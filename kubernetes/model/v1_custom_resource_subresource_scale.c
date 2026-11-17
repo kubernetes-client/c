@@ -14,11 +14,11 @@ static v1_custom_resource_subresource_scale_t *v1_custom_resource_subresource_sc
     if (!v1_custom_resource_subresource_scale_local_var) {
         return NULL;
     }
+    memset(v1_custom_resource_subresource_scale_local_var, 0, sizeof(v1_custom_resource_subresource_scale_t));
+    v1_custom_resource_subresource_scale_local_var->_library_owned = 1;
     v1_custom_resource_subresource_scale_local_var->label_selector_path = label_selector_path;
     v1_custom_resource_subresource_scale_local_var->spec_replicas_path = spec_replicas_path;
     v1_custom_resource_subresource_scale_local_var->status_replicas_path = status_replicas_path;
-
-    v1_custom_resource_subresource_scale_local_var->_library_owned = 1;
     return v1_custom_resource_subresource_scale_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_custom_resource_subresource_scale_t *v1_custom_re
     char *spec_replicas_path,
     char *status_replicas_path
     ) {
-    return v1_custom_resource_subresource_scale_create_internal (
+    v1_custom_resource_subresource_scale_t *result = v1_custom_resource_subresource_scale_create_internal (
         label_selector_path,
         spec_replicas_path,
         status_replicas_path
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_custom_resource_subresource_scale_free(v1_custom_resource_subresource_scale_t *v1_custom_resource_subresource_scale) {
@@ -98,6 +101,12 @@ v1_custom_resource_subresource_scale_t *v1_custom_resource_subresource_scale_par
 
     v1_custom_resource_subresource_scale_t *v1_custom_resource_subresource_scale_local_var = NULL;
 
+    char *label_selector_path_local_str = NULL;
+
+    char *spec_replicas_path_local_str = NULL;
+
+    char *status_replicas_path_local_str = NULL;
+
     // v1_custom_resource_subresource_scale->label_selector_path
     cJSON *label_selector_path = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_subresource_scaleJSON, "labelSelectorPath");
     if (cJSON_IsNull(label_selector_path)) {
@@ -141,14 +150,34 @@ v1_custom_resource_subresource_scale_t *v1_custom_resource_subresource_scale_par
     }
 
 
+    if (label_selector_path && !cJSON_IsNull(label_selector_path)) label_selector_path_local_str = strdup(label_selector_path->valuestring);
+    if (spec_replicas_path && !cJSON_IsNull(spec_replicas_path)) spec_replicas_path_local_str = strdup(spec_replicas_path->valuestring);
+    if (status_replicas_path && !cJSON_IsNull(status_replicas_path)) status_replicas_path_local_str = strdup(status_replicas_path->valuestring);
+
     v1_custom_resource_subresource_scale_local_var = v1_custom_resource_subresource_scale_create_internal (
-        label_selector_path && !cJSON_IsNull(label_selector_path) ? strdup(label_selector_path->valuestring) : NULL,
-        strdup(spec_replicas_path->valuestring),
-        strdup(status_replicas_path->valuestring)
+        label_selector_path_local_str,
+        spec_replicas_path_local_str,
+        status_replicas_path_local_str
         );
+
+    if (!v1_custom_resource_subresource_scale_local_var) {
+        goto end;
+    }
 
     return v1_custom_resource_subresource_scale_local_var;
 end:
+    if (label_selector_path_local_str) {
+        free(label_selector_path_local_str);
+        label_selector_path_local_str = NULL;
+    }
+    if (spec_replicas_path_local_str) {
+        free(spec_replicas_path_local_str);
+        spec_replicas_path_local_str = NULL;
+    }
+    if (status_replicas_path_local_str) {
+        free(status_replicas_path_local_str);
+        status_replicas_path_local_str = NULL;
+    }
     return NULL;
 
 }

@@ -18,6 +18,7 @@ void list_event(apiClient_t * apiClient)
                                                                      NULL,  /* resourceVersion */
                                                                      NULL,  /* resourceVersionMatch */
                                                                      NULL,  /* sendInitialEvents */
+                                                                     NULL,    /* shardSelector */
                                                                      NULL,  /* timeoutSeconds */
                                                                      NULL   /* watch */
         );

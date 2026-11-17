@@ -15,12 +15,12 @@ static v1alpha1_mutating_admission_policy_t *v1alpha1_mutating_admission_policy_
     if (!v1alpha1_mutating_admission_policy_local_var) {
         return NULL;
     }
+    memset(v1alpha1_mutating_admission_policy_local_var, 0, sizeof(v1alpha1_mutating_admission_policy_t));
+    v1alpha1_mutating_admission_policy_local_var->_library_owned = 1;
     v1alpha1_mutating_admission_policy_local_var->api_version = api_version;
     v1alpha1_mutating_admission_policy_local_var->kind = kind;
     v1alpha1_mutating_admission_policy_local_var->metadata = metadata;
     v1alpha1_mutating_admission_policy_local_var->spec = spec;
-
-    v1alpha1_mutating_admission_policy_local_var->_library_owned = 1;
     return v1alpha1_mutating_admission_policy_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1alpha1_mutating_admission_policy_t *v1alpha1_mutat
     v1_object_meta_t *metadata,
     v1alpha1_mutating_admission_policy_spec_t *spec
     ) {
-    return v1alpha1_mutating_admission_policy_create_internal (
+    v1alpha1_mutating_admission_policy_t *result = v1alpha1_mutating_admission_policy_create_internal (
         api_version,
         kind,
         metadata,
         spec
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1alpha1_mutating_admission_policy_free(v1alpha1_mutating_admission_policy_t *v1alpha1_mutating_admission_policy) {
@@ -122,6 +125,10 @@ v1alpha1_mutating_admission_policy_t *v1alpha1_mutating_admission_policy_parseFr
 
     v1alpha1_mutating_admission_policy_t *v1alpha1_mutating_admission_policy_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
+    char *kind_local_str = NULL;
+
     // define the local variable for v1alpha1_mutating_admission_policy->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
 
@@ -171,15 +178,30 @@ v1alpha1_mutating_admission_policy_t *v1alpha1_mutating_admission_policy_parseFr
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+
     v1alpha1_mutating_admission_policy_local_var = v1alpha1_mutating_admission_policy_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version_local_str,
+        kind_local_str,
         metadata ? metadata_local_nonprim : NULL,
         spec ? spec_local_nonprim : NULL
         );
 
+    if (!v1alpha1_mutating_admission_policy_local_var) {
+        goto end;
+    }
+
     return v1alpha1_mutating_admission_policy_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;

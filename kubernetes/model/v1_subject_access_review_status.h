@@ -19,8 +19,8 @@ typedef struct v1_subject_access_review_status_t v1_subject_access_review_status
 
 
 typedef struct v1_subject_access_review_status_t {
-    int allowed; //boolean
-    int denied; //boolean
+    int *allowed; //boolean
+    int *denied; //boolean
     char *evaluation_error; // string
     char *reason; // string
 
@@ -28,8 +28,8 @@ typedef struct v1_subject_access_review_status_t {
 } v1_subject_access_review_status_t;
 
 __attribute__((deprecated)) v1_subject_access_review_status_t *v1_subject_access_review_status_create(
-    int allowed,
-    int denied,
+    int *allowed,
+    int *denied,
     char *evaluation_error,
     char *reason
 );

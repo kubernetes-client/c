@@ -7,11 +7,11 @@
 
 static v1_pod_security_context_t *v1_pod_security_context_create_internal(
     v1_app_armor_profile_t *app_armor_profile,
-    long fs_group,
+    long *fs_group,
     char *fs_group_change_policy,
-    long run_as_group,
-    int run_as_non_root,
-    long run_as_user,
+    long *run_as_group,
+    int *run_as_non_root,
+    long *run_as_user,
     char *se_linux_change_policy,
     v1_se_linux_options_t *se_linux_options,
     v1_seccomp_profile_t *seccomp_profile,
@@ -24,6 +24,8 @@ static v1_pod_security_context_t *v1_pod_security_context_create_internal(
     if (!v1_pod_security_context_local_var) {
         return NULL;
     }
+    memset(v1_pod_security_context_local_var, 0, sizeof(v1_pod_security_context_t));
+    v1_pod_security_context_local_var->_library_owned = 1;
     v1_pod_security_context_local_var->app_armor_profile = app_armor_profile;
     v1_pod_security_context_local_var->fs_group = fs_group;
     v1_pod_security_context_local_var->fs_group_change_policy = fs_group_change_policy;
@@ -37,18 +39,16 @@ static v1_pod_security_context_t *v1_pod_security_context_create_internal(
     v1_pod_security_context_local_var->supplemental_groups_policy = supplemental_groups_policy;
     v1_pod_security_context_local_var->sysctls = sysctls;
     v1_pod_security_context_local_var->windows_options = windows_options;
-
-    v1_pod_security_context_local_var->_library_owned = 1;
     return v1_pod_security_context_local_var;
 }
 
 __attribute__((deprecated)) v1_pod_security_context_t *v1_pod_security_context_create(
     v1_app_armor_profile_t *app_armor_profile,
-    long fs_group,
+    long *fs_group,
     char *fs_group_change_policy,
-    long run_as_group,
-    int run_as_non_root,
-    long run_as_user,
+    long *run_as_group,
+    int *run_as_non_root,
+    long *run_as_user,
     char *se_linux_change_policy,
     v1_se_linux_options_t *se_linux_options,
     v1_seccomp_profile_t *seccomp_profile,
@@ -57,13 +57,33 @@ __attribute__((deprecated)) v1_pod_security_context_t *v1_pod_security_context_c
     list_t *sysctls,
     v1_windows_security_context_options_t *windows_options
     ) {
-    return v1_pod_security_context_create_internal (
+    long *fs_group_copy = NULL;
+    if (fs_group) {
+        fs_group_copy = malloc(sizeof(long));
+        if (fs_group_copy) *fs_group_copy = *fs_group;
+    }
+    long *run_as_group_copy = NULL;
+    if (run_as_group) {
+        run_as_group_copy = malloc(sizeof(long));
+        if (run_as_group_copy) *run_as_group_copy = *run_as_group;
+    }
+    int *run_as_non_root_copy = NULL;
+    if (run_as_non_root) {
+        run_as_non_root_copy = malloc(sizeof(int));
+        if (run_as_non_root_copy) *run_as_non_root_copy = *run_as_non_root;
+    }
+    long *run_as_user_copy = NULL;
+    if (run_as_user) {
+        run_as_user_copy = malloc(sizeof(long));
+        if (run_as_user_copy) *run_as_user_copy = *run_as_user;
+    }
+    v1_pod_security_context_t *result = v1_pod_security_context_create_internal (
         app_armor_profile,
-        fs_group,
+        fs_group_copy,
         fs_group_change_policy,
-        run_as_group,
-        run_as_non_root,
-        run_as_user,
+        run_as_group_copy,
+        run_as_non_root_copy,
+        run_as_user_copy,
         se_linux_change_policy,
         se_linux_options,
         seccomp_profile,
@@ -72,6 +92,13 @@ __attribute__((deprecated)) v1_pod_security_context_t *v1_pod_security_context_c
         sysctls,
         windows_options
         );
+    if (!result) {
+        free(fs_group_copy);
+        free(run_as_group_copy);
+        free(run_as_non_root_copy);
+        free(run_as_user_copy);
+    }
+    return result;
 }
 
 void v1_pod_security_context_free(v1_pod_security_context_t *v1_pod_security_context) {
@@ -87,9 +114,25 @@ void v1_pod_security_context_free(v1_pod_security_context_t *v1_pod_security_con
         v1_app_armor_profile_free(v1_pod_security_context->app_armor_profile);
         v1_pod_security_context->app_armor_profile = NULL;
     }
+    if (v1_pod_security_context->fs_group) {
+        free(v1_pod_security_context->fs_group);
+        v1_pod_security_context->fs_group = NULL;
+    }
     if (v1_pod_security_context->fs_group_change_policy) {
         free(v1_pod_security_context->fs_group_change_policy);
         v1_pod_security_context->fs_group_change_policy = NULL;
+    }
+    if (v1_pod_security_context->run_as_group) {
+        free(v1_pod_security_context->run_as_group);
+        v1_pod_security_context->run_as_group = NULL;
+    }
+    if (v1_pod_security_context->run_as_non_root) {
+        free(v1_pod_security_context->run_as_non_root);
+        v1_pod_security_context->run_as_non_root = NULL;
+    }
+    if (v1_pod_security_context->run_as_user) {
+        free(v1_pod_security_context->run_as_user);
+        v1_pod_security_context->run_as_user = NULL;
     }
     if (v1_pod_security_context->se_linux_change_policy) {
         free(v1_pod_security_context->se_linux_change_policy);
@@ -146,7 +189,7 @@ cJSON *v1_pod_security_context_convertToJSON(v1_pod_security_context_t *v1_pod_s
 
     // v1_pod_security_context->fs_group
     if(v1_pod_security_context->fs_group) {
-    if(cJSON_AddNumberToObject(item, "fsGroup", v1_pod_security_context->fs_group) == NULL) {
+    if(cJSON_AddNumberToObject(item, "fsGroup", *v1_pod_security_context->fs_group) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -162,7 +205,7 @@ cJSON *v1_pod_security_context_convertToJSON(v1_pod_security_context_t *v1_pod_s
 
     // v1_pod_security_context->run_as_group
     if(v1_pod_security_context->run_as_group) {
-    if(cJSON_AddNumberToObject(item, "runAsGroup", v1_pod_security_context->run_as_group) == NULL) {
+    if(cJSON_AddNumberToObject(item, "runAsGroup", *v1_pod_security_context->run_as_group) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -170,7 +213,7 @@ cJSON *v1_pod_security_context_convertToJSON(v1_pod_security_context_t *v1_pod_s
 
     // v1_pod_security_context->run_as_non_root
     if(v1_pod_security_context->run_as_non_root) {
-    if(cJSON_AddBoolToObject(item, "runAsNonRoot", v1_pod_security_context->run_as_non_root) == NULL) {
+    if(cJSON_AddBoolToObject(item, "runAsNonRoot", *v1_pod_security_context->run_as_non_root) == NULL) {
     goto fail; //Bool
     }
     }
@@ -178,7 +221,7 @@ cJSON *v1_pod_security_context_convertToJSON(v1_pod_security_context_t *v1_pod_s
 
     // v1_pod_security_context->run_as_user
     if(v1_pod_security_context->run_as_user) {
-    if(cJSON_AddNumberToObject(item, "runAsUser", v1_pod_security_context->run_as_user) == NULL) {
+    if(cJSON_AddNumberToObject(item, "runAsUser", *v1_pod_security_context->run_as_user) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -290,6 +333,22 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
     // define the local variable for v1_pod_security_context->app_armor_profile
     v1_app_armor_profile_t *app_armor_profile_local_nonprim = NULL;
 
+    // define the local variable for v1_pod_security_context->fs_group
+    long *fs_group_local_var = NULL;
+
+    char *fs_group_change_policy_local_str = NULL;
+
+    // define the local variable for v1_pod_security_context->run_as_group
+    long *run_as_group_local_var = NULL;
+
+    // define the local variable for v1_pod_security_context->run_as_non_root
+    int *run_as_non_root_local_var = NULL;
+
+    // define the local variable for v1_pod_security_context->run_as_user
+    long *run_as_user_local_var = NULL;
+
+    char *se_linux_change_policy_local_str = NULL;
+
     // define the local variable for v1_pod_security_context->se_linux_options
     v1_se_linux_options_t *se_linux_options_local_nonprim = NULL;
 
@@ -298,6 +357,8 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
 
     // define the local list for v1_pod_security_context->supplemental_groups
     list_t *supplemental_groupsList = NULL;
+
+    char *supplemental_groups_policy_local_str = NULL;
 
     // define the local list for v1_pod_security_context->sysctls
     list_t *sysctlsList = NULL;
@@ -324,6 +385,12 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
     {
     goto end; //Numeric
     }
+    fs_group_local_var = malloc(sizeof(long));
+    if(!fs_group_local_var)
+    {
+        goto end;
+    }
+    *fs_group_local_var = fs_group->valuedouble;
     }
 
     // v1_pod_security_context->fs_group_change_policy
@@ -348,6 +415,12 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
     {
     goto end; //Numeric
     }
+    run_as_group_local_var = malloc(sizeof(long));
+    if(!run_as_group_local_var)
+    {
+        goto end;
+    }
+    *run_as_group_local_var = run_as_group->valuedouble;
     }
 
     // v1_pod_security_context->run_as_non_root
@@ -360,6 +433,12 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
     {
     goto end; //Bool
     }
+    run_as_non_root_local_var = malloc(sizeof(int));
+    if(!run_as_non_root_local_var)
+    {
+        goto end;
+    }
+    *run_as_non_root_local_var = run_as_non_root->valueint;
     }
 
     // v1_pod_security_context->run_as_user
@@ -372,6 +451,12 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
     {
     goto end; //Numeric
     }
+    run_as_user_local_var = malloc(sizeof(long));
+    if(!run_as_user_local_var)
+    {
+        goto end;
+    }
+    *run_as_user_local_var = run_as_user->valuedouble;
     }
 
     // v1_pod_security_context->se_linux_change_policy
@@ -478,27 +563,59 @@ v1_pod_security_context_t *v1_pod_security_context_parseFromJSON(cJSON *v1_pod_s
     }
 
 
+    if (fs_group_change_policy && !cJSON_IsNull(fs_group_change_policy)) fs_group_change_policy_local_str = strdup(fs_group_change_policy->valuestring);
+    if (se_linux_change_policy && !cJSON_IsNull(se_linux_change_policy)) se_linux_change_policy_local_str = strdup(se_linux_change_policy->valuestring);
+    if (supplemental_groups_policy && !cJSON_IsNull(supplemental_groups_policy)) supplemental_groups_policy_local_str = strdup(supplemental_groups_policy->valuestring);
+
     v1_pod_security_context_local_var = v1_pod_security_context_create_internal (
         app_armor_profile ? app_armor_profile_local_nonprim : NULL,
-        fs_group ? fs_group->valuedouble : 0,
-        fs_group_change_policy && !cJSON_IsNull(fs_group_change_policy) ? strdup(fs_group_change_policy->valuestring) : NULL,
-        run_as_group ? run_as_group->valuedouble : 0,
-        run_as_non_root ? run_as_non_root->valueint : 0,
-        run_as_user ? run_as_user->valuedouble : 0,
-        se_linux_change_policy && !cJSON_IsNull(se_linux_change_policy) ? strdup(se_linux_change_policy->valuestring) : NULL,
+        fs_group_local_var,
+        fs_group_change_policy_local_str,
+        run_as_group_local_var,
+        run_as_non_root_local_var,
+        run_as_user_local_var,
+        se_linux_change_policy_local_str,
         se_linux_options ? se_linux_options_local_nonprim : NULL,
         seccomp_profile ? seccomp_profile_local_nonprim : NULL,
         supplemental_groups ? supplemental_groupsList : NULL,
-        supplemental_groups_policy && !cJSON_IsNull(supplemental_groups_policy) ? strdup(supplemental_groups_policy->valuestring) : NULL,
+        supplemental_groups_policy_local_str,
         sysctls ? sysctlsList : NULL,
         windows_options ? windows_options_local_nonprim : NULL
         );
+
+    if (!v1_pod_security_context_local_var) {
+        goto end;
+    }
 
     return v1_pod_security_context_local_var;
 end:
     if (app_armor_profile_local_nonprim) {
         v1_app_armor_profile_free(app_armor_profile_local_nonprim);
         app_armor_profile_local_nonprim = NULL;
+    }
+    if (fs_group_local_var) {
+        free(fs_group_local_var);
+        fs_group_local_var = NULL;
+    }
+    if (fs_group_change_policy_local_str) {
+        free(fs_group_change_policy_local_str);
+        fs_group_change_policy_local_str = NULL;
+    }
+    if (run_as_group_local_var) {
+        free(run_as_group_local_var);
+        run_as_group_local_var = NULL;
+    }
+    if (run_as_non_root_local_var) {
+        free(run_as_non_root_local_var);
+        run_as_non_root_local_var = NULL;
+    }
+    if (run_as_user_local_var) {
+        free(run_as_user_local_var);
+        run_as_user_local_var = NULL;
+    }
+    if (se_linux_change_policy_local_str) {
+        free(se_linux_change_policy_local_str);
+        se_linux_change_policy_local_str = NULL;
     }
     if (se_linux_options_local_nonprim) {
         v1_se_linux_options_free(se_linux_options_local_nonprim);
@@ -516,6 +633,10 @@ end:
         }
         list_freeList(supplemental_groupsList);
         supplemental_groupsList = NULL;
+    }
+    if (supplemental_groups_policy_local_str) {
+        free(supplemental_groups_policy_local_str);
+        supplemental_groups_policy_local_str = NULL;
     }
     if (sysctlsList) {
         listEntry_t *listEntry = NULL;

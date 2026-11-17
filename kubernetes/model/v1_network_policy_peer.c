@@ -14,11 +14,11 @@ static v1_network_policy_peer_t *v1_network_policy_peer_create_internal(
     if (!v1_network_policy_peer_local_var) {
         return NULL;
     }
+    memset(v1_network_policy_peer_local_var, 0, sizeof(v1_network_policy_peer_t));
+    v1_network_policy_peer_local_var->_library_owned = 1;
     v1_network_policy_peer_local_var->ip_block = ip_block;
     v1_network_policy_peer_local_var->namespace_selector = namespace_selector;
     v1_network_policy_peer_local_var->pod_selector = pod_selector;
-
-    v1_network_policy_peer_local_var->_library_owned = 1;
     return v1_network_policy_peer_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_network_policy_peer_t *v1_network_policy_peer_cre
     v1_label_selector_t *namespace_selector,
     v1_label_selector_t *pod_selector
     ) {
-    return v1_network_policy_peer_create_internal (
+    v1_network_policy_peer_t *result = v1_network_policy_peer_create_internal (
         ip_block,
         namespace_selector,
         pod_selector
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_network_policy_peer_free(v1_network_policy_peer_t *v1_network_policy_peer) {
@@ -148,11 +151,16 @@ v1_network_policy_peer_t *v1_network_policy_peer_parseFromJSON(cJSON *v1_network
     }
 
 
+
     v1_network_policy_peer_local_var = v1_network_policy_peer_create_internal (
         ip_block ? ip_block_local_nonprim : NULL,
         namespace_selector ? namespace_selector_local_nonprim : NULL,
         pod_selector ? pod_selector_local_nonprim : NULL
         );
+
+    if (!v1_network_policy_peer_local_var) {
+        goto end;
+    }
 
     return v1_network_policy_peer_local_var;
 end:

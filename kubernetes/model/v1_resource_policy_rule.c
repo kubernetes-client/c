@@ -7,7 +7,7 @@
 
 static v1_resource_policy_rule_t *v1_resource_policy_rule_create_internal(
     list_t *api_groups,
-    int cluster_scope,
+    int *cluster_scope,
     list_t *namespaces,
     list_t *resources,
     list_t *verbs
@@ -16,30 +16,39 @@ static v1_resource_policy_rule_t *v1_resource_policy_rule_create_internal(
     if (!v1_resource_policy_rule_local_var) {
         return NULL;
     }
+    memset(v1_resource_policy_rule_local_var, 0, sizeof(v1_resource_policy_rule_t));
+    v1_resource_policy_rule_local_var->_library_owned = 1;
     v1_resource_policy_rule_local_var->api_groups = api_groups;
     v1_resource_policy_rule_local_var->cluster_scope = cluster_scope;
     v1_resource_policy_rule_local_var->namespaces = namespaces;
     v1_resource_policy_rule_local_var->resources = resources;
     v1_resource_policy_rule_local_var->verbs = verbs;
-
-    v1_resource_policy_rule_local_var->_library_owned = 1;
     return v1_resource_policy_rule_local_var;
 }
 
 __attribute__((deprecated)) v1_resource_policy_rule_t *v1_resource_policy_rule_create(
     list_t *api_groups,
-    int cluster_scope,
+    int *cluster_scope,
     list_t *namespaces,
     list_t *resources,
     list_t *verbs
     ) {
-    return v1_resource_policy_rule_create_internal (
+    int *cluster_scope_copy = NULL;
+    if (cluster_scope) {
+        cluster_scope_copy = malloc(sizeof(int));
+        if (cluster_scope_copy) *cluster_scope_copy = *cluster_scope;
+    }
+    v1_resource_policy_rule_t *result = v1_resource_policy_rule_create_internal (
         api_groups,
-        cluster_scope,
+        cluster_scope_copy,
         namespaces,
         resources,
         verbs
         );
+    if (!result) {
+        free(cluster_scope_copy);
+    }
+    return result;
 }
 
 void v1_resource_policy_rule_free(v1_resource_policy_rule_t *v1_resource_policy_rule) {
@@ -57,6 +66,10 @@ void v1_resource_policy_rule_free(v1_resource_policy_rule_t *v1_resource_policy_
         }
         list_freeList(v1_resource_policy_rule->api_groups);
         v1_resource_policy_rule->api_groups = NULL;
+    }
+    if (v1_resource_policy_rule->cluster_scope) {
+        free(v1_resource_policy_rule->cluster_scope);
+        v1_resource_policy_rule->cluster_scope = NULL;
     }
     if (v1_resource_policy_rule->namespaces) {
         list_ForEach(listEntry, v1_resource_policy_rule->namespaces) {
@@ -105,7 +118,7 @@ cJSON *v1_resource_policy_rule_convertToJSON(v1_resource_policy_rule_t *v1_resou
 
     // v1_resource_policy_rule->cluster_scope
     if(v1_resource_policy_rule->cluster_scope) {
-    if(cJSON_AddBoolToObject(item, "clusterScope", v1_resource_policy_rule->cluster_scope) == NULL) {
+    if(cJSON_AddBoolToObject(item, "clusterScope", *v1_resource_policy_rule->cluster_scope) == NULL) {
     goto fail; //Bool
     }
     }
@@ -178,6 +191,9 @@ v1_resource_policy_rule_t *v1_resource_policy_rule_parseFromJSON(cJSON *v1_resou
     // define the local list for v1_resource_policy_rule->api_groups
     list_t *api_groupsList = NULL;
 
+    // define the local variable for v1_resource_policy_rule->cluster_scope
+    int *cluster_scope_local_var = NULL;
+
     // define the local list for v1_resource_policy_rule->namespaces
     list_t *namespacesList = NULL;
 
@@ -222,6 +238,12 @@ v1_resource_policy_rule_t *v1_resource_policy_rule_parseFromJSON(cJSON *v1_resou
     {
     goto end; //Bool
     }
+    cluster_scope_local_var = malloc(sizeof(int));
+    if(!cluster_scope_local_var)
+    {
+        goto end;
+    }
+    *cluster_scope_local_var = cluster_scope->valueint;
     }
 
     // v1_resource_policy_rule->namespaces
@@ -297,13 +319,18 @@ v1_resource_policy_rule_t *v1_resource_policy_rule_parseFromJSON(cJSON *v1_resou
     }
 
 
+
     v1_resource_policy_rule_local_var = v1_resource_policy_rule_create_internal (
         api_groupsList,
-        cluster_scope ? cluster_scope->valueint : 0,
+        cluster_scope_local_var,
         namespaces ? namespacesList : NULL,
         resourcesList,
         verbsList
         );
+
+    if (!v1_resource_policy_rule_local_var) {
+        goto end;
+    }
 
     return v1_resource_policy_rule_local_var;
 end:
@@ -315,6 +342,10 @@ end:
         }
         list_freeList(api_groupsList);
         api_groupsList = NULL;
+    }
+    if (cluster_scope_local_var) {
+        free(cluster_scope_local_var);
+        cluster_scope_local_var = NULL;
     }
     if (namespacesList) {
         listEntry_t *listEntry = NULL;

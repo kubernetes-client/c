@@ -13,10 +13,10 @@ static v1_label_selector_attributes_t *v1_label_selector_attributes_create_inter
     if (!v1_label_selector_attributes_local_var) {
         return NULL;
     }
+    memset(v1_label_selector_attributes_local_var, 0, sizeof(v1_label_selector_attributes_t));
+    v1_label_selector_attributes_local_var->_library_owned = 1;
     v1_label_selector_attributes_local_var->raw_selector = raw_selector;
     v1_label_selector_attributes_local_var->requirements = requirements;
-
-    v1_label_selector_attributes_local_var->_library_owned = 1;
     return v1_label_selector_attributes_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_label_selector_attributes_t *v1_label_selector_at
     char *raw_selector,
     list_t *requirements
     ) {
-    return v1_label_selector_attributes_create_internal (
+    v1_label_selector_attributes_t *result = v1_label_selector_attributes_create_internal (
         raw_selector,
         requirements
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_label_selector_attributes_free(v1_label_selector_attributes_t *v1_label_selector_attributes) {
@@ -95,6 +98,8 @@ v1_label_selector_attributes_t *v1_label_selector_attributes_parseFromJSON(cJSON
 
     v1_label_selector_attributes_t *v1_label_selector_attributes_local_var = NULL;
 
+    char *raw_selector_local_str = NULL;
+
     // define the local list for v1_label_selector_attributes->requirements
     list_t *requirementsList = NULL;
 
@@ -135,13 +140,23 @@ v1_label_selector_attributes_t *v1_label_selector_attributes_parseFromJSON(cJSON
     }
 
 
+    if (raw_selector && !cJSON_IsNull(raw_selector)) raw_selector_local_str = strdup(raw_selector->valuestring);
+
     v1_label_selector_attributes_local_var = v1_label_selector_attributes_create_internal (
-        raw_selector && !cJSON_IsNull(raw_selector) ? strdup(raw_selector->valuestring) : NULL,
+        raw_selector_local_str,
         requirements ? requirementsList : NULL
         );
 
+    if (!v1_label_selector_attributes_local_var) {
+        goto end;
+    }
+
     return v1_label_selector_attributes_local_var;
 end:
+    if (raw_selector_local_str) {
+        free(raw_selector_local_str);
+        raw_selector_local_str = NULL;
+    }
     if (requirementsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, requirementsList) {

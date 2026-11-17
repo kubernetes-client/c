@@ -20,19 +20,19 @@ typedef struct v1_horizontal_pod_autoscaler_spec_t v1_horizontal_pod_autoscaler_
 
 
 typedef struct v1_horizontal_pod_autoscaler_spec_t {
-    int max_replicas; //numeric
-    int min_replicas; //numeric
+    int *max_replicas; //numeric
+    int *min_replicas; //numeric
     struct v1_cross_version_object_reference_t *scale_target_ref; //model
-    int target_cpu_utilization_percentage; //numeric
+    int *target_cpu_utilization_percentage; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_horizontal_pod_autoscaler_spec_t;
 
 __attribute__((deprecated)) v1_horizontal_pod_autoscaler_spec_t *v1_horizontal_pod_autoscaler_spec_create(
-    int max_replicas,
-    int min_replicas,
+    int *max_replicas,
+    int *min_replicas,
     v1_cross_version_object_reference_t *scale_target_ref,
-    int target_cpu_utilization_percentage
+    int *target_cpu_utilization_percentage
 );
 
 void v1_horizontal_pod_autoscaler_spec_free(v1_horizontal_pod_autoscaler_spec_t *v1_horizontal_pod_autoscaler_spec);

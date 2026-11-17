@@ -13,10 +13,10 @@ static v1_ingress_service_backend_t *v1_ingress_service_backend_create_internal(
     if (!v1_ingress_service_backend_local_var) {
         return NULL;
     }
+    memset(v1_ingress_service_backend_local_var, 0, sizeof(v1_ingress_service_backend_t));
+    v1_ingress_service_backend_local_var->_library_owned = 1;
     v1_ingress_service_backend_local_var->name = name;
     v1_ingress_service_backend_local_var->port = port;
-
-    v1_ingress_service_backend_local_var->_library_owned = 1;
     return v1_ingress_service_backend_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_ingress_service_backend_t *v1_ingress_service_bac
     char *name,
     v1_service_backend_port_t *port
     ) {
-    return v1_ingress_service_backend_create_internal (
+    v1_ingress_service_backend_t *result = v1_ingress_service_backend_create_internal (
         name,
         port
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_ingress_service_backend_free(v1_ingress_service_backend_t *v1_ingress_service_backend) {
@@ -86,6 +89,8 @@ v1_ingress_service_backend_t *v1_ingress_service_backend_parseFromJSON(cJSON *v1
 
     v1_ingress_service_backend_t *v1_ingress_service_backend_local_var = NULL;
 
+    char *name_local_str = NULL;
+
     // define the local variable for v1_ingress_service_backend->port
     v1_service_backend_port_t *port_local_nonprim = NULL;
 
@@ -114,13 +119,23 @@ v1_ingress_service_backend_t *v1_ingress_service_backend_parseFromJSON(cJSON *v1
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v1_ingress_service_backend_local_var = v1_ingress_service_backend_create_internal (
-        strdup(name->valuestring),
+        name_local_str,
         port ? port_local_nonprim : NULL
         );
 
+    if (!v1_ingress_service_backend_local_var) {
+        goto end;
+    }
+
     return v1_ingress_service_backend_local_var;
 end:
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
     if (port_local_nonprim) {
         v1_service_backend_port_free(port_local_nonprim);
         port_local_nonprim = NULL;

@@ -23,7 +23,7 @@ typedef struct v1_custom_resource_column_definition_t {
     char *format; // string
     char *json_path; // string
     char *name; // string
-    int priority; //numeric
+    int *priority; //numeric
     char *type; // string
 
     int _library_owned; // Is the library responsible for freeing this object?
@@ -34,7 +34,7 @@ __attribute__((deprecated)) v1_custom_resource_column_definition_t *v1_custom_re
     char *format,
     char *json_path,
     char *name,
-    int priority,
+    int *priority,
     char *type
 );
 

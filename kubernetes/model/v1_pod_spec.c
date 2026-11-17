@@ -6,19 +6,20 @@
 
 
 static v1_pod_spec_t *v1_pod_spec_create_internal(
-    long active_deadline_seconds,
+    long *active_deadline_seconds,
     v1_affinity_t *affinity,
-    int automount_service_account_token,
+    int *automount_service_account_token,
     list_t *containers,
     v1_pod_dns_config_t *dns_config,
     char *dns_policy,
-    int enable_service_links,
+    int *enable_service_links,
     list_t *ephemeral_containers,
+    list_t *eviction_responders,
     list_t *host_aliases,
-    int host_ipc,
-    int host_network,
-    int host_pid,
-    int host_users,
+    int *host_ipc,
+    int *host_network,
+    int *host_pid,
+    int *host_users,
     char *hostname,
     char *hostname_override,
     list_t *image_pull_secrets,
@@ -28,7 +29,7 @@ static v1_pod_spec_t *v1_pod_spec_create_internal(
     v1_pod_os_t *os,
     list_t* overhead,
     char *preemption_policy,
-    int priority,
+    int *priority,
     char *priority_class_name,
     list_t *readiness_gates,
     list_t *resource_claims,
@@ -37,13 +38,14 @@ static v1_pod_spec_t *v1_pod_spec_create_internal(
     char *runtime_class_name,
     char *scheduler_name,
     list_t *scheduling_gates,
+    v1_pod_scheduling_group_t *scheduling_group,
     v1_pod_security_context_t *security_context,
     char *service_account,
     char *service_account_name,
-    int set_hostname_as_fqdn,
-    int share_process_namespace,
+    int *set_hostname_as_fqdn,
+    int *share_process_namespace,
     char *subdomain,
-    long termination_grace_period_seconds,
+    long *termination_grace_period_seconds,
     list_t *tolerations,
     list_t *topology_spread_constraints,
     list_t *volumes
@@ -52,6 +54,8 @@ static v1_pod_spec_t *v1_pod_spec_create_internal(
     if (!v1_pod_spec_local_var) {
         return NULL;
     }
+    memset(v1_pod_spec_local_var, 0, sizeof(v1_pod_spec_t));
+    v1_pod_spec_local_var->_library_owned = 1;
     v1_pod_spec_local_var->active_deadline_seconds = active_deadline_seconds;
     v1_pod_spec_local_var->affinity = affinity;
     v1_pod_spec_local_var->automount_service_account_token = automount_service_account_token;
@@ -60,6 +64,7 @@ static v1_pod_spec_t *v1_pod_spec_create_internal(
     v1_pod_spec_local_var->dns_policy = dns_policy;
     v1_pod_spec_local_var->enable_service_links = enable_service_links;
     v1_pod_spec_local_var->ephemeral_containers = ephemeral_containers;
+    v1_pod_spec_local_var->eviction_responders = eviction_responders;
     v1_pod_spec_local_var->host_aliases = host_aliases;
     v1_pod_spec_local_var->host_ipc = host_ipc;
     v1_pod_spec_local_var->host_network = host_network;
@@ -83,6 +88,7 @@ static v1_pod_spec_t *v1_pod_spec_create_internal(
     v1_pod_spec_local_var->runtime_class_name = runtime_class_name;
     v1_pod_spec_local_var->scheduler_name = scheduler_name;
     v1_pod_spec_local_var->scheduling_gates = scheduling_gates;
+    v1_pod_spec_local_var->scheduling_group = scheduling_group;
     v1_pod_spec_local_var->security_context = security_context;
     v1_pod_spec_local_var->service_account = service_account;
     v1_pod_spec_local_var->service_account_name = service_account_name;
@@ -93,25 +99,24 @@ static v1_pod_spec_t *v1_pod_spec_create_internal(
     v1_pod_spec_local_var->tolerations = tolerations;
     v1_pod_spec_local_var->topology_spread_constraints = topology_spread_constraints;
     v1_pod_spec_local_var->volumes = volumes;
-
-    v1_pod_spec_local_var->_library_owned = 1;
     return v1_pod_spec_local_var;
 }
 
 __attribute__((deprecated)) v1_pod_spec_t *v1_pod_spec_create(
-    long active_deadline_seconds,
+    long *active_deadline_seconds,
     v1_affinity_t *affinity,
-    int automount_service_account_token,
+    int *automount_service_account_token,
     list_t *containers,
     v1_pod_dns_config_t *dns_config,
     char *dns_policy,
-    int enable_service_links,
+    int *enable_service_links,
     list_t *ephemeral_containers,
+    list_t *eviction_responders,
     list_t *host_aliases,
-    int host_ipc,
-    int host_network,
-    int host_pid,
-    int host_users,
+    int *host_ipc,
+    int *host_network,
+    int *host_pid,
+    int *host_users,
     char *hostname,
     char *hostname_override,
     list_t *image_pull_secrets,
@@ -121,7 +126,7 @@ __attribute__((deprecated)) v1_pod_spec_t *v1_pod_spec_create(
     v1_pod_os_t *os,
     list_t* overhead,
     char *preemption_policy,
-    int priority,
+    int *priority,
     char *priority_class_name,
     list_t *readiness_gates,
     list_t *resource_claims,
@@ -130,31 +135,88 @@ __attribute__((deprecated)) v1_pod_spec_t *v1_pod_spec_create(
     char *runtime_class_name,
     char *scheduler_name,
     list_t *scheduling_gates,
+    v1_pod_scheduling_group_t *scheduling_group,
     v1_pod_security_context_t *security_context,
     char *service_account,
     char *service_account_name,
-    int set_hostname_as_fqdn,
-    int share_process_namespace,
+    int *set_hostname_as_fqdn,
+    int *share_process_namespace,
     char *subdomain,
-    long termination_grace_period_seconds,
+    long *termination_grace_period_seconds,
     list_t *tolerations,
     list_t *topology_spread_constraints,
     list_t *volumes
     ) {
-    return v1_pod_spec_create_internal (
-        active_deadline_seconds,
+    long *active_deadline_seconds_copy = NULL;
+    if (active_deadline_seconds) {
+        active_deadline_seconds_copy = malloc(sizeof(long));
+        if (active_deadline_seconds_copy) *active_deadline_seconds_copy = *active_deadline_seconds;
+    }
+    int *automount_service_account_token_copy = NULL;
+    if (automount_service_account_token) {
+        automount_service_account_token_copy = malloc(sizeof(int));
+        if (automount_service_account_token_copy) *automount_service_account_token_copy = *automount_service_account_token;
+    }
+    int *enable_service_links_copy = NULL;
+    if (enable_service_links) {
+        enable_service_links_copy = malloc(sizeof(int));
+        if (enable_service_links_copy) *enable_service_links_copy = *enable_service_links;
+    }
+    int *host_ipc_copy = NULL;
+    if (host_ipc) {
+        host_ipc_copy = malloc(sizeof(int));
+        if (host_ipc_copy) *host_ipc_copy = *host_ipc;
+    }
+    int *host_network_copy = NULL;
+    if (host_network) {
+        host_network_copy = malloc(sizeof(int));
+        if (host_network_copy) *host_network_copy = *host_network;
+    }
+    int *host_pid_copy = NULL;
+    if (host_pid) {
+        host_pid_copy = malloc(sizeof(int));
+        if (host_pid_copy) *host_pid_copy = *host_pid;
+    }
+    int *host_users_copy = NULL;
+    if (host_users) {
+        host_users_copy = malloc(sizeof(int));
+        if (host_users_copy) *host_users_copy = *host_users;
+    }
+    int *priority_copy = NULL;
+    if (priority) {
+        priority_copy = malloc(sizeof(int));
+        if (priority_copy) *priority_copy = *priority;
+    }
+    int *set_hostname_as_fqdn_copy = NULL;
+    if (set_hostname_as_fqdn) {
+        set_hostname_as_fqdn_copy = malloc(sizeof(int));
+        if (set_hostname_as_fqdn_copy) *set_hostname_as_fqdn_copy = *set_hostname_as_fqdn;
+    }
+    int *share_process_namespace_copy = NULL;
+    if (share_process_namespace) {
+        share_process_namespace_copy = malloc(sizeof(int));
+        if (share_process_namespace_copy) *share_process_namespace_copy = *share_process_namespace;
+    }
+    long *termination_grace_period_seconds_copy = NULL;
+    if (termination_grace_period_seconds) {
+        termination_grace_period_seconds_copy = malloc(sizeof(long));
+        if (termination_grace_period_seconds_copy) *termination_grace_period_seconds_copy = *termination_grace_period_seconds;
+    }
+    v1_pod_spec_t *result = v1_pod_spec_create_internal (
+        active_deadline_seconds_copy,
         affinity,
-        automount_service_account_token,
+        automount_service_account_token_copy,
         containers,
         dns_config,
         dns_policy,
-        enable_service_links,
+        enable_service_links_copy,
         ephemeral_containers,
+        eviction_responders,
         host_aliases,
-        host_ipc,
-        host_network,
-        host_pid,
-        host_users,
+        host_ipc_copy,
+        host_network_copy,
+        host_pid_copy,
+        host_users_copy,
         hostname,
         hostname_override,
         image_pull_secrets,
@@ -164,7 +226,7 @@ __attribute__((deprecated)) v1_pod_spec_t *v1_pod_spec_create(
         os,
         overhead,
         preemption_policy,
-        priority,
+        priority_copy,
         priority_class_name,
         readiness_gates,
         resource_claims,
@@ -173,17 +235,32 @@ __attribute__((deprecated)) v1_pod_spec_t *v1_pod_spec_create(
         runtime_class_name,
         scheduler_name,
         scheduling_gates,
+        scheduling_group,
         security_context,
         service_account,
         service_account_name,
-        set_hostname_as_fqdn,
-        share_process_namespace,
+        set_hostname_as_fqdn_copy,
+        share_process_namespace_copy,
         subdomain,
-        termination_grace_period_seconds,
+        termination_grace_period_seconds_copy,
         tolerations,
         topology_spread_constraints,
         volumes
         );
+    if (!result) {
+        free(active_deadline_seconds_copy);
+        free(automount_service_account_token_copy);
+        free(enable_service_links_copy);
+        free(host_ipc_copy);
+        free(host_network_copy);
+        free(host_pid_copy);
+        free(host_users_copy);
+        free(priority_copy);
+        free(set_hostname_as_fqdn_copy);
+        free(share_process_namespace_copy);
+        free(termination_grace_period_seconds_copy);
+    }
+    return result;
 }
 
 void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
@@ -195,9 +272,17 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_pod_spec->active_deadline_seconds) {
+        free(v1_pod_spec->active_deadline_seconds);
+        v1_pod_spec->active_deadline_seconds = NULL;
+    }
     if (v1_pod_spec->affinity) {
         v1_affinity_free(v1_pod_spec->affinity);
         v1_pod_spec->affinity = NULL;
+    }
+    if (v1_pod_spec->automount_service_account_token) {
+        free(v1_pod_spec->automount_service_account_token);
+        v1_pod_spec->automount_service_account_token = NULL;
     }
     if (v1_pod_spec->containers) {
         list_ForEach(listEntry, v1_pod_spec->containers) {
@@ -214,6 +299,10 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
         free(v1_pod_spec->dns_policy);
         v1_pod_spec->dns_policy = NULL;
     }
+    if (v1_pod_spec->enable_service_links) {
+        free(v1_pod_spec->enable_service_links);
+        v1_pod_spec->enable_service_links = NULL;
+    }
     if (v1_pod_spec->ephemeral_containers) {
         list_ForEach(listEntry, v1_pod_spec->ephemeral_containers) {
             v1_ephemeral_container_free(listEntry->data);
@@ -221,12 +310,35 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
         list_freeList(v1_pod_spec->ephemeral_containers);
         v1_pod_spec->ephemeral_containers = NULL;
     }
+    if (v1_pod_spec->eviction_responders) {
+        list_ForEach(listEntry, v1_pod_spec->eviction_responders) {
+            v1_eviction_responder_free(listEntry->data);
+        }
+        list_freeList(v1_pod_spec->eviction_responders);
+        v1_pod_spec->eviction_responders = NULL;
+    }
     if (v1_pod_spec->host_aliases) {
         list_ForEach(listEntry, v1_pod_spec->host_aliases) {
             v1_host_alias_free(listEntry->data);
         }
         list_freeList(v1_pod_spec->host_aliases);
         v1_pod_spec->host_aliases = NULL;
+    }
+    if (v1_pod_spec->host_ipc) {
+        free(v1_pod_spec->host_ipc);
+        v1_pod_spec->host_ipc = NULL;
+    }
+    if (v1_pod_spec->host_network) {
+        free(v1_pod_spec->host_network);
+        v1_pod_spec->host_network = NULL;
+    }
+    if (v1_pod_spec->host_pid) {
+        free(v1_pod_spec->host_pid);
+        v1_pod_spec->host_pid = NULL;
+    }
+    if (v1_pod_spec->host_users) {
+        free(v1_pod_spec->host_users);
+        v1_pod_spec->host_users = NULL;
     }
     if (v1_pod_spec->hostname) {
         free(v1_pod_spec->hostname);
@@ -282,6 +394,10 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
         free(v1_pod_spec->preemption_policy);
         v1_pod_spec->preemption_policy = NULL;
     }
+    if (v1_pod_spec->priority) {
+        free(v1_pod_spec->priority);
+        v1_pod_spec->priority = NULL;
+    }
     if (v1_pod_spec->priority_class_name) {
         free(v1_pod_spec->priority_class_name);
         v1_pod_spec->priority_class_name = NULL;
@@ -323,6 +439,10 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
         list_freeList(v1_pod_spec->scheduling_gates);
         v1_pod_spec->scheduling_gates = NULL;
     }
+    if (v1_pod_spec->scheduling_group) {
+        v1_pod_scheduling_group_free(v1_pod_spec->scheduling_group);
+        v1_pod_spec->scheduling_group = NULL;
+    }
     if (v1_pod_spec->security_context) {
         v1_pod_security_context_free(v1_pod_spec->security_context);
         v1_pod_spec->security_context = NULL;
@@ -335,9 +455,21 @@ void v1_pod_spec_free(v1_pod_spec_t *v1_pod_spec) {
         free(v1_pod_spec->service_account_name);
         v1_pod_spec->service_account_name = NULL;
     }
+    if (v1_pod_spec->set_hostname_as_fqdn) {
+        free(v1_pod_spec->set_hostname_as_fqdn);
+        v1_pod_spec->set_hostname_as_fqdn = NULL;
+    }
+    if (v1_pod_spec->share_process_namespace) {
+        free(v1_pod_spec->share_process_namespace);
+        v1_pod_spec->share_process_namespace = NULL;
+    }
     if (v1_pod_spec->subdomain) {
         free(v1_pod_spec->subdomain);
         v1_pod_spec->subdomain = NULL;
+    }
+    if (v1_pod_spec->termination_grace_period_seconds) {
+        free(v1_pod_spec->termination_grace_period_seconds);
+        v1_pod_spec->termination_grace_period_seconds = NULL;
     }
     if (v1_pod_spec->tolerations) {
         list_ForEach(listEntry, v1_pod_spec->tolerations) {
@@ -368,7 +500,7 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
 
     // v1_pod_spec->active_deadline_seconds
     if(v1_pod_spec->active_deadline_seconds) {
-    if(cJSON_AddNumberToObject(item, "activeDeadlineSeconds", v1_pod_spec->active_deadline_seconds) == NULL) {
+    if(cJSON_AddNumberToObject(item, "activeDeadlineSeconds", *v1_pod_spec->active_deadline_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -389,7 +521,7 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
 
     // v1_pod_spec->automount_service_account_token
     if(v1_pod_spec->automount_service_account_token) {
-    if(cJSON_AddBoolToObject(item, "automountServiceAccountToken", v1_pod_spec->automount_service_account_token) == NULL) {
+    if(cJSON_AddBoolToObject(item, "automountServiceAccountToken", *v1_pod_spec->automount_service_account_token) == NULL) {
     goto fail; //Bool
     }
     }
@@ -439,7 +571,7 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
 
     // v1_pod_spec->enable_service_links
     if(v1_pod_spec->enable_service_links) {
-    if(cJSON_AddBoolToObject(item, "enableServiceLinks", v1_pod_spec->enable_service_links) == NULL) {
+    if(cJSON_AddBoolToObject(item, "enableServiceLinks", *v1_pod_spec->enable_service_links) == NULL) {
     goto fail; //Bool
     }
     }
@@ -460,6 +592,26 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     goto fail;
     }
     cJSON_AddItemToArray(ephemeral_containers, itemLocal);
+    }
+    }
+    }
+
+
+    // v1_pod_spec->eviction_responders
+    if(v1_pod_spec->eviction_responders) {
+    cJSON *eviction_responders = cJSON_AddArrayToObject(item, "evictionResponders");
+    if(eviction_responders == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *eviction_respondersListEntry;
+    if (v1_pod_spec->eviction_responders) {
+    list_ForEach(eviction_respondersListEntry, v1_pod_spec->eviction_responders) {
+    cJSON *itemLocal = v1_eviction_responder_convertToJSON(eviction_respondersListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(eviction_responders, itemLocal);
     }
     }
     }
@@ -487,7 +639,7 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
 
     // v1_pod_spec->host_ipc
     if(v1_pod_spec->host_ipc) {
-    if(cJSON_AddBoolToObject(item, "hostIPC", v1_pod_spec->host_ipc) == NULL) {
+    if(cJSON_AddBoolToObject(item, "hostIPC", *v1_pod_spec->host_ipc) == NULL) {
     goto fail; //Bool
     }
     }
@@ -495,7 +647,7 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
 
     // v1_pod_spec->host_network
     if(v1_pod_spec->host_network) {
-    if(cJSON_AddBoolToObject(item, "hostNetwork", v1_pod_spec->host_network) == NULL) {
+    if(cJSON_AddBoolToObject(item, "hostNetwork", *v1_pod_spec->host_network) == NULL) {
     goto fail; //Bool
     }
     }
@@ -503,7 +655,7 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
 
     // v1_pod_spec->host_pid
     if(v1_pod_spec->host_pid) {
-    if(cJSON_AddBoolToObject(item, "hostPID", v1_pod_spec->host_pid) == NULL) {
+    if(cJSON_AddBoolToObject(item, "hostPID", *v1_pod_spec->host_pid) == NULL) {
     goto fail; //Bool
     }
     }
@@ -511,7 +663,7 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
 
     // v1_pod_spec->host_users
     if(v1_pod_spec->host_users) {
-    if(cJSON_AddBoolToObject(item, "hostUsers", v1_pod_spec->host_users) == NULL) {
+    if(cJSON_AddBoolToObject(item, "hostUsers", *v1_pod_spec->host_users) == NULL) {
     goto fail; //Bool
     }
     }
@@ -644,7 +796,7 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
 
     // v1_pod_spec->priority
     if(v1_pod_spec->priority) {
-    if(cJSON_AddNumberToObject(item, "priority", v1_pod_spec->priority) == NULL) {
+    if(cJSON_AddNumberToObject(item, "priority", *v1_pod_spec->priority) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -755,6 +907,19 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
     }
 
 
+    // v1_pod_spec->scheduling_group
+    if(v1_pod_spec->scheduling_group) {
+    cJSON *scheduling_group_local_JSON = v1_pod_scheduling_group_convertToJSON(v1_pod_spec->scheduling_group);
+    if(scheduling_group_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "schedulingGroup", scheduling_group_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+    }
+
+
     // v1_pod_spec->security_context
     if(v1_pod_spec->security_context) {
     cJSON *security_context_local_JSON = v1_pod_security_context_convertToJSON(v1_pod_spec->security_context);
@@ -786,7 +951,7 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
 
     // v1_pod_spec->set_hostname_as_fqdn
     if(v1_pod_spec->set_hostname_as_fqdn) {
-    if(cJSON_AddBoolToObject(item, "setHostnameAsFQDN", v1_pod_spec->set_hostname_as_fqdn) == NULL) {
+    if(cJSON_AddBoolToObject(item, "setHostnameAsFQDN", *v1_pod_spec->set_hostname_as_fqdn) == NULL) {
     goto fail; //Bool
     }
     }
@@ -794,7 +959,7 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
 
     // v1_pod_spec->share_process_namespace
     if(v1_pod_spec->share_process_namespace) {
-    if(cJSON_AddBoolToObject(item, "shareProcessNamespace", v1_pod_spec->share_process_namespace) == NULL) {
+    if(cJSON_AddBoolToObject(item, "shareProcessNamespace", *v1_pod_spec->share_process_namespace) == NULL) {
     goto fail; //Bool
     }
     }
@@ -810,7 +975,7 @@ cJSON *v1_pod_spec_convertToJSON(v1_pod_spec_t *v1_pod_spec) {
 
     // v1_pod_spec->termination_grace_period_seconds
     if(v1_pod_spec->termination_grace_period_seconds) {
-    if(cJSON_AddNumberToObject(item, "terminationGracePeriodSeconds", v1_pod_spec->termination_grace_period_seconds) == NULL) {
+    if(cJSON_AddNumberToObject(item, "terminationGracePeriodSeconds", *v1_pod_spec->termination_grace_period_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -887,8 +1052,14 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
 
     v1_pod_spec_t *v1_pod_spec_local_var = NULL;
 
+    // define the local variable for v1_pod_spec->active_deadline_seconds
+    long *active_deadline_seconds_local_var = NULL;
+
     // define the local variable for v1_pod_spec->affinity
     v1_affinity_t *affinity_local_nonprim = NULL;
+
+    // define the local variable for v1_pod_spec->automount_service_account_token
+    int *automount_service_account_token_local_var = NULL;
 
     // define the local list for v1_pod_spec->containers
     list_t *containersList = NULL;
@@ -896,17 +1067,43 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     // define the local variable for v1_pod_spec->dns_config
     v1_pod_dns_config_t *dns_config_local_nonprim = NULL;
 
+    char *dns_policy_local_str = NULL;
+
+    // define the local variable for v1_pod_spec->enable_service_links
+    int *enable_service_links_local_var = NULL;
+
     // define the local list for v1_pod_spec->ephemeral_containers
     list_t *ephemeral_containersList = NULL;
 
+    // define the local list for v1_pod_spec->eviction_responders
+    list_t *eviction_respondersList = NULL;
+
     // define the local list for v1_pod_spec->host_aliases
     list_t *host_aliasesList = NULL;
+
+    // define the local variable for v1_pod_spec->host_ipc
+    int *host_ipc_local_var = NULL;
+
+    // define the local variable for v1_pod_spec->host_network
+    int *host_network_local_var = NULL;
+
+    // define the local variable for v1_pod_spec->host_pid
+    int *host_pid_local_var = NULL;
+
+    // define the local variable for v1_pod_spec->host_users
+    int *host_users_local_var = NULL;
+
+    char *hostname_local_str = NULL;
+
+    char *hostname_override_local_str = NULL;
 
     // define the local list for v1_pod_spec->image_pull_secrets
     list_t *image_pull_secretsList = NULL;
 
     // define the local list for v1_pod_spec->init_containers
     list_t *init_containersList = NULL;
+
+    char *node_name_local_str = NULL;
 
     // define the local map for v1_pod_spec->node_selector
     list_t *node_selectorList = NULL;
@@ -917,6 +1114,13 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     // define the local map for v1_pod_spec->overhead
     list_t *overheadList = NULL;
 
+    char *preemption_policy_local_str = NULL;
+
+    // define the local variable for v1_pod_spec->priority
+    int *priority_local_var = NULL;
+
+    char *priority_class_name_local_str = NULL;
+
     // define the local list for v1_pod_spec->readiness_gates
     list_t *readiness_gatesList = NULL;
 
@@ -926,11 +1130,35 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     // define the local variable for v1_pod_spec->resources
     v1_resource_requirements_t *resources_local_nonprim = NULL;
 
+    char *restart_policy_local_str = NULL;
+
+    char *runtime_class_name_local_str = NULL;
+
+    char *scheduler_name_local_str = NULL;
+
     // define the local list for v1_pod_spec->scheduling_gates
     list_t *scheduling_gatesList = NULL;
 
+    // define the local variable for v1_pod_spec->scheduling_group
+    v1_pod_scheduling_group_t *scheduling_group_local_nonprim = NULL;
+
     // define the local variable for v1_pod_spec->security_context
     v1_pod_security_context_t *security_context_local_nonprim = NULL;
+
+    char *service_account_local_str = NULL;
+
+    char *service_account_name_local_str = NULL;
+
+    // define the local variable for v1_pod_spec->set_hostname_as_fqdn
+    int *set_hostname_as_fqdn_local_var = NULL;
+
+    // define the local variable for v1_pod_spec->share_process_namespace
+    int *share_process_namespace_local_var = NULL;
+
+    char *subdomain_local_str = NULL;
+
+    // define the local variable for v1_pod_spec->termination_grace_period_seconds
+    long *termination_grace_period_seconds_local_var = NULL;
 
     // define the local list for v1_pod_spec->tolerations
     list_t *tolerationsList = NULL;
@@ -951,6 +1179,12 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     {
     goto end; //Numeric
     }
+    active_deadline_seconds_local_var = malloc(sizeof(long));
+    if(!active_deadline_seconds_local_var)
+    {
+        goto end;
+    }
+    *active_deadline_seconds_local_var = active_deadline_seconds->valuedouble;
     }
 
     // v1_pod_spec->affinity
@@ -972,6 +1206,12 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     {
     goto end; //Bool
     }
+    automount_service_account_token_local_var = malloc(sizeof(int));
+    if(!automount_service_account_token_local_var)
+    {
+        goto end;
+    }
+    *automount_service_account_token_local_var = automount_service_account_token->valueint;
     }
 
     // v1_pod_spec->containers
@@ -1032,6 +1272,12 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     {
     goto end; //Bool
     }
+    enable_service_links_local_var = malloc(sizeof(int));
+    if(!enable_service_links_local_var)
+    {
+        goto end;
+    }
+    *enable_service_links_local_var = enable_service_links->valueint;
     }
 
     // v1_pod_spec->ephemeral_containers
@@ -1055,6 +1301,30 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
         v1_ephemeral_container_t *ephemeral_containersItem = v1_ephemeral_container_parseFromJSON(ephemeral_containers_local_nonprimitive);
 
         list_addElement(ephemeral_containersList, ephemeral_containersItem);
+    }
+    }
+
+    // v1_pod_spec->eviction_responders
+    cJSON *eviction_responders = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "evictionResponders");
+    if (cJSON_IsNull(eviction_responders)) {
+        eviction_responders = NULL;
+    }
+    if (eviction_responders) { 
+    cJSON *eviction_responders_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(eviction_responders)){
+        goto end; //nonprimitive container
+    }
+
+    eviction_respondersList = list_createList();
+
+    cJSON_ArrayForEach(eviction_responders_local_nonprimitive,eviction_responders )
+    {
+        if(!cJSON_IsObject(eviction_responders_local_nonprimitive)){
+            goto end;
+        }
+        v1_eviction_responder_t *eviction_respondersItem = v1_eviction_responder_parseFromJSON(eviction_responders_local_nonprimitive);
+
+        list_addElement(eviction_respondersList, eviction_respondersItem);
     }
     }
 
@@ -1092,6 +1362,12 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     {
     goto end; //Bool
     }
+    host_ipc_local_var = malloc(sizeof(int));
+    if(!host_ipc_local_var)
+    {
+        goto end;
+    }
+    *host_ipc_local_var = host_ipc->valueint;
     }
 
     // v1_pod_spec->host_network
@@ -1104,6 +1380,12 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     {
     goto end; //Bool
     }
+    host_network_local_var = malloc(sizeof(int));
+    if(!host_network_local_var)
+    {
+        goto end;
+    }
+    *host_network_local_var = host_network->valueint;
     }
 
     // v1_pod_spec->host_pid
@@ -1116,6 +1398,12 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     {
     goto end; //Bool
     }
+    host_pid_local_var = malloc(sizeof(int));
+    if(!host_pid_local_var)
+    {
+        goto end;
+    }
+    *host_pid_local_var = host_pid->valueint;
     }
 
     // v1_pod_spec->host_users
@@ -1128,6 +1416,12 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     {
     goto end; //Bool
     }
+    host_users_local_var = malloc(sizeof(int));
+    if(!host_users_local_var)
+    {
+        goto end;
+    }
+    *host_users_local_var = host_users->valueint;
     }
 
     // v1_pod_spec->hostname
@@ -1301,6 +1595,12 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     {
     goto end; //Numeric
     }
+    priority_local_var = malloc(sizeof(int));
+    if(!priority_local_var)
+    {
+        goto end;
+    }
+    *priority_local_var = priority->valuedouble;
     }
 
     // v1_pod_spec->priority_class_name
@@ -1432,6 +1732,15 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     }
     }
 
+    // v1_pod_spec->scheduling_group
+    cJSON *scheduling_group = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "schedulingGroup");
+    if (cJSON_IsNull(scheduling_group)) {
+        scheduling_group = NULL;
+    }
+    if (scheduling_group) { 
+    scheduling_group_local_nonprim = v1_pod_scheduling_group_parseFromJSON(scheduling_group); //nonprimitive
+    }
+
     // v1_pod_spec->security_context
     cJSON *security_context = cJSON_GetObjectItemCaseSensitive(v1_pod_specJSON, "securityContext");
     if (cJSON_IsNull(security_context)) {
@@ -1475,6 +1784,12 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     {
     goto end; //Bool
     }
+    set_hostname_as_fqdn_local_var = malloc(sizeof(int));
+    if(!set_hostname_as_fqdn_local_var)
+    {
+        goto end;
+    }
+    *set_hostname_as_fqdn_local_var = set_hostname_as_fqdn->valueint;
     }
 
     // v1_pod_spec->share_process_namespace
@@ -1487,6 +1802,12 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     {
     goto end; //Bool
     }
+    share_process_namespace_local_var = malloc(sizeof(int));
+    if(!share_process_namespace_local_var)
+    {
+        goto end;
+    }
+    *share_process_namespace_local_var = share_process_namespace->valueint;
     }
 
     // v1_pod_spec->subdomain
@@ -1511,6 +1832,12 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     {
     goto end; //Numeric
     }
+    termination_grace_period_seconds_local_var = malloc(sizeof(long));
+    if(!termination_grace_period_seconds_local_var)
+    {
+        goto end;
+    }
+    *termination_grace_period_seconds_local_var = termination_grace_period_seconds->valuedouble;
     }
 
     // v1_pod_spec->tolerations
@@ -1586,55 +1913,82 @@ v1_pod_spec_t *v1_pod_spec_parseFromJSON(cJSON *v1_pod_specJSON){
     }
 
 
+    if (dns_policy && !cJSON_IsNull(dns_policy)) dns_policy_local_str = strdup(dns_policy->valuestring);
+    if (hostname && !cJSON_IsNull(hostname)) hostname_local_str = strdup(hostname->valuestring);
+    if (hostname_override && !cJSON_IsNull(hostname_override)) hostname_override_local_str = strdup(hostname_override->valuestring);
+    if (node_name && !cJSON_IsNull(node_name)) node_name_local_str = strdup(node_name->valuestring);
+    if (preemption_policy && !cJSON_IsNull(preemption_policy)) preemption_policy_local_str = strdup(preemption_policy->valuestring);
+    if (priority_class_name && !cJSON_IsNull(priority_class_name)) priority_class_name_local_str = strdup(priority_class_name->valuestring);
+    if (restart_policy && !cJSON_IsNull(restart_policy)) restart_policy_local_str = strdup(restart_policy->valuestring);
+    if (runtime_class_name && !cJSON_IsNull(runtime_class_name)) runtime_class_name_local_str = strdup(runtime_class_name->valuestring);
+    if (scheduler_name && !cJSON_IsNull(scheduler_name)) scheduler_name_local_str = strdup(scheduler_name->valuestring);
+    if (service_account && !cJSON_IsNull(service_account)) service_account_local_str = strdup(service_account->valuestring);
+    if (service_account_name && !cJSON_IsNull(service_account_name)) service_account_name_local_str = strdup(service_account_name->valuestring);
+    if (subdomain && !cJSON_IsNull(subdomain)) subdomain_local_str = strdup(subdomain->valuestring);
+
     v1_pod_spec_local_var = v1_pod_spec_create_internal (
-        active_deadline_seconds ? active_deadline_seconds->valuedouble : 0,
+        active_deadline_seconds_local_var,
         affinity ? affinity_local_nonprim : NULL,
-        automount_service_account_token ? automount_service_account_token->valueint : 0,
+        automount_service_account_token_local_var,
         containersList,
         dns_config ? dns_config_local_nonprim : NULL,
-        dns_policy && !cJSON_IsNull(dns_policy) ? strdup(dns_policy->valuestring) : NULL,
-        enable_service_links ? enable_service_links->valueint : 0,
+        dns_policy_local_str,
+        enable_service_links_local_var,
         ephemeral_containers ? ephemeral_containersList : NULL,
+        eviction_responders ? eviction_respondersList : NULL,
         host_aliases ? host_aliasesList : NULL,
-        host_ipc ? host_ipc->valueint : 0,
-        host_network ? host_network->valueint : 0,
-        host_pid ? host_pid->valueint : 0,
-        host_users ? host_users->valueint : 0,
-        hostname && !cJSON_IsNull(hostname) ? strdup(hostname->valuestring) : NULL,
-        hostname_override && !cJSON_IsNull(hostname_override) ? strdup(hostname_override->valuestring) : NULL,
+        host_ipc_local_var,
+        host_network_local_var,
+        host_pid_local_var,
+        host_users_local_var,
+        hostname_local_str,
+        hostname_override_local_str,
         image_pull_secrets ? image_pull_secretsList : NULL,
         init_containers ? init_containersList : NULL,
-        node_name && !cJSON_IsNull(node_name) ? strdup(node_name->valuestring) : NULL,
+        node_name_local_str,
         node_selector ? node_selectorList : NULL,
         os ? os_local_nonprim : NULL,
         overhead ? overheadList : NULL,
-        preemption_policy && !cJSON_IsNull(preemption_policy) ? strdup(preemption_policy->valuestring) : NULL,
-        priority ? priority->valuedouble : 0,
-        priority_class_name && !cJSON_IsNull(priority_class_name) ? strdup(priority_class_name->valuestring) : NULL,
+        preemption_policy_local_str,
+        priority_local_var,
+        priority_class_name_local_str,
         readiness_gates ? readiness_gatesList : NULL,
         resource_claims ? resource_claimsList : NULL,
         resources ? resources_local_nonprim : NULL,
-        restart_policy && !cJSON_IsNull(restart_policy) ? strdup(restart_policy->valuestring) : NULL,
-        runtime_class_name && !cJSON_IsNull(runtime_class_name) ? strdup(runtime_class_name->valuestring) : NULL,
-        scheduler_name && !cJSON_IsNull(scheduler_name) ? strdup(scheduler_name->valuestring) : NULL,
+        restart_policy_local_str,
+        runtime_class_name_local_str,
+        scheduler_name_local_str,
         scheduling_gates ? scheduling_gatesList : NULL,
+        scheduling_group ? scheduling_group_local_nonprim : NULL,
         security_context ? security_context_local_nonprim : NULL,
-        service_account && !cJSON_IsNull(service_account) ? strdup(service_account->valuestring) : NULL,
-        service_account_name && !cJSON_IsNull(service_account_name) ? strdup(service_account_name->valuestring) : NULL,
-        set_hostname_as_fqdn ? set_hostname_as_fqdn->valueint : 0,
-        share_process_namespace ? share_process_namespace->valueint : 0,
-        subdomain && !cJSON_IsNull(subdomain) ? strdup(subdomain->valuestring) : NULL,
-        termination_grace_period_seconds ? termination_grace_period_seconds->valuedouble : 0,
+        service_account_local_str,
+        service_account_name_local_str,
+        set_hostname_as_fqdn_local_var,
+        share_process_namespace_local_var,
+        subdomain_local_str,
+        termination_grace_period_seconds_local_var,
         tolerations ? tolerationsList : NULL,
         topology_spread_constraints ? topology_spread_constraintsList : NULL,
         volumes ? volumesList : NULL
         );
 
+    if (!v1_pod_spec_local_var) {
+        goto end;
+    }
+
     return v1_pod_spec_local_var;
 end:
+    if (active_deadline_seconds_local_var) {
+        free(active_deadline_seconds_local_var);
+        active_deadline_seconds_local_var = NULL;
+    }
     if (affinity_local_nonprim) {
         v1_affinity_free(affinity_local_nonprim);
         affinity_local_nonprim = NULL;
+    }
+    if (automount_service_account_token_local_var) {
+        free(automount_service_account_token_local_var);
+        automount_service_account_token_local_var = NULL;
     }
     if (containersList) {
         listEntry_t *listEntry = NULL;
@@ -1649,6 +2003,14 @@ end:
         v1_pod_dns_config_free(dns_config_local_nonprim);
         dns_config_local_nonprim = NULL;
     }
+    if (dns_policy_local_str) {
+        free(dns_policy_local_str);
+        dns_policy_local_str = NULL;
+    }
+    if (enable_service_links_local_var) {
+        free(enable_service_links_local_var);
+        enable_service_links_local_var = NULL;
+    }
     if (ephemeral_containersList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, ephemeral_containersList) {
@@ -1658,6 +2020,15 @@ end:
         list_freeList(ephemeral_containersList);
         ephemeral_containersList = NULL;
     }
+    if (eviction_respondersList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, eviction_respondersList) {
+            v1_eviction_responder_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(eviction_respondersList);
+        eviction_respondersList = NULL;
+    }
     if (host_aliasesList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, host_aliasesList) {
@@ -1666,6 +2037,30 @@ end:
         }
         list_freeList(host_aliasesList);
         host_aliasesList = NULL;
+    }
+    if (host_ipc_local_var) {
+        free(host_ipc_local_var);
+        host_ipc_local_var = NULL;
+    }
+    if (host_network_local_var) {
+        free(host_network_local_var);
+        host_network_local_var = NULL;
+    }
+    if (host_pid_local_var) {
+        free(host_pid_local_var);
+        host_pid_local_var = NULL;
+    }
+    if (host_users_local_var) {
+        free(host_users_local_var);
+        host_users_local_var = NULL;
+    }
+    if (hostname_local_str) {
+        free(hostname_local_str);
+        hostname_local_str = NULL;
+    }
+    if (hostname_override_local_str) {
+        free(hostname_override_local_str);
+        hostname_override_local_str = NULL;
     }
     if (image_pull_secretsList) {
         listEntry_t *listEntry = NULL;
@@ -1684,6 +2079,10 @@ end:
         }
         list_freeList(init_containersList);
         init_containersList = NULL;
+    }
+    if (node_name_local_str) {
+        free(node_name_local_str);
+        node_name_local_str = NULL;
     }
     if (node_selectorList) {
         listEntry_t *listEntry = NULL;
@@ -1717,6 +2116,18 @@ end:
         list_freeList(overheadList);
         overheadList = NULL;
     }
+    if (preemption_policy_local_str) {
+        free(preemption_policy_local_str);
+        preemption_policy_local_str = NULL;
+    }
+    if (priority_local_var) {
+        free(priority_local_var);
+        priority_local_var = NULL;
+    }
+    if (priority_class_name_local_str) {
+        free(priority_class_name_local_str);
+        priority_class_name_local_str = NULL;
+    }
     if (readiness_gatesList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, readiness_gatesList) {
@@ -1739,6 +2150,18 @@ end:
         v1_resource_requirements_free(resources_local_nonprim);
         resources_local_nonprim = NULL;
     }
+    if (restart_policy_local_str) {
+        free(restart_policy_local_str);
+        restart_policy_local_str = NULL;
+    }
+    if (runtime_class_name_local_str) {
+        free(runtime_class_name_local_str);
+        runtime_class_name_local_str = NULL;
+    }
+    if (scheduler_name_local_str) {
+        free(scheduler_name_local_str);
+        scheduler_name_local_str = NULL;
+    }
     if (scheduling_gatesList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, scheduling_gatesList) {
@@ -1748,9 +2171,37 @@ end:
         list_freeList(scheduling_gatesList);
         scheduling_gatesList = NULL;
     }
+    if (scheduling_group_local_nonprim) {
+        v1_pod_scheduling_group_free(scheduling_group_local_nonprim);
+        scheduling_group_local_nonprim = NULL;
+    }
     if (security_context_local_nonprim) {
         v1_pod_security_context_free(security_context_local_nonprim);
         security_context_local_nonprim = NULL;
+    }
+    if (service_account_local_str) {
+        free(service_account_local_str);
+        service_account_local_str = NULL;
+    }
+    if (service_account_name_local_str) {
+        free(service_account_name_local_str);
+        service_account_name_local_str = NULL;
+    }
+    if (set_hostname_as_fqdn_local_var) {
+        free(set_hostname_as_fqdn_local_var);
+        set_hostname_as_fqdn_local_var = NULL;
+    }
+    if (share_process_namespace_local_var) {
+        free(share_process_namespace_local_var);
+        share_process_namespace_local_var = NULL;
+    }
+    if (subdomain_local_str) {
+        free(subdomain_local_str);
+        subdomain_local_str = NULL;
+    }
+    if (termination_grace_period_seconds_local_var) {
+        free(termination_grace_period_seconds_local_var);
+        termination_grace_period_seconds_local_var = NULL;
     }
     if (tolerationsList) {
         listEntry_t *listEntry = NULL;

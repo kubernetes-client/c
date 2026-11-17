@@ -16,13 +16,13 @@ static v1_volume_attributes_class_t *v1_volume_attributes_class_create_internal(
     if (!v1_volume_attributes_class_local_var) {
         return NULL;
     }
+    memset(v1_volume_attributes_class_local_var, 0, sizeof(v1_volume_attributes_class_t));
+    v1_volume_attributes_class_local_var->_library_owned = 1;
     v1_volume_attributes_class_local_var->api_version = api_version;
     v1_volume_attributes_class_local_var->driver_name = driver_name;
     v1_volume_attributes_class_local_var->kind = kind;
     v1_volume_attributes_class_local_var->metadata = metadata;
     v1_volume_attributes_class_local_var->parameters = parameters;
-
-    v1_volume_attributes_class_local_var->_library_owned = 1;
     return v1_volume_attributes_class_local_var;
 }
 
@@ -33,13 +33,16 @@ __attribute__((deprecated)) v1_volume_attributes_class_t *v1_volume_attributes_c
     v1_object_meta_t *metadata,
     list_t* parameters
     ) {
-    return v1_volume_attributes_class_create_internal (
+    v1_volume_attributes_class_t *result = v1_volume_attributes_class_create_internal (
         api_version,
         driver_name,
         kind,
         metadata,
         parameters
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_volume_attributes_class_free(v1_volume_attributes_class_t *v1_volume_attributes_class) {
@@ -152,6 +155,12 @@ v1_volume_attributes_class_t *v1_volume_attributes_class_parseFromJSON(cJSON *v1
 
     v1_volume_attributes_class_t *v1_volume_attributes_class_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
+    char *driver_name_local_str = NULL;
+
+    char *kind_local_str = NULL;
+
     // define the local variable for v1_volume_attributes_class->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
 
@@ -235,16 +244,36 @@ v1_volume_attributes_class_t *v1_volume_attributes_class_parseFromJSON(cJSON *v1
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (driver_name && !cJSON_IsNull(driver_name)) driver_name_local_str = strdup(driver_name->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+
     v1_volume_attributes_class_local_var = v1_volume_attributes_class_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        strdup(driver_name->valuestring),
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version_local_str,
+        driver_name_local_str,
+        kind_local_str,
         metadata ? metadata_local_nonprim : NULL,
         parameters ? parametersList : NULL
         );
 
+    if (!v1_volume_attributes_class_local_var) {
+        goto end;
+    }
+
     return v1_volume_attributes_class_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (driver_name_local_str) {
+        free(driver_name_local_str);
+        driver_name_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;

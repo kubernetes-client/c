@@ -7,27 +7,36 @@
 
 static storage_v1_token_request_t *storage_v1_token_request_create_internal(
     char *audience,
-    long expiration_seconds
+    long *expiration_seconds
     ) {
     storage_v1_token_request_t *storage_v1_token_request_local_var = malloc(sizeof(storage_v1_token_request_t));
     if (!storage_v1_token_request_local_var) {
         return NULL;
     }
+    memset(storage_v1_token_request_local_var, 0, sizeof(storage_v1_token_request_t));
+    storage_v1_token_request_local_var->_library_owned = 1;
     storage_v1_token_request_local_var->audience = audience;
     storage_v1_token_request_local_var->expiration_seconds = expiration_seconds;
-
-    storage_v1_token_request_local_var->_library_owned = 1;
     return storage_v1_token_request_local_var;
 }
 
 __attribute__((deprecated)) storage_v1_token_request_t *storage_v1_token_request_create(
     char *audience,
-    long expiration_seconds
+    long *expiration_seconds
     ) {
-    return storage_v1_token_request_create_internal (
+    long *expiration_seconds_copy = NULL;
+    if (expiration_seconds) {
+        expiration_seconds_copy = malloc(sizeof(long));
+        if (expiration_seconds_copy) *expiration_seconds_copy = *expiration_seconds;
+    }
+    storage_v1_token_request_t *result = storage_v1_token_request_create_internal (
         audience,
-        expiration_seconds
+        expiration_seconds_copy
         );
+    if (!result) {
+        free(expiration_seconds_copy);
+    }
+    return result;
 }
 
 void storage_v1_token_request_free(storage_v1_token_request_t *storage_v1_token_request) {
@@ -42,6 +51,10 @@ void storage_v1_token_request_free(storage_v1_token_request_t *storage_v1_token_
     if (storage_v1_token_request->audience) {
         free(storage_v1_token_request->audience);
         storage_v1_token_request->audience = NULL;
+    }
+    if (storage_v1_token_request->expiration_seconds) {
+        free(storage_v1_token_request->expiration_seconds);
+        storage_v1_token_request->expiration_seconds = NULL;
     }
     free(storage_v1_token_request);
 }
@@ -60,7 +73,7 @@ cJSON *storage_v1_token_request_convertToJSON(storage_v1_token_request_t *storag
 
     // storage_v1_token_request->expiration_seconds
     if(storage_v1_token_request->expiration_seconds) {
-    if(cJSON_AddNumberToObject(item, "expirationSeconds", storage_v1_token_request->expiration_seconds) == NULL) {
+    if(cJSON_AddNumberToObject(item, "expirationSeconds", *storage_v1_token_request->expiration_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -76,6 +89,11 @@ fail:
 storage_v1_token_request_t *storage_v1_token_request_parseFromJSON(cJSON *storage_v1_token_requestJSON){
 
     storage_v1_token_request_t *storage_v1_token_request_local_var = NULL;
+
+    char *audience_local_str = NULL;
+
+    // define the local variable for storage_v1_token_request->expiration_seconds
+    long *expiration_seconds_local_var = NULL;
 
     // storage_v1_token_request->audience
     cJSON *audience = cJSON_GetObjectItemCaseSensitive(storage_v1_token_requestJSON, "audience");
@@ -102,16 +120,36 @@ storage_v1_token_request_t *storage_v1_token_request_parseFromJSON(cJSON *storag
     {
     goto end; //Numeric
     }
+    expiration_seconds_local_var = malloc(sizeof(long));
+    if(!expiration_seconds_local_var)
+    {
+        goto end;
+    }
+    *expiration_seconds_local_var = expiration_seconds->valuedouble;
     }
 
 
+    if (audience && !cJSON_IsNull(audience)) audience_local_str = strdup(audience->valuestring);
+
     storage_v1_token_request_local_var = storage_v1_token_request_create_internal (
-        strdup(audience->valuestring),
-        expiration_seconds ? expiration_seconds->valuedouble : 0
+        audience_local_str,
+        expiration_seconds_local_var
         );
+
+    if (!storage_v1_token_request_local_var) {
+        goto end;
+    }
 
     return storage_v1_token_request_local_var;
 end:
+    if (audience_local_str) {
+        free(audience_local_str);
+        audience_local_str = NULL;
+    }
+    if (expiration_seconds_local_var) {
+        free(expiration_seconds_local_var);
+        expiration_seconds_local_var = NULL;
+    }
     return NULL;
 
 }

@@ -20,18 +20,18 @@ typedef struct v1_gce_persistent_disk_volume_source_t v1_gce_persistent_disk_vol
 
 typedef struct v1_gce_persistent_disk_volume_source_t {
     char *fs_type; // string
-    int partition; //numeric
+    int *partition; //numeric
     char *pd_name; // string
-    int read_only; //boolean
+    int *read_only; //boolean
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_gce_persistent_disk_volume_source_t;
 
 __attribute__((deprecated)) v1_gce_persistent_disk_volume_source_t *v1_gce_persistent_disk_volume_source_create(
     char *fs_type,
-    int partition,
+    int *partition,
     char *pd_name,
-    int read_only
+    int *read_only
 );
 
 void v1_gce_persistent_disk_volume_source_free(v1_gce_persistent_disk_volume_source_t *v1_gce_persistent_disk_volume_source);

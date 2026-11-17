@@ -13,10 +13,10 @@ static v1_container_status_t *v1_container_status_create_internal(
     char *image_id,
     v1_container_state_t *last_state,
     char *name,
-    int ready,
+    int *ready,
     v1_resource_requirements_t *resources,
-    int restart_count,
-    int started,
+    int *restart_count,
+    int *started,
     v1_container_state_t *state,
     char *stop_signal,
     v1_container_user_t *user,
@@ -26,6 +26,8 @@ static v1_container_status_t *v1_container_status_create_internal(
     if (!v1_container_status_local_var) {
         return NULL;
     }
+    memset(v1_container_status_local_var, 0, sizeof(v1_container_status_t));
+    v1_container_status_local_var->_library_owned = 1;
     v1_container_status_local_var->allocated_resources = allocated_resources;
     v1_container_status_local_var->allocated_resources_status = allocated_resources_status;
     v1_container_status_local_var->container_id = container_id;
@@ -41,8 +43,6 @@ static v1_container_status_t *v1_container_status_create_internal(
     v1_container_status_local_var->stop_signal = stop_signal;
     v1_container_status_local_var->user = user;
     v1_container_status_local_var->volume_mounts = volume_mounts;
-
-    v1_container_status_local_var->_library_owned = 1;
     return v1_container_status_local_var;
 }
 
@@ -54,16 +54,31 @@ __attribute__((deprecated)) v1_container_status_t *v1_container_status_create(
     char *image_id,
     v1_container_state_t *last_state,
     char *name,
-    int ready,
+    int *ready,
     v1_resource_requirements_t *resources,
-    int restart_count,
-    int started,
+    int *restart_count,
+    int *started,
     v1_container_state_t *state,
     char *stop_signal,
     v1_container_user_t *user,
     list_t *volume_mounts
     ) {
-    return v1_container_status_create_internal (
+    int *ready_copy = NULL;
+    if (ready) {
+        ready_copy = malloc(sizeof(int));
+        if (ready_copy) *ready_copy = *ready;
+    }
+    int *restart_count_copy = NULL;
+    if (restart_count) {
+        restart_count_copy = malloc(sizeof(int));
+        if (restart_count_copy) *restart_count_copy = *restart_count;
+    }
+    int *started_copy = NULL;
+    if (started) {
+        started_copy = malloc(sizeof(int));
+        if (started_copy) *started_copy = *started;
+    }
+    v1_container_status_t *result = v1_container_status_create_internal (
         allocated_resources,
         allocated_resources_status,
         container_id,
@@ -71,15 +86,21 @@ __attribute__((deprecated)) v1_container_status_t *v1_container_status_create(
         image_id,
         last_state,
         name,
-        ready,
+        ready_copy,
         resources,
-        restart_count,
-        started,
+        restart_count_copy,
+        started_copy,
         state,
         stop_signal,
         user,
         volume_mounts
         );
+    if (!result) {
+        free(ready_copy);
+        free(restart_count_copy);
+        free(started_copy);
+    }
+    return result;
 }
 
 void v1_container_status_free(v1_container_status_t *v1_container_status) {
@@ -128,9 +149,21 @@ void v1_container_status_free(v1_container_status_t *v1_container_status) {
         free(v1_container_status->name);
         v1_container_status->name = NULL;
     }
+    if (v1_container_status->ready) {
+        free(v1_container_status->ready);
+        v1_container_status->ready = NULL;
+    }
     if (v1_container_status->resources) {
         v1_resource_requirements_free(v1_container_status->resources);
         v1_container_status->resources = NULL;
+    }
+    if (v1_container_status->restart_count) {
+        free(v1_container_status->restart_count);
+        v1_container_status->restart_count = NULL;
+    }
+    if (v1_container_status->started) {
+        free(v1_container_status->started);
+        v1_container_status->started = NULL;
     }
     if (v1_container_status->state) {
         v1_container_state_free(v1_container_status->state);
@@ -249,7 +282,7 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
     if (!v1_container_status->ready) {
         goto fail;
     }
-    if(cJSON_AddBoolToObject(item, "ready", v1_container_status->ready) == NULL) {
+    if(cJSON_AddBoolToObject(item, "ready", *v1_container_status->ready) == NULL) {
     goto fail; //Bool
     }
 
@@ -271,14 +304,14 @@ cJSON *v1_container_status_convertToJSON(v1_container_status_t *v1_container_sta
     if (!v1_container_status->restart_count) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "restartCount", v1_container_status->restart_count) == NULL) {
+    if(cJSON_AddNumberToObject(item, "restartCount", *v1_container_status->restart_count) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_container_status->started
     if(v1_container_status->started) {
-    if(cJSON_AddBoolToObject(item, "started", v1_container_status->started) == NULL) {
+    if(cJSON_AddBoolToObject(item, "started", *v1_container_status->started) == NULL) {
     goto fail; //Bool
     }
     }
@@ -355,14 +388,33 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
     // define the local list for v1_container_status->allocated_resources_status
     list_t *allocated_resources_statusList = NULL;
 
+    char *container_id_local_str = NULL;
+
+    char *image_local_str = NULL;
+
+    char *image_id_local_str = NULL;
+
     // define the local variable for v1_container_status->last_state
     v1_container_state_t *last_state_local_nonprim = NULL;
+
+    char *name_local_str = NULL;
+
+    // define the local variable for v1_container_status->ready
+    int *ready_local_var = NULL;
 
     // define the local variable for v1_container_status->resources
     v1_resource_requirements_t *resources_local_nonprim = NULL;
 
+    // define the local variable for v1_container_status->restart_count
+    int *restart_count_local_var = NULL;
+
+    // define the local variable for v1_container_status->started
+    int *started_local_var = NULL;
+
     // define the local variable for v1_container_status->state
     v1_container_state_t *state_local_nonprim = NULL;
+
+    char *stop_signal_local_str = NULL;
 
     // define the local variable for v1_container_status->user
     v1_container_user_t *user_local_nonprim = NULL;
@@ -502,6 +554,12 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
     {
     goto end; //Bool
     }
+    ready_local_var = malloc(sizeof(int));
+    if(!ready_local_var)
+    {
+        goto end;
+    }
+    *ready_local_var = ready->valueint;
 
     // v1_container_status->resources
     cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "resources");
@@ -526,6 +584,12 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
     {
     goto end; //Numeric
     }
+    restart_count_local_var = malloc(sizeof(int));
+    if(!restart_count_local_var)
+    {
+        goto end;
+    }
+    *restart_count_local_var = restart_count->valuedouble;
 
     // v1_container_status->started
     cJSON *started = cJSON_GetObjectItemCaseSensitive(v1_container_statusJSON, "started");
@@ -537,6 +601,12 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
     {
     goto end; //Bool
     }
+    started_local_var = malloc(sizeof(int));
+    if(!started_local_var)
+    {
+        goto end;
+    }
+    *started_local_var = started->valueint;
     }
 
     // v1_container_status->state
@@ -594,23 +664,33 @@ v1_container_status_t *v1_container_status_parseFromJSON(cJSON *v1_container_sta
     }
 
 
+    if (container_id && !cJSON_IsNull(container_id)) container_id_local_str = strdup(container_id->valuestring);
+    if (image && !cJSON_IsNull(image)) image_local_str = strdup(image->valuestring);
+    if (image_id && !cJSON_IsNull(image_id)) image_id_local_str = strdup(image_id->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (stop_signal && !cJSON_IsNull(stop_signal)) stop_signal_local_str = strdup(stop_signal->valuestring);
+
     v1_container_status_local_var = v1_container_status_create_internal (
         allocated_resources ? allocated_resourcesList : NULL,
         allocated_resources_status ? allocated_resources_statusList : NULL,
-        container_id && !cJSON_IsNull(container_id) ? strdup(container_id->valuestring) : NULL,
-        strdup(image->valuestring),
-        strdup(image_id->valuestring),
+        container_id_local_str,
+        image_local_str,
+        image_id_local_str,
         last_state ? last_state_local_nonprim : NULL,
-        strdup(name->valuestring),
-        ready->valueint,
+        name_local_str,
+        ready_local_var,
         resources ? resources_local_nonprim : NULL,
-        restart_count->valuedouble,
-        started ? started->valueint : 0,
+        restart_count_local_var,
+        started_local_var,
         state ? state_local_nonprim : NULL,
-        stop_signal && !cJSON_IsNull(stop_signal) ? strdup(stop_signal->valuestring) : NULL,
+        stop_signal_local_str,
         user ? user_local_nonprim : NULL,
         volume_mounts ? volume_mountsList : NULL
         );
+
+    if (!v1_container_status_local_var) {
+        goto end;
+    }
 
     return v1_container_status_local_var;
 end:
@@ -637,17 +717,49 @@ end:
         list_freeList(allocated_resources_statusList);
         allocated_resources_statusList = NULL;
     }
+    if (container_id_local_str) {
+        free(container_id_local_str);
+        container_id_local_str = NULL;
+    }
+    if (image_local_str) {
+        free(image_local_str);
+        image_local_str = NULL;
+    }
+    if (image_id_local_str) {
+        free(image_id_local_str);
+        image_id_local_str = NULL;
+    }
     if (last_state_local_nonprim) {
         v1_container_state_free(last_state_local_nonprim);
         last_state_local_nonprim = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (ready_local_var) {
+        free(ready_local_var);
+        ready_local_var = NULL;
     }
     if (resources_local_nonprim) {
         v1_resource_requirements_free(resources_local_nonprim);
         resources_local_nonprim = NULL;
     }
+    if (restart_count_local_var) {
+        free(restart_count_local_var);
+        restart_count_local_var = NULL;
+    }
+    if (started_local_var) {
+        free(started_local_var);
+        started_local_var = NULL;
+    }
     if (state_local_nonprim) {
         v1_container_state_free(state_local_nonprim);
         state_local_nonprim = NULL;
+    }
+    if (stop_signal_local_str) {
+        free(stop_signal_local_str);
+        stop_signal_local_str = NULL;
     }
     if (user_local_nonprim) {
         v1_container_user_free(user_local_nonprim);

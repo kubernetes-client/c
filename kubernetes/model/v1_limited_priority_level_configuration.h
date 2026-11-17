@@ -20,19 +20,19 @@ typedef struct v1_limited_priority_level_configuration_t v1_limited_priority_lev
 
 
 typedef struct v1_limited_priority_level_configuration_t {
-    int borrowing_limit_percent; //numeric
-    int lendable_percent; //numeric
+    int *borrowing_limit_percent; //numeric
+    int *lendable_percent; //numeric
     struct v1_limit_response_t *limit_response; //model
-    int nominal_concurrency_shares; //numeric
+    int *nominal_concurrency_shares; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_limited_priority_level_configuration_t;
 
 __attribute__((deprecated)) v1_limited_priority_level_configuration_t *v1_limited_priority_level_configuration_create(
-    int borrowing_limit_percent,
-    int lendable_percent,
+    int *borrowing_limit_percent,
+    int *lendable_percent,
     v1_limit_response_t *limit_response,
-    int nominal_concurrency_shares
+    int *nominal_concurrency_shares
 );
 
 void v1_limited_priority_level_configuration_free(v1_limited_priority_level_configuration_t *v1_limited_priority_level_configuration);

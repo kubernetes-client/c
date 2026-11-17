@@ -10,19 +10,21 @@ static v1_http_get_action_t *v1_http_get_action_create_internal(
     list_t *http_headers,
     char *path,
     int_or_string_t *port,
+    char *protocol,
     char *scheme
     ) {
     v1_http_get_action_t *v1_http_get_action_local_var = malloc(sizeof(v1_http_get_action_t));
     if (!v1_http_get_action_local_var) {
         return NULL;
     }
+    memset(v1_http_get_action_local_var, 0, sizeof(v1_http_get_action_t));
+    v1_http_get_action_local_var->_library_owned = 1;
     v1_http_get_action_local_var->host = host;
     v1_http_get_action_local_var->http_headers = http_headers;
     v1_http_get_action_local_var->path = path;
     v1_http_get_action_local_var->port = port;
+    v1_http_get_action_local_var->protocol = protocol;
     v1_http_get_action_local_var->scheme = scheme;
-
-    v1_http_get_action_local_var->_library_owned = 1;
     return v1_http_get_action_local_var;
 }
 
@@ -31,15 +33,20 @@ __attribute__((deprecated)) v1_http_get_action_t *v1_http_get_action_create(
     list_t *http_headers,
     char *path,
     int_or_string_t *port,
+    char *protocol,
     char *scheme
     ) {
-    return v1_http_get_action_create_internal (
+    v1_http_get_action_t *result = v1_http_get_action_create_internal (
         host,
         http_headers,
         path,
         port,
+        protocol,
         scheme
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_http_get_action_free(v1_http_get_action_t *v1_http_get_action) {
@@ -69,6 +76,10 @@ void v1_http_get_action_free(v1_http_get_action_t *v1_http_get_action) {
     if (v1_http_get_action->port) {
         int_or_string_free(v1_http_get_action->port);
         v1_http_get_action->port = NULL;
+    }
+    if (v1_http_get_action->protocol) {
+        free(v1_http_get_action->protocol);
+        v1_http_get_action->protocol = NULL;
     }
     if (v1_http_get_action->scheme) {
         free(v1_http_get_action->scheme);
@@ -130,6 +141,14 @@ cJSON *v1_http_get_action_convertToJSON(v1_http_get_action_t *v1_http_get_action
     }
 
 
+    // v1_http_get_action->protocol
+    if(v1_http_get_action->protocol) {
+    if(cJSON_AddStringToObject(item, "protocol", v1_http_get_action->protocol) == NULL) {
+    goto fail; //String
+    }
+    }
+
+
     // v1_http_get_action->scheme
     if(v1_http_get_action->scheme) {
     if(cJSON_AddStringToObject(item, "scheme", v1_http_get_action->scheme) == NULL) {
@@ -149,11 +168,19 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
 
     v1_http_get_action_t *v1_http_get_action_local_var = NULL;
 
+    char *host_local_str = NULL;
+
     // define the local list for v1_http_get_action->http_headers
     list_t *http_headersList = NULL;
 
+    char *path_local_str = NULL;
+
     // define the local variable for v1_http_get_action->port
     int_or_string_t *port_local_nonprim = NULL;
+
+    char *protocol_local_str = NULL;
+
+    char *scheme_local_str = NULL;
 
     // v1_http_get_action->host
     cJSON *host = cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "host");
@@ -215,6 +242,18 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
     
     port_local_nonprim = int_or_string_parseFromJSON(port); //custom
 
+    // v1_http_get_action->protocol
+    cJSON *protocol = cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "protocol");
+    if (cJSON_IsNull(protocol)) {
+        protocol = NULL;
+    }
+    if (protocol) { 
+    if(!cJSON_IsString(protocol) && !cJSON_IsNull(protocol))
+    {
+    goto end; //String
+    }
+    }
+
     // v1_http_get_action->scheme
     cJSON *scheme = cJSON_GetObjectItemCaseSensitive(v1_http_get_actionJSON, "scheme");
     if (cJSON_IsNull(scheme)) {
@@ -228,16 +267,30 @@ v1_http_get_action_t *v1_http_get_action_parseFromJSON(cJSON *v1_http_get_action
     }
 
 
+    if (host && !cJSON_IsNull(host)) host_local_str = strdup(host->valuestring);
+    if (path && !cJSON_IsNull(path)) path_local_str = strdup(path->valuestring);
+    if (protocol && !cJSON_IsNull(protocol)) protocol_local_str = strdup(protocol->valuestring);
+    if (scheme && !cJSON_IsNull(scheme)) scheme_local_str = strdup(scheme->valuestring);
+
     v1_http_get_action_local_var = v1_http_get_action_create_internal (
-        host && !cJSON_IsNull(host) ? strdup(host->valuestring) : NULL,
+        host_local_str,
         http_headers ? http_headersList : NULL,
-        path && !cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,
+        path_local_str,
         port_local_nonprim,
-        scheme && !cJSON_IsNull(scheme) ? strdup(scheme->valuestring) : NULL
+        protocol_local_str,
+        scheme_local_str
         );
+
+    if (!v1_http_get_action_local_var) {
+        goto end;
+    }
 
     return v1_http_get_action_local_var;
 end:
+    if (host_local_str) {
+        free(host_local_str);
+        host_local_str = NULL;
+    }
     if (http_headersList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, http_headersList) {
@@ -247,9 +300,21 @@ end:
         list_freeList(http_headersList);
         http_headersList = NULL;
     }
+    if (path_local_str) {
+        free(path_local_str);
+        path_local_str = NULL;
+    }
     if (port_local_nonprim) {
         int_or_string_free(port_local_nonprim);
         port_local_nonprim = NULL;
+    }
+    if (protocol_local_str) {
+        free(protocol_local_str);
+        protocol_local_str = NULL;
+    }
+    if (scheme_local_str) {
+        free(scheme_local_str);
+        scheme_local_str = NULL;
     }
     return NULL;
 

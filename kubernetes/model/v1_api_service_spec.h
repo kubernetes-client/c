@@ -22,11 +22,11 @@ typedef struct v1_api_service_spec_t v1_api_service_spec_t;
 typedef struct v1_api_service_spec_t {
     char *ca_bundle; //ByteArray
     char *group; // string
-    int group_priority_minimum; //numeric
-    int insecure_skip_tls_verify; //boolean
+    int *group_priority_minimum; //numeric
+    int *insecure_skip_tls_verify; //boolean
     struct apiregistration_v1_service_reference_t *service; //model
     char *version; // string
-    int version_priority; //numeric
+    int *version_priority; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_api_service_spec_t;
@@ -34,11 +34,11 @@ typedef struct v1_api_service_spec_t {
 __attribute__((deprecated)) v1_api_service_spec_t *v1_api_service_spec_create(
     char *ca_bundle,
     char *group,
-    int group_priority_minimum,
-    int insecure_skip_tls_verify,
+    int *group_priority_minimum,
+    int *insecure_skip_tls_verify,
     apiregistration_v1_service_reference_t *service,
     char *version,
-    int version_priority
+    int *version_priority
 );
 
 void v1_api_service_spec_free(v1_api_service_spec_t *v1_api_service_spec);

@@ -11,6 +11,8 @@
 #include "../model/v1_status.h"
 #include "../model/v1alpha3_device_taint_rule.h"
 #include "../model/v1alpha3_device_taint_rule_list.h"
+#include "../model/v1alpha3_resource_pool_status_request.h"
+#include "../model/v1alpha3_resource_pool_status_request_list.h"
 
 
 // create a DeviceTaintRule
@@ -19,16 +21,34 @@ v1alpha3_device_taint_rule_t*
 ResourceV1alpha3API_createDeviceTaintRule(apiClient_t *apiClient, v1alpha3_device_taint_rule_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 
+// create a ResourcePoolStatusRequest
+//
+v1alpha3_resource_pool_status_request_t*
+ResourceV1alpha3API_createResourcePoolStatusRequest(apiClient_t *apiClient, v1alpha3_resource_pool_status_request_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+
+
 // delete collection of DeviceTaintRule
 //
 v1_status_t*
-ResourceV1alpha3API_deleteCollectionDeviceTaintRule(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+ResourceV1alpha3API_deleteCollectionDeviceTaintRule(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body);
+
+
+// delete collection of ResourcePoolStatusRequest
+//
+v1_status_t*
+ResourceV1alpha3API_deleteCollectionResourcePoolStatusRequest(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete a DeviceTaintRule
 //
 v1alpha3_device_taint_rule_t*
 ResourceV1alpha3API_deleteDeviceTaintRule(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+
+
+// delete a ResourcePoolStatusRequest
+//
+v1alpha3_resource_pool_status_request_t*
+ResourceV1alpha3API_deleteResourcePoolStatusRequest(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // get available resources
@@ -40,7 +60,13 @@ ResourceV1alpha3API_getAPIResources(apiClient_t *apiClient);
 // list or watch objects of kind DeviceTaintRule
 //
 v1alpha3_device_taint_rule_list_t*
-ResourceV1alpha3API_listDeviceTaintRule(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+ResourceV1alpha3API_listDeviceTaintRule(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch);
+
+
+// list or watch objects of kind ResourcePoolStatusRequest
+//
+v1alpha3_resource_pool_status_request_list_t*
+ResourceV1alpha3API_listResourcePoolStatusRequest(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch);
 
 
 // partially update the specified DeviceTaintRule
@@ -49,15 +75,69 @@ v1alpha3_device_taint_rule_t*
 ResourceV1alpha3API_patchDeviceTaintRule(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 
 
+// partially update status of the specified DeviceTaintRule
+//
+v1alpha3_device_taint_rule_t*
+ResourceV1alpha3API_patchDeviceTaintRuleStatus(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+
+
+// partially update the specified ResourcePoolStatusRequest
+//
+v1alpha3_resource_pool_status_request_t*
+ResourceV1alpha3API_patchResourcePoolStatusRequest(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+
+
+// partially update status of the specified ResourcePoolStatusRequest
+//
+v1alpha3_resource_pool_status_request_t*
+ResourceV1alpha3API_patchResourcePoolStatusRequestStatus(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+
+
 // read the specified DeviceTaintRule
 //
 v1alpha3_device_taint_rule_t*
 ResourceV1alpha3API_readDeviceTaintRule(apiClient_t *apiClient, char *name, char *pretty);
 
 
+// read status of the specified DeviceTaintRule
+//
+v1alpha3_device_taint_rule_t*
+ResourceV1alpha3API_readDeviceTaintRuleStatus(apiClient_t *apiClient, char *name, char *pretty);
+
+
+// read the specified ResourcePoolStatusRequest
+//
+v1alpha3_resource_pool_status_request_t*
+ResourceV1alpha3API_readResourcePoolStatusRequest(apiClient_t *apiClient, char *name, char *pretty);
+
+
+// read status of the specified ResourcePoolStatusRequest
+//
+v1alpha3_resource_pool_status_request_t*
+ResourceV1alpha3API_readResourcePoolStatusRequestStatus(apiClient_t *apiClient, char *name, char *pretty);
+
+
 // replace the specified DeviceTaintRule
 //
 v1alpha3_device_taint_rule_t*
 ResourceV1alpha3API_replaceDeviceTaintRule(apiClient_t *apiClient, char *name, v1alpha3_device_taint_rule_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+
+
+// replace status of the specified DeviceTaintRule
+//
+v1alpha3_device_taint_rule_t*
+ResourceV1alpha3API_replaceDeviceTaintRuleStatus(apiClient_t *apiClient, char *name, v1alpha3_device_taint_rule_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+
+
+// replace the specified ResourcePoolStatusRequest
+//
+v1alpha3_resource_pool_status_request_t*
+ResourceV1alpha3API_replaceResourcePoolStatusRequest(apiClient_t *apiClient, char *name, v1alpha3_resource_pool_status_request_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+
+
+// replace status of the specified ResourcePoolStatusRequest
+//
+v1alpha3_resource_pool_status_request_t*
+ResourceV1alpha3API_replaceResourcePoolStatusRequestStatus(apiClient_t *apiClient, char *name, v1alpha3_resource_pool_status_request_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 

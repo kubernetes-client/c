@@ -8,30 +8,43 @@
 static v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_create_internal(
     v1_custom_resource_definition_names_t *accepted_names,
     list_t *conditions,
+    long *observed_generation,
     list_t *stored_versions
     ) {
     v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_local_var = malloc(sizeof(v1_custom_resource_definition_status_t));
     if (!v1_custom_resource_definition_status_local_var) {
         return NULL;
     }
+    memset(v1_custom_resource_definition_status_local_var, 0, sizeof(v1_custom_resource_definition_status_t));
+    v1_custom_resource_definition_status_local_var->_library_owned = 1;
     v1_custom_resource_definition_status_local_var->accepted_names = accepted_names;
     v1_custom_resource_definition_status_local_var->conditions = conditions;
+    v1_custom_resource_definition_status_local_var->observed_generation = observed_generation;
     v1_custom_resource_definition_status_local_var->stored_versions = stored_versions;
-
-    v1_custom_resource_definition_status_local_var->_library_owned = 1;
     return v1_custom_resource_definition_status_local_var;
 }
 
 __attribute__((deprecated)) v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_create(
     v1_custom_resource_definition_names_t *accepted_names,
     list_t *conditions,
+    long *observed_generation,
     list_t *stored_versions
     ) {
-    return v1_custom_resource_definition_status_create_internal (
+    long *observed_generation_copy = NULL;
+    if (observed_generation) {
+        observed_generation_copy = malloc(sizeof(long));
+        if (observed_generation_copy) *observed_generation_copy = *observed_generation;
+    }
+    v1_custom_resource_definition_status_t *result = v1_custom_resource_definition_status_create_internal (
         accepted_names,
         conditions,
+        observed_generation_copy,
         stored_versions
         );
+    if (!result) {
+        free(observed_generation_copy);
+    }
+    return result;
 }
 
 void v1_custom_resource_definition_status_free(v1_custom_resource_definition_status_t *v1_custom_resource_definition_status) {
@@ -53,6 +66,10 @@ void v1_custom_resource_definition_status_free(v1_custom_resource_definition_sta
         }
         list_freeList(v1_custom_resource_definition_status->conditions);
         v1_custom_resource_definition_status->conditions = NULL;
+    }
+    if (v1_custom_resource_definition_status->observed_generation) {
+        free(v1_custom_resource_definition_status->observed_generation);
+        v1_custom_resource_definition_status->observed_generation = NULL;
     }
     if (v1_custom_resource_definition_status->stored_versions) {
         list_ForEach(listEntry, v1_custom_resource_definition_status->stored_versions) {
@@ -100,6 +117,14 @@ cJSON *v1_custom_resource_definition_status_convertToJSON(v1_custom_resource_def
     }
 
 
+    // v1_custom_resource_definition_status->observed_generation
+    if(v1_custom_resource_definition_status->observed_generation) {
+    if(cJSON_AddNumberToObject(item, "observedGeneration", *v1_custom_resource_definition_status->observed_generation) == NULL) {
+    goto fail; //Numeric
+    }
+    }
+
+
     // v1_custom_resource_definition_status->stored_versions
     if(v1_custom_resource_definition_status->stored_versions) {
     cJSON *stored_versions = cJSON_AddArrayToObject(item, "storedVersions");
@@ -133,6 +158,9 @@ v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_par
 
     // define the local list for v1_custom_resource_definition_status->conditions
     list_t *conditionsList = NULL;
+
+    // define the local variable for v1_custom_resource_definition_status->observed_generation
+    long *observed_generation_local_var = NULL;
 
     // define the local list for v1_custom_resource_definition_status->stored_versions
     list_t *stored_versionsList = NULL;
@@ -170,6 +198,24 @@ v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_par
     }
     }
 
+    // v1_custom_resource_definition_status->observed_generation
+    cJSON *observed_generation = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_statusJSON, "observedGeneration");
+    if (cJSON_IsNull(observed_generation)) {
+        observed_generation = NULL;
+    }
+    if (observed_generation) { 
+    if(!cJSON_IsNumber(observed_generation))
+    {
+    goto end; //Numeric
+    }
+    observed_generation_local_var = malloc(sizeof(long));
+    if(!observed_generation_local_var)
+    {
+        goto end;
+    }
+    *observed_generation_local_var = observed_generation->valuedouble;
+    }
+
     // v1_custom_resource_definition_status->stored_versions
     cJSON *stored_versions = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_statusJSON, "storedVersions");
     if (cJSON_IsNull(stored_versions)) {
@@ -193,11 +239,17 @@ v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_par
     }
 
 
+
     v1_custom_resource_definition_status_local_var = v1_custom_resource_definition_status_create_internal (
         accepted_names ? accepted_names_local_nonprim : NULL,
         conditions ? conditionsList : NULL,
+        observed_generation_local_var,
         stored_versions ? stored_versionsList : NULL
         );
+
+    if (!v1_custom_resource_definition_status_local_var) {
+        goto end;
+    }
 
     return v1_custom_resource_definition_status_local_var;
 end:
@@ -213,6 +265,10 @@ end:
         }
         list_freeList(conditionsList);
         conditionsList = NULL;
+    }
+    if (observed_generation_local_var) {
+        free(observed_generation_local_var);
+        observed_generation_local_var = NULL;
     }
     if (stored_versionsList) {
         listEntry_t *listEntry = NULL;

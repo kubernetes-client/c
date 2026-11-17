@@ -14,11 +14,11 @@ static v1_resource_quota_spec_t *v1_resource_quota_spec_create_internal(
     if (!v1_resource_quota_spec_local_var) {
         return NULL;
     }
+    memset(v1_resource_quota_spec_local_var, 0, sizeof(v1_resource_quota_spec_t));
+    v1_resource_quota_spec_local_var->_library_owned = 1;
     v1_resource_quota_spec_local_var->hard = hard;
     v1_resource_quota_spec_local_var->scope_selector = scope_selector;
     v1_resource_quota_spec_local_var->scopes = scopes;
-
-    v1_resource_quota_spec_local_var->_library_owned = 1;
     return v1_resource_quota_spec_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_resource_quota_spec_t *v1_resource_quota_spec_cre
     v1_scope_selector_t *scope_selector,
     list_t *scopes
     ) {
-    return v1_resource_quota_spec_create_internal (
+    v1_resource_quota_spec_t *result = v1_resource_quota_spec_create_internal (
         hard,
         scope_selector,
         scopes
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_resource_quota_spec_free(v1_resource_quota_spec_t *v1_resource_quota_spec) {
@@ -200,11 +203,16 @@ v1_resource_quota_spec_t *v1_resource_quota_spec_parseFromJSON(cJSON *v1_resourc
     }
 
 
+
     v1_resource_quota_spec_local_var = v1_resource_quota_spec_create_internal (
         hard ? hardList : NULL,
         scope_selector ? scope_selector_local_nonprim : NULL,
         scopes ? scopesList : NULL
         );
+
+    if (!v1_resource_quota_spec_local_var) {
+        goto end;
+    }
 
     return v1_resource_quota_spec_local_var;
 end:

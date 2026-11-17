@@ -12,18 +12,21 @@ static v1beta1_device_class_configuration_t *v1beta1_device_class_configuration_
     if (!v1beta1_device_class_configuration_local_var) {
         return NULL;
     }
-    v1beta1_device_class_configuration_local_var->opaque = opaque;
-
+    memset(v1beta1_device_class_configuration_local_var, 0, sizeof(v1beta1_device_class_configuration_t));
     v1beta1_device_class_configuration_local_var->_library_owned = 1;
+    v1beta1_device_class_configuration_local_var->opaque = opaque;
     return v1beta1_device_class_configuration_local_var;
 }
 
 __attribute__((deprecated)) v1beta1_device_class_configuration_t *v1beta1_device_class_configuration_create(
     v1beta1_opaque_device_configuration_t *opaque
     ) {
-    return v1beta1_device_class_configuration_create_internal (
+    v1beta1_device_class_configuration_t *result = v1beta1_device_class_configuration_create_internal (
         opaque
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1beta1_device_class_configuration_free(v1beta1_device_class_configuration_t *v1beta1_device_class_configuration) {
@@ -82,9 +85,14 @@ v1beta1_device_class_configuration_t *v1beta1_device_class_configuration_parseFr
     }
 
 
+
     v1beta1_device_class_configuration_local_var = v1beta1_device_class_configuration_create_internal (
         opaque ? opaque_local_nonprim : NULL
         );
+
+    if (!v1beta1_device_class_configuration_local_var) {
+        goto end;
+    }
 
     return v1beta1_device_class_configuration_local_var;
 end:

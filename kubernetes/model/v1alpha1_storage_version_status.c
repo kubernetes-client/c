@@ -14,11 +14,11 @@ static v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_create
     if (!v1alpha1_storage_version_status_local_var) {
         return NULL;
     }
+    memset(v1alpha1_storage_version_status_local_var, 0, sizeof(v1alpha1_storage_version_status_t));
+    v1alpha1_storage_version_status_local_var->_library_owned = 1;
     v1alpha1_storage_version_status_local_var->common_encoding_version = common_encoding_version;
     v1alpha1_storage_version_status_local_var->conditions = conditions;
     v1alpha1_storage_version_status_local_var->storage_versions = storage_versions;
-
-    v1alpha1_storage_version_status_local_var->_library_owned = 1;
     return v1alpha1_storage_version_status_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1alpha1_storage_version_status_t *v1alpha1_storage_
     list_t *conditions,
     list_t *storage_versions
     ) {
-    return v1alpha1_storage_version_status_create_internal (
+    v1alpha1_storage_version_status_t *result = v1alpha1_storage_version_status_create_internal (
         common_encoding_version,
         conditions,
         storage_versions
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1alpha1_storage_version_status_free(v1alpha1_storage_version_status_t *v1alpha1_storage_version_status) {
@@ -126,6 +129,8 @@ v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_parseFromJSON
 
     v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_local_var = NULL;
 
+    char *common_encoding_version_local_str = NULL;
+
     // define the local list for v1alpha1_storage_version_status->conditions
     list_t *conditionsList = NULL;
 
@@ -193,14 +198,24 @@ v1alpha1_storage_version_status_t *v1alpha1_storage_version_status_parseFromJSON
     }
 
 
+    if (common_encoding_version && !cJSON_IsNull(common_encoding_version)) common_encoding_version_local_str = strdup(common_encoding_version->valuestring);
+
     v1alpha1_storage_version_status_local_var = v1alpha1_storage_version_status_create_internal (
-        common_encoding_version && !cJSON_IsNull(common_encoding_version) ? strdup(common_encoding_version->valuestring) : NULL,
+        common_encoding_version_local_str,
         conditions ? conditionsList : NULL,
         storage_versions ? storage_versionsList : NULL
         );
 
+    if (!v1alpha1_storage_version_status_local_var) {
+        goto end;
+    }
+
     return v1alpha1_storage_version_status_local_var;
 end:
+    if (common_encoding_version_local_str) {
+        free(common_encoding_version_local_str);
+        common_encoding_version_local_str = NULL;
+    }
     if (conditionsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, conditionsList) {

@@ -13,10 +13,10 @@ static v1_resource_status_t *v1_resource_status_create_internal(
     if (!v1_resource_status_local_var) {
         return NULL;
     }
+    memset(v1_resource_status_local_var, 0, sizeof(v1_resource_status_t));
+    v1_resource_status_local_var->_library_owned = 1;
     v1_resource_status_local_var->name = name;
     v1_resource_status_local_var->resources = resources;
-
-    v1_resource_status_local_var->_library_owned = 1;
     return v1_resource_status_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_resource_status_t *v1_resource_status_create(
     char *name,
     list_t *resources
     ) {
-    return v1_resource_status_create_internal (
+    v1_resource_status_t *result = v1_resource_status_create_internal (
         name,
         resources
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_resource_status_free(v1_resource_status_t *v1_resource_status) {
@@ -96,6 +99,8 @@ v1_resource_status_t *v1_resource_status_parseFromJSON(cJSON *v1_resource_status
 
     v1_resource_status_t *v1_resource_status_local_var = NULL;
 
+    char *name_local_str = NULL;
+
     // define the local list for v1_resource_status->resources
     list_t *resourcesList = NULL;
 
@@ -139,13 +144,23 @@ v1_resource_status_t *v1_resource_status_parseFromJSON(cJSON *v1_resource_status
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v1_resource_status_local_var = v1_resource_status_create_internal (
-        strdup(name->valuestring),
+        name_local_str,
         resources ? resourcesList : NULL
         );
 
+    if (!v1_resource_status_local_var) {
+        goto end;
+    }
+
     return v1_resource_status_local_var;
 end:
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
     if (resourcesList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, resourcesList) {

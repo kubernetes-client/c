@@ -15,12 +15,12 @@ static v1_resource_rule_t *v1_resource_rule_create_internal(
     if (!v1_resource_rule_local_var) {
         return NULL;
     }
+    memset(v1_resource_rule_local_var, 0, sizeof(v1_resource_rule_t));
+    v1_resource_rule_local_var->_library_owned = 1;
     v1_resource_rule_local_var->api_groups = api_groups;
     v1_resource_rule_local_var->resource_names = resource_names;
     v1_resource_rule_local_var->resources = resources;
     v1_resource_rule_local_var->verbs = verbs;
-
-    v1_resource_rule_local_var->_library_owned = 1;
     return v1_resource_rule_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1_resource_rule_t *v1_resource_rule_create(
     list_t *resources,
     list_t *verbs
     ) {
-    return v1_resource_rule_create_internal (
+    v1_resource_rule_t *result = v1_resource_rule_create_internal (
         api_groups,
         resource_names,
         resources,
         verbs
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_resource_rule_free(v1_resource_rule_t *v1_resource_rule) {
@@ -265,12 +268,17 @@ v1_resource_rule_t *v1_resource_rule_parseFromJSON(cJSON *v1_resource_ruleJSON){
     }
 
 
+
     v1_resource_rule_local_var = v1_resource_rule_create_internal (
         api_groups ? api_groupsList : NULL,
         resource_names ? resource_namesList : NULL,
         resources ? resourcesList : NULL,
         verbsList
         );
+
+    if (!v1_resource_rule_local_var) {
+        goto end;
+    }
 
     return v1_resource_rule_local_var;
 end:

@@ -13,10 +13,10 @@ static v1_image_volume_source_t *v1_image_volume_source_create_internal(
     if (!v1_image_volume_source_local_var) {
         return NULL;
     }
+    memset(v1_image_volume_source_local_var, 0, sizeof(v1_image_volume_source_t));
+    v1_image_volume_source_local_var->_library_owned = 1;
     v1_image_volume_source_local_var->pull_policy = pull_policy;
     v1_image_volume_source_local_var->reference = reference;
-
-    v1_image_volume_source_local_var->_library_owned = 1;
     return v1_image_volume_source_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_image_volume_source_t *v1_image_volume_source_cre
     char *pull_policy,
     char *reference
     ) {
-    return v1_image_volume_source_create_internal (
+    v1_image_volume_source_t *result = v1_image_volume_source_create_internal (
         pull_policy,
         reference
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_image_volume_source_free(v1_image_volume_source_t *v1_image_volume_source) {
@@ -80,6 +83,10 @@ v1_image_volume_source_t *v1_image_volume_source_parseFromJSON(cJSON *v1_image_v
 
     v1_image_volume_source_t *v1_image_volume_source_local_var = NULL;
 
+    char *pull_policy_local_str = NULL;
+
+    char *reference_local_str = NULL;
+
     // v1_image_volume_source->pull_policy
     cJSON *pull_policy = cJSON_GetObjectItemCaseSensitive(v1_image_volume_sourceJSON, "pullPolicy");
     if (cJSON_IsNull(pull_policy)) {
@@ -105,13 +112,28 @@ v1_image_volume_source_t *v1_image_volume_source_parseFromJSON(cJSON *v1_image_v
     }
 
 
+    if (pull_policy && !cJSON_IsNull(pull_policy)) pull_policy_local_str = strdup(pull_policy->valuestring);
+    if (reference && !cJSON_IsNull(reference)) reference_local_str = strdup(reference->valuestring);
+
     v1_image_volume_source_local_var = v1_image_volume_source_create_internal (
-        pull_policy && !cJSON_IsNull(pull_policy) ? strdup(pull_policy->valuestring) : NULL,
-        reference && !cJSON_IsNull(reference) ? strdup(reference->valuestring) : NULL
+        pull_policy_local_str,
+        reference_local_str
         );
+
+    if (!v1_image_volume_source_local_var) {
+        goto end;
+    }
 
     return v1_image_volume_source_local_var;
 end:
+    if (pull_policy_local_str) {
+        free(pull_policy_local_str);
+        pull_policy_local_str = NULL;
+    }
+    if (reference_local_str) {
+        free(reference_local_str);
+        reference_local_str = NULL;
+    }
     return NULL;
 
 }

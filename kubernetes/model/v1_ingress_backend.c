@@ -13,10 +13,10 @@ static v1_ingress_backend_t *v1_ingress_backend_create_internal(
     if (!v1_ingress_backend_local_var) {
         return NULL;
     }
+    memset(v1_ingress_backend_local_var, 0, sizeof(v1_ingress_backend_t));
+    v1_ingress_backend_local_var->_library_owned = 1;
     v1_ingress_backend_local_var->resource = resource;
     v1_ingress_backend_local_var->service = service;
-
-    v1_ingress_backend_local_var->_library_owned = 1;
     return v1_ingress_backend_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_ingress_backend_t *v1_ingress_backend_create(
     v1_typed_local_object_reference_t *resource,
     v1_ingress_service_backend_t *service
     ) {
-    return v1_ingress_backend_create_internal (
+    v1_ingress_backend_t *result = v1_ingress_backend_create_internal (
         resource,
         service
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_ingress_backend_free(v1_ingress_backend_t *v1_ingress_backend) {
@@ -115,10 +118,15 @@ v1_ingress_backend_t *v1_ingress_backend_parseFromJSON(cJSON *v1_ingress_backend
     }
 
 
+
     v1_ingress_backend_local_var = v1_ingress_backend_create_internal (
         resource ? resource_local_nonprim : NULL,
         service ? service_local_nonprim : NULL
         );
+
+    if (!v1_ingress_backend_local_var) {
+        goto end;
+    }
 
     return v1_ingress_backend_local_var;
 end:

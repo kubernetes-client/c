@@ -22,7 +22,7 @@ CoordinationV1alpha2API_createNamespacedLeaseCandidate(apiClient_t *apiClient, c
 // delete collection of LeaseCandidate
 //
 v1_status_t*
-CoordinationV1alpha2API_deleteCollectionNamespacedLeaseCandidate(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+CoordinationV1alpha2API_deleteCollectionNamespacedLeaseCandidate(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete a LeaseCandidate
@@ -40,13 +40,13 @@ CoordinationV1alpha2API_getAPIResources(apiClient_t *apiClient);
 // list or watch objects of kind LeaseCandidate
 //
 v1alpha2_lease_candidate_list_t*
-CoordinationV1alpha2API_listLeaseCandidateForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+CoordinationV1alpha2API_listLeaseCandidateForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch);
 
 
 // list or watch objects of kind LeaseCandidate
 //
 v1alpha2_lease_candidate_list_t*
-CoordinationV1alpha2API_listNamespacedLeaseCandidate(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+CoordinationV1alpha2API_listNamespacedLeaseCandidate(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch);
 
 
 // partially update the specified LeaseCandidate

@@ -14,11 +14,11 @@ static v1_api_group_list_t *v1_api_group_list_create_internal(
     if (!v1_api_group_list_local_var) {
         return NULL;
     }
+    memset(v1_api_group_list_local_var, 0, sizeof(v1_api_group_list_t));
+    v1_api_group_list_local_var->_library_owned = 1;
     v1_api_group_list_local_var->api_version = api_version;
     v1_api_group_list_local_var->groups = groups;
     v1_api_group_list_local_var->kind = kind;
-
-    v1_api_group_list_local_var->_library_owned = 1;
     return v1_api_group_list_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_api_group_list_t *v1_api_group_list_create(
     list_t *groups,
     char *kind
     ) {
-    return v1_api_group_list_create_internal (
+    v1_api_group_list_t *result = v1_api_group_list_create_internal (
         api_version,
         groups,
         kind
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_api_group_list_free(v1_api_group_list_t *v1_api_group_list) {
@@ -112,8 +115,12 @@ v1_api_group_list_t *v1_api_group_list_parseFromJSON(cJSON *v1_api_group_listJSO
 
     v1_api_group_list_t *v1_api_group_list_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
     // define the local list for v1_api_group_list->groups
     list_t *groupsList = NULL;
+
+    char *kind_local_str = NULL;
 
     // v1_api_group_list->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_api_group_listJSON, "apiVersion");
@@ -167,14 +174,25 @@ v1_api_group_list_t *v1_api_group_list_parseFromJSON(cJSON *v1_api_group_listJSO
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+
     v1_api_group_list_local_var = v1_api_group_list_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        api_version_local_str,
         groupsList,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL
+        kind_local_str
         );
+
+    if (!v1_api_group_list_local_var) {
+        goto end;
+    }
 
     return v1_api_group_list_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
     if (groupsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, groupsList) {
@@ -183,6 +201,10 @@ end:
         }
         list_freeList(groupsList);
         groupsList = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
     }
     return NULL;
 

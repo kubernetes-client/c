@@ -33,10 +33,11 @@ void create_configmap(apiClient_t * apiClient, char *name, char *namespace_)
                                                    NULL,
                                                    NULL);
 
+    int immutable = 1;
     v1_config_map_t *body = v1_config_map_create(api_version,
                                                  NULL,
                                                  data,
-                                                 1,
+                                                 &immutable,
                                                  kind,
                                                  meta);
 
@@ -80,6 +81,7 @@ void list_configmap(apiClient_t * apiClient, char *namespace_)
                                                                               NULL, // char *resourceVersion
                                                                               NULL, // char *resourceVersionMatch
                                                                               NULL, // sendInitialEvents
+                                                                              NULL, // shardSelector
                                                                               NULL, // int *timeoutSeconds
                                                                               NULL  //int *watch
         );

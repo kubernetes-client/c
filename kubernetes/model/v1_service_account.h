@@ -23,7 +23,7 @@ typedef struct v1_service_account_t v1_service_account_t;
 
 typedef struct v1_service_account_t {
     char *api_version; // string
-    int automount_service_account_token; //boolean
+    int *automount_service_account_token; //boolean
     list_t *image_pull_secrets; //nonprimitive container
     char *kind; // string
     struct v1_object_meta_t *metadata; //model
@@ -34,7 +34,7 @@ typedef struct v1_service_account_t {
 
 __attribute__((deprecated)) v1_service_account_t *v1_service_account_create(
     char *api_version,
-    int automount_service_account_token,
+    int *automount_service_account_token,
     list_t *image_pull_secrets,
     char *kind,
     v1_object_meta_t *metadata,

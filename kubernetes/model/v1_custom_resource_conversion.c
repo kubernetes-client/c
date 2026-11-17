@@ -13,10 +13,10 @@ static v1_custom_resource_conversion_t *v1_custom_resource_conversion_create_int
     if (!v1_custom_resource_conversion_local_var) {
         return NULL;
     }
+    memset(v1_custom_resource_conversion_local_var, 0, sizeof(v1_custom_resource_conversion_t));
+    v1_custom_resource_conversion_local_var->_library_owned = 1;
     v1_custom_resource_conversion_local_var->strategy = strategy;
     v1_custom_resource_conversion_local_var->webhook = webhook;
-
-    v1_custom_resource_conversion_local_var->_library_owned = 1;
     return v1_custom_resource_conversion_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_custom_resource_conversion_t *v1_custom_resource_
     char *strategy,
     v1_webhook_conversion_t *webhook
     ) {
-    return v1_custom_resource_conversion_create_internal (
+    v1_custom_resource_conversion_t *result = v1_custom_resource_conversion_create_internal (
         strategy,
         webhook
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_custom_resource_conversion_free(v1_custom_resource_conversion_t *v1_custom_resource_conversion) {
@@ -86,6 +89,8 @@ v1_custom_resource_conversion_t *v1_custom_resource_conversion_parseFromJSON(cJS
 
     v1_custom_resource_conversion_t *v1_custom_resource_conversion_local_var = NULL;
 
+    char *strategy_local_str = NULL;
+
     // define the local variable for v1_custom_resource_conversion->webhook
     v1_webhook_conversion_t *webhook_local_nonprim = NULL;
 
@@ -114,13 +119,23 @@ v1_custom_resource_conversion_t *v1_custom_resource_conversion_parseFromJSON(cJS
     }
 
 
+    if (strategy && !cJSON_IsNull(strategy)) strategy_local_str = strdup(strategy->valuestring);
+
     v1_custom_resource_conversion_local_var = v1_custom_resource_conversion_create_internal (
-        strdup(strategy->valuestring),
+        strategy_local_str,
         webhook ? webhook_local_nonprim : NULL
         );
 
+    if (!v1_custom_resource_conversion_local_var) {
+        goto end;
+    }
+
     return v1_custom_resource_conversion_local_var;
 end:
+    if (strategy_local_str) {
+        free(strategy_local_str);
+        strategy_local_str = NULL;
+    }
     if (webhook_local_nonprim) {
         v1_webhook_conversion_free(webhook_local_nonprim);
         webhook_local_nonprim = NULL;

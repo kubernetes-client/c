@@ -13,10 +13,10 @@ static v1_pod_dns_config_option_t *v1_pod_dns_config_option_create_internal(
     if (!v1_pod_dns_config_option_local_var) {
         return NULL;
     }
+    memset(v1_pod_dns_config_option_local_var, 0, sizeof(v1_pod_dns_config_option_t));
+    v1_pod_dns_config_option_local_var->_library_owned = 1;
     v1_pod_dns_config_option_local_var->name = name;
     v1_pod_dns_config_option_local_var->value = value;
-
-    v1_pod_dns_config_option_local_var->_library_owned = 1;
     return v1_pod_dns_config_option_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_pod_dns_config_option_t *v1_pod_dns_config_option
     char *name,
     char *value
     ) {
-    return v1_pod_dns_config_option_create_internal (
+    v1_pod_dns_config_option_t *result = v1_pod_dns_config_option_create_internal (
         name,
         value
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_pod_dns_config_option_free(v1_pod_dns_config_option_t *v1_pod_dns_config_option) {
@@ -80,6 +83,10 @@ v1_pod_dns_config_option_t *v1_pod_dns_config_option_parseFromJSON(cJSON *v1_pod
 
     v1_pod_dns_config_option_t *v1_pod_dns_config_option_local_var = NULL;
 
+    char *name_local_str = NULL;
+
+    char *value_local_str = NULL;
+
     // v1_pod_dns_config_option->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_pod_dns_config_optionJSON, "name");
     if (cJSON_IsNull(name)) {
@@ -105,13 +112,28 @@ v1_pod_dns_config_option_t *v1_pod_dns_config_option_parseFromJSON(cJSON *v1_pod
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (value && !cJSON_IsNull(value)) value_local_str = strdup(value->valuestring);
+
     v1_pod_dns_config_option_local_var = v1_pod_dns_config_option_create_internal (
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
-        value && !cJSON_IsNull(value) ? strdup(value->valuestring) : NULL
+        name_local_str,
+        value_local_str
         );
+
+    if (!v1_pod_dns_config_option_local_var) {
+        goto end;
+    }
 
     return v1_pod_dns_config_option_local_var;
 end:
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (value_local_str) {
+        free(value_local_str);
+        value_local_str = NULL;
+    }
     return NULL;
 
 }

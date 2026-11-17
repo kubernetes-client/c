@@ -13,10 +13,10 @@ static v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_s
     if (!v1_stateful_set_persistent_volume_claim_retention_policy_local_var) {
         return NULL;
     }
+    memset(v1_stateful_set_persistent_volume_claim_retention_policy_local_var, 0, sizeof(v1_stateful_set_persistent_volume_claim_retention_policy_t));
+    v1_stateful_set_persistent_volume_claim_retention_policy_local_var->_library_owned = 1;
     v1_stateful_set_persistent_volume_claim_retention_policy_local_var->when_deleted = when_deleted;
     v1_stateful_set_persistent_volume_claim_retention_policy_local_var->when_scaled = when_scaled;
-
-    v1_stateful_set_persistent_volume_claim_retention_policy_local_var->_library_owned = 1;
     return v1_stateful_set_persistent_volume_claim_retention_policy_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_stateful_set_persistent_volume_claim_retention_po
     char *when_deleted,
     char *when_scaled
     ) {
-    return v1_stateful_set_persistent_volume_claim_retention_policy_create_internal (
+    v1_stateful_set_persistent_volume_claim_retention_policy_t *result = v1_stateful_set_persistent_volume_claim_retention_policy_create_internal (
         when_deleted,
         when_scaled
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_stateful_set_persistent_volume_claim_retention_policy_free(v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_set_persistent_volume_claim_retention_policy) {
@@ -80,6 +83,10 @@ v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_set_pers
 
     v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_set_persistent_volume_claim_retention_policy_local_var = NULL;
 
+    char *when_deleted_local_str = NULL;
+
+    char *when_scaled_local_str = NULL;
+
     // v1_stateful_set_persistent_volume_claim_retention_policy->when_deleted
     cJSON *when_deleted = cJSON_GetObjectItemCaseSensitive(v1_stateful_set_persistent_volume_claim_retention_policyJSON, "whenDeleted");
     if (cJSON_IsNull(when_deleted)) {
@@ -105,13 +112,28 @@ v1_stateful_set_persistent_volume_claim_retention_policy_t *v1_stateful_set_pers
     }
 
 
+    if (when_deleted && !cJSON_IsNull(when_deleted)) when_deleted_local_str = strdup(when_deleted->valuestring);
+    if (when_scaled && !cJSON_IsNull(when_scaled)) when_scaled_local_str = strdup(when_scaled->valuestring);
+
     v1_stateful_set_persistent_volume_claim_retention_policy_local_var = v1_stateful_set_persistent_volume_claim_retention_policy_create_internal (
-        when_deleted && !cJSON_IsNull(when_deleted) ? strdup(when_deleted->valuestring) : NULL,
-        when_scaled && !cJSON_IsNull(when_scaled) ? strdup(when_scaled->valuestring) : NULL
+        when_deleted_local_str,
+        when_scaled_local_str
         );
+
+    if (!v1_stateful_set_persistent_volume_claim_retention_policy_local_var) {
+        goto end;
+    }
 
     return v1_stateful_set_persistent_volume_claim_retention_policy_local_var;
 end:
+    if (when_deleted_local_str) {
+        free(when_deleted_local_str);
+        when_deleted_local_str = NULL;
+    }
+    if (when_scaled_local_str) {
+        free(when_scaled_local_str);
+        when_scaled_local_str = NULL;
+    }
     return NULL;
 
 }

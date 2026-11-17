@@ -21,6 +21,7 @@ typedef struct v1_custom_resource_definition_condition_t v1_custom_resource_defi
 typedef struct v1_custom_resource_definition_condition_t {
     char *last_transition_time; //date time
     char *message; // string
+    long *observed_generation; //numeric
     char *reason; // string
     char *status; // string
     char *type; // string
@@ -31,6 +32,7 @@ typedef struct v1_custom_resource_definition_condition_t {
 __attribute__((deprecated)) v1_custom_resource_definition_condition_t *v1_custom_resource_definition_condition_create(
     char *last_transition_time,
     char *message,
+    long *observed_generation,
     char *reason,
     char *status,
     char *type

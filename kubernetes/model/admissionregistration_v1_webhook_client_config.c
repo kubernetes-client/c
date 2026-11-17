@@ -14,11 +14,11 @@ static admissionregistration_v1_webhook_client_config_t *admissionregistration_v
     if (!admissionregistration_v1_webhook_client_config_local_var) {
         return NULL;
     }
+    memset(admissionregistration_v1_webhook_client_config_local_var, 0, sizeof(admissionregistration_v1_webhook_client_config_t));
+    admissionregistration_v1_webhook_client_config_local_var->_library_owned = 1;
     admissionregistration_v1_webhook_client_config_local_var->ca_bundle = ca_bundle;
     admissionregistration_v1_webhook_client_config_local_var->service = service;
     admissionregistration_v1_webhook_client_config_local_var->url = url;
-
-    admissionregistration_v1_webhook_client_config_local_var->_library_owned = 1;
     return admissionregistration_v1_webhook_client_config_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) admissionregistration_v1_webhook_client_config_t *ad
     admissionregistration_v1_service_reference_t *service,
     char *url
     ) {
-    return admissionregistration_v1_webhook_client_config_create_internal (
+    admissionregistration_v1_webhook_client_config_t *result = admissionregistration_v1_webhook_client_config_create_internal (
         ca_bundle,
         service,
         url
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void admissionregistration_v1_webhook_client_config_free(admissionregistration_v1_webhook_client_config_t *admissionregistration_v1_webhook_client_config) {
@@ -101,8 +104,12 @@ admissionregistration_v1_webhook_client_config_t *admissionregistration_v1_webho
 
     admissionregistration_v1_webhook_client_config_t *admissionregistration_v1_webhook_client_config_local_var = NULL;
 
+    char *ca_bundle_local_str = NULL;
+
     // define the local variable for admissionregistration_v1_webhook_client_config->service
     admissionregistration_v1_service_reference_t *service_local_nonprim = NULL;
+
+    char *url_local_str = NULL;
 
     // admissionregistration_v1_webhook_client_config->ca_bundle
     cJSON *ca_bundle = cJSON_GetObjectItemCaseSensitive(admissionregistration_v1_webhook_client_configJSON, "caBundle");
@@ -138,17 +145,32 @@ admissionregistration_v1_webhook_client_config_t *admissionregistration_v1_webho
     }
 
 
+    if (ca_bundle) ca_bundle_local_str = strdup(ca_bundle->valuestring);
+    if (url && !cJSON_IsNull(url)) url_local_str = strdup(url->valuestring);
+
     admissionregistration_v1_webhook_client_config_local_var = admissionregistration_v1_webhook_client_config_create_internal (
-        ca_bundle ? strdup(ca_bundle->valuestring) : NULL,
+        ca_bundle_local_str,
         service ? service_local_nonprim : NULL,
-        url && !cJSON_IsNull(url) ? strdup(url->valuestring) : NULL
+        url_local_str
         );
+
+    if (!admissionregistration_v1_webhook_client_config_local_var) {
+        goto end;
+    }
 
     return admissionregistration_v1_webhook_client_config_local_var;
 end:
+    if (ca_bundle_local_str) {
+        free(ca_bundle_local_str);
+        ca_bundle_local_str = NULL;
+    }
     if (service_local_nonprim) {
         admissionregistration_v1_service_reference_free(service_local_nonprim);
         service_local_nonprim = NULL;
+    }
+    if (url_local_str) {
+        free(url_local_str);
+        url_local_str = NULL;
     }
     return NULL;
 

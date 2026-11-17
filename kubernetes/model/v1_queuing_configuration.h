@@ -19,17 +19,17 @@ typedef struct v1_queuing_configuration_t v1_queuing_configuration_t;
 
 
 typedef struct v1_queuing_configuration_t {
-    int hand_size; //numeric
-    int queue_length_limit; //numeric
-    int queues; //numeric
+    int *hand_size; //numeric
+    int *queue_length_limit; //numeric
+    int *queues; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_queuing_configuration_t;
 
 __attribute__((deprecated)) v1_queuing_configuration_t *v1_queuing_configuration_create(
-    int hand_size,
-    int queue_length_limit,
-    int queues
+    int *hand_size,
+    int *queue_length_limit,
+    int *queues
 );
 
 void v1_queuing_configuration_free(v1_queuing_configuration_t *v1_queuing_configuration);

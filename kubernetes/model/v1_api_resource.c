@@ -10,7 +10,7 @@ static v1_api_resource_t *v1_api_resource_create_internal(
     char *group,
     char *kind,
     char *name,
-    int namespaced,
+    int *namespaced,
     list_t *short_names,
     char *singular_name,
     char *storage_version_hash,
@@ -21,6 +21,8 @@ static v1_api_resource_t *v1_api_resource_create_internal(
     if (!v1_api_resource_local_var) {
         return NULL;
     }
+    memset(v1_api_resource_local_var, 0, sizeof(v1_api_resource_t));
+    v1_api_resource_local_var->_library_owned = 1;
     v1_api_resource_local_var->categories = categories;
     v1_api_resource_local_var->group = group;
     v1_api_resource_local_var->kind = kind;
@@ -31,8 +33,6 @@ static v1_api_resource_t *v1_api_resource_create_internal(
     v1_api_resource_local_var->storage_version_hash = storage_version_hash;
     v1_api_resource_local_var->verbs = verbs;
     v1_api_resource_local_var->version = version;
-
-    v1_api_resource_local_var->_library_owned = 1;
     return v1_api_resource_local_var;
 }
 
@@ -41,25 +41,34 @@ __attribute__((deprecated)) v1_api_resource_t *v1_api_resource_create(
     char *group,
     char *kind,
     char *name,
-    int namespaced,
+    int *namespaced,
     list_t *short_names,
     char *singular_name,
     char *storage_version_hash,
     list_t *verbs,
     char *version
     ) {
-    return v1_api_resource_create_internal (
+    int *namespaced_copy = NULL;
+    if (namespaced) {
+        namespaced_copy = malloc(sizeof(int));
+        if (namespaced_copy) *namespaced_copy = *namespaced;
+    }
+    v1_api_resource_t *result = v1_api_resource_create_internal (
         categories,
         group,
         kind,
         name,
-        namespaced,
+        namespaced_copy,
         short_names,
         singular_name,
         storage_version_hash,
         verbs,
         version
         );
+    if (!result) {
+        free(namespaced_copy);
+    }
+    return result;
 }
 
 void v1_api_resource_free(v1_api_resource_t *v1_api_resource) {
@@ -89,6 +98,10 @@ void v1_api_resource_free(v1_api_resource_t *v1_api_resource) {
     if (v1_api_resource->name) {
         free(v1_api_resource->name);
         v1_api_resource->name = NULL;
+    }
+    if (v1_api_resource->namespaced) {
+        free(v1_api_resource->namespaced);
+        v1_api_resource->namespaced = NULL;
     }
     if (v1_api_resource->short_names) {
         list_ForEach(listEntry, v1_api_resource->short_names) {
@@ -169,7 +182,7 @@ cJSON *v1_api_resource_convertToJSON(v1_api_resource_t *v1_api_resource) {
     if (!v1_api_resource->namespaced) {
         goto fail;
     }
-    if(cJSON_AddBoolToObject(item, "namespaced", v1_api_resource->namespaced) == NULL) {
+    if(cJSON_AddBoolToObject(item, "namespaced", *v1_api_resource->namespaced) == NULL) {
     goto fail; //Bool
     }
 
@@ -248,11 +261,26 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
     // define the local list for v1_api_resource->categories
     list_t *categoriesList = NULL;
 
+    char *group_local_str = NULL;
+
+    char *kind_local_str = NULL;
+
+    char *name_local_str = NULL;
+
+    // define the local variable for v1_api_resource->namespaced
+    int *namespaced_local_var = NULL;
+
     // define the local list for v1_api_resource->short_names
     list_t *short_namesList = NULL;
 
+    char *singular_name_local_str = NULL;
+
+    char *storage_version_hash_local_str = NULL;
+
     // define the local list for v1_api_resource->verbs
     list_t *verbsList = NULL;
+
+    char *version_local_str = NULL;
 
     // v1_api_resource->categories
     cJSON *categories = cJSON_GetObjectItemCaseSensitive(v1_api_resourceJSON, "categories");
@@ -332,6 +360,12 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
     {
     goto end; //Bool
     }
+    namespaced_local_var = malloc(sizeof(int));
+    if(!namespaced_local_var)
+    {
+        goto end;
+    }
+    *namespaced_local_var = namespaced->valueint;
 
     // v1_api_resource->short_names
     cJSON *short_names = cJSON_GetObjectItemCaseSensitive(v1_api_resourceJSON, "shortNames");
@@ -420,18 +454,29 @@ v1_api_resource_t *v1_api_resource_parseFromJSON(cJSON *v1_api_resourceJSON){
     }
 
 
+    if (group && !cJSON_IsNull(group)) group_local_str = strdup(group->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (singular_name && !cJSON_IsNull(singular_name)) singular_name_local_str = strdup(singular_name->valuestring);
+    if (storage_version_hash && !cJSON_IsNull(storage_version_hash)) storage_version_hash_local_str = strdup(storage_version_hash->valuestring);
+    if (version && !cJSON_IsNull(version)) version_local_str = strdup(version->valuestring);
+
     v1_api_resource_local_var = v1_api_resource_create_internal (
         categories ? categoriesList : NULL,
-        group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
-        strdup(kind->valuestring),
-        strdup(name->valuestring),
-        namespaced->valueint,
+        group_local_str,
+        kind_local_str,
+        name_local_str,
+        namespaced_local_var,
         short_names ? short_namesList : NULL,
-        strdup(singular_name->valuestring),
-        storage_version_hash && !cJSON_IsNull(storage_version_hash) ? strdup(storage_version_hash->valuestring) : NULL,
+        singular_name_local_str,
+        storage_version_hash_local_str,
         verbsList,
-        version && !cJSON_IsNull(version) ? strdup(version->valuestring) : NULL
+        version_local_str
         );
+
+    if (!v1_api_resource_local_var) {
+        goto end;
+    }
 
     return v1_api_resource_local_var;
 end:
@@ -444,6 +489,22 @@ end:
         list_freeList(categoriesList);
         categoriesList = NULL;
     }
+    if (group_local_str) {
+        free(group_local_str);
+        group_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (namespaced_local_var) {
+        free(namespaced_local_var);
+        namespaced_local_var = NULL;
+    }
     if (short_namesList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, short_namesList) {
@@ -453,6 +514,14 @@ end:
         list_freeList(short_namesList);
         short_namesList = NULL;
     }
+    if (singular_name_local_str) {
+        free(singular_name_local_str);
+        singular_name_local_str = NULL;
+    }
+    if (storage_version_hash_local_str) {
+        free(storage_version_hash_local_str);
+        storage_version_hash_local_str = NULL;
+    }
     if (verbsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, verbsList) {
@@ -461,6 +530,10 @@ end:
         }
         list_freeList(verbsList);
         verbsList = NULL;
+    }
+    if (version_local_str) {
+        free(version_local_str);
+        version_local_str = NULL;
     }
     return NULL;
 

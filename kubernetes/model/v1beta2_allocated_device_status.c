@@ -18,6 +18,8 @@ static v1beta2_allocated_device_status_t *v1beta2_allocated_device_status_create
     if (!v1beta2_allocated_device_status_local_var) {
         return NULL;
     }
+    memset(v1beta2_allocated_device_status_local_var, 0, sizeof(v1beta2_allocated_device_status_t));
+    v1beta2_allocated_device_status_local_var->_library_owned = 1;
     v1beta2_allocated_device_status_local_var->conditions = conditions;
     v1beta2_allocated_device_status_local_var->data = data;
     v1beta2_allocated_device_status_local_var->device = device;
@@ -25,8 +27,6 @@ static v1beta2_allocated_device_status_t *v1beta2_allocated_device_status_create
     v1beta2_allocated_device_status_local_var->network_data = network_data;
     v1beta2_allocated_device_status_local_var->pool = pool;
     v1beta2_allocated_device_status_local_var->share_id = share_id;
-
-    v1beta2_allocated_device_status_local_var->_library_owned = 1;
     return v1beta2_allocated_device_status_local_var;
 }
 
@@ -39,7 +39,7 @@ __attribute__((deprecated)) v1beta2_allocated_device_status_t *v1beta2_allocated
     char *pool,
     char *share_id
     ) {
-    return v1beta2_allocated_device_status_create_internal (
+    v1beta2_allocated_device_status_t *result = v1beta2_allocated_device_status_create_internal (
         conditions,
         data,
         device,
@@ -48,6 +48,9 @@ __attribute__((deprecated)) v1beta2_allocated_device_status_t *v1beta2_allocated
         pool,
         share_id
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1beta2_allocated_device_status_free(v1beta2_allocated_device_status_t *v1beta2_allocated_device_status) {
@@ -191,8 +194,16 @@ v1beta2_allocated_device_status_t *v1beta2_allocated_device_status_parseFromJSON
     // define the local list for v1beta2_allocated_device_status->conditions
     list_t *conditionsList = NULL;
 
+    char *device_local_str = NULL;
+
+    char *driver_local_str = NULL;
+
     // define the local variable for v1beta2_allocated_device_status->network_data
     v1beta2_network_device_data_t *network_data_local_nonprim = NULL;
+
+    char *pool_local_str = NULL;
+
+    char *share_id_local_str = NULL;
 
     // v1beta2_allocated_device_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1beta2_allocated_device_statusJSON, "conditions");
@@ -295,15 +306,24 @@ v1beta2_allocated_device_status_t *v1beta2_allocated_device_status_parseFromJSON
     }
 
 
+    if (device && !cJSON_IsNull(device)) device_local_str = strdup(device->valuestring);
+    if (driver && !cJSON_IsNull(driver)) driver_local_str = strdup(driver->valuestring);
+    if (pool && !cJSON_IsNull(pool)) pool_local_str = strdup(pool->valuestring);
+    if (share_id && !cJSON_IsNull(share_id)) share_id_local_str = strdup(share_id->valuestring);
+
     v1beta2_allocated_device_status_local_var = v1beta2_allocated_device_status_create_internal (
         conditions ? conditionsList : NULL,
         data ? data_local_object : NULL,
-        strdup(device->valuestring),
-        strdup(driver->valuestring),
+        device_local_str,
+        driver_local_str,
         network_data ? network_data_local_nonprim : NULL,
-        strdup(pool->valuestring),
-        share_id && !cJSON_IsNull(share_id) ? strdup(share_id->valuestring) : NULL
+        pool_local_str,
+        share_id_local_str
         );
+
+    if (!v1beta2_allocated_device_status_local_var) {
+        goto end;
+    }
 
     return v1beta2_allocated_device_status_local_var;
 end:
@@ -316,9 +336,25 @@ end:
         list_freeList(conditionsList);
         conditionsList = NULL;
     }
+    if (device_local_str) {
+        free(device_local_str);
+        device_local_str = NULL;
+    }
+    if (driver_local_str) {
+        free(driver_local_str);
+        driver_local_str = NULL;
+    }
     if (network_data_local_nonprim) {
         v1beta2_network_device_data_free(network_data_local_nonprim);
         network_data_local_nonprim = NULL;
+    }
+    if (pool_local_str) {
+        free(pool_local_str);
+        pool_local_str = NULL;
+    }
+    if (share_id_local_str) {
+        free(share_id_local_str);
+        share_id_local_str = NULL;
     }
     return NULL;
 

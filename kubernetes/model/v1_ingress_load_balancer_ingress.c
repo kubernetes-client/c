@@ -14,11 +14,11 @@ static v1_ingress_load_balancer_ingress_t *v1_ingress_load_balancer_ingress_crea
     if (!v1_ingress_load_balancer_ingress_local_var) {
         return NULL;
     }
+    memset(v1_ingress_load_balancer_ingress_local_var, 0, sizeof(v1_ingress_load_balancer_ingress_t));
+    v1_ingress_load_balancer_ingress_local_var->_library_owned = 1;
     v1_ingress_load_balancer_ingress_local_var->hostname = hostname;
     v1_ingress_load_balancer_ingress_local_var->ip = ip;
     v1_ingress_load_balancer_ingress_local_var->ports = ports;
-
-    v1_ingress_load_balancer_ingress_local_var->_library_owned = 1;
     return v1_ingress_load_balancer_ingress_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_ingress_load_balancer_ingress_t *v1_ingress_load_
     char *ip,
     list_t *ports
     ) {
-    return v1_ingress_load_balancer_ingress_create_internal (
+    v1_ingress_load_balancer_ingress_t *result = v1_ingress_load_balancer_ingress_create_internal (
         hostname,
         ip,
         ports
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_ingress_load_balancer_ingress_free(v1_ingress_load_balancer_ingress_t *v1_ingress_load_balancer_ingress) {
@@ -111,6 +114,10 @@ v1_ingress_load_balancer_ingress_t *v1_ingress_load_balancer_ingress_parseFromJS
 
     v1_ingress_load_balancer_ingress_t *v1_ingress_load_balancer_ingress_local_var = NULL;
 
+    char *hostname_local_str = NULL;
+
+    char *ip_local_str = NULL;
+
     // define the local list for v1_ingress_load_balancer_ingress->ports
     list_t *portsList = NULL;
 
@@ -163,14 +170,29 @@ v1_ingress_load_balancer_ingress_t *v1_ingress_load_balancer_ingress_parseFromJS
     }
 
 
+    if (hostname && !cJSON_IsNull(hostname)) hostname_local_str = strdup(hostname->valuestring);
+    if (ip && !cJSON_IsNull(ip)) ip_local_str = strdup(ip->valuestring);
+
     v1_ingress_load_balancer_ingress_local_var = v1_ingress_load_balancer_ingress_create_internal (
-        hostname && !cJSON_IsNull(hostname) ? strdup(hostname->valuestring) : NULL,
-        ip && !cJSON_IsNull(ip) ? strdup(ip->valuestring) : NULL,
+        hostname_local_str,
+        ip_local_str,
         ports ? portsList : NULL
         );
 
+    if (!v1_ingress_load_balancer_ingress_local_var) {
+        goto end;
+    }
+
     return v1_ingress_load_balancer_ingress_local_var;
 end:
+    if (hostname_local_str) {
+        free(hostname_local_str);
+        hostname_local_str = NULL;
+    }
+    if (ip_local_str) {
+        free(ip_local_str);
+        ip_local_str = NULL;
+    }
     if (portsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, portsList) {

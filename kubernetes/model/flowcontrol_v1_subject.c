@@ -15,12 +15,12 @@ static flowcontrol_v1_subject_t *flowcontrol_v1_subject_create_internal(
     if (!flowcontrol_v1_subject_local_var) {
         return NULL;
     }
+    memset(flowcontrol_v1_subject_local_var, 0, sizeof(flowcontrol_v1_subject_t));
+    flowcontrol_v1_subject_local_var->_library_owned = 1;
     flowcontrol_v1_subject_local_var->group = group;
     flowcontrol_v1_subject_local_var->kind = kind;
     flowcontrol_v1_subject_local_var->service_account = service_account;
     flowcontrol_v1_subject_local_var->user = user;
-
-    flowcontrol_v1_subject_local_var->_library_owned = 1;
     return flowcontrol_v1_subject_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) flowcontrol_v1_subject_t *flowcontrol_v1_subject_cre
     v1_service_account_subject_t *service_account,
     v1_user_subject_t *user
     ) {
-    return flowcontrol_v1_subject_create_internal (
+    flowcontrol_v1_subject_t *result = flowcontrol_v1_subject_create_internal (
         group,
         kind,
         service_account,
         user
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void flowcontrol_v1_subject_free(flowcontrol_v1_subject_t *flowcontrol_v1_subject) {
@@ -131,6 +134,8 @@ flowcontrol_v1_subject_t *flowcontrol_v1_subject_parseFromJSON(cJSON *flowcontro
     // define the local variable for flowcontrol_v1_subject->group
     v1_group_subject_t *group_local_nonprim = NULL;
 
+    char *kind_local_str = NULL;
+
     // define the local variable for flowcontrol_v1_subject->service_account
     v1_service_account_subject_t *service_account_local_nonprim = NULL;
 
@@ -180,18 +185,28 @@ flowcontrol_v1_subject_t *flowcontrol_v1_subject_parseFromJSON(cJSON *flowcontro
     }
 
 
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+
     flowcontrol_v1_subject_local_var = flowcontrol_v1_subject_create_internal (
         group ? group_local_nonprim : NULL,
-        strdup(kind->valuestring),
+        kind_local_str,
         service_account ? service_account_local_nonprim : NULL,
         user ? user_local_nonprim : NULL
         );
+
+    if (!flowcontrol_v1_subject_local_var) {
+        goto end;
+    }
 
     return flowcontrol_v1_subject_local_var;
 end:
     if (group_local_nonprim) {
         v1_group_subject_free(group_local_nonprim);
         group_local_nonprim = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
     }
     if (service_account_local_nonprim) {
         v1_service_account_subject_free(service_account_local_nonprim);

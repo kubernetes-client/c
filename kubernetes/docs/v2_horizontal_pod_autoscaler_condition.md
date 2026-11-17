@@ -5,6 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **last_transition_time** | **char \*** | lastTransitionTime is the last time the condition transitioned from one status to another | [optional] 
 **message** | **char \*** | message is a human-readable explanation containing details about the transition | [optional] 
+**observed_generation** | **long** | observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance. | [optional] 
 **reason** | **char \*** | reason is the reason for the condition&#39;s last transition. | [optional] 
 **status** | **char \*** | status is the status of the condition (True, False, Unknown) | 
 **type** | **char \*** | type describes the current condition | 

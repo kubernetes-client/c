@@ -20,13 +20,15 @@ typedef struct v1_csi_driver_spec_t v1_csi_driver_spec_t;
 
 
 typedef struct v1_csi_driver_spec_t {
-    int attach_required; //boolean
+    int *attach_required; //boolean
     char *fs_group_policy; // string
-    long node_allocatable_update_period_seconds; //numeric
-    int pod_info_on_mount; //boolean
-    int requires_republish; //boolean
-    int se_linux_mount; //boolean
-    int storage_capacity; //boolean
+    long *node_allocatable_update_period_seconds; //numeric
+    int *pod_info_on_mount; //boolean
+    int *prevent_pod_scheduling_if_missing; //boolean
+    int *requires_republish; //boolean
+    int *se_linux_mount; //boolean
+    int *service_account_token_in_secrets; //boolean
+    int *storage_capacity; //boolean
     list_t *token_requests; //nonprimitive container
     list_t *volume_lifecycle_modes; //primitive container
 
@@ -34,13 +36,15 @@ typedef struct v1_csi_driver_spec_t {
 } v1_csi_driver_spec_t;
 
 __attribute__((deprecated)) v1_csi_driver_spec_t *v1_csi_driver_spec_create(
-    int attach_required,
+    int *attach_required,
     char *fs_group_policy,
-    long node_allocatable_update_period_seconds,
-    int pod_info_on_mount,
-    int requires_republish,
-    int se_linux_mount,
-    int storage_capacity,
+    long *node_allocatable_update_period_seconds,
+    int *pod_info_on_mount,
+    int *prevent_pod_scheduling_if_missing,
+    int *requires_republish,
+    int *se_linux_mount,
+    int *service_account_token_in_secrets,
+    int *storage_capacity,
     list_t *token_requests,
     list_t *volume_lifecycle_modes
 );

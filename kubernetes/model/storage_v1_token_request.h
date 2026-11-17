@@ -20,14 +20,14 @@ typedef struct storage_v1_token_request_t storage_v1_token_request_t;
 
 typedef struct storage_v1_token_request_t {
     char *audience; // string
-    long expiration_seconds; //numeric
+    long *expiration_seconds; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } storage_v1_token_request_t;
 
 __attribute__((deprecated)) storage_v1_token_request_t *storage_v1_token_request_create(
     char *audience,
-    long expiration_seconds
+    long *expiration_seconds
 );
 
 void storage_v1_token_request_free(storage_v1_token_request_t *storage_v1_token_request);

@@ -20,7 +20,7 @@ typedef struct v1_quobyte_volume_source_t v1_quobyte_volume_source_t;
 
 typedef struct v1_quobyte_volume_source_t {
     char *group; // string
-    int read_only; //boolean
+    int *read_only; //boolean
     char *registry; // string
     char *tenant; // string
     char *user; // string
@@ -31,7 +31,7 @@ typedef struct v1_quobyte_volume_source_t {
 
 __attribute__((deprecated)) v1_quobyte_volume_source_t *v1_quobyte_volume_source_create(
     char *group,
-    int read_only,
+    int *read_only,
     char *registry,
     char *tenant,
     char *user,

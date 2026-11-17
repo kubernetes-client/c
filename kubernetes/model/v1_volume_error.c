@@ -6,7 +6,7 @@
 
 
 static v1_volume_error_t *v1_volume_error_create_internal(
-    int error_code,
+    int *error_code,
     char *message,
     char *time
     ) {
@@ -14,24 +14,33 @@ static v1_volume_error_t *v1_volume_error_create_internal(
     if (!v1_volume_error_local_var) {
         return NULL;
     }
+    memset(v1_volume_error_local_var, 0, sizeof(v1_volume_error_t));
+    v1_volume_error_local_var->_library_owned = 1;
     v1_volume_error_local_var->error_code = error_code;
     v1_volume_error_local_var->message = message;
     v1_volume_error_local_var->time = time;
-
-    v1_volume_error_local_var->_library_owned = 1;
     return v1_volume_error_local_var;
 }
 
 __attribute__((deprecated)) v1_volume_error_t *v1_volume_error_create(
-    int error_code,
+    int *error_code,
     char *message,
     char *time
     ) {
-    return v1_volume_error_create_internal (
-        error_code,
+    int *error_code_copy = NULL;
+    if (error_code) {
+        error_code_copy = malloc(sizeof(int));
+        if (error_code_copy) *error_code_copy = *error_code;
+    }
+    v1_volume_error_t *result = v1_volume_error_create_internal (
+        error_code_copy,
         message,
         time
         );
+    if (!result) {
+        free(error_code_copy);
+    }
+    return result;
 }
 
 void v1_volume_error_free(v1_volume_error_t *v1_volume_error) {
@@ -43,6 +52,10 @@ void v1_volume_error_free(v1_volume_error_t *v1_volume_error) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_volume_error->error_code) {
+        free(v1_volume_error->error_code);
+        v1_volume_error->error_code = NULL;
+    }
     if (v1_volume_error->message) {
         free(v1_volume_error->message);
         v1_volume_error->message = NULL;
@@ -59,7 +72,7 @@ cJSON *v1_volume_error_convertToJSON(v1_volume_error_t *v1_volume_error) {
 
     // v1_volume_error->error_code
     if(v1_volume_error->error_code) {
-    if(cJSON_AddNumberToObject(item, "errorCode", v1_volume_error->error_code) == NULL) {
+    if(cJSON_AddNumberToObject(item, "errorCode", *v1_volume_error->error_code) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -92,6 +105,13 @@ v1_volume_error_t *v1_volume_error_parseFromJSON(cJSON *v1_volume_errorJSON){
 
     v1_volume_error_t *v1_volume_error_local_var = NULL;
 
+    // define the local variable for v1_volume_error->error_code
+    int *error_code_local_var = NULL;
+
+    char *message_local_str = NULL;
+
+    char *time_local_str = NULL;
+
     // v1_volume_error->error_code
     cJSON *error_code = cJSON_GetObjectItemCaseSensitive(v1_volume_errorJSON, "errorCode");
     if (cJSON_IsNull(error_code)) {
@@ -102,6 +122,12 @@ v1_volume_error_t *v1_volume_error_parseFromJSON(cJSON *v1_volume_errorJSON){
     {
     goto end; //Numeric
     }
+    error_code_local_var = malloc(sizeof(int));
+    if(!error_code_local_var)
+    {
+        goto end;
+    }
+    *error_code_local_var = error_code->valuedouble;
     }
 
     // v1_volume_error->message
@@ -129,14 +155,33 @@ v1_volume_error_t *v1_volume_error_parseFromJSON(cJSON *v1_volume_errorJSON){
     }
 
 
+    if (message && !cJSON_IsNull(message)) message_local_str = strdup(message->valuestring);
+    if (time && !cJSON_IsNull(time)) time_local_str = strdup(time->valuestring);
+
     v1_volume_error_local_var = v1_volume_error_create_internal (
-        error_code ? error_code->valuedouble : 0,
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
-        time && !cJSON_IsNull(time) ? strdup(time->valuestring) : NULL
+        error_code_local_var,
+        message_local_str,
+        time_local_str
         );
+
+    if (!v1_volume_error_local_var) {
+        goto end;
+    }
 
     return v1_volume_error_local_var;
 end:
+    if (error_code_local_var) {
+        free(error_code_local_var);
+        error_code_local_var = NULL;
+    }
+    if (message_local_str) {
+        free(message_local_str);
+        message_local_str = NULL;
+    }
+    if (time_local_str) {
+        free(time_local_str);
+        time_local_str = NULL;
+    }
     return NULL;
 
 }

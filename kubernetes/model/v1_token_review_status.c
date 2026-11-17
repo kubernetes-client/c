@@ -7,7 +7,7 @@
 
 static v1_token_review_status_t *v1_token_review_status_create_internal(
     list_t *audiences,
-    int authenticated,
+    int *authenticated,
     char *error,
     v1_user_info_t *user
     ) {
@@ -15,27 +15,36 @@ static v1_token_review_status_t *v1_token_review_status_create_internal(
     if (!v1_token_review_status_local_var) {
         return NULL;
     }
+    memset(v1_token_review_status_local_var, 0, sizeof(v1_token_review_status_t));
+    v1_token_review_status_local_var->_library_owned = 1;
     v1_token_review_status_local_var->audiences = audiences;
     v1_token_review_status_local_var->authenticated = authenticated;
     v1_token_review_status_local_var->error = error;
     v1_token_review_status_local_var->user = user;
-
-    v1_token_review_status_local_var->_library_owned = 1;
     return v1_token_review_status_local_var;
 }
 
 __attribute__((deprecated)) v1_token_review_status_t *v1_token_review_status_create(
     list_t *audiences,
-    int authenticated,
+    int *authenticated,
     char *error,
     v1_user_info_t *user
     ) {
-    return v1_token_review_status_create_internal (
+    int *authenticated_copy = NULL;
+    if (authenticated) {
+        authenticated_copy = malloc(sizeof(int));
+        if (authenticated_copy) *authenticated_copy = *authenticated;
+    }
+    v1_token_review_status_t *result = v1_token_review_status_create_internal (
         audiences,
-        authenticated,
+        authenticated_copy,
         error,
         user
         );
+    if (!result) {
+        free(authenticated_copy);
+    }
+    return result;
 }
 
 void v1_token_review_status_free(v1_token_review_status_t *v1_token_review_status) {
@@ -53,6 +62,10 @@ void v1_token_review_status_free(v1_token_review_status_t *v1_token_review_statu
         }
         list_freeList(v1_token_review_status->audiences);
         v1_token_review_status->audiences = NULL;
+    }
+    if (v1_token_review_status->authenticated) {
+        free(v1_token_review_status->authenticated);
+        v1_token_review_status->authenticated = NULL;
     }
     if (v1_token_review_status->error) {
         free(v1_token_review_status->error);
@@ -87,7 +100,7 @@ cJSON *v1_token_review_status_convertToJSON(v1_token_review_status_t *v1_token_r
 
     // v1_token_review_status->authenticated
     if(v1_token_review_status->authenticated) {
-    if(cJSON_AddBoolToObject(item, "authenticated", v1_token_review_status->authenticated) == NULL) {
+    if(cJSON_AddBoolToObject(item, "authenticated", *v1_token_review_status->authenticated) == NULL) {
     goto fail; //Bool
     }
     }
@@ -128,6 +141,11 @@ v1_token_review_status_t *v1_token_review_status_parseFromJSON(cJSON *v1_token_r
     // define the local list for v1_token_review_status->audiences
     list_t *audiencesList = NULL;
 
+    // define the local variable for v1_token_review_status->authenticated
+    int *authenticated_local_var = NULL;
+
+    char *error_local_str = NULL;
+
     // define the local variable for v1_token_review_status->user
     v1_user_info_t *user_local_nonprim = NULL;
 
@@ -163,6 +181,12 @@ v1_token_review_status_t *v1_token_review_status_parseFromJSON(cJSON *v1_token_r
     {
     goto end; //Bool
     }
+    authenticated_local_var = malloc(sizeof(int));
+    if(!authenticated_local_var)
+    {
+        goto end;
+    }
+    *authenticated_local_var = authenticated->valueint;
     }
 
     // v1_token_review_status->error
@@ -187,12 +211,18 @@ v1_token_review_status_t *v1_token_review_status_parseFromJSON(cJSON *v1_token_r
     }
 
 
+    if (error && !cJSON_IsNull(error)) error_local_str = strdup(error->valuestring);
+
     v1_token_review_status_local_var = v1_token_review_status_create_internal (
         audiences ? audiencesList : NULL,
-        authenticated ? authenticated->valueint : 0,
-        error && !cJSON_IsNull(error) ? strdup(error->valuestring) : NULL,
+        authenticated_local_var,
+        error_local_str,
         user ? user_local_nonprim : NULL
         );
+
+    if (!v1_token_review_status_local_var) {
+        goto end;
+    }
 
     return v1_token_review_status_local_var;
 end:
@@ -204,6 +234,14 @@ end:
         }
         list_freeList(audiencesList);
         audiencesList = NULL;
+    }
+    if (authenticated_local_var) {
+        free(authenticated_local_var);
+        authenticated_local_var = NULL;
+    }
+    if (error_local_str) {
+        free(error_local_str);
+        error_local_str = NULL;
     }
     if (user_local_nonprim) {
         v1_user_info_free(user_local_nonprim);

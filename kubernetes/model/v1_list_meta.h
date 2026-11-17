@@ -15,23 +15,26 @@
 
 typedef struct v1_list_meta_t v1_list_meta_t;
 
+#include "v1_shard_info.h"
 
 
 
 typedef struct v1_list_meta_t {
     char *_continue; // string
-    long remaining_item_count; //numeric
+    long *remaining_item_count; //numeric
     char *resource_version; // string
     char *self_link; // string
+    struct v1_shard_info_t *shard_info; //model
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_list_meta_t;
 
 __attribute__((deprecated)) v1_list_meta_t *v1_list_meta_create(
     char *_continue,
-    long remaining_item_count,
+    long *remaining_item_count,
     char *resource_version,
-    char *self_link
+    char *self_link,
+    v1_shard_info_t *shard_info
 );
 
 void v1_list_meta_free(v1_list_meta_t *v1_list_meta);

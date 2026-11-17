@@ -91,6 +91,7 @@ list all pods:
                                            NULL,    /* resourceVersion */
                                            NULL,    /* resourceVersionMatch */
                                            NULL,    /* sendInitialEvents */
+                                           NULL,    /* shardSelector */
                                            NULL,    /* timeoutSeconds */
                                            NULL     /* watch */
         );
@@ -137,6 +138,7 @@ list all pods in cluster:
                                            NULL,    /* resourceVersion */
                                            NULL,    /* resourceVersionMatch */
                                            NULL,    /* sendInitialEvents */
+                                           NULL,    /* shardSelector */
                                            NULL,    /* timeoutSeconds */
                                            NULL     /* watch */
         );
@@ -172,6 +174,7 @@ v1_pod_list_t* CoreV1API_listNamespacedPod(apiClient_t *apiClient,
                                            char *resourceVersion, 
                                            char *resourceVersionMatch, 
                                            int *sendInitialEvents,   /* <-- here */
+                                           char *shardSelector,
                                            int *timeoutSeconds,      /* <-- here */
                                            int *watch);              /* <-- here */
 ```
@@ -191,6 +194,7 @@ pod_list = CoreV1API_listNamespacedPod(apiClient, "default",    /*namespace */
                                        NULL,    /* resourceVersion */
                                        NULL,    /* resourceVersionMatch */
                                        NULL,    /* sendInitialEvents */
+                                       NULL,    /* shardSelector */
                                        &timeoutSeconds,    /* timeoutSeconds */
                                        &watch   /* watch */
 );

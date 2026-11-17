@@ -15,12 +15,12 @@ static v1_node_config_status_t *v1_node_config_status_create_internal(
     if (!v1_node_config_status_local_var) {
         return NULL;
     }
+    memset(v1_node_config_status_local_var, 0, sizeof(v1_node_config_status_t));
+    v1_node_config_status_local_var->_library_owned = 1;
     v1_node_config_status_local_var->active = active;
     v1_node_config_status_local_var->assigned = assigned;
     v1_node_config_status_local_var->error = error;
     v1_node_config_status_local_var->last_known_good = last_known_good;
-
-    v1_node_config_status_local_var->_library_owned = 1;
     return v1_node_config_status_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1_node_config_status_t *v1_node_config_status_creat
     char *error,
     v1_node_config_source_t *last_known_good
     ) {
-    return v1_node_config_status_create_internal (
+    v1_node_config_status_t *result = v1_node_config_status_create_internal (
         active,
         assigned,
         error,
         last_known_good
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_node_config_status_free(v1_node_config_status_t *v1_node_config_status) {
@@ -133,6 +136,8 @@ v1_node_config_status_t *v1_node_config_status_parseFromJSON(cJSON *v1_node_conf
     // define the local variable for v1_node_config_status->assigned
     v1_node_config_source_t *assigned_local_nonprim = NULL;
 
+    char *error_local_str = NULL;
+
     // define the local variable for v1_node_config_status->last_known_good
     v1_node_config_source_t *last_known_good_local_nonprim = NULL;
 
@@ -176,12 +181,18 @@ v1_node_config_status_t *v1_node_config_status_parseFromJSON(cJSON *v1_node_conf
     }
 
 
+    if (error && !cJSON_IsNull(error)) error_local_str = strdup(error->valuestring);
+
     v1_node_config_status_local_var = v1_node_config_status_create_internal (
         active ? active_local_nonprim : NULL,
         assigned ? assigned_local_nonprim : NULL,
-        error && !cJSON_IsNull(error) ? strdup(error->valuestring) : NULL,
+        error_local_str,
         last_known_good ? last_known_good_local_nonprim : NULL
         );
+
+    if (!v1_node_config_status_local_var) {
+        goto end;
+    }
 
     return v1_node_config_status_local_var;
 end:
@@ -192,6 +203,10 @@ end:
     if (assigned_local_nonprim) {
         v1_node_config_source_free(assigned_local_nonprim);
         assigned_local_nonprim = NULL;
+    }
+    if (error_local_str) {
+        free(error_local_str);
+        error_local_str = NULL;
     }
     if (last_known_good_local_nonprim) {
         v1_node_config_source_free(last_known_good_local_nonprim);

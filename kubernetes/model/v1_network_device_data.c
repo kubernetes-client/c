@@ -14,11 +14,11 @@ static v1_network_device_data_t *v1_network_device_data_create_internal(
     if (!v1_network_device_data_local_var) {
         return NULL;
     }
+    memset(v1_network_device_data_local_var, 0, sizeof(v1_network_device_data_t));
+    v1_network_device_data_local_var->_library_owned = 1;
     v1_network_device_data_local_var->hardware_address = hardware_address;
     v1_network_device_data_local_var->interface_name = interface_name;
     v1_network_device_data_local_var->ips = ips;
-
-    v1_network_device_data_local_var->_library_owned = 1;
     return v1_network_device_data_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_network_device_data_t *v1_network_device_data_cre
     char *interface_name,
     list_t *ips
     ) {
-    return v1_network_device_data_create_internal (
+    v1_network_device_data_t *result = v1_network_device_data_create_internal (
         hardware_address,
         interface_name,
         ips
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_network_device_data_free(v1_network_device_data_t *v1_network_device_data) {
@@ -108,6 +111,10 @@ v1_network_device_data_t *v1_network_device_data_parseFromJSON(cJSON *v1_network
 
     v1_network_device_data_t *v1_network_device_data_local_var = NULL;
 
+    char *hardware_address_local_str = NULL;
+
+    char *interface_name_local_str = NULL;
+
     // define the local list for v1_network_device_data->ips
     list_t *ipsList = NULL;
 
@@ -158,14 +165,29 @@ v1_network_device_data_t *v1_network_device_data_parseFromJSON(cJSON *v1_network
     }
 
 
+    if (hardware_address && !cJSON_IsNull(hardware_address)) hardware_address_local_str = strdup(hardware_address->valuestring);
+    if (interface_name && !cJSON_IsNull(interface_name)) interface_name_local_str = strdup(interface_name->valuestring);
+
     v1_network_device_data_local_var = v1_network_device_data_create_internal (
-        hardware_address && !cJSON_IsNull(hardware_address) ? strdup(hardware_address->valuestring) : NULL,
-        interface_name && !cJSON_IsNull(interface_name) ? strdup(interface_name->valuestring) : NULL,
+        hardware_address_local_str,
+        interface_name_local_str,
         ips ? ipsList : NULL
         );
 
+    if (!v1_network_device_data_local_var) {
+        goto end;
+    }
+
     return v1_network_device_data_local_var;
 end:
+    if (hardware_address_local_str) {
+        free(hardware_address_local_str);
+        hardware_address_local_str = NULL;
+    }
+    if (interface_name_local_str) {
+        free(interface_name_local_str);
+        interface_name_local_str = NULL;
+    }
     if (ipsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, ipsList) {

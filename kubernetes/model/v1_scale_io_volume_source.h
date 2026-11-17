@@ -23,9 +23,9 @@ typedef struct v1_scale_io_volume_source_t {
     char *fs_type; // string
     char *gateway; // string
     char *protection_domain; // string
-    int read_only; //boolean
+    int *read_only; //boolean
     struct v1_local_object_reference_t *secret_ref; //model
-    int ssl_enabled; //boolean
+    int *ssl_enabled; //boolean
     char *storage_mode; // string
     char *storage_pool; // string
     char *system; // string
@@ -38,9 +38,9 @@ __attribute__((deprecated)) v1_scale_io_volume_source_t *v1_scale_io_volume_sour
     char *fs_type,
     char *gateway,
     char *protection_domain,
-    int read_only,
+    int *read_only,
     v1_local_object_reference_t *secret_ref,
-    int ssl_enabled,
+    int *ssl_enabled,
     char *storage_mode,
     char *storage_pool,
     char *system,

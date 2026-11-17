@@ -13,10 +13,10 @@ static v1_non_resource_attributes_t *v1_non_resource_attributes_create_internal(
     if (!v1_non_resource_attributes_local_var) {
         return NULL;
     }
+    memset(v1_non_resource_attributes_local_var, 0, sizeof(v1_non_resource_attributes_t));
+    v1_non_resource_attributes_local_var->_library_owned = 1;
     v1_non_resource_attributes_local_var->path = path;
     v1_non_resource_attributes_local_var->verb = verb;
-
-    v1_non_resource_attributes_local_var->_library_owned = 1;
     return v1_non_resource_attributes_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_non_resource_attributes_t *v1_non_resource_attrib
     char *path,
     char *verb
     ) {
-    return v1_non_resource_attributes_create_internal (
+    v1_non_resource_attributes_t *result = v1_non_resource_attributes_create_internal (
         path,
         verb
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_non_resource_attributes_free(v1_non_resource_attributes_t *v1_non_resource_attributes) {
@@ -80,6 +83,10 @@ v1_non_resource_attributes_t *v1_non_resource_attributes_parseFromJSON(cJSON *v1
 
     v1_non_resource_attributes_t *v1_non_resource_attributes_local_var = NULL;
 
+    char *path_local_str = NULL;
+
+    char *verb_local_str = NULL;
+
     // v1_non_resource_attributes->path
     cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_non_resource_attributesJSON, "path");
     if (cJSON_IsNull(path)) {
@@ -105,13 +112,28 @@ v1_non_resource_attributes_t *v1_non_resource_attributes_parseFromJSON(cJSON *v1
     }
 
 
+    if (path && !cJSON_IsNull(path)) path_local_str = strdup(path->valuestring);
+    if (verb && !cJSON_IsNull(verb)) verb_local_str = strdup(verb->valuestring);
+
     v1_non_resource_attributes_local_var = v1_non_resource_attributes_create_internal (
-        path && !cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,
-        verb && !cJSON_IsNull(verb) ? strdup(verb->valuestring) : NULL
+        path_local_str,
+        verb_local_str
         );
+
+    if (!v1_non_resource_attributes_local_var) {
+        goto end;
+    }
 
     return v1_non_resource_attributes_local_var;
 end:
+    if (path_local_str) {
+        free(path_local_str);
+        path_local_str = NULL;
+    }
+    if (verb_local_str) {
+        free(verb_local_str);
+        verb_local_str = NULL;
+    }
     return NULL;
 
 }

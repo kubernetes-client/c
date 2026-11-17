@@ -19,7 +19,7 @@ typedef struct v1_volume_error_t v1_volume_error_t;
 
 
 typedef struct v1_volume_error_t {
-    int error_code; //numeric
+    int *error_code; //numeric
     char *message; // string
     char *time; //date time
 
@@ -27,7 +27,7 @@ typedef struct v1_volume_error_t {
 } v1_volume_error_t;
 
 __attribute__((deprecated)) v1_volume_error_t *v1_volume_error_create(
-    int error_code,
+    int *error_code,
     char *message,
     char *time
 );

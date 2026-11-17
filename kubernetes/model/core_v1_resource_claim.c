@@ -13,10 +13,10 @@ static core_v1_resource_claim_t *core_v1_resource_claim_create_internal(
     if (!core_v1_resource_claim_local_var) {
         return NULL;
     }
+    memset(core_v1_resource_claim_local_var, 0, sizeof(core_v1_resource_claim_t));
+    core_v1_resource_claim_local_var->_library_owned = 1;
     core_v1_resource_claim_local_var->name = name;
     core_v1_resource_claim_local_var->request = request;
-
-    core_v1_resource_claim_local_var->_library_owned = 1;
     return core_v1_resource_claim_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) core_v1_resource_claim_t *core_v1_resource_claim_cre
     char *name,
     char *request
     ) {
-    return core_v1_resource_claim_create_internal (
+    core_v1_resource_claim_t *result = core_v1_resource_claim_create_internal (
         name,
         request
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void core_v1_resource_claim_free(core_v1_resource_claim_t *core_v1_resource_claim) {
@@ -81,6 +84,10 @@ core_v1_resource_claim_t *core_v1_resource_claim_parseFromJSON(cJSON *core_v1_re
 
     core_v1_resource_claim_t *core_v1_resource_claim_local_var = NULL;
 
+    char *name_local_str = NULL;
+
+    char *request_local_str = NULL;
+
     // core_v1_resource_claim->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(core_v1_resource_claimJSON, "name");
     if (cJSON_IsNull(name)) {
@@ -109,13 +116,28 @@ core_v1_resource_claim_t *core_v1_resource_claim_parseFromJSON(cJSON *core_v1_re
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (request && !cJSON_IsNull(request)) request_local_str = strdup(request->valuestring);
+
     core_v1_resource_claim_local_var = core_v1_resource_claim_create_internal (
-        strdup(name->valuestring),
-        request && !cJSON_IsNull(request) ? strdup(request->valuestring) : NULL
+        name_local_str,
+        request_local_str
         );
+
+    if (!core_v1_resource_claim_local_var) {
+        goto end;
+    }
 
     return core_v1_resource_claim_local_var;
 end:
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (request_local_str) {
+        free(request_local_str);
+        request_local_str = NULL;
+    }
     return NULL;
 
 }

@@ -16,6 +16,7 @@
 #include "../model/v1_list_meta.h"
 v1_list_meta_t* instantiate_v1_list_meta(int include_optional);
 
+#include "test_v1_shard_info.c"
 
 
 v1_list_meta_t* instantiate_v1_list_meta(int include_optional) {
@@ -25,14 +26,17 @@ v1_list_meta_t* instantiate_v1_list_meta(int include_optional) {
       "0",
       56,
       "0",
-      "0"
+      "0",
+       // false, not to have infinite recursion
+      instantiate_v1_shard_info(0)
     );
   } else {
     v1_list_meta = v1_list_meta_create(
       "0",
       56,
       "0",
-      "0"
+      "0",
+      NULL
     );
   }
 

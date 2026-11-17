@@ -12,18 +12,21 @@ static v1_node_daemon_endpoints_t *v1_node_daemon_endpoints_create_internal(
     if (!v1_node_daemon_endpoints_local_var) {
         return NULL;
     }
-    v1_node_daemon_endpoints_local_var->kubelet_endpoint = kubelet_endpoint;
-
+    memset(v1_node_daemon_endpoints_local_var, 0, sizeof(v1_node_daemon_endpoints_t));
     v1_node_daemon_endpoints_local_var->_library_owned = 1;
+    v1_node_daemon_endpoints_local_var->kubelet_endpoint = kubelet_endpoint;
     return v1_node_daemon_endpoints_local_var;
 }
 
 __attribute__((deprecated)) v1_node_daemon_endpoints_t *v1_node_daemon_endpoints_create(
     v1_daemon_endpoint_t *kubelet_endpoint
     ) {
-    return v1_node_daemon_endpoints_create_internal (
+    v1_node_daemon_endpoints_t *result = v1_node_daemon_endpoints_create_internal (
         kubelet_endpoint
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_node_daemon_endpoints_free(v1_node_daemon_endpoints_t *v1_node_daemon_endpoints) {
@@ -82,9 +85,14 @@ v1_node_daemon_endpoints_t *v1_node_daemon_endpoints_parseFromJSON(cJSON *v1_nod
     }
 
 
+
     v1_node_daemon_endpoints_local_var = v1_node_daemon_endpoints_create_internal (
         kubelet_endpoint ? kubelet_endpoint_local_nonprim : NULL
         );
+
+    if (!v1_node_daemon_endpoints_local_var) {
+        goto end;
+    }
 
     return v1_node_daemon_endpoints_local_var;
 end:

@@ -14,11 +14,11 @@ static v1_resource_requirements_t *v1_resource_requirements_create_internal(
     if (!v1_resource_requirements_local_var) {
         return NULL;
     }
+    memset(v1_resource_requirements_local_var, 0, sizeof(v1_resource_requirements_t));
+    v1_resource_requirements_local_var->_library_owned = 1;
     v1_resource_requirements_local_var->claims = claims;
     v1_resource_requirements_local_var->limits = limits;
     v1_resource_requirements_local_var->requests = requests;
-
-    v1_resource_requirements_local_var->_library_owned = 1;
     return v1_resource_requirements_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_resource_requirements_t *v1_resource_requirements
     list_t* limits,
     list_t* requests
     ) {
-    return v1_resource_requirements_create_internal (
+    v1_resource_requirements_t *result = v1_resource_requirements_create_internal (
         claims,
         limits,
         requests
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_resource_requirements_free(v1_resource_requirements_t *v1_resource_requirements) {
@@ -237,11 +240,16 @@ v1_resource_requirements_t *v1_resource_requirements_parseFromJSON(cJSON *v1_res
     }
 
 
+
     v1_resource_requirements_local_var = v1_resource_requirements_create_internal (
         claims ? claimsList : NULL,
         limits ? limitsList : NULL,
         requests ? requestsList : NULL
         );
+
+    if (!v1_resource_requirements_local_var) {
+        goto end;
+    }
 
     return v1_resource_requirements_local_var;
 end:

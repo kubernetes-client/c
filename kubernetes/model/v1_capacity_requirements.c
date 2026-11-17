@@ -12,18 +12,21 @@ static v1_capacity_requirements_t *v1_capacity_requirements_create_internal(
     if (!v1_capacity_requirements_local_var) {
         return NULL;
     }
-    v1_capacity_requirements_local_var->requests = requests;
-
+    memset(v1_capacity_requirements_local_var, 0, sizeof(v1_capacity_requirements_t));
     v1_capacity_requirements_local_var->_library_owned = 1;
+    v1_capacity_requirements_local_var->requests = requests;
     return v1_capacity_requirements_local_var;
 }
 
 __attribute__((deprecated)) v1_capacity_requirements_t *v1_capacity_requirements_create(
     list_t* requests
     ) {
-    return v1_capacity_requirements_create_internal (
+    v1_capacity_requirements_t *result = v1_capacity_requirements_create_internal (
         requests
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_capacity_requirements_free(v1_capacity_requirements_t *v1_capacity_requirements) {
@@ -114,9 +117,14 @@ v1_capacity_requirements_t *v1_capacity_requirements_parseFromJSON(cJSON *v1_cap
     }
 
 
+
     v1_capacity_requirements_local_var = v1_capacity_requirements_create_internal (
         requests ? requestsList : NULL
         );
+
+    if (!v1_capacity_requirements_local_var) {
+        goto end;
+    }
 
     return v1_capacity_requirements_local_var;
 end:

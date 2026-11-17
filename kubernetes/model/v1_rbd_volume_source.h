@@ -25,7 +25,7 @@ typedef struct v1_rbd_volume_source_t {
     char *keyring; // string
     list_t *monitors; //primitive container
     char *pool; // string
-    int read_only; //boolean
+    int *read_only; //boolean
     struct v1_local_object_reference_t *secret_ref; //model
     char *user; // string
 
@@ -38,7 +38,7 @@ __attribute__((deprecated)) v1_rbd_volume_source_t *v1_rbd_volume_source_create(
     char *keyring,
     list_t *monitors,
     char *pool,
-    int read_only,
+    int *read_only,
     v1_local_object_reference_t *secret_ref,
     char *user
 );

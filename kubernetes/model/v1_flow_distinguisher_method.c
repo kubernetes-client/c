@@ -12,18 +12,21 @@ static v1_flow_distinguisher_method_t *v1_flow_distinguisher_method_create_inter
     if (!v1_flow_distinguisher_method_local_var) {
         return NULL;
     }
-    v1_flow_distinguisher_method_local_var->type = type;
-
+    memset(v1_flow_distinguisher_method_local_var, 0, sizeof(v1_flow_distinguisher_method_t));
     v1_flow_distinguisher_method_local_var->_library_owned = 1;
+    v1_flow_distinguisher_method_local_var->type = type;
     return v1_flow_distinguisher_method_local_var;
 }
 
 __attribute__((deprecated)) v1_flow_distinguisher_method_t *v1_flow_distinguisher_method_create(
     char *type
     ) {
-    return v1_flow_distinguisher_method_create_internal (
+    v1_flow_distinguisher_method_t *result = v1_flow_distinguisher_method_create_internal (
         type
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_flow_distinguisher_method_free(v1_flow_distinguisher_method_t *v1_flow_distinguisher_method) {
@@ -65,6 +68,8 @@ v1_flow_distinguisher_method_t *v1_flow_distinguisher_method_parseFromJSON(cJSON
 
     v1_flow_distinguisher_method_t *v1_flow_distinguisher_method_local_var = NULL;
 
+    char *type_local_str = NULL;
+
     // v1_flow_distinguisher_method->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v1_flow_distinguisher_methodJSON, "type");
     if (cJSON_IsNull(type)) {
@@ -81,12 +86,22 @@ v1_flow_distinguisher_method_t *v1_flow_distinguisher_method_parseFromJSON(cJSON
     }
 
 
+    if (type && !cJSON_IsNull(type)) type_local_str = strdup(type->valuestring);
+
     v1_flow_distinguisher_method_local_var = v1_flow_distinguisher_method_create_internal (
-        strdup(type->valuestring)
+        type_local_str
         );
+
+    if (!v1_flow_distinguisher_method_local_var) {
+        goto end;
+    }
 
     return v1_flow_distinguisher_method_local_var;
 end:
+    if (type_local_str) {
+        free(type_local_str);
+        type_local_str = NULL;
+    }
     return NULL;
 
 }

@@ -24,13 +24,15 @@ v1_key_to_path_t* instantiate_v1_key_to_path(int include_optional) {
     v1_key_to_path = v1_key_to_path_create(
       "0",
       56,
-      "0"
+      "0",
+      56
     );
   } else {
     v1_key_to_path = v1_key_to_path_create(
       "0",
       56,
-      "0"
+      "0",
+      56
     );
   }
 

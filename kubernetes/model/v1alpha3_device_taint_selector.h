@@ -15,26 +15,21 @@
 
 typedef struct v1alpha3_device_taint_selector_t v1alpha3_device_taint_selector_t;
 
-#include "v1alpha3_device_selector.h"
 
 
 
 typedef struct v1alpha3_device_taint_selector_t {
     char *device; // string
-    char *device_class_name; // string
     char *driver; // string
     char *pool; // string
-    list_t *selectors; //nonprimitive container
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha3_device_taint_selector_t;
 
 __attribute__((deprecated)) v1alpha3_device_taint_selector_t *v1alpha3_device_taint_selector_create(
     char *device,
-    char *device_class_name,
     char *driver,
-    char *pool,
-    list_t *selectors
+    char *pool
 );
 
 void v1alpha3_device_taint_selector_free(v1alpha3_device_taint_selector_t *v1alpha3_device_taint_selector);

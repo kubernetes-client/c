@@ -14,11 +14,11 @@ static v1_resource_field_selector_t *v1_resource_field_selector_create_internal(
     if (!v1_resource_field_selector_local_var) {
         return NULL;
     }
+    memset(v1_resource_field_selector_local_var, 0, sizeof(v1_resource_field_selector_t));
+    v1_resource_field_selector_local_var->_library_owned = 1;
     v1_resource_field_selector_local_var->container_name = container_name;
     v1_resource_field_selector_local_var->divisor = divisor;
     v1_resource_field_selector_local_var->resource = resource;
-
-    v1_resource_field_selector_local_var->_library_owned = 1;
     return v1_resource_field_selector_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_resource_field_selector_t *v1_resource_field_sele
     char *divisor,
     char *resource
     ) {
-    return v1_resource_field_selector_create_internal (
+    v1_resource_field_selector_t *result = v1_resource_field_selector_create_internal (
         container_name,
         divisor,
         resource
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_resource_field_selector_free(v1_resource_field_selector_t *v1_resource_field_selector) {
@@ -97,6 +100,12 @@ v1_resource_field_selector_t *v1_resource_field_selector_parseFromJSON(cJSON *v1
 
     v1_resource_field_selector_t *v1_resource_field_selector_local_var = NULL;
 
+    char *container_name_local_str = NULL;
+
+    char *divisor_local_str = NULL;
+
+    char *resource_local_str = NULL;
+
     // v1_resource_field_selector->container_name
     cJSON *container_name = cJSON_GetObjectItemCaseSensitive(v1_resource_field_selectorJSON, "containerName");
     if (cJSON_IsNull(container_name)) {
@@ -137,14 +146,34 @@ v1_resource_field_selector_t *v1_resource_field_selector_parseFromJSON(cJSON *v1
     }
 
 
+    if (container_name && !cJSON_IsNull(container_name)) container_name_local_str = strdup(container_name->valuestring);
+    if (divisor && !cJSON_IsNull(divisor)) divisor_local_str = strdup(divisor->valuestring);
+    if (resource && !cJSON_IsNull(resource)) resource_local_str = strdup(resource->valuestring);
+
     v1_resource_field_selector_local_var = v1_resource_field_selector_create_internal (
-        container_name && !cJSON_IsNull(container_name) ? strdup(container_name->valuestring) : NULL,
-        divisor && !cJSON_IsNull(divisor) ? strdup(divisor->valuestring) : NULL,
-        strdup(resource->valuestring)
+        container_name_local_str,
+        divisor_local_str,
+        resource_local_str
         );
+
+    if (!v1_resource_field_selector_local_var) {
+        goto end;
+    }
 
     return v1_resource_field_selector_local_var;
 end:
+    if (container_name_local_str) {
+        free(container_name_local_str);
+        container_name_local_str = NULL;
+    }
+    if (divisor_local_str) {
+        free(divisor_local_str);
+        divisor_local_str = NULL;
+    }
+    if (resource_local_str) {
+        free(resource_local_str);
+        resource_local_str = NULL;
+    }
     return NULL;
 
 }

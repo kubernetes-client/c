@@ -13,10 +13,10 @@ static v1_pod_anti_affinity_t *v1_pod_anti_affinity_create_internal(
     if (!v1_pod_anti_affinity_local_var) {
         return NULL;
     }
+    memset(v1_pod_anti_affinity_local_var, 0, sizeof(v1_pod_anti_affinity_t));
+    v1_pod_anti_affinity_local_var->_library_owned = 1;
     v1_pod_anti_affinity_local_var->preferred_during_scheduling_ignored_during_execution = preferred_during_scheduling_ignored_during_execution;
     v1_pod_anti_affinity_local_var->required_during_scheduling_ignored_during_execution = required_during_scheduling_ignored_during_execution;
-
-    v1_pod_anti_affinity_local_var->_library_owned = 1;
     return v1_pod_anti_affinity_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_pod_anti_affinity_t *v1_pod_anti_affinity_create(
     list_t *preferred_during_scheduling_ignored_during_execution,
     list_t *required_during_scheduling_ignored_during_execution
     ) {
-    return v1_pod_anti_affinity_create_internal (
+    v1_pod_anti_affinity_t *result = v1_pod_anti_affinity_create_internal (
         preferred_during_scheduling_ignored_during_execution,
         required_during_scheduling_ignored_during_execution
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_pod_anti_affinity_free(v1_pod_anti_affinity_t *v1_pod_anti_affinity) {
@@ -165,10 +168,15 @@ v1_pod_anti_affinity_t *v1_pod_anti_affinity_parseFromJSON(cJSON *v1_pod_anti_af
     }
 
 
+
     v1_pod_anti_affinity_local_var = v1_pod_anti_affinity_create_internal (
         preferred_during_scheduling_ignored_during_execution ? preferred_during_scheduling_ignored_during_executionList : NULL,
         required_during_scheduling_ignored_during_execution ? required_during_scheduling_ignored_during_executionList : NULL
         );
+
+    if (!v1_pod_anti_affinity_local_var) {
+        goto end;
+    }
 
     return v1_pod_anti_affinity_local_var;
 end:

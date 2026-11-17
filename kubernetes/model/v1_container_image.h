@@ -20,14 +20,14 @@ typedef struct v1_container_image_t v1_container_image_t;
 
 typedef struct v1_container_image_t {
     list_t *names; //primitive container
-    long size_bytes; //numeric
+    long *size_bytes; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_container_image_t;
 
 __attribute__((deprecated)) v1_container_image_t *v1_container_image_create(
     list_t *names,
-    long size_bytes
+    long *size_bytes
 );
 
 void v1_container_image_free(v1_container_image_t *v1_container_image);

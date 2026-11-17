@@ -18,6 +18,8 @@ static v1_validating_admission_policy_spec_t *v1_validating_admission_policy_spe
     if (!v1_validating_admission_policy_spec_local_var) {
         return NULL;
     }
+    memset(v1_validating_admission_policy_spec_local_var, 0, sizeof(v1_validating_admission_policy_spec_t));
+    v1_validating_admission_policy_spec_local_var->_library_owned = 1;
     v1_validating_admission_policy_spec_local_var->audit_annotations = audit_annotations;
     v1_validating_admission_policy_spec_local_var->failure_policy = failure_policy;
     v1_validating_admission_policy_spec_local_var->match_conditions = match_conditions;
@@ -25,8 +27,6 @@ static v1_validating_admission_policy_spec_t *v1_validating_admission_policy_spe
     v1_validating_admission_policy_spec_local_var->param_kind = param_kind;
     v1_validating_admission_policy_spec_local_var->validations = validations;
     v1_validating_admission_policy_spec_local_var->variables = variables;
-
-    v1_validating_admission_policy_spec_local_var->_library_owned = 1;
     return v1_validating_admission_policy_spec_local_var;
 }
 
@@ -39,7 +39,7 @@ __attribute__((deprecated)) v1_validating_admission_policy_spec_t *v1_validating
     list_t *validations,
     list_t *variables
     ) {
-    return v1_validating_admission_policy_spec_create_internal (
+    v1_validating_admission_policy_spec_t *result = v1_validating_admission_policy_spec_create_internal (
         audit_annotations,
         failure_policy,
         match_conditions,
@@ -48,6 +48,9 @@ __attribute__((deprecated)) v1_validating_admission_policy_spec_t *v1_validating
         validations,
         variables
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_validating_admission_policy_spec_free(v1_validating_admission_policy_spec_t *v1_validating_admission_policy_spec) {
@@ -233,6 +236,8 @@ v1_validating_admission_policy_spec_t *v1_validating_admission_policy_spec_parse
     // define the local list for v1_validating_admission_policy_spec->audit_annotations
     list_t *audit_annotationsList = NULL;
 
+    char *failure_policy_local_str = NULL;
+
     // define the local list for v1_validating_admission_policy_spec->match_conditions
     list_t *match_conditionsList = NULL;
 
@@ -375,15 +380,21 @@ v1_validating_admission_policy_spec_t *v1_validating_admission_policy_spec_parse
     }
 
 
+    if (failure_policy && !cJSON_IsNull(failure_policy)) failure_policy_local_str = strdup(failure_policy->valuestring);
+
     v1_validating_admission_policy_spec_local_var = v1_validating_admission_policy_spec_create_internal (
         audit_annotations ? audit_annotationsList : NULL,
-        failure_policy && !cJSON_IsNull(failure_policy) ? strdup(failure_policy->valuestring) : NULL,
+        failure_policy_local_str,
         match_conditions ? match_conditionsList : NULL,
         match_constraints ? match_constraints_local_nonprim : NULL,
         param_kind ? param_kind_local_nonprim : NULL,
         validations ? validationsList : NULL,
         variables ? variablesList : NULL
         );
+
+    if (!v1_validating_admission_policy_spec_local_var) {
+        goto end;
+    }
 
     return v1_validating_admission_policy_spec_local_var;
 end:
@@ -395,6 +406,10 @@ end:
         }
         list_freeList(audit_annotationsList);
         audit_annotationsList = NULL;
+    }
+    if (failure_policy_local_str) {
+        free(failure_policy_local_str);
+        failure_policy_local_str = NULL;
     }
     if (match_conditionsList) {
         listEntry_t *listEntry = NULL;

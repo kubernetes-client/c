@@ -21,6 +21,7 @@ typedef struct v2_horizontal_pod_autoscaler_condition_t v2_horizontal_pod_autosc
 typedef struct v2_horizontal_pod_autoscaler_condition_t {
     char *last_transition_time; //date time
     char *message; // string
+    long *observed_generation; //numeric
     char *reason; // string
     char *status; // string
     char *type; // string
@@ -31,6 +32,7 @@ typedef struct v2_horizontal_pod_autoscaler_condition_t {
 __attribute__((deprecated)) v2_horizontal_pod_autoscaler_condition_t *v2_horizontal_pod_autoscaler_condition_create(
     char *last_transition_time,
     char *message,
+    long *observed_generation,
     char *reason,
     char *status,
     char *type

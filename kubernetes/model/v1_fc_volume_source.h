@@ -20,8 +20,8 @@ typedef struct v1_fc_volume_source_t v1_fc_volume_source_t;
 
 typedef struct v1_fc_volume_source_t {
     char *fs_type; // string
-    int lun; //numeric
-    int read_only; //boolean
+    int *lun; //numeric
+    int *read_only; //boolean
     list_t *target_wwns; //primitive container
     list_t *wwids; //primitive container
 
@@ -30,8 +30,8 @@ typedef struct v1_fc_volume_source_t {
 
 __attribute__((deprecated)) v1_fc_volume_source_t *v1_fc_volume_source_create(
     char *fs_type,
-    int lun,
-    int read_only,
+    int *lun,
+    int *read_only,
     list_t *target_wwns,
     list_t *wwids
 );

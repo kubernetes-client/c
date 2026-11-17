@@ -7,20 +7,22 @@
 
 static v1_probe_t *v1_probe_create_internal(
     v1_exec_action_t *exec,
-    int failure_threshold,
+    int *failure_threshold,
     v1_grpc_action_t *grpc,
     v1_http_get_action_t *http_get,
-    int initial_delay_seconds,
-    int period_seconds,
-    int success_threshold,
+    int *initial_delay_seconds,
+    int *period_seconds,
+    int *success_threshold,
     v1_tcp_socket_action_t *tcp_socket,
-    long termination_grace_period_seconds,
-    int timeout_seconds
+    long *termination_grace_period_seconds,
+    int *timeout_seconds
     ) {
     v1_probe_t *v1_probe_local_var = malloc(sizeof(v1_probe_t));
     if (!v1_probe_local_var) {
         return NULL;
     }
+    memset(v1_probe_local_var, 0, sizeof(v1_probe_t));
+    v1_probe_local_var->_library_owned = 1;
     v1_probe_local_var->exec = exec;
     v1_probe_local_var->failure_threshold = failure_threshold;
     v1_probe_local_var->grpc = grpc;
@@ -31,35 +33,72 @@ static v1_probe_t *v1_probe_create_internal(
     v1_probe_local_var->tcp_socket = tcp_socket;
     v1_probe_local_var->termination_grace_period_seconds = termination_grace_period_seconds;
     v1_probe_local_var->timeout_seconds = timeout_seconds;
-
-    v1_probe_local_var->_library_owned = 1;
     return v1_probe_local_var;
 }
 
 __attribute__((deprecated)) v1_probe_t *v1_probe_create(
     v1_exec_action_t *exec,
-    int failure_threshold,
+    int *failure_threshold,
     v1_grpc_action_t *grpc,
     v1_http_get_action_t *http_get,
-    int initial_delay_seconds,
-    int period_seconds,
-    int success_threshold,
+    int *initial_delay_seconds,
+    int *period_seconds,
+    int *success_threshold,
     v1_tcp_socket_action_t *tcp_socket,
-    long termination_grace_period_seconds,
-    int timeout_seconds
+    long *termination_grace_period_seconds,
+    int *timeout_seconds
     ) {
-    return v1_probe_create_internal (
+    int *failure_threshold_copy = NULL;
+    if (failure_threshold) {
+        failure_threshold_copy = malloc(sizeof(int));
+        if (failure_threshold_copy) *failure_threshold_copy = *failure_threshold;
+    }
+    int *initial_delay_seconds_copy = NULL;
+    if (initial_delay_seconds) {
+        initial_delay_seconds_copy = malloc(sizeof(int));
+        if (initial_delay_seconds_copy) *initial_delay_seconds_copy = *initial_delay_seconds;
+    }
+    int *period_seconds_copy = NULL;
+    if (period_seconds) {
+        period_seconds_copy = malloc(sizeof(int));
+        if (period_seconds_copy) *period_seconds_copy = *period_seconds;
+    }
+    int *success_threshold_copy = NULL;
+    if (success_threshold) {
+        success_threshold_copy = malloc(sizeof(int));
+        if (success_threshold_copy) *success_threshold_copy = *success_threshold;
+    }
+    long *termination_grace_period_seconds_copy = NULL;
+    if (termination_grace_period_seconds) {
+        termination_grace_period_seconds_copy = malloc(sizeof(long));
+        if (termination_grace_period_seconds_copy) *termination_grace_period_seconds_copy = *termination_grace_period_seconds;
+    }
+    int *timeout_seconds_copy = NULL;
+    if (timeout_seconds) {
+        timeout_seconds_copy = malloc(sizeof(int));
+        if (timeout_seconds_copy) *timeout_seconds_copy = *timeout_seconds;
+    }
+    v1_probe_t *result = v1_probe_create_internal (
         exec,
-        failure_threshold,
+        failure_threshold_copy,
         grpc,
         http_get,
-        initial_delay_seconds,
-        period_seconds,
-        success_threshold,
+        initial_delay_seconds_copy,
+        period_seconds_copy,
+        success_threshold_copy,
         tcp_socket,
-        termination_grace_period_seconds,
-        timeout_seconds
+        termination_grace_period_seconds_copy,
+        timeout_seconds_copy
         );
+    if (!result) {
+        free(failure_threshold_copy);
+        free(initial_delay_seconds_copy);
+        free(period_seconds_copy);
+        free(success_threshold_copy);
+        free(termination_grace_period_seconds_copy);
+        free(timeout_seconds_copy);
+    }
+    return result;
 }
 
 void v1_probe_free(v1_probe_t *v1_probe) {
@@ -75,6 +114,10 @@ void v1_probe_free(v1_probe_t *v1_probe) {
         v1_exec_action_free(v1_probe->exec);
         v1_probe->exec = NULL;
     }
+    if (v1_probe->failure_threshold) {
+        free(v1_probe->failure_threshold);
+        v1_probe->failure_threshold = NULL;
+    }
     if (v1_probe->grpc) {
         v1_grpc_action_free(v1_probe->grpc);
         v1_probe->grpc = NULL;
@@ -83,9 +126,29 @@ void v1_probe_free(v1_probe_t *v1_probe) {
         v1_http_get_action_free(v1_probe->http_get);
         v1_probe->http_get = NULL;
     }
+    if (v1_probe->initial_delay_seconds) {
+        free(v1_probe->initial_delay_seconds);
+        v1_probe->initial_delay_seconds = NULL;
+    }
+    if (v1_probe->period_seconds) {
+        free(v1_probe->period_seconds);
+        v1_probe->period_seconds = NULL;
+    }
+    if (v1_probe->success_threshold) {
+        free(v1_probe->success_threshold);
+        v1_probe->success_threshold = NULL;
+    }
     if (v1_probe->tcp_socket) {
         v1_tcp_socket_action_free(v1_probe->tcp_socket);
         v1_probe->tcp_socket = NULL;
+    }
+    if (v1_probe->termination_grace_period_seconds) {
+        free(v1_probe->termination_grace_period_seconds);
+        v1_probe->termination_grace_period_seconds = NULL;
+    }
+    if (v1_probe->timeout_seconds) {
+        free(v1_probe->timeout_seconds);
+        v1_probe->timeout_seconds = NULL;
     }
     free(v1_probe);
 }
@@ -108,7 +171,7 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
 
     // v1_probe->failure_threshold
     if(v1_probe->failure_threshold) {
-    if(cJSON_AddNumberToObject(item, "failureThreshold", v1_probe->failure_threshold) == NULL) {
+    if(cJSON_AddNumberToObject(item, "failureThreshold", *v1_probe->failure_threshold) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -142,7 +205,7 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
 
     // v1_probe->initial_delay_seconds
     if(v1_probe->initial_delay_seconds) {
-    if(cJSON_AddNumberToObject(item, "initialDelaySeconds", v1_probe->initial_delay_seconds) == NULL) {
+    if(cJSON_AddNumberToObject(item, "initialDelaySeconds", *v1_probe->initial_delay_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -150,7 +213,7 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
 
     // v1_probe->period_seconds
     if(v1_probe->period_seconds) {
-    if(cJSON_AddNumberToObject(item, "periodSeconds", v1_probe->period_seconds) == NULL) {
+    if(cJSON_AddNumberToObject(item, "periodSeconds", *v1_probe->period_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -158,7 +221,7 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
 
     // v1_probe->success_threshold
     if(v1_probe->success_threshold) {
-    if(cJSON_AddNumberToObject(item, "successThreshold", v1_probe->success_threshold) == NULL) {
+    if(cJSON_AddNumberToObject(item, "successThreshold", *v1_probe->success_threshold) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -179,7 +242,7 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
 
     // v1_probe->termination_grace_period_seconds
     if(v1_probe->termination_grace_period_seconds) {
-    if(cJSON_AddNumberToObject(item, "terminationGracePeriodSeconds", v1_probe->termination_grace_period_seconds) == NULL) {
+    if(cJSON_AddNumberToObject(item, "terminationGracePeriodSeconds", *v1_probe->termination_grace_period_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -187,7 +250,7 @@ cJSON *v1_probe_convertToJSON(v1_probe_t *v1_probe) {
 
     // v1_probe->timeout_seconds
     if(v1_probe->timeout_seconds) {
-    if(cJSON_AddNumberToObject(item, "timeoutSeconds", v1_probe->timeout_seconds) == NULL) {
+    if(cJSON_AddNumberToObject(item, "timeoutSeconds", *v1_probe->timeout_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -207,14 +270,32 @@ v1_probe_t *v1_probe_parseFromJSON(cJSON *v1_probeJSON){
     // define the local variable for v1_probe->exec
     v1_exec_action_t *exec_local_nonprim = NULL;
 
+    // define the local variable for v1_probe->failure_threshold
+    int *failure_threshold_local_var = NULL;
+
     // define the local variable for v1_probe->grpc
     v1_grpc_action_t *grpc_local_nonprim = NULL;
 
     // define the local variable for v1_probe->http_get
     v1_http_get_action_t *http_get_local_nonprim = NULL;
 
+    // define the local variable for v1_probe->initial_delay_seconds
+    int *initial_delay_seconds_local_var = NULL;
+
+    // define the local variable for v1_probe->period_seconds
+    int *period_seconds_local_var = NULL;
+
+    // define the local variable for v1_probe->success_threshold
+    int *success_threshold_local_var = NULL;
+
     // define the local variable for v1_probe->tcp_socket
     v1_tcp_socket_action_t *tcp_socket_local_nonprim = NULL;
+
+    // define the local variable for v1_probe->termination_grace_period_seconds
+    long *termination_grace_period_seconds_local_var = NULL;
+
+    // define the local variable for v1_probe->timeout_seconds
+    int *timeout_seconds_local_var = NULL;
 
     // v1_probe->exec
     cJSON *exec = cJSON_GetObjectItemCaseSensitive(v1_probeJSON, "exec");
@@ -235,6 +316,12 @@ v1_probe_t *v1_probe_parseFromJSON(cJSON *v1_probeJSON){
     {
     goto end; //Numeric
     }
+    failure_threshold_local_var = malloc(sizeof(int));
+    if(!failure_threshold_local_var)
+    {
+        goto end;
+    }
+    *failure_threshold_local_var = failure_threshold->valuedouble;
     }
 
     // v1_probe->grpc
@@ -265,6 +352,12 @@ v1_probe_t *v1_probe_parseFromJSON(cJSON *v1_probeJSON){
     {
     goto end; //Numeric
     }
+    initial_delay_seconds_local_var = malloc(sizeof(int));
+    if(!initial_delay_seconds_local_var)
+    {
+        goto end;
+    }
+    *initial_delay_seconds_local_var = initial_delay_seconds->valuedouble;
     }
 
     // v1_probe->period_seconds
@@ -277,6 +370,12 @@ v1_probe_t *v1_probe_parseFromJSON(cJSON *v1_probeJSON){
     {
     goto end; //Numeric
     }
+    period_seconds_local_var = malloc(sizeof(int));
+    if(!period_seconds_local_var)
+    {
+        goto end;
+    }
+    *period_seconds_local_var = period_seconds->valuedouble;
     }
 
     // v1_probe->success_threshold
@@ -289,6 +388,12 @@ v1_probe_t *v1_probe_parseFromJSON(cJSON *v1_probeJSON){
     {
     goto end; //Numeric
     }
+    success_threshold_local_var = malloc(sizeof(int));
+    if(!success_threshold_local_var)
+    {
+        goto end;
+    }
+    *success_threshold_local_var = success_threshold->valuedouble;
     }
 
     // v1_probe->tcp_socket
@@ -310,6 +415,12 @@ v1_probe_t *v1_probe_parseFromJSON(cJSON *v1_probeJSON){
     {
     goto end; //Numeric
     }
+    termination_grace_period_seconds_local_var = malloc(sizeof(long));
+    if(!termination_grace_period_seconds_local_var)
+    {
+        goto end;
+    }
+    *termination_grace_period_seconds_local_var = termination_grace_period_seconds->valuedouble;
     }
 
     // v1_probe->timeout_seconds
@@ -322,27 +433,42 @@ v1_probe_t *v1_probe_parseFromJSON(cJSON *v1_probeJSON){
     {
     goto end; //Numeric
     }
+    timeout_seconds_local_var = malloc(sizeof(int));
+    if(!timeout_seconds_local_var)
+    {
+        goto end;
     }
+    *timeout_seconds_local_var = timeout_seconds->valuedouble;
+    }
+
 
 
     v1_probe_local_var = v1_probe_create_internal (
         exec ? exec_local_nonprim : NULL,
-        failure_threshold ? failure_threshold->valuedouble : 0,
+        failure_threshold_local_var,
         grpc ? grpc_local_nonprim : NULL,
         http_get ? http_get_local_nonprim : NULL,
-        initial_delay_seconds ? initial_delay_seconds->valuedouble : 0,
-        period_seconds ? period_seconds->valuedouble : 0,
-        success_threshold ? success_threshold->valuedouble : 0,
+        initial_delay_seconds_local_var,
+        period_seconds_local_var,
+        success_threshold_local_var,
         tcp_socket ? tcp_socket_local_nonprim : NULL,
-        termination_grace_period_seconds ? termination_grace_period_seconds->valuedouble : 0,
-        timeout_seconds ? timeout_seconds->valuedouble : 0
+        termination_grace_period_seconds_local_var,
+        timeout_seconds_local_var
         );
+
+    if (!v1_probe_local_var) {
+        goto end;
+    }
 
     return v1_probe_local_var;
 end:
     if (exec_local_nonprim) {
         v1_exec_action_free(exec_local_nonprim);
         exec_local_nonprim = NULL;
+    }
+    if (failure_threshold_local_var) {
+        free(failure_threshold_local_var);
+        failure_threshold_local_var = NULL;
     }
     if (grpc_local_nonprim) {
         v1_grpc_action_free(grpc_local_nonprim);
@@ -352,9 +478,29 @@ end:
         v1_http_get_action_free(http_get_local_nonprim);
         http_get_local_nonprim = NULL;
     }
+    if (initial_delay_seconds_local_var) {
+        free(initial_delay_seconds_local_var);
+        initial_delay_seconds_local_var = NULL;
+    }
+    if (period_seconds_local_var) {
+        free(period_seconds_local_var);
+        period_seconds_local_var = NULL;
+    }
+    if (success_threshold_local_var) {
+        free(success_threshold_local_var);
+        success_threshold_local_var = NULL;
+    }
     if (tcp_socket_local_nonprim) {
         v1_tcp_socket_action_free(tcp_socket_local_nonprim);
         tcp_socket_local_nonprim = NULL;
+    }
+    if (termination_grace_period_seconds_local_var) {
+        free(termination_grace_period_seconds_local_var);
+        termination_grace_period_seconds_local_var = NULL;
+    }
+    if (timeout_seconds_local_var) {
+        free(timeout_seconds_local_var);
+        timeout_seconds_local_var = NULL;
     }
     return NULL;
 

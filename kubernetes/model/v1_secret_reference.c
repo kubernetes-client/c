@@ -13,10 +13,10 @@ static v1_secret_reference_t *v1_secret_reference_create_internal(
     if (!v1_secret_reference_local_var) {
         return NULL;
     }
+    memset(v1_secret_reference_local_var, 0, sizeof(v1_secret_reference_t));
+    v1_secret_reference_local_var->_library_owned = 1;
     v1_secret_reference_local_var->name = name;
     v1_secret_reference_local_var->_namespace = _namespace;
-
-    v1_secret_reference_local_var->_library_owned = 1;
     return v1_secret_reference_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_secret_reference_t *v1_secret_reference_create(
     char *name,
     char *_namespace
     ) {
-    return v1_secret_reference_create_internal (
+    v1_secret_reference_t *result = v1_secret_reference_create_internal (
         name,
         _namespace
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_secret_reference_free(v1_secret_reference_t *v1_secret_reference) {
@@ -80,6 +83,10 @@ v1_secret_reference_t *v1_secret_reference_parseFromJSON(cJSON *v1_secret_refere
 
     v1_secret_reference_t *v1_secret_reference_local_var = NULL;
 
+    char *name_local_str = NULL;
+
+    char *_namespace_local_str = NULL;
+
     // v1_secret_reference->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_secret_referenceJSON, "name");
     if (cJSON_IsNull(name)) {
@@ -105,13 +112,28 @@ v1_secret_reference_t *v1_secret_reference_parseFromJSON(cJSON *v1_secret_refere
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (_namespace && !cJSON_IsNull(_namespace)) _namespace_local_str = strdup(_namespace->valuestring);
+
     v1_secret_reference_local_var = v1_secret_reference_create_internal (
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
-        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL
+        name_local_str,
+        _namespace_local_str
         );
+
+    if (!v1_secret_reference_local_var) {
+        goto end;
+    }
 
     return v1_secret_reference_local_var;
 end:
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (_namespace_local_str) {
+        free(_namespace_local_str);
+        _namespace_local_str = NULL;
+    }
     return NULL;
 
 }

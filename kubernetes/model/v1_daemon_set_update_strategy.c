@@ -13,10 +13,10 @@ static v1_daemon_set_update_strategy_t *v1_daemon_set_update_strategy_create_int
     if (!v1_daemon_set_update_strategy_local_var) {
         return NULL;
     }
+    memset(v1_daemon_set_update_strategy_local_var, 0, sizeof(v1_daemon_set_update_strategy_t));
+    v1_daemon_set_update_strategy_local_var->_library_owned = 1;
     v1_daemon_set_update_strategy_local_var->rolling_update = rolling_update;
     v1_daemon_set_update_strategy_local_var->type = type;
-
-    v1_daemon_set_update_strategy_local_var->_library_owned = 1;
     return v1_daemon_set_update_strategy_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_daemon_set_update_strategy_t *v1_daemon_set_updat
     v1_rolling_update_daemon_set_t *rolling_update,
     char *type
     ) {
-    return v1_daemon_set_update_strategy_create_internal (
+    v1_daemon_set_update_strategy_t *result = v1_daemon_set_update_strategy_create_internal (
         rolling_update,
         type
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_daemon_set_update_strategy_free(v1_daemon_set_update_strategy_t *v1_daemon_set_update_strategy) {
@@ -88,6 +91,8 @@ v1_daemon_set_update_strategy_t *v1_daemon_set_update_strategy_parseFromJSON(cJS
     // define the local variable for v1_daemon_set_update_strategy->rolling_update
     v1_rolling_update_daemon_set_t *rolling_update_local_nonprim = NULL;
 
+    char *type_local_str = NULL;
+
     // v1_daemon_set_update_strategy->rolling_update
     cJSON *rolling_update = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_update_strategyJSON, "rollingUpdate");
     if (cJSON_IsNull(rolling_update)) {
@@ -110,16 +115,26 @@ v1_daemon_set_update_strategy_t *v1_daemon_set_update_strategy_parseFromJSON(cJS
     }
 
 
+    if (type && !cJSON_IsNull(type)) type_local_str = strdup(type->valuestring);
+
     v1_daemon_set_update_strategy_local_var = v1_daemon_set_update_strategy_create_internal (
         rolling_update ? rolling_update_local_nonprim : NULL,
-        type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
+        type_local_str
         );
+
+    if (!v1_daemon_set_update_strategy_local_var) {
+        goto end;
+    }
 
     return v1_daemon_set_update_strategy_local_var;
 end:
     if (rolling_update_local_nonprim) {
         v1_rolling_update_daemon_set_free(rolling_update_local_nonprim);
         rolling_update_local_nonprim = NULL;
+    }
+    if (type_local_str) {
+        free(type_local_str);
+        type_local_str = NULL;
     }
     return NULL;
 

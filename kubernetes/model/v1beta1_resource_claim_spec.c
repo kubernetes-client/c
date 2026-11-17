@@ -12,18 +12,21 @@ static v1beta1_resource_claim_spec_t *v1beta1_resource_claim_spec_create_interna
     if (!v1beta1_resource_claim_spec_local_var) {
         return NULL;
     }
-    v1beta1_resource_claim_spec_local_var->devices = devices;
-
+    memset(v1beta1_resource_claim_spec_local_var, 0, sizeof(v1beta1_resource_claim_spec_t));
     v1beta1_resource_claim_spec_local_var->_library_owned = 1;
+    v1beta1_resource_claim_spec_local_var->devices = devices;
     return v1beta1_resource_claim_spec_local_var;
 }
 
 __attribute__((deprecated)) v1beta1_resource_claim_spec_t *v1beta1_resource_claim_spec_create(
     v1beta1_device_claim_t *devices
     ) {
-    return v1beta1_resource_claim_spec_create_internal (
+    v1beta1_resource_claim_spec_t *result = v1beta1_resource_claim_spec_create_internal (
         devices
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1beta1_resource_claim_spec_free(v1beta1_resource_claim_spec_t *v1beta1_resource_claim_spec) {
@@ -82,9 +85,14 @@ v1beta1_resource_claim_spec_t *v1beta1_resource_claim_spec_parseFromJSON(cJSON *
     }
 
 
+
     v1beta1_resource_claim_spec_local_var = v1beta1_resource_claim_spec_create_internal (
         devices ? devices_local_nonprim : NULL
         );
+
+    if (!v1beta1_resource_claim_spec_local_var) {
+        goto end;
+    }
 
     return v1beta1_resource_claim_spec_local_var;
 end:

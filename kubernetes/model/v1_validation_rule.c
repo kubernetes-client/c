@@ -9,7 +9,7 @@ static v1_validation_rule_t *v1_validation_rule_create_internal(
     char *field_path,
     char *message,
     char *message_expression,
-    int optional_old_self,
+    int *optional_old_self,
     char *reason,
     char *rule
     ) {
@@ -17,14 +17,14 @@ static v1_validation_rule_t *v1_validation_rule_create_internal(
     if (!v1_validation_rule_local_var) {
         return NULL;
     }
+    memset(v1_validation_rule_local_var, 0, sizeof(v1_validation_rule_t));
+    v1_validation_rule_local_var->_library_owned = 1;
     v1_validation_rule_local_var->field_path = field_path;
     v1_validation_rule_local_var->message = message;
     v1_validation_rule_local_var->message_expression = message_expression;
     v1_validation_rule_local_var->optional_old_self = optional_old_self;
     v1_validation_rule_local_var->reason = reason;
     v1_validation_rule_local_var->rule = rule;
-
-    v1_validation_rule_local_var->_library_owned = 1;
     return v1_validation_rule_local_var;
 }
 
@@ -32,18 +32,27 @@ __attribute__((deprecated)) v1_validation_rule_t *v1_validation_rule_create(
     char *field_path,
     char *message,
     char *message_expression,
-    int optional_old_self,
+    int *optional_old_self,
     char *reason,
     char *rule
     ) {
-    return v1_validation_rule_create_internal (
+    int *optional_old_self_copy = NULL;
+    if (optional_old_self) {
+        optional_old_self_copy = malloc(sizeof(int));
+        if (optional_old_self_copy) *optional_old_self_copy = *optional_old_self;
+    }
+    v1_validation_rule_t *result = v1_validation_rule_create_internal (
         field_path,
         message,
         message_expression,
-        optional_old_self,
+        optional_old_self_copy,
         reason,
         rule
         );
+    if (!result) {
+        free(optional_old_self_copy);
+    }
+    return result;
 }
 
 void v1_validation_rule_free(v1_validation_rule_t *v1_validation_rule) {
@@ -66,6 +75,10 @@ void v1_validation_rule_free(v1_validation_rule_t *v1_validation_rule) {
     if (v1_validation_rule->message_expression) {
         free(v1_validation_rule->message_expression);
         v1_validation_rule->message_expression = NULL;
+    }
+    if (v1_validation_rule->optional_old_self) {
+        free(v1_validation_rule->optional_old_self);
+        v1_validation_rule->optional_old_self = NULL;
     }
     if (v1_validation_rule->reason) {
         free(v1_validation_rule->reason);
@@ -107,7 +120,7 @@ cJSON *v1_validation_rule_convertToJSON(v1_validation_rule_t *v1_validation_rule
 
     // v1_validation_rule->optional_old_self
     if(v1_validation_rule->optional_old_self) {
-    if(cJSON_AddBoolToObject(item, "optionalOldSelf", v1_validation_rule->optional_old_self) == NULL) {
+    if(cJSON_AddBoolToObject(item, "optionalOldSelf", *v1_validation_rule->optional_old_self) == NULL) {
     goto fail; //Bool
     }
     }
@@ -140,6 +153,19 @@ fail:
 v1_validation_rule_t *v1_validation_rule_parseFromJSON(cJSON *v1_validation_ruleJSON){
 
     v1_validation_rule_t *v1_validation_rule_local_var = NULL;
+
+    char *field_path_local_str = NULL;
+
+    char *message_local_str = NULL;
+
+    char *message_expression_local_str = NULL;
+
+    // define the local variable for v1_validation_rule->optional_old_self
+    int *optional_old_self_local_var = NULL;
+
+    char *reason_local_str = NULL;
+
+    char *rule_local_str = NULL;
 
     // v1_validation_rule->field_path
     cJSON *field_path = cJSON_GetObjectItemCaseSensitive(v1_validation_ruleJSON, "fieldPath");
@@ -187,6 +213,12 @@ v1_validation_rule_t *v1_validation_rule_parseFromJSON(cJSON *v1_validation_rule
     {
     goto end; //Bool
     }
+    optional_old_self_local_var = malloc(sizeof(int));
+    if(!optional_old_self_local_var)
+    {
+        goto end;
+    }
+    *optional_old_self_local_var = optional_old_self->valueint;
     }
 
     // v1_validation_rule->reason
@@ -217,17 +249,51 @@ v1_validation_rule_t *v1_validation_rule_parseFromJSON(cJSON *v1_validation_rule
     }
 
 
+    if (field_path && !cJSON_IsNull(field_path)) field_path_local_str = strdup(field_path->valuestring);
+    if (message && !cJSON_IsNull(message)) message_local_str = strdup(message->valuestring);
+    if (message_expression && !cJSON_IsNull(message_expression)) message_expression_local_str = strdup(message_expression->valuestring);
+    if (reason && !cJSON_IsNull(reason)) reason_local_str = strdup(reason->valuestring);
+    if (rule && !cJSON_IsNull(rule)) rule_local_str = strdup(rule->valuestring);
+
     v1_validation_rule_local_var = v1_validation_rule_create_internal (
-        field_path && !cJSON_IsNull(field_path) ? strdup(field_path->valuestring) : NULL,
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
-        message_expression && !cJSON_IsNull(message_expression) ? strdup(message_expression->valuestring) : NULL,
-        optional_old_self ? optional_old_self->valueint : 0,
-        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
-        strdup(rule->valuestring)
+        field_path_local_str,
+        message_local_str,
+        message_expression_local_str,
+        optional_old_self_local_var,
+        reason_local_str,
+        rule_local_str
         );
+
+    if (!v1_validation_rule_local_var) {
+        goto end;
+    }
 
     return v1_validation_rule_local_var;
 end:
+    if (field_path_local_str) {
+        free(field_path_local_str);
+        field_path_local_str = NULL;
+    }
+    if (message_local_str) {
+        free(message_local_str);
+        message_local_str = NULL;
+    }
+    if (message_expression_local_str) {
+        free(message_expression_local_str);
+        message_expression_local_str = NULL;
+    }
+    if (optional_old_self_local_var) {
+        free(optional_old_self_local_var);
+        optional_old_self_local_var = NULL;
+    }
+    if (reason_local_str) {
+        free(reason_local_str);
+        reason_local_str = NULL;
+    }
+    if (rule_local_str) {
+        free(rule_local_str);
+        rule_local_str = NULL;
+    }
     return NULL;
 
 }

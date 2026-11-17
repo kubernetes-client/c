@@ -12,18 +12,21 @@ static v1_namespace_spec_t *v1_namespace_spec_create_internal(
     if (!v1_namespace_spec_local_var) {
         return NULL;
     }
-    v1_namespace_spec_local_var->finalizers = finalizers;
-
+    memset(v1_namespace_spec_local_var, 0, sizeof(v1_namespace_spec_t));
     v1_namespace_spec_local_var->_library_owned = 1;
+    v1_namespace_spec_local_var->finalizers = finalizers;
     return v1_namespace_spec_local_var;
 }
 
 __attribute__((deprecated)) v1_namespace_spec_t *v1_namespace_spec_create(
     list_t *finalizers
     ) {
-    return v1_namespace_spec_create_internal (
+    v1_namespace_spec_t *result = v1_namespace_spec_create_internal (
         finalizers
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_namespace_spec_free(v1_namespace_spec_t *v1_namespace_spec) {
@@ -102,9 +105,14 @@ v1_namespace_spec_t *v1_namespace_spec_parseFromJSON(cJSON *v1_namespace_specJSO
     }
 
 
+
     v1_namespace_spec_local_var = v1_namespace_spec_create_internal (
         finalizers ? finalizersList : NULL
         );
+
+    if (!v1_namespace_spec_local_var) {
+        goto end;
+    }
 
     return v1_namespace_spec_local_var;
 end:

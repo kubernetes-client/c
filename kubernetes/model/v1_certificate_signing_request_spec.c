@@ -6,7 +6,7 @@
 
 
 static v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_create_internal(
-    int expiration_seconds,
+    int *expiration_seconds,
     list_t* extra,
     list_t *groups,
     char *request,
@@ -19,6 +19,8 @@ static v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spe
     if (!v1_certificate_signing_request_spec_local_var) {
         return NULL;
     }
+    memset(v1_certificate_signing_request_spec_local_var, 0, sizeof(v1_certificate_signing_request_spec_t));
+    v1_certificate_signing_request_spec_local_var->_library_owned = 1;
     v1_certificate_signing_request_spec_local_var->expiration_seconds = expiration_seconds;
     v1_certificate_signing_request_spec_local_var->extra = extra;
     v1_certificate_signing_request_spec_local_var->groups = groups;
@@ -27,13 +29,11 @@ static v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spe
     v1_certificate_signing_request_spec_local_var->uid = uid;
     v1_certificate_signing_request_spec_local_var->usages = usages;
     v1_certificate_signing_request_spec_local_var->username = username;
-
-    v1_certificate_signing_request_spec_local_var->_library_owned = 1;
     return v1_certificate_signing_request_spec_local_var;
 }
 
 __attribute__((deprecated)) v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_create(
-    int expiration_seconds,
+    int *expiration_seconds,
     list_t* extra,
     list_t *groups,
     char *request,
@@ -42,8 +42,13 @@ __attribute__((deprecated)) v1_certificate_signing_request_spec_t *v1_certificat
     list_t *usages,
     char *username
     ) {
-    return v1_certificate_signing_request_spec_create_internal (
-        expiration_seconds,
+    int *expiration_seconds_copy = NULL;
+    if (expiration_seconds) {
+        expiration_seconds_copy = malloc(sizeof(int));
+        if (expiration_seconds_copy) *expiration_seconds_copy = *expiration_seconds;
+    }
+    v1_certificate_signing_request_spec_t *result = v1_certificate_signing_request_spec_create_internal (
+        expiration_seconds_copy,
         extra,
         groups,
         request,
@@ -52,6 +57,10 @@ __attribute__((deprecated)) v1_certificate_signing_request_spec_t *v1_certificat
         usages,
         username
         );
+    if (!result) {
+        free(expiration_seconds_copy);
+    }
+    return result;
 }
 
 void v1_certificate_signing_request_spec_free(v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec) {
@@ -63,6 +72,10 @@ void v1_certificate_signing_request_spec_free(v1_certificate_signing_request_spe
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_certificate_signing_request_spec->expiration_seconds) {
+        free(v1_certificate_signing_request_spec->expiration_seconds);
+        v1_certificate_signing_request_spec->expiration_seconds = NULL;
+    }
     if (v1_certificate_signing_request_spec->extra) {
         list_ForEach(listEntry, v1_certificate_signing_request_spec->extra) {
             keyValuePair_t *localKeyValue = listEntry->data;
@@ -111,7 +124,7 @@ cJSON *v1_certificate_signing_request_spec_convertToJSON(v1_certificate_signing_
 
     // v1_certificate_signing_request_spec->expiration_seconds
     if(v1_certificate_signing_request_spec->expiration_seconds) {
-    if(cJSON_AddNumberToObject(item, "expirationSeconds", v1_certificate_signing_request_spec->expiration_seconds) == NULL) {
+    if(cJSON_AddNumberToObject(item, "expirationSeconds", *v1_certificate_signing_request_spec->expiration_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -212,14 +225,25 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
 
     v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_local_var = NULL;
 
+    // define the local variable for v1_certificate_signing_request_spec->expiration_seconds
+    int *expiration_seconds_local_var = NULL;
+
     // define the local map for v1_certificate_signing_request_spec->extra
     list_t *extraList = NULL;
 
     // define the local list for v1_certificate_signing_request_spec->groups
     list_t *groupsList = NULL;
 
+    char *request_local_str = NULL;
+
+    char *signer_name_local_str = NULL;
+
+    char *uid_local_str = NULL;
+
     // define the local list for v1_certificate_signing_request_spec->usages
     list_t *usagesList = NULL;
+
+    char *username_local_str = NULL;
 
     // v1_certificate_signing_request_spec->expiration_seconds
     cJSON *expiration_seconds = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_specJSON, "expirationSeconds");
@@ -231,6 +255,12 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
     {
     goto end; //Numeric
     }
+    expiration_seconds_local_var = malloc(sizeof(int));
+    if(!expiration_seconds_local_var)
+    {
+        goto end;
+    }
+    *expiration_seconds_local_var = expiration_seconds->valuedouble;
     }
 
     // v1_certificate_signing_request_spec->extra
@@ -355,19 +385,32 @@ v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_parse
     }
 
 
+    if (request) request_local_str = strdup(request->valuestring);
+    if (signer_name && !cJSON_IsNull(signer_name)) signer_name_local_str = strdup(signer_name->valuestring);
+    if (uid && !cJSON_IsNull(uid)) uid_local_str = strdup(uid->valuestring);
+    if (username && !cJSON_IsNull(username)) username_local_str = strdup(username->valuestring);
+
     v1_certificate_signing_request_spec_local_var = v1_certificate_signing_request_spec_create_internal (
-        expiration_seconds ? expiration_seconds->valuedouble : 0,
+        expiration_seconds_local_var,
         extra ? extraList : NULL,
         groups ? groupsList : NULL,
-        strdup(request->valuestring),
-        strdup(signer_name->valuestring),
-        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL,
+        request_local_str,
+        signer_name_local_str,
+        uid_local_str,
         usages ? usagesList : NULL,
-        username && !cJSON_IsNull(username) ? strdup(username->valuestring) : NULL
+        username_local_str
         );
+
+    if (!v1_certificate_signing_request_spec_local_var) {
+        goto end;
+    }
 
     return v1_certificate_signing_request_spec_local_var;
 end:
+    if (expiration_seconds_local_var) {
+        free(expiration_seconds_local_var);
+        expiration_seconds_local_var = NULL;
+    }
     if (extraList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, extraList) {
@@ -389,6 +432,18 @@ end:
         list_freeList(groupsList);
         groupsList = NULL;
     }
+    if (request_local_str) {
+        free(request_local_str);
+        request_local_str = NULL;
+    }
+    if (signer_name_local_str) {
+        free(signer_name_local_str);
+        signer_name_local_str = NULL;
+    }
+    if (uid_local_str) {
+        free(uid_local_str);
+        uid_local_str = NULL;
+    }
     if (usagesList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, usagesList) {
@@ -397,6 +452,10 @@ end:
         }
         list_freeList(usagesList);
         usagesList = NULL;
+    }
+    if (username_local_str) {
+        free(username_local_str);
+        username_local_str = NULL;
     }
     return NULL;
 

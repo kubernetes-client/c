@@ -12,18 +12,21 @@ static v1_exec_action_t *v1_exec_action_create_internal(
     if (!v1_exec_action_local_var) {
         return NULL;
     }
-    v1_exec_action_local_var->command = command;
-
+    memset(v1_exec_action_local_var, 0, sizeof(v1_exec_action_t));
     v1_exec_action_local_var->_library_owned = 1;
+    v1_exec_action_local_var->command = command;
     return v1_exec_action_local_var;
 }
 
 __attribute__((deprecated)) v1_exec_action_t *v1_exec_action_create(
     list_t *command
     ) {
-    return v1_exec_action_create_internal (
+    v1_exec_action_t *result = v1_exec_action_create_internal (
         command
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_exec_action_free(v1_exec_action_t *v1_exec_action) {
@@ -102,9 +105,14 @@ v1_exec_action_t *v1_exec_action_parseFromJSON(cJSON *v1_exec_actionJSON){
     }
 
 
+
     v1_exec_action_local_var = v1_exec_action_create_internal (
         command ? commandList : NULL
         );
+
+    if (!v1_exec_action_local_var) {
+        goto end;
+    }
 
     return v1_exec_action_local_var;
 end:

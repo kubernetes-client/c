@@ -12,18 +12,21 @@ static v1_http_ingress_rule_value_t *v1_http_ingress_rule_value_create_internal(
     if (!v1_http_ingress_rule_value_local_var) {
         return NULL;
     }
-    v1_http_ingress_rule_value_local_var->paths = paths;
-
+    memset(v1_http_ingress_rule_value_local_var, 0, sizeof(v1_http_ingress_rule_value_t));
     v1_http_ingress_rule_value_local_var->_library_owned = 1;
+    v1_http_ingress_rule_value_local_var->paths = paths;
     return v1_http_ingress_rule_value_local_var;
 }
 
 __attribute__((deprecated)) v1_http_ingress_rule_value_t *v1_http_ingress_rule_value_create(
     list_t *paths
     ) {
-    return v1_http_ingress_rule_value_create_internal (
+    v1_http_ingress_rule_value_t *result = v1_http_ingress_rule_value_create_internal (
         paths
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_http_ingress_rule_value_free(v1_http_ingress_rule_value_t *v1_http_ingress_rule_value) {
@@ -111,9 +114,14 @@ v1_http_ingress_rule_value_t *v1_http_ingress_rule_value_parseFromJSON(cJSON *v1
     }
 
 
+
     v1_http_ingress_rule_value_local_var = v1_http_ingress_rule_value_create_internal (
         pathsList
         );
+
+    if (!v1_http_ingress_rule_value_local_var) {
+        goto end;
+    }
 
     return v1_http_ingress_rule_value_local_var;
 end:

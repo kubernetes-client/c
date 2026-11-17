@@ -12,18 +12,21 @@ static v1_self_subject_review_status_t *v1_self_subject_review_status_create_int
     if (!v1_self_subject_review_status_local_var) {
         return NULL;
     }
-    v1_self_subject_review_status_local_var->user_info = user_info;
-
+    memset(v1_self_subject_review_status_local_var, 0, sizeof(v1_self_subject_review_status_t));
     v1_self_subject_review_status_local_var->_library_owned = 1;
+    v1_self_subject_review_status_local_var->user_info = user_info;
     return v1_self_subject_review_status_local_var;
 }
 
 __attribute__((deprecated)) v1_self_subject_review_status_t *v1_self_subject_review_status_create(
     v1_user_info_t *user_info
     ) {
-    return v1_self_subject_review_status_create_internal (
+    v1_self_subject_review_status_t *result = v1_self_subject_review_status_create_internal (
         user_info
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_self_subject_review_status_free(v1_self_subject_review_status_t *v1_self_subject_review_status) {
@@ -82,9 +85,14 @@ v1_self_subject_review_status_t *v1_self_subject_review_status_parseFromJSON(cJS
     }
 
 
+
     v1_self_subject_review_status_local_var = v1_self_subject_review_status_create_internal (
         user_info ? user_info_local_nonprim : NULL
         );
+
+    if (!v1_self_subject_review_status_local_var) {
+        goto end;
+    }
 
     return v1_self_subject_review_status_local_var;
 end:

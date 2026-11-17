@@ -13,10 +13,10 @@ static v1_ingress_tls_t *v1_ingress_tls_create_internal(
     if (!v1_ingress_tls_local_var) {
         return NULL;
     }
+    memset(v1_ingress_tls_local_var, 0, sizeof(v1_ingress_tls_t));
+    v1_ingress_tls_local_var->_library_owned = 1;
     v1_ingress_tls_local_var->hosts = hosts;
     v1_ingress_tls_local_var->secret_name = secret_name;
-
-    v1_ingress_tls_local_var->_library_owned = 1;
     return v1_ingress_tls_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_ingress_tls_t *v1_ingress_tls_create(
     list_t *hosts,
     char *secret_name
     ) {
-    return v1_ingress_tls_create_internal (
+    v1_ingress_tls_t *result = v1_ingress_tls_create_internal (
         hosts,
         secret_name
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_ingress_tls_free(v1_ingress_tls_t *v1_ingress_tls) {
@@ -95,6 +98,8 @@ v1_ingress_tls_t *v1_ingress_tls_parseFromJSON(cJSON *v1_ingress_tlsJSON){
     // define the local list for v1_ingress_tls->hosts
     list_t *hostsList = NULL;
 
+    char *secret_name_local_str = NULL;
+
     // v1_ingress_tls->hosts
     cJSON *hosts = cJSON_GetObjectItemCaseSensitive(v1_ingress_tlsJSON, "hosts");
     if (cJSON_IsNull(hosts)) {
@@ -130,10 +135,16 @@ v1_ingress_tls_t *v1_ingress_tls_parseFromJSON(cJSON *v1_ingress_tlsJSON){
     }
 
 
+    if (secret_name && !cJSON_IsNull(secret_name)) secret_name_local_str = strdup(secret_name->valuestring);
+
     v1_ingress_tls_local_var = v1_ingress_tls_create_internal (
         hosts ? hostsList : NULL,
-        secret_name && !cJSON_IsNull(secret_name) ? strdup(secret_name->valuestring) : NULL
+        secret_name_local_str
         );
+
+    if (!v1_ingress_tls_local_var) {
+        goto end;
+    }
 
     return v1_ingress_tls_local_var;
 end:
@@ -145,6 +156,10 @@ end:
         }
         list_freeList(hostsList);
         hostsList = NULL;
+    }
+    if (secret_name_local_str) {
+        free(secret_name_local_str);
+        secret_name_local_str = NULL;
     }
     return NULL;
 

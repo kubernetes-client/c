@@ -17,14 +17,14 @@ static v1_node_condition_t *v1_node_condition_create_internal(
     if (!v1_node_condition_local_var) {
         return NULL;
     }
+    memset(v1_node_condition_local_var, 0, sizeof(v1_node_condition_t));
+    v1_node_condition_local_var->_library_owned = 1;
     v1_node_condition_local_var->last_heartbeat_time = last_heartbeat_time;
     v1_node_condition_local_var->last_transition_time = last_transition_time;
     v1_node_condition_local_var->message = message;
     v1_node_condition_local_var->reason = reason;
     v1_node_condition_local_var->status = status;
     v1_node_condition_local_var->type = type;
-
-    v1_node_condition_local_var->_library_owned = 1;
     return v1_node_condition_local_var;
 }
 
@@ -36,7 +36,7 @@ __attribute__((deprecated)) v1_node_condition_t *v1_node_condition_create(
     char *status,
     char *type
     ) {
-    return v1_node_condition_create_internal (
+    v1_node_condition_t *result = v1_node_condition_create_internal (
         last_heartbeat_time,
         last_transition_time,
         message,
@@ -44,6 +44,9 @@ __attribute__((deprecated)) v1_node_condition_t *v1_node_condition_create(
         status,
         type
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_node_condition_free(v1_node_condition_t *v1_node_condition) {
@@ -146,6 +149,18 @@ v1_node_condition_t *v1_node_condition_parseFromJSON(cJSON *v1_node_conditionJSO
 
     v1_node_condition_t *v1_node_condition_local_var = NULL;
 
+    char *last_heartbeat_time_local_str = NULL;
+
+    char *last_transition_time_local_str = NULL;
+
+    char *message_local_str = NULL;
+
+    char *reason_local_str = NULL;
+
+    char *status_local_str = NULL;
+
+    char *type_local_str = NULL;
+
     // v1_node_condition->last_heartbeat_time
     cJSON *last_heartbeat_time = cJSON_GetObjectItemCaseSensitive(v1_node_conditionJSON, "lastHeartbeatTime");
     if (cJSON_IsNull(last_heartbeat_time)) {
@@ -225,17 +240,52 @@ v1_node_condition_t *v1_node_condition_parseFromJSON(cJSON *v1_node_conditionJSO
     }
 
 
+    if (last_heartbeat_time && !cJSON_IsNull(last_heartbeat_time)) last_heartbeat_time_local_str = strdup(last_heartbeat_time->valuestring);
+    if (last_transition_time && !cJSON_IsNull(last_transition_time)) last_transition_time_local_str = strdup(last_transition_time->valuestring);
+    if (message && !cJSON_IsNull(message)) message_local_str = strdup(message->valuestring);
+    if (reason && !cJSON_IsNull(reason)) reason_local_str = strdup(reason->valuestring);
+    if (status && !cJSON_IsNull(status)) status_local_str = strdup(status->valuestring);
+    if (type && !cJSON_IsNull(type)) type_local_str = strdup(type->valuestring);
+
     v1_node_condition_local_var = v1_node_condition_create_internal (
-        last_heartbeat_time && !cJSON_IsNull(last_heartbeat_time) ? strdup(last_heartbeat_time->valuestring) : NULL,
-        last_transition_time && !cJSON_IsNull(last_transition_time) ? strdup(last_transition_time->valuestring) : NULL,
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
-        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
-        strdup(status->valuestring),
-        strdup(type->valuestring)
+        last_heartbeat_time_local_str,
+        last_transition_time_local_str,
+        message_local_str,
+        reason_local_str,
+        status_local_str,
+        type_local_str
         );
+
+    if (!v1_node_condition_local_var) {
+        goto end;
+    }
 
     return v1_node_condition_local_var;
 end:
+    if (last_heartbeat_time_local_str) {
+        free(last_heartbeat_time_local_str);
+        last_heartbeat_time_local_str = NULL;
+    }
+    if (last_transition_time_local_str) {
+        free(last_transition_time_local_str);
+        last_transition_time_local_str = NULL;
+    }
+    if (message_local_str) {
+        free(message_local_str);
+        message_local_str = NULL;
+    }
+    if (reason_local_str) {
+        free(reason_local_str);
+        reason_local_str = NULL;
+    }
+    if (status_local_str) {
+        free(status_local_str);
+        status_local_str = NULL;
+    }
+    if (type_local_str) {
+        free(type_local_str);
+        type_local_str = NULL;
+    }
     return NULL;
 
 }

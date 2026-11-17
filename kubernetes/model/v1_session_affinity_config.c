@@ -12,18 +12,21 @@ static v1_session_affinity_config_t *v1_session_affinity_config_create_internal(
     if (!v1_session_affinity_config_local_var) {
         return NULL;
     }
-    v1_session_affinity_config_local_var->client_ip = client_ip;
-
+    memset(v1_session_affinity_config_local_var, 0, sizeof(v1_session_affinity_config_t));
     v1_session_affinity_config_local_var->_library_owned = 1;
+    v1_session_affinity_config_local_var->client_ip = client_ip;
     return v1_session_affinity_config_local_var;
 }
 
 __attribute__((deprecated)) v1_session_affinity_config_t *v1_session_affinity_config_create(
     v1_client_ip_config_t *client_ip
     ) {
-    return v1_session_affinity_config_create_internal (
+    v1_session_affinity_config_t *result = v1_session_affinity_config_create_internal (
         client_ip
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_session_affinity_config_free(v1_session_affinity_config_t *v1_session_affinity_config) {
@@ -82,9 +85,14 @@ v1_session_affinity_config_t *v1_session_affinity_config_parseFromJSON(cJSON *v1
     }
 
 
+
     v1_session_affinity_config_local_var = v1_session_affinity_config_create_internal (
         client_ip ? client_ip_local_nonprim : NULL
         );
+
+    if (!v1_session_affinity_config_local_var) {
+        goto end;
+    }
 
     return v1_session_affinity_config_local_var;
 end:

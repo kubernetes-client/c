@@ -8,7 +8,7 @@
 static core_v1_event_t *core_v1_event_create_internal(
     char *action,
     char *api_version,
-    int count,
+    int *count,
     char *event_time,
     char *first_timestamp,
     v1_object_reference_t *involved_object,
@@ -28,6 +28,8 @@ static core_v1_event_t *core_v1_event_create_internal(
     if (!core_v1_event_local_var) {
         return NULL;
     }
+    memset(core_v1_event_local_var, 0, sizeof(core_v1_event_t));
+    core_v1_event_local_var->_library_owned = 1;
     core_v1_event_local_var->action = action;
     core_v1_event_local_var->api_version = api_version;
     core_v1_event_local_var->count = count;
@@ -45,15 +47,13 @@ static core_v1_event_t *core_v1_event_create_internal(
     core_v1_event_local_var->series = series;
     core_v1_event_local_var->source = source;
     core_v1_event_local_var->type = type;
-
-    core_v1_event_local_var->_library_owned = 1;
     return core_v1_event_local_var;
 }
 
 __attribute__((deprecated)) core_v1_event_t *core_v1_event_create(
     char *action,
     char *api_version,
-    int count,
+    int *count,
     char *event_time,
     char *first_timestamp,
     v1_object_reference_t *involved_object,
@@ -69,10 +69,15 @@ __attribute__((deprecated)) core_v1_event_t *core_v1_event_create(
     v1_event_source_t *source,
     char *type
     ) {
-    return core_v1_event_create_internal (
+    int *count_copy = NULL;
+    if (count) {
+        count_copy = malloc(sizeof(int));
+        if (count_copy) *count_copy = *count;
+    }
+    core_v1_event_t *result = core_v1_event_create_internal (
         action,
         api_version,
-        count,
+        count_copy,
         event_time,
         first_timestamp,
         involved_object,
@@ -88,6 +93,10 @@ __attribute__((deprecated)) core_v1_event_t *core_v1_event_create(
         source,
         type
         );
+    if (!result) {
+        free(count_copy);
+    }
+    return result;
 }
 
 void core_v1_event_free(core_v1_event_t *core_v1_event) {
@@ -106,6 +115,10 @@ void core_v1_event_free(core_v1_event_t *core_v1_event) {
     if (core_v1_event->api_version) {
         free(core_v1_event->api_version);
         core_v1_event->api_version = NULL;
+    }
+    if (core_v1_event->count) {
+        free(core_v1_event->count);
+        core_v1_event->count = NULL;
     }
     if (core_v1_event->event_time) {
         free(core_v1_event->event_time);
@@ -187,7 +200,7 @@ cJSON *core_v1_event_convertToJSON(core_v1_event_t *core_v1_event) {
 
     // core_v1_event->count
     if(core_v1_event->count) {
-    if(cJSON_AddNumberToObject(item, "count", core_v1_event->count) == NULL) {
+    if(cJSON_AddNumberToObject(item, "count", *core_v1_event->count) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -343,20 +356,45 @@ core_v1_event_t *core_v1_event_parseFromJSON(cJSON *core_v1_eventJSON){
 
     core_v1_event_t *core_v1_event_local_var = NULL;
 
+    char *action_local_str = NULL;
+
+    char *api_version_local_str = NULL;
+
+    // define the local variable for core_v1_event->count
+    int *count_local_var = NULL;
+
+    char *event_time_local_str = NULL;
+
+    char *first_timestamp_local_str = NULL;
+
     // define the local variable for core_v1_event->involved_object
     v1_object_reference_t *involved_object_local_nonprim = NULL;
+
+    char *kind_local_str = NULL;
+
+    char *last_timestamp_local_str = NULL;
+
+    char *message_local_str = NULL;
 
     // define the local variable for core_v1_event->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
 
+    char *reason_local_str = NULL;
+
     // define the local variable for core_v1_event->related
     v1_object_reference_t *related_local_nonprim = NULL;
+
+    char *reporting_component_local_str = NULL;
+
+    char *reporting_instance_local_str = NULL;
 
     // define the local variable for core_v1_event->series
     core_v1_event_series_t *series_local_nonprim = NULL;
 
     // define the local variable for core_v1_event->source
     v1_event_source_t *source_local_nonprim = NULL;
+
+    char *type_local_str = NULL;
 
     // core_v1_event->action
     cJSON *action = cJSON_GetObjectItemCaseSensitive(core_v1_eventJSON, "action");
@@ -392,6 +430,12 @@ core_v1_event_t *core_v1_event_parseFromJSON(cJSON *core_v1_eventJSON){
     {
     goto end; //Numeric
     }
+    count_local_var = malloc(sizeof(int));
+    if(!count_local_var)
+    {
+        goto end;
+    }
+    *count_local_var = count->valuedouble;
     }
 
     // core_v1_event->event_time
@@ -554,39 +598,99 @@ core_v1_event_t *core_v1_event_parseFromJSON(cJSON *core_v1_eventJSON){
     }
 
 
+    if (action && !cJSON_IsNull(action)) action_local_str = strdup(action->valuestring);
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (event_time && !cJSON_IsNull(event_time)) event_time_local_str = strdup(event_time->valuestring);
+    if (first_timestamp && !cJSON_IsNull(first_timestamp)) first_timestamp_local_str = strdup(first_timestamp->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+    if (last_timestamp && !cJSON_IsNull(last_timestamp)) last_timestamp_local_str = strdup(last_timestamp->valuestring);
+    if (message && !cJSON_IsNull(message)) message_local_str = strdup(message->valuestring);
+    if (reason && !cJSON_IsNull(reason)) reason_local_str = strdup(reason->valuestring);
+    if (reporting_component && !cJSON_IsNull(reporting_component)) reporting_component_local_str = strdup(reporting_component->valuestring);
+    if (reporting_instance && !cJSON_IsNull(reporting_instance)) reporting_instance_local_str = strdup(reporting_instance->valuestring);
+    if (type && !cJSON_IsNull(type)) type_local_str = strdup(type->valuestring);
+
     core_v1_event_local_var = core_v1_event_create_internal (
-        action && !cJSON_IsNull(action) ? strdup(action->valuestring) : NULL,
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        count ? count->valuedouble : 0,
-        event_time && !cJSON_IsNull(event_time) ? strdup(event_time->valuestring) : NULL,
-        first_timestamp && !cJSON_IsNull(first_timestamp) ? strdup(first_timestamp->valuestring) : NULL,
+        action_local_str,
+        api_version_local_str,
+        count_local_var,
+        event_time_local_str,
+        first_timestamp_local_str,
         involved_object_local_nonprim,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
-        last_timestamp && !cJSON_IsNull(last_timestamp) ? strdup(last_timestamp->valuestring) : NULL,
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
+        kind_local_str,
+        last_timestamp_local_str,
+        message_local_str,
         metadata_local_nonprim,
-        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
+        reason_local_str,
         related ? related_local_nonprim : NULL,
-        reporting_component && !cJSON_IsNull(reporting_component) ? strdup(reporting_component->valuestring) : NULL,
-        reporting_instance && !cJSON_IsNull(reporting_instance) ? strdup(reporting_instance->valuestring) : NULL,
+        reporting_component_local_str,
+        reporting_instance_local_str,
         series ? series_local_nonprim : NULL,
         source ? source_local_nonprim : NULL,
-        type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
+        type_local_str
         );
+
+    if (!core_v1_event_local_var) {
+        goto end;
+    }
 
     return core_v1_event_local_var;
 end:
+    if (action_local_str) {
+        free(action_local_str);
+        action_local_str = NULL;
+    }
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (count_local_var) {
+        free(count_local_var);
+        count_local_var = NULL;
+    }
+    if (event_time_local_str) {
+        free(event_time_local_str);
+        event_time_local_str = NULL;
+    }
+    if (first_timestamp_local_str) {
+        free(first_timestamp_local_str);
+        first_timestamp_local_str = NULL;
+    }
     if (involved_object_local_nonprim) {
         v1_object_reference_free(involved_object_local_nonprim);
         involved_object_local_nonprim = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
+    if (last_timestamp_local_str) {
+        free(last_timestamp_local_str);
+        last_timestamp_local_str = NULL;
+    }
+    if (message_local_str) {
+        free(message_local_str);
+        message_local_str = NULL;
     }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;
     }
+    if (reason_local_str) {
+        free(reason_local_str);
+        reason_local_str = NULL;
+    }
     if (related_local_nonprim) {
         v1_object_reference_free(related_local_nonprim);
         related_local_nonprim = NULL;
+    }
+    if (reporting_component_local_str) {
+        free(reporting_component_local_str);
+        reporting_component_local_str = NULL;
+    }
+    if (reporting_instance_local_str) {
+        free(reporting_instance_local_str);
+        reporting_instance_local_str = NULL;
     }
     if (series_local_nonprim) {
         core_v1_event_series_free(series_local_nonprim);
@@ -595,6 +699,10 @@ end:
     if (source_local_nonprim) {
         v1_event_source_free(source_local_nonprim);
         source_local_nonprim = NULL;
+    }
+    if (type_local_str) {
+        free(type_local_str);
+        type_local_str = NULL;
     }
     return NULL;
 

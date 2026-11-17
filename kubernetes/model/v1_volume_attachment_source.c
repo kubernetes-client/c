@@ -13,10 +13,10 @@ static v1_volume_attachment_source_t *v1_volume_attachment_source_create_interna
     if (!v1_volume_attachment_source_local_var) {
         return NULL;
     }
+    memset(v1_volume_attachment_source_local_var, 0, sizeof(v1_volume_attachment_source_t));
+    v1_volume_attachment_source_local_var->_library_owned = 1;
     v1_volume_attachment_source_local_var->inline_volume_spec = inline_volume_spec;
     v1_volume_attachment_source_local_var->persistent_volume_name = persistent_volume_name;
-
-    v1_volume_attachment_source_local_var->_library_owned = 1;
     return v1_volume_attachment_source_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_volume_attachment_source_t *v1_volume_attachment_
     v1_persistent_volume_spec_t *inline_volume_spec,
     char *persistent_volume_name
     ) {
-    return v1_volume_attachment_source_create_internal (
+    v1_volume_attachment_source_t *result = v1_volume_attachment_source_create_internal (
         inline_volume_spec,
         persistent_volume_name
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_volume_attachment_source_free(v1_volume_attachment_source_t *v1_volume_attachment_source) {
@@ -88,6 +91,8 @@ v1_volume_attachment_source_t *v1_volume_attachment_source_parseFromJSON(cJSON *
     // define the local variable for v1_volume_attachment_source->inline_volume_spec
     v1_persistent_volume_spec_t *inline_volume_spec_local_nonprim = NULL;
 
+    char *persistent_volume_name_local_str = NULL;
+
     // v1_volume_attachment_source->inline_volume_spec
     cJSON *inline_volume_spec = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_sourceJSON, "inlineVolumeSpec");
     if (cJSON_IsNull(inline_volume_spec)) {
@@ -110,16 +115,26 @@ v1_volume_attachment_source_t *v1_volume_attachment_source_parseFromJSON(cJSON *
     }
 
 
+    if (persistent_volume_name && !cJSON_IsNull(persistent_volume_name)) persistent_volume_name_local_str = strdup(persistent_volume_name->valuestring);
+
     v1_volume_attachment_source_local_var = v1_volume_attachment_source_create_internal (
         inline_volume_spec ? inline_volume_spec_local_nonprim : NULL,
-        persistent_volume_name && !cJSON_IsNull(persistent_volume_name) ? strdup(persistent_volume_name->valuestring) : NULL
+        persistent_volume_name_local_str
         );
+
+    if (!v1_volume_attachment_source_local_var) {
+        goto end;
+    }
 
     return v1_volume_attachment_source_local_var;
 end:
     if (inline_volume_spec_local_nonprim) {
         v1_persistent_volume_spec_free(inline_volume_spec_local_nonprim);
         inline_volume_spec_local_nonprim = NULL;
+    }
+    if (persistent_volume_name_local_str) {
+        free(persistent_volume_name_local_str);
+        persistent_volume_name_local_str = NULL;
     }
     return NULL;
 

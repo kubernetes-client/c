@@ -20,7 +20,7 @@ typedef struct v1_device_request_allocation_result_t v1_device_request_allocatio
 
 
 typedef struct v1_device_request_allocation_result_t {
-    int admin_access; //boolean
+    int *admin_access; //boolean
     list_t *binding_conditions; //primitive container
     list_t *binding_failure_conditions; //primitive container
     list_t* consumed_capacity; //map
@@ -29,13 +29,14 @@ typedef struct v1_device_request_allocation_result_t {
     char *pool; // string
     char *request; // string
     char *share_id; // string
+    list_t *skip_node_operations; //primitive container
     list_t *tolerations; //nonprimitive container
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_device_request_allocation_result_t;
 
 __attribute__((deprecated)) v1_device_request_allocation_result_t *v1_device_request_allocation_result_create(
-    int admin_access,
+    int *admin_access,
     list_t *binding_conditions,
     list_t *binding_failure_conditions,
     list_t* consumed_capacity,
@@ -44,6 +45,7 @@ __attribute__((deprecated)) v1_device_request_allocation_result_t *v1_device_req
     char *pool,
     char *request,
     char *share_id,
+    list_t *skip_node_operations,
     list_t *tolerations
 );
 

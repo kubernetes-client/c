@@ -15,12 +15,12 @@ static v1_parent_reference_t *v1_parent_reference_create_internal(
     if (!v1_parent_reference_local_var) {
         return NULL;
     }
+    memset(v1_parent_reference_local_var, 0, sizeof(v1_parent_reference_t));
+    v1_parent_reference_local_var->_library_owned = 1;
     v1_parent_reference_local_var->group = group;
     v1_parent_reference_local_var->name = name;
     v1_parent_reference_local_var->_namespace = _namespace;
     v1_parent_reference_local_var->resource = resource;
-
-    v1_parent_reference_local_var->_library_owned = 1;
     return v1_parent_reference_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1_parent_reference_t *v1_parent_reference_create(
     char *_namespace,
     char *resource
     ) {
-    return v1_parent_reference_create_internal (
+    v1_parent_reference_t *result = v1_parent_reference_create_internal (
         group,
         name,
         _namespace,
         resource
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_parent_reference_free(v1_parent_reference_t *v1_parent_reference) {
@@ -114,6 +117,14 @@ v1_parent_reference_t *v1_parent_reference_parseFromJSON(cJSON *v1_parent_refere
 
     v1_parent_reference_t *v1_parent_reference_local_var = NULL;
 
+    char *group_local_str = NULL;
+
+    char *name_local_str = NULL;
+
+    char *_namespace_local_str = NULL;
+
+    char *resource_local_str = NULL;
+
     // v1_parent_reference->group
     cJSON *group = cJSON_GetObjectItemCaseSensitive(v1_parent_referenceJSON, "group");
     if (cJSON_IsNull(group)) {
@@ -169,15 +180,40 @@ v1_parent_reference_t *v1_parent_reference_parseFromJSON(cJSON *v1_parent_refere
     }
 
 
+    if (group && !cJSON_IsNull(group)) group_local_str = strdup(group->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (_namespace && !cJSON_IsNull(_namespace)) _namespace_local_str = strdup(_namespace->valuestring);
+    if (resource && !cJSON_IsNull(resource)) resource_local_str = strdup(resource->valuestring);
+
     v1_parent_reference_local_var = v1_parent_reference_create_internal (
-        group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
-        strdup(name->valuestring),
-        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
-        strdup(resource->valuestring)
+        group_local_str,
+        name_local_str,
+        _namespace_local_str,
+        resource_local_str
         );
+
+    if (!v1_parent_reference_local_var) {
+        goto end;
+    }
 
     return v1_parent_reference_local_var;
 end:
+    if (group_local_str) {
+        free(group_local_str);
+        group_local_str = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (_namespace_local_str) {
+        free(_namespace_local_str);
+        _namespace_local_str = NULL;
+    }
+    if (resource_local_str) {
+        free(resource_local_str);
+        resource_local_str = NULL;
+    }
     return NULL;
 
 }

@@ -13,10 +13,10 @@ static v1_container_restart_rule_t *v1_container_restart_rule_create_internal(
     if (!v1_container_restart_rule_local_var) {
         return NULL;
     }
+    memset(v1_container_restart_rule_local_var, 0, sizeof(v1_container_restart_rule_t));
+    v1_container_restart_rule_local_var->_library_owned = 1;
     v1_container_restart_rule_local_var->action = action;
     v1_container_restart_rule_local_var->exit_codes = exit_codes;
-
-    v1_container_restart_rule_local_var->_library_owned = 1;
     return v1_container_restart_rule_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_container_restart_rule_t *v1_container_restart_ru
     char *action,
     v1_container_restart_rule_on_exit_codes_t *exit_codes
     ) {
-    return v1_container_restart_rule_create_internal (
+    v1_container_restart_rule_t *result = v1_container_restart_rule_create_internal (
         action,
         exit_codes
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_container_restart_rule_free(v1_container_restart_rule_t *v1_container_restart_rule) {
@@ -86,6 +89,8 @@ v1_container_restart_rule_t *v1_container_restart_rule_parseFromJSON(cJSON *v1_c
 
     v1_container_restart_rule_t *v1_container_restart_rule_local_var = NULL;
 
+    char *action_local_str = NULL;
+
     // define the local variable for v1_container_restart_rule->exit_codes
     v1_container_restart_rule_on_exit_codes_t *exit_codes_local_nonprim = NULL;
 
@@ -114,13 +119,23 @@ v1_container_restart_rule_t *v1_container_restart_rule_parseFromJSON(cJSON *v1_c
     }
 
 
+    if (action && !cJSON_IsNull(action)) action_local_str = strdup(action->valuestring);
+
     v1_container_restart_rule_local_var = v1_container_restart_rule_create_internal (
-        strdup(action->valuestring),
+        action_local_str,
         exit_codes ? exit_codes_local_nonprim : NULL
         );
 
+    if (!v1_container_restart_rule_local_var) {
+        goto end;
+    }
+
     return v1_container_restart_rule_local_var;
 end:
+    if (action_local_str) {
+        free(action_local_str);
+        action_local_str = NULL;
+    }
     if (exit_codes_local_nonprim) {
         v1_container_restart_rule_on_exit_codes_free(exit_codes_local_nonprim);
         exit_codes_local_nonprim = NULL;

@@ -7,7 +7,7 @@
 
 static v1_flow_schema_spec_t *v1_flow_schema_spec_create_internal(
     v1_flow_distinguisher_method_t *distinguisher_method,
-    int matching_precedence,
+    int *matching_precedence,
     v1_priority_level_configuration_reference_t *priority_level_configuration,
     list_t *rules
     ) {
@@ -15,27 +15,36 @@ static v1_flow_schema_spec_t *v1_flow_schema_spec_create_internal(
     if (!v1_flow_schema_spec_local_var) {
         return NULL;
     }
+    memset(v1_flow_schema_spec_local_var, 0, sizeof(v1_flow_schema_spec_t));
+    v1_flow_schema_spec_local_var->_library_owned = 1;
     v1_flow_schema_spec_local_var->distinguisher_method = distinguisher_method;
     v1_flow_schema_spec_local_var->matching_precedence = matching_precedence;
     v1_flow_schema_spec_local_var->priority_level_configuration = priority_level_configuration;
     v1_flow_schema_spec_local_var->rules = rules;
-
-    v1_flow_schema_spec_local_var->_library_owned = 1;
     return v1_flow_schema_spec_local_var;
 }
 
 __attribute__((deprecated)) v1_flow_schema_spec_t *v1_flow_schema_spec_create(
     v1_flow_distinguisher_method_t *distinguisher_method,
-    int matching_precedence,
+    int *matching_precedence,
     v1_priority_level_configuration_reference_t *priority_level_configuration,
     list_t *rules
     ) {
-    return v1_flow_schema_spec_create_internal (
+    int *matching_precedence_copy = NULL;
+    if (matching_precedence) {
+        matching_precedence_copy = malloc(sizeof(int));
+        if (matching_precedence_copy) *matching_precedence_copy = *matching_precedence;
+    }
+    v1_flow_schema_spec_t *result = v1_flow_schema_spec_create_internal (
         distinguisher_method,
-        matching_precedence,
+        matching_precedence_copy,
         priority_level_configuration,
         rules
         );
+    if (!result) {
+        free(matching_precedence_copy);
+    }
+    return result;
 }
 
 void v1_flow_schema_spec_free(v1_flow_schema_spec_t *v1_flow_schema_spec) {
@@ -50,6 +59,10 @@ void v1_flow_schema_spec_free(v1_flow_schema_spec_t *v1_flow_schema_spec) {
     if (v1_flow_schema_spec->distinguisher_method) {
         v1_flow_distinguisher_method_free(v1_flow_schema_spec->distinguisher_method);
         v1_flow_schema_spec->distinguisher_method = NULL;
+    }
+    if (v1_flow_schema_spec->matching_precedence) {
+        free(v1_flow_schema_spec->matching_precedence);
+        v1_flow_schema_spec->matching_precedence = NULL;
     }
     if (v1_flow_schema_spec->priority_level_configuration) {
         v1_priority_level_configuration_reference_free(v1_flow_schema_spec->priority_level_configuration);
@@ -83,7 +96,7 @@ cJSON *v1_flow_schema_spec_convertToJSON(v1_flow_schema_spec_t *v1_flow_schema_s
 
     // v1_flow_schema_spec->matching_precedence
     if(v1_flow_schema_spec->matching_precedence) {
-    if(cJSON_AddNumberToObject(item, "matchingPrecedence", v1_flow_schema_spec->matching_precedence) == NULL) {
+    if(cJSON_AddNumberToObject(item, "matchingPrecedence", *v1_flow_schema_spec->matching_precedence) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -137,6 +150,9 @@ v1_flow_schema_spec_t *v1_flow_schema_spec_parseFromJSON(cJSON *v1_flow_schema_s
     // define the local variable for v1_flow_schema_spec->distinguisher_method
     v1_flow_distinguisher_method_t *distinguisher_method_local_nonprim = NULL;
 
+    // define the local variable for v1_flow_schema_spec->matching_precedence
+    int *matching_precedence_local_var = NULL;
+
     // define the local variable for v1_flow_schema_spec->priority_level_configuration
     v1_priority_level_configuration_reference_t *priority_level_configuration_local_nonprim = NULL;
 
@@ -162,6 +178,12 @@ v1_flow_schema_spec_t *v1_flow_schema_spec_parseFromJSON(cJSON *v1_flow_schema_s
     {
     goto end; //Numeric
     }
+    matching_precedence_local_var = malloc(sizeof(int));
+    if(!matching_precedence_local_var)
+    {
+        goto end;
+    }
+    *matching_precedence_local_var = matching_precedence->valuedouble;
     }
 
     // v1_flow_schema_spec->priority_level_configuration
@@ -201,18 +223,27 @@ v1_flow_schema_spec_t *v1_flow_schema_spec_parseFromJSON(cJSON *v1_flow_schema_s
     }
 
 
+
     v1_flow_schema_spec_local_var = v1_flow_schema_spec_create_internal (
         distinguisher_method ? distinguisher_method_local_nonprim : NULL,
-        matching_precedence ? matching_precedence->valuedouble : 0,
+        matching_precedence_local_var,
         priority_level_configuration_local_nonprim,
         rules ? rulesList : NULL
         );
+
+    if (!v1_flow_schema_spec_local_var) {
+        goto end;
+    }
 
     return v1_flow_schema_spec_local_var;
 end:
     if (distinguisher_method_local_nonprim) {
         v1_flow_distinguisher_method_free(distinguisher_method_local_nonprim);
         distinguisher_method_local_nonprim = NULL;
+    }
+    if (matching_precedence_local_var) {
+        free(matching_precedence_local_var);
+        matching_precedence_local_var = NULL;
     }
     if (priority_level_configuration_local_nonprim) {
         v1_priority_level_configuration_reference_free(priority_level_configuration_local_nonprim);

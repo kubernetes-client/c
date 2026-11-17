@@ -25,12 +25,12 @@ typedef struct v1_stateful_set_spec_t v1_stateful_set_spec_t;
 
 
 typedef struct v1_stateful_set_spec_t {
-    int min_ready_seconds; //numeric
+    int *min_ready_seconds; //numeric
     struct v1_stateful_set_ordinals_t *ordinals; //model
     struct v1_stateful_set_persistent_volume_claim_retention_policy_t *persistent_volume_claim_retention_policy; //model
     char *pod_management_policy; // string
-    int replicas; //numeric
-    int revision_history_limit; //numeric
+    int *replicas; //numeric
+    int *revision_history_limit; //numeric
     struct v1_label_selector_t *selector; //model
     char *service_name; // string
     struct v1_pod_template_spec_t *_template; //model
@@ -41,12 +41,12 @@ typedef struct v1_stateful_set_spec_t {
 } v1_stateful_set_spec_t;
 
 __attribute__((deprecated)) v1_stateful_set_spec_t *v1_stateful_set_spec_create(
-    int min_ready_seconds,
+    int *min_ready_seconds,
     v1_stateful_set_ordinals_t *ordinals,
     v1_stateful_set_persistent_volume_claim_retention_policy_t *persistent_volume_claim_retention_policy,
     char *pod_management_policy,
-    int replicas,
-    int revision_history_limit,
+    int *replicas,
+    int *revision_history_limit,
     v1_label_selector_t *selector,
     char *service_name,
     v1_pod_template_spec_t *_template,

@@ -23,27 +23,31 @@ typedef struct v1beta2_resource_slice_spec_t v1beta2_resource_slice_spec_t;
 
 
 typedef struct v1beta2_resource_slice_spec_t {
-    int all_nodes; //boolean
+    int *all_nodes; //boolean
     list_t *devices; //nonprimitive container
     char *driver; // string
     char *node_name; // string
     struct v1_node_selector_t *node_selector; //model
-    int per_device_node_selection; //boolean
+    char *partition_type_attribute; // string
+    int *per_device_node_selection; //boolean
     struct v1beta2_resource_pool_t *pool; //model
     list_t *shared_counters; //nonprimitive container
+    list_t *skip_node_operations; //primitive container
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1beta2_resource_slice_spec_t;
 
 __attribute__((deprecated)) v1beta2_resource_slice_spec_t *v1beta2_resource_slice_spec_create(
-    int all_nodes,
+    int *all_nodes,
     list_t *devices,
     char *driver,
     char *node_name,
     v1_node_selector_t *node_selector,
-    int per_device_node_selection,
+    char *partition_type_attribute,
+    int *per_device_node_selection,
     v1beta2_resource_pool_t *pool,
-    list_t *shared_counters
+    list_t *shared_counters,
+    list_t *skip_node_operations
 );
 
 void v1beta2_resource_slice_spec_free(v1beta2_resource_slice_spec_t *v1beta2_resource_slice_spec);

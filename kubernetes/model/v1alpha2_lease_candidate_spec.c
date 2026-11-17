@@ -17,14 +17,14 @@ static v1alpha2_lease_candidate_spec_t *v1alpha2_lease_candidate_spec_create_int
     if (!v1alpha2_lease_candidate_spec_local_var) {
         return NULL;
     }
+    memset(v1alpha2_lease_candidate_spec_local_var, 0, sizeof(v1alpha2_lease_candidate_spec_t));
+    v1alpha2_lease_candidate_spec_local_var->_library_owned = 1;
     v1alpha2_lease_candidate_spec_local_var->binary_version = binary_version;
     v1alpha2_lease_candidate_spec_local_var->emulation_version = emulation_version;
     v1alpha2_lease_candidate_spec_local_var->lease_name = lease_name;
     v1alpha2_lease_candidate_spec_local_var->ping_time = ping_time;
     v1alpha2_lease_candidate_spec_local_var->renew_time = renew_time;
     v1alpha2_lease_candidate_spec_local_var->strategy = strategy;
-
-    v1alpha2_lease_candidate_spec_local_var->_library_owned = 1;
     return v1alpha2_lease_candidate_spec_local_var;
 }
 
@@ -36,7 +36,7 @@ __attribute__((deprecated)) v1alpha2_lease_candidate_spec_t *v1alpha2_lease_cand
     char *renew_time,
     char *strategy
     ) {
-    return v1alpha2_lease_candidate_spec_create_internal (
+    v1alpha2_lease_candidate_spec_t *result = v1alpha2_lease_candidate_spec_create_internal (
         binary_version,
         emulation_version,
         lease_name,
@@ -44,6 +44,9 @@ __attribute__((deprecated)) v1alpha2_lease_candidate_spec_t *v1alpha2_lease_cand
         renew_time,
         strategy
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1alpha2_lease_candidate_spec_free(v1alpha2_lease_candidate_spec_t *v1alpha2_lease_candidate_spec) {
@@ -147,6 +150,18 @@ v1alpha2_lease_candidate_spec_t *v1alpha2_lease_candidate_spec_parseFromJSON(cJS
 
     v1alpha2_lease_candidate_spec_t *v1alpha2_lease_candidate_spec_local_var = NULL;
 
+    char *binary_version_local_str = NULL;
+
+    char *emulation_version_local_str = NULL;
+
+    char *lease_name_local_str = NULL;
+
+    char *ping_time_local_str = NULL;
+
+    char *renew_time_local_str = NULL;
+
+    char *strategy_local_str = NULL;
+
     // v1alpha2_lease_candidate_spec->binary_version
     cJSON *binary_version = cJSON_GetObjectItemCaseSensitive(v1alpha2_lease_candidate_specJSON, "binaryVersion");
     if (cJSON_IsNull(binary_version)) {
@@ -229,17 +244,52 @@ v1alpha2_lease_candidate_spec_t *v1alpha2_lease_candidate_spec_parseFromJSON(cJS
     }
 
 
+    if (binary_version && !cJSON_IsNull(binary_version)) binary_version_local_str = strdup(binary_version->valuestring);
+    if (emulation_version && !cJSON_IsNull(emulation_version)) emulation_version_local_str = strdup(emulation_version->valuestring);
+    if (lease_name && !cJSON_IsNull(lease_name)) lease_name_local_str = strdup(lease_name->valuestring);
+    if (ping_time && !cJSON_IsNull(ping_time)) ping_time_local_str = strdup(ping_time->valuestring);
+    if (renew_time && !cJSON_IsNull(renew_time)) renew_time_local_str = strdup(renew_time->valuestring);
+    if (strategy && !cJSON_IsNull(strategy)) strategy_local_str = strdup(strategy->valuestring);
+
     v1alpha2_lease_candidate_spec_local_var = v1alpha2_lease_candidate_spec_create_internal (
-        strdup(binary_version->valuestring),
-        emulation_version && !cJSON_IsNull(emulation_version) ? strdup(emulation_version->valuestring) : NULL,
-        strdup(lease_name->valuestring),
-        ping_time && !cJSON_IsNull(ping_time) ? strdup(ping_time->valuestring) : NULL,
-        renew_time && !cJSON_IsNull(renew_time) ? strdup(renew_time->valuestring) : NULL,
-        strdup(strategy->valuestring)
+        binary_version_local_str,
+        emulation_version_local_str,
+        lease_name_local_str,
+        ping_time_local_str,
+        renew_time_local_str,
+        strategy_local_str
         );
+
+    if (!v1alpha2_lease_candidate_spec_local_var) {
+        goto end;
+    }
 
     return v1alpha2_lease_candidate_spec_local_var;
 end:
+    if (binary_version_local_str) {
+        free(binary_version_local_str);
+        binary_version_local_str = NULL;
+    }
+    if (emulation_version_local_str) {
+        free(emulation_version_local_str);
+        emulation_version_local_str = NULL;
+    }
+    if (lease_name_local_str) {
+        free(lease_name_local_str);
+        lease_name_local_str = NULL;
+    }
+    if (ping_time_local_str) {
+        free(ping_time_local_str);
+        ping_time_local_str = NULL;
+    }
+    if (renew_time_local_str) {
+        free(renew_time_local_str);
+        renew_time_local_str = NULL;
+    }
+    if (strategy_local_str) {
+        free(strategy_local_str);
+        strategy_local_str = NULL;
+    }
     return NULL;
 
 }

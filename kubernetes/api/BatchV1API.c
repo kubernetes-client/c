@@ -426,7 +426,7 @@ end:
 // delete collection of CronJob
 //
 v1_status_t*
-BatchV1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+BatchV1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -620,6 +620,18 @@ BatchV1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char *_name
     }
 
     // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -849,6 +861,18 @@ BatchV1API_deleteCollectionNamespacedCronJob(apiClient_t *apiClient, char *_name
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -871,7 +895,7 @@ end:
 // delete collection of Job
 //
 v1_status_t*
-BatchV1API_deleteCollectionNamespacedJob(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+BatchV1API_deleteCollectionNamespacedJob(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1065,6 +1089,18 @@ BatchV1API_deleteCollectionNamespacedJob(apiClient_t *apiClient, char *_namespac
     }
 
     // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -1293,6 +1329,18 @@ BatchV1API_deleteCollectionNamespacedJob(apiClient_t *apiClient, char *_namespac
     if(keyPairQuery_sendInitialEvents){
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
+    }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
     }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
@@ -1925,7 +1973,7 @@ end:
 // list or watch objects of kind CronJob
 //
 v1_cron_job_list_t*
-BatchV1API_listCronJobForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+BatchV1API_listCronJobForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2054,6 +2102,18 @@ BatchV1API_listCronJobForAllNamespaces(apiClient_t *apiClient, int *allowWatchBo
         snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
     }
 
     // query parameters
@@ -2238,6 +2298,18 @@ BatchV1API_listCronJobForAllNamespaces(apiClient_t *apiClient, int *allowWatchBo
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -2272,7 +2344,7 @@ end:
 // list or watch objects of kind Job
 //
 v1_job_list_t*
-BatchV1API_listJobForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+BatchV1API_listJobForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2401,6 +2473,18 @@ BatchV1API_listJobForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookma
         snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
     }
 
     // query parameters
@@ -2585,6 +2669,18 @@ BatchV1API_listJobForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookma
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -2619,7 +2715,7 @@ end:
 // list or watch objects of kind CronJob
 //
 v1_cron_job_list_t*
-BatchV1API_listNamespacedCronJob(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+BatchV1API_listNamespacedCronJob(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2763,6 +2859,18 @@ BatchV1API_listNamespacedCronJob(apiClient_t *apiClient, char *_namespace, char 
     }
 
     // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -2945,6 +3053,18 @@ BatchV1API_listNamespacedCronJob(apiClient_t *apiClient, char *_namespace, char 
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -2979,7 +3099,7 @@ end:
 // list or watch objects of kind Job
 //
 v1_job_list_t*
-BatchV1API_listNamespacedJob(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+BatchV1API_listNamespacedJob(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3120,6 +3240,18 @@ BatchV1API_listNamespacedJob(apiClient_t *apiClient, char *_namespace, char *pre
         snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
     }
 
     // query parameters
@@ -3304,6 +3436,18 @@ BatchV1API_listNamespacedJob(apiClient_t *apiClient, char *_namespace, char *pre
     if(keyPairQuery_sendInitialEvents){
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
+    }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
     }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);

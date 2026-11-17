@@ -8,30 +8,39 @@
 static v1_config_map_key_selector_t *v1_config_map_key_selector_create_internal(
     char *key,
     char *name,
-    int optional
+    int *optional
     ) {
     v1_config_map_key_selector_t *v1_config_map_key_selector_local_var = malloc(sizeof(v1_config_map_key_selector_t));
     if (!v1_config_map_key_selector_local_var) {
         return NULL;
     }
+    memset(v1_config_map_key_selector_local_var, 0, sizeof(v1_config_map_key_selector_t));
+    v1_config_map_key_selector_local_var->_library_owned = 1;
     v1_config_map_key_selector_local_var->key = key;
     v1_config_map_key_selector_local_var->name = name;
     v1_config_map_key_selector_local_var->optional = optional;
-
-    v1_config_map_key_selector_local_var->_library_owned = 1;
     return v1_config_map_key_selector_local_var;
 }
 
 __attribute__((deprecated)) v1_config_map_key_selector_t *v1_config_map_key_selector_create(
     char *key,
     char *name,
-    int optional
+    int *optional
     ) {
-    return v1_config_map_key_selector_create_internal (
+    int *optional_copy = NULL;
+    if (optional) {
+        optional_copy = malloc(sizeof(int));
+        if (optional_copy) *optional_copy = *optional;
+    }
+    v1_config_map_key_selector_t *result = v1_config_map_key_selector_create_internal (
         key,
         name,
-        optional
+        optional_copy
         );
+    if (!result) {
+        free(optional_copy);
+    }
+    return result;
 }
 
 void v1_config_map_key_selector_free(v1_config_map_key_selector_t *v1_config_map_key_selector) {
@@ -50,6 +59,10 @@ void v1_config_map_key_selector_free(v1_config_map_key_selector_t *v1_config_map
     if (v1_config_map_key_selector->name) {
         free(v1_config_map_key_selector->name);
         v1_config_map_key_selector->name = NULL;
+    }
+    if (v1_config_map_key_selector->optional) {
+        free(v1_config_map_key_selector->optional);
+        v1_config_map_key_selector->optional = NULL;
     }
     free(v1_config_map_key_selector);
 }
@@ -76,7 +89,7 @@ cJSON *v1_config_map_key_selector_convertToJSON(v1_config_map_key_selector_t *v1
 
     // v1_config_map_key_selector->optional
     if(v1_config_map_key_selector->optional) {
-    if(cJSON_AddBoolToObject(item, "optional", v1_config_map_key_selector->optional) == NULL) {
+    if(cJSON_AddBoolToObject(item, "optional", *v1_config_map_key_selector->optional) == NULL) {
     goto fail; //Bool
     }
     }
@@ -92,6 +105,13 @@ fail:
 v1_config_map_key_selector_t *v1_config_map_key_selector_parseFromJSON(cJSON *v1_config_map_key_selectorJSON){
 
     v1_config_map_key_selector_t *v1_config_map_key_selector_local_var = NULL;
+
+    char *key_local_str = NULL;
+
+    char *name_local_str = NULL;
+
+    // define the local variable for v1_config_map_key_selector->optional
+    int *optional_local_var = NULL;
 
     // v1_config_map_key_selector->key
     cJSON *key = cJSON_GetObjectItemCaseSensitive(v1_config_map_key_selectorJSON, "key");
@@ -130,17 +150,42 @@ v1_config_map_key_selector_t *v1_config_map_key_selector_parseFromJSON(cJSON *v1
     {
     goto end; //Bool
     }
+    optional_local_var = malloc(sizeof(int));
+    if(!optional_local_var)
+    {
+        goto end;
+    }
+    *optional_local_var = optional->valueint;
     }
 
 
+    if (key && !cJSON_IsNull(key)) key_local_str = strdup(key->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v1_config_map_key_selector_local_var = v1_config_map_key_selector_create_internal (
-        strdup(key->valuestring),
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
-        optional ? optional->valueint : 0
+        key_local_str,
+        name_local_str,
+        optional_local_var
         );
+
+    if (!v1_config_map_key_selector_local_var) {
+        goto end;
+    }
 
     return v1_config_map_key_selector_local_var;
 end:
+    if (key_local_str) {
+        free(key_local_str);
+        key_local_str = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (optional_local_var) {
+        free(optional_local_var);
+        optional_local_var = NULL;
+    }
     return NULL;
 
 }

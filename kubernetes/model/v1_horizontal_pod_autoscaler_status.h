@@ -19,21 +19,21 @@ typedef struct v1_horizontal_pod_autoscaler_status_t v1_horizontal_pod_autoscale
 
 
 typedef struct v1_horizontal_pod_autoscaler_status_t {
-    int current_cpu_utilization_percentage; //numeric
-    int current_replicas; //numeric
-    int desired_replicas; //numeric
+    int *current_cpu_utilization_percentage; //numeric
+    int *current_replicas; //numeric
+    int *desired_replicas; //numeric
     char *last_scale_time; //date time
-    long observed_generation; //numeric
+    long *observed_generation; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_horizontal_pod_autoscaler_status_t;
 
 __attribute__((deprecated)) v1_horizontal_pod_autoscaler_status_t *v1_horizontal_pod_autoscaler_status_create(
-    int current_cpu_utilization_percentage,
-    int current_replicas,
-    int desired_replicas,
+    int *current_cpu_utilization_percentage,
+    int *current_replicas,
+    int *desired_replicas,
     char *last_scale_time,
-    long observed_generation
+    long *observed_generation
 );
 
 void v1_horizontal_pod_autoscaler_status_free(v1_horizontal_pod_autoscaler_status_t *v1_horizontal_pod_autoscaler_status);

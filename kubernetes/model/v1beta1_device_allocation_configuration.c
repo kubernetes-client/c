@@ -14,11 +14,11 @@ static v1beta1_device_allocation_configuration_t *v1beta1_device_allocation_conf
     if (!v1beta1_device_allocation_configuration_local_var) {
         return NULL;
     }
+    memset(v1beta1_device_allocation_configuration_local_var, 0, sizeof(v1beta1_device_allocation_configuration_t));
+    v1beta1_device_allocation_configuration_local_var->_library_owned = 1;
     v1beta1_device_allocation_configuration_local_var->opaque = opaque;
     v1beta1_device_allocation_configuration_local_var->requests = requests;
     v1beta1_device_allocation_configuration_local_var->source = source;
-
-    v1beta1_device_allocation_configuration_local_var->_library_owned = 1;
     return v1beta1_device_allocation_configuration_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1beta1_device_allocation_configuration_t *v1beta1_d
     list_t *requests,
     char *source
     ) {
-    return v1beta1_device_allocation_configuration_create_internal (
+    v1beta1_device_allocation_configuration_t *result = v1beta1_device_allocation_configuration_create_internal (
         opaque,
         requests,
         source
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1beta1_device_allocation_configuration_free(v1beta1_device_allocation_configuration_t *v1beta1_device_allocation_configuration) {
@@ -120,6 +123,8 @@ v1beta1_device_allocation_configuration_t *v1beta1_device_allocation_configurati
     // define the local list for v1beta1_device_allocation_configuration->requests
     list_t *requestsList = NULL;
 
+    char *source_local_str = NULL;
+
     // v1beta1_device_allocation_configuration->opaque
     cJSON *opaque = cJSON_GetObjectItemCaseSensitive(v1beta1_device_allocation_configurationJSON, "opaque");
     if (cJSON_IsNull(opaque)) {
@@ -167,11 +172,17 @@ v1beta1_device_allocation_configuration_t *v1beta1_device_allocation_configurati
     }
 
 
+    if (source && !cJSON_IsNull(source)) source_local_str = strdup(source->valuestring);
+
     v1beta1_device_allocation_configuration_local_var = v1beta1_device_allocation_configuration_create_internal (
         opaque ? opaque_local_nonprim : NULL,
         requests ? requestsList : NULL,
-        strdup(source->valuestring)
+        source_local_str
         );
+
+    if (!v1beta1_device_allocation_configuration_local_var) {
+        goto end;
+    }
 
     return v1beta1_device_allocation_configuration_local_var;
 end:
@@ -187,6 +198,10 @@ end:
         }
         list_freeList(requestsList);
         requestsList = NULL;
+    }
+    if (source_local_str) {
+        free(source_local_str);
+        source_local_str = NULL;
     }
     return NULL;
 

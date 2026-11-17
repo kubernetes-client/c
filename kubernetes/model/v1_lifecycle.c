@@ -14,11 +14,11 @@ static v1_lifecycle_t *v1_lifecycle_create_internal(
     if (!v1_lifecycle_local_var) {
         return NULL;
     }
+    memset(v1_lifecycle_local_var, 0, sizeof(v1_lifecycle_t));
+    v1_lifecycle_local_var->_library_owned = 1;
     v1_lifecycle_local_var->post_start = post_start;
     v1_lifecycle_local_var->pre_stop = pre_stop;
     v1_lifecycle_local_var->stop_signal = stop_signal;
-
-    v1_lifecycle_local_var->_library_owned = 1;
     return v1_lifecycle_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_lifecycle_t *v1_lifecycle_create(
     v1_lifecycle_handler_t *pre_stop,
     char *stop_signal
     ) {
-    return v1_lifecycle_create_internal (
+    v1_lifecycle_t *result = v1_lifecycle_create_internal (
         post_start,
         pre_stop,
         stop_signal
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_lifecycle_free(v1_lifecycle_t *v1_lifecycle) {
@@ -112,6 +115,8 @@ v1_lifecycle_t *v1_lifecycle_parseFromJSON(cJSON *v1_lifecycleJSON){
     // define the local variable for v1_lifecycle->pre_stop
     v1_lifecycle_handler_t *pre_stop_local_nonprim = NULL;
 
+    char *stop_signal_local_str = NULL;
+
     // v1_lifecycle->post_start
     cJSON *post_start = cJSON_GetObjectItemCaseSensitive(v1_lifecycleJSON, "postStart");
     if (cJSON_IsNull(post_start)) {
@@ -143,11 +148,17 @@ v1_lifecycle_t *v1_lifecycle_parseFromJSON(cJSON *v1_lifecycleJSON){
     }
 
 
+    if (stop_signal && !cJSON_IsNull(stop_signal)) stop_signal_local_str = strdup(stop_signal->valuestring);
+
     v1_lifecycle_local_var = v1_lifecycle_create_internal (
         post_start ? post_start_local_nonprim : NULL,
         pre_stop ? pre_stop_local_nonprim : NULL,
-        stop_signal && !cJSON_IsNull(stop_signal) ? strdup(stop_signal->valuestring) : NULL
+        stop_signal_local_str
         );
+
+    if (!v1_lifecycle_local_var) {
+        goto end;
+    }
 
     return v1_lifecycle_local_var;
 end:
@@ -158,6 +169,10 @@ end:
     if (pre_stop_local_nonprim) {
         v1_lifecycle_handler_free(pre_stop_local_nonprim);
         pre_stop_local_nonprim = NULL;
+    }
+    if (stop_signal_local_str) {
+        free(stop_signal_local_str);
+        stop_signal_local_str = NULL;
     }
     return NULL;
 

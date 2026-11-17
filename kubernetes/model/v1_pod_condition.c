@@ -9,7 +9,7 @@ static v1_pod_condition_t *v1_pod_condition_create_internal(
     char *last_probe_time,
     char *last_transition_time,
     char *message,
-    long observed_generation,
+    long *observed_generation,
     char *reason,
     char *status,
     char *type
@@ -18,6 +18,8 @@ static v1_pod_condition_t *v1_pod_condition_create_internal(
     if (!v1_pod_condition_local_var) {
         return NULL;
     }
+    memset(v1_pod_condition_local_var, 0, sizeof(v1_pod_condition_t));
+    v1_pod_condition_local_var->_library_owned = 1;
     v1_pod_condition_local_var->last_probe_time = last_probe_time;
     v1_pod_condition_local_var->last_transition_time = last_transition_time;
     v1_pod_condition_local_var->message = message;
@@ -25,8 +27,6 @@ static v1_pod_condition_t *v1_pod_condition_create_internal(
     v1_pod_condition_local_var->reason = reason;
     v1_pod_condition_local_var->status = status;
     v1_pod_condition_local_var->type = type;
-
-    v1_pod_condition_local_var->_library_owned = 1;
     return v1_pod_condition_local_var;
 }
 
@@ -34,20 +34,29 @@ __attribute__((deprecated)) v1_pod_condition_t *v1_pod_condition_create(
     char *last_probe_time,
     char *last_transition_time,
     char *message,
-    long observed_generation,
+    long *observed_generation,
     char *reason,
     char *status,
     char *type
     ) {
-    return v1_pod_condition_create_internal (
+    long *observed_generation_copy = NULL;
+    if (observed_generation) {
+        observed_generation_copy = malloc(sizeof(long));
+        if (observed_generation_copy) *observed_generation_copy = *observed_generation;
+    }
+    v1_pod_condition_t *result = v1_pod_condition_create_internal (
         last_probe_time,
         last_transition_time,
         message,
-        observed_generation,
+        observed_generation_copy,
         reason,
         status,
         type
         );
+    if (!result) {
+        free(observed_generation_copy);
+    }
+    return result;
 }
 
 void v1_pod_condition_free(v1_pod_condition_t *v1_pod_condition) {
@@ -70,6 +79,10 @@ void v1_pod_condition_free(v1_pod_condition_t *v1_pod_condition) {
     if (v1_pod_condition->message) {
         free(v1_pod_condition->message);
         v1_pod_condition->message = NULL;
+    }
+    if (v1_pod_condition->observed_generation) {
+        free(v1_pod_condition->observed_generation);
+        v1_pod_condition->observed_generation = NULL;
     }
     if (v1_pod_condition->reason) {
         free(v1_pod_condition->reason);
@@ -115,7 +128,7 @@ cJSON *v1_pod_condition_convertToJSON(v1_pod_condition_t *v1_pod_condition) {
 
     // v1_pod_condition->observed_generation
     if(v1_pod_condition->observed_generation) {
-    if(cJSON_AddNumberToObject(item, "observedGeneration", v1_pod_condition->observed_generation) == NULL) {
+    if(cJSON_AddNumberToObject(item, "observedGeneration", *v1_pod_condition->observed_generation) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -157,6 +170,21 @@ fail:
 v1_pod_condition_t *v1_pod_condition_parseFromJSON(cJSON *v1_pod_conditionJSON){
 
     v1_pod_condition_t *v1_pod_condition_local_var = NULL;
+
+    char *last_probe_time_local_str = NULL;
+
+    char *last_transition_time_local_str = NULL;
+
+    char *message_local_str = NULL;
+
+    // define the local variable for v1_pod_condition->observed_generation
+    long *observed_generation_local_var = NULL;
+
+    char *reason_local_str = NULL;
+
+    char *status_local_str = NULL;
+
+    char *type_local_str = NULL;
 
     // v1_pod_condition->last_probe_time
     cJSON *last_probe_time = cJSON_GetObjectItemCaseSensitive(v1_pod_conditionJSON, "lastProbeTime");
@@ -204,6 +232,12 @@ v1_pod_condition_t *v1_pod_condition_parseFromJSON(cJSON *v1_pod_conditionJSON){
     {
     goto end; //Numeric
     }
+    observed_generation_local_var = malloc(sizeof(long));
+    if(!observed_generation_local_var)
+    {
+        goto end;
+    }
+    *observed_generation_local_var = observed_generation->valuedouble;
     }
 
     // v1_pod_condition->reason
@@ -249,18 +283,57 @@ v1_pod_condition_t *v1_pod_condition_parseFromJSON(cJSON *v1_pod_conditionJSON){
     }
 
 
+    if (last_probe_time && !cJSON_IsNull(last_probe_time)) last_probe_time_local_str = strdup(last_probe_time->valuestring);
+    if (last_transition_time && !cJSON_IsNull(last_transition_time)) last_transition_time_local_str = strdup(last_transition_time->valuestring);
+    if (message && !cJSON_IsNull(message)) message_local_str = strdup(message->valuestring);
+    if (reason && !cJSON_IsNull(reason)) reason_local_str = strdup(reason->valuestring);
+    if (status && !cJSON_IsNull(status)) status_local_str = strdup(status->valuestring);
+    if (type && !cJSON_IsNull(type)) type_local_str = strdup(type->valuestring);
+
     v1_pod_condition_local_var = v1_pod_condition_create_internal (
-        last_probe_time && !cJSON_IsNull(last_probe_time) ? strdup(last_probe_time->valuestring) : NULL,
-        last_transition_time && !cJSON_IsNull(last_transition_time) ? strdup(last_transition_time->valuestring) : NULL,
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
-        observed_generation ? observed_generation->valuedouble : 0,
-        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
-        strdup(status->valuestring),
-        strdup(type->valuestring)
+        last_probe_time_local_str,
+        last_transition_time_local_str,
+        message_local_str,
+        observed_generation_local_var,
+        reason_local_str,
+        status_local_str,
+        type_local_str
         );
+
+    if (!v1_pod_condition_local_var) {
+        goto end;
+    }
 
     return v1_pod_condition_local_var;
 end:
+    if (last_probe_time_local_str) {
+        free(last_probe_time_local_str);
+        last_probe_time_local_str = NULL;
+    }
+    if (last_transition_time_local_str) {
+        free(last_transition_time_local_str);
+        last_transition_time_local_str = NULL;
+    }
+    if (message_local_str) {
+        free(message_local_str);
+        message_local_str = NULL;
+    }
+    if (observed_generation_local_var) {
+        free(observed_generation_local_var);
+        observed_generation_local_var = NULL;
+    }
+    if (reason_local_str) {
+        free(reason_local_str);
+        reason_local_str = NULL;
+    }
+    if (status_local_str) {
+        free(status_local_str);
+        status_local_str = NULL;
+    }
+    if (type_local_str) {
+        free(type_local_str);
+        type_local_str = NULL;
+    }
     return NULL;
 
 }

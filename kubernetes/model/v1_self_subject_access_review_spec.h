@@ -1,7 +1,7 @@
 /*
  * v1_self_subject_access_review_spec.h
  *
- * SelfSubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set
+ * SelfSubjectAccessReviewSpec is a description of the access request.  Exactly one of resourceAttributes and nonResourceAttributes must be set
  */
 
 #ifndef _v1_self_subject_access_review_spec_H_

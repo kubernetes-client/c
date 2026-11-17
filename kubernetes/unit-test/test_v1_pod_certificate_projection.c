@@ -27,7 +27,9 @@ v1_pod_certificate_projection_t* instantiate_v1_pod_certificate_projection(int i
       "0",
       "0",
       56,
-      "0"
+      "0",
+      56,
+      list_createList()
     );
   } else {
     v1_pod_certificate_projection = v1_pod_certificate_projection_create(
@@ -36,7 +38,9 @@ v1_pod_certificate_projection_t* instantiate_v1_pod_certificate_projection(int i
       "0",
       "0",
       56,
-      "0"
+      "0",
+      56,
+      list_createList()
     );
   }
 

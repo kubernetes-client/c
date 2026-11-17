@@ -7,17 +7,19 @@
 
 static v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_create_internal(
     list_t *conditions,
-    int current_healthy,
-    int desired_healthy,
+    int *current_healthy,
+    int *desired_healthy,
     list_t* disrupted_pods,
-    int disruptions_allowed,
-    int expected_pods,
-    long observed_generation
+    int *disruptions_allowed,
+    int *expected_pods,
+    long *observed_generation
     ) {
     v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_local_var = malloc(sizeof(v1_pod_disruption_budget_status_t));
     if (!v1_pod_disruption_budget_status_local_var) {
         return NULL;
     }
+    memset(v1_pod_disruption_budget_status_local_var, 0, sizeof(v1_pod_disruption_budget_status_t));
+    v1_pod_disruption_budget_status_local_var->_library_owned = 1;
     v1_pod_disruption_budget_status_local_var->conditions = conditions;
     v1_pod_disruption_budget_status_local_var->current_healthy = current_healthy;
     v1_pod_disruption_budget_status_local_var->desired_healthy = desired_healthy;
@@ -25,29 +27,60 @@ static v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_create
     v1_pod_disruption_budget_status_local_var->disruptions_allowed = disruptions_allowed;
     v1_pod_disruption_budget_status_local_var->expected_pods = expected_pods;
     v1_pod_disruption_budget_status_local_var->observed_generation = observed_generation;
-
-    v1_pod_disruption_budget_status_local_var->_library_owned = 1;
     return v1_pod_disruption_budget_status_local_var;
 }
 
 __attribute__((deprecated)) v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_create(
     list_t *conditions,
-    int current_healthy,
-    int desired_healthy,
+    int *current_healthy,
+    int *desired_healthy,
     list_t* disrupted_pods,
-    int disruptions_allowed,
-    int expected_pods,
-    long observed_generation
+    int *disruptions_allowed,
+    int *expected_pods,
+    long *observed_generation
     ) {
-    return v1_pod_disruption_budget_status_create_internal (
+    int *current_healthy_copy = NULL;
+    if (current_healthy) {
+        current_healthy_copy = malloc(sizeof(int));
+        if (current_healthy_copy) *current_healthy_copy = *current_healthy;
+    }
+    int *desired_healthy_copy = NULL;
+    if (desired_healthy) {
+        desired_healthy_copy = malloc(sizeof(int));
+        if (desired_healthy_copy) *desired_healthy_copy = *desired_healthy;
+    }
+    int *disruptions_allowed_copy = NULL;
+    if (disruptions_allowed) {
+        disruptions_allowed_copy = malloc(sizeof(int));
+        if (disruptions_allowed_copy) *disruptions_allowed_copy = *disruptions_allowed;
+    }
+    int *expected_pods_copy = NULL;
+    if (expected_pods) {
+        expected_pods_copy = malloc(sizeof(int));
+        if (expected_pods_copy) *expected_pods_copy = *expected_pods;
+    }
+    long *observed_generation_copy = NULL;
+    if (observed_generation) {
+        observed_generation_copy = malloc(sizeof(long));
+        if (observed_generation_copy) *observed_generation_copy = *observed_generation;
+    }
+    v1_pod_disruption_budget_status_t *result = v1_pod_disruption_budget_status_create_internal (
         conditions,
-        current_healthy,
-        desired_healthy,
+        current_healthy_copy,
+        desired_healthy_copy,
         disrupted_pods,
-        disruptions_allowed,
-        expected_pods,
-        observed_generation
+        disruptions_allowed_copy,
+        expected_pods_copy,
+        observed_generation_copy
         );
+    if (!result) {
+        free(current_healthy_copy);
+        free(desired_healthy_copy);
+        free(disruptions_allowed_copy);
+        free(expected_pods_copy);
+        free(observed_generation_copy);
+    }
+    return result;
 }
 
 void v1_pod_disruption_budget_status_free(v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status) {
@@ -66,6 +99,14 @@ void v1_pod_disruption_budget_status_free(v1_pod_disruption_budget_status_t *v1_
         list_freeList(v1_pod_disruption_budget_status->conditions);
         v1_pod_disruption_budget_status->conditions = NULL;
     }
+    if (v1_pod_disruption_budget_status->current_healthy) {
+        free(v1_pod_disruption_budget_status->current_healthy);
+        v1_pod_disruption_budget_status->current_healthy = NULL;
+    }
+    if (v1_pod_disruption_budget_status->desired_healthy) {
+        free(v1_pod_disruption_budget_status->desired_healthy);
+        v1_pod_disruption_budget_status->desired_healthy = NULL;
+    }
     if (v1_pod_disruption_budget_status->disrupted_pods) {
         list_ForEach(listEntry, v1_pod_disruption_budget_status->disrupted_pods) {
             keyValuePair_t *localKeyValue = listEntry->data;
@@ -75,6 +116,18 @@ void v1_pod_disruption_budget_status_free(v1_pod_disruption_budget_status_t *v1_
         }
         list_freeList(v1_pod_disruption_budget_status->disrupted_pods);
         v1_pod_disruption_budget_status->disrupted_pods = NULL;
+    }
+    if (v1_pod_disruption_budget_status->disruptions_allowed) {
+        free(v1_pod_disruption_budget_status->disruptions_allowed);
+        v1_pod_disruption_budget_status->disruptions_allowed = NULL;
+    }
+    if (v1_pod_disruption_budget_status->expected_pods) {
+        free(v1_pod_disruption_budget_status->expected_pods);
+        v1_pod_disruption_budget_status->expected_pods = NULL;
+    }
+    if (v1_pod_disruption_budget_status->observed_generation) {
+        free(v1_pod_disruption_budget_status->observed_generation);
+        v1_pod_disruption_budget_status->observed_generation = NULL;
     }
     free(v1_pod_disruption_budget_status);
 }
@@ -103,20 +156,18 @@ cJSON *v1_pod_disruption_budget_status_convertToJSON(v1_pod_disruption_budget_st
 
 
     // v1_pod_disruption_budget_status->current_healthy
-    if (!v1_pod_disruption_budget_status->current_healthy) {
-        goto fail;
-    }
-    if(cJSON_AddNumberToObject(item, "currentHealthy", v1_pod_disruption_budget_status->current_healthy) == NULL) {
+    if(v1_pod_disruption_budget_status->current_healthy) {
+    if(cJSON_AddNumberToObject(item, "currentHealthy", *v1_pod_disruption_budget_status->current_healthy) == NULL) {
     goto fail; //Numeric
+    }
     }
 
 
     // v1_pod_disruption_budget_status->desired_healthy
-    if (!v1_pod_disruption_budget_status->desired_healthy) {
-        goto fail;
-    }
-    if(cJSON_AddNumberToObject(item, "desiredHealthy", v1_pod_disruption_budget_status->desired_healthy) == NULL) {
+    if(v1_pod_disruption_budget_status->desired_healthy) {
+    if(cJSON_AddNumberToObject(item, "desiredHealthy", *v1_pod_disruption_budget_status->desired_healthy) == NULL) {
     goto fail; //Numeric
+    }
     }
 
 
@@ -137,26 +188,24 @@ cJSON *v1_pod_disruption_budget_status_convertToJSON(v1_pod_disruption_budget_st
 
 
     // v1_pod_disruption_budget_status->disruptions_allowed
-    if (!v1_pod_disruption_budget_status->disruptions_allowed) {
-        goto fail;
-    }
-    if(cJSON_AddNumberToObject(item, "disruptionsAllowed", v1_pod_disruption_budget_status->disruptions_allowed) == NULL) {
+    if(v1_pod_disruption_budget_status->disruptions_allowed) {
+    if(cJSON_AddNumberToObject(item, "disruptionsAllowed", *v1_pod_disruption_budget_status->disruptions_allowed) == NULL) {
     goto fail; //Numeric
+    }
     }
 
 
     // v1_pod_disruption_budget_status->expected_pods
-    if (!v1_pod_disruption_budget_status->expected_pods) {
-        goto fail;
-    }
-    if(cJSON_AddNumberToObject(item, "expectedPods", v1_pod_disruption_budget_status->expected_pods) == NULL) {
+    if(v1_pod_disruption_budget_status->expected_pods) {
+    if(cJSON_AddNumberToObject(item, "expectedPods", *v1_pod_disruption_budget_status->expected_pods) == NULL) {
     goto fail; //Numeric
+    }
     }
 
 
     // v1_pod_disruption_budget_status->observed_generation
     if(v1_pod_disruption_budget_status->observed_generation) {
-    if(cJSON_AddNumberToObject(item, "observedGeneration", v1_pod_disruption_budget_status->observed_generation) == NULL) {
+    if(cJSON_AddNumberToObject(item, "observedGeneration", *v1_pod_disruption_budget_status->observed_generation) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -176,8 +225,23 @@ v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_parseFromJSON
     // define the local list for v1_pod_disruption_budget_status->conditions
     list_t *conditionsList = NULL;
 
+    // define the local variable for v1_pod_disruption_budget_status->current_healthy
+    int *current_healthy_local_var = NULL;
+
+    // define the local variable for v1_pod_disruption_budget_status->desired_healthy
+    int *desired_healthy_local_var = NULL;
+
     // define the local map for v1_pod_disruption_budget_status->disrupted_pods
     list_t *disrupted_podsList = NULL;
+
+    // define the local variable for v1_pod_disruption_budget_status->disruptions_allowed
+    int *disruptions_allowed_local_var = NULL;
+
+    // define the local variable for v1_pod_disruption_budget_status->expected_pods
+    int *expected_pods_local_var = NULL;
+
+    // define the local variable for v1_pod_disruption_budget_status->observed_generation
+    long *observed_generation_local_var = NULL;
 
     // v1_pod_disruption_budget_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_statusJSON, "conditions");
@@ -208,14 +272,17 @@ v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_parseFromJSON
     if (cJSON_IsNull(current_healthy)) {
         current_healthy = NULL;
     }
-    if (!current_healthy) {
-        goto end;
-    }
-
-    
+    if (current_healthy) { 
     if(!cJSON_IsNumber(current_healthy))
     {
     goto end; //Numeric
+    }
+    current_healthy_local_var = malloc(sizeof(int));
+    if(!current_healthy_local_var)
+    {
+        goto end;
+    }
+    *current_healthy_local_var = current_healthy->valuedouble;
     }
 
     // v1_pod_disruption_budget_status->desired_healthy
@@ -223,14 +290,17 @@ v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_parseFromJSON
     if (cJSON_IsNull(desired_healthy)) {
         desired_healthy = NULL;
     }
-    if (!desired_healthy) {
-        goto end;
-    }
-
-    
+    if (desired_healthy) { 
     if(!cJSON_IsNumber(desired_healthy))
     {
     goto end; //Numeric
+    }
+    desired_healthy_local_var = malloc(sizeof(int));
+    if(!desired_healthy_local_var)
+    {
+        goto end;
+    }
+    *desired_healthy_local_var = desired_healthy->valuedouble;
     }
 
     // v1_pod_disruption_budget_status->disrupted_pods
@@ -261,14 +331,17 @@ v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_parseFromJSON
     if (cJSON_IsNull(disruptions_allowed)) {
         disruptions_allowed = NULL;
     }
-    if (!disruptions_allowed) {
-        goto end;
-    }
-
-    
+    if (disruptions_allowed) { 
     if(!cJSON_IsNumber(disruptions_allowed))
     {
     goto end; //Numeric
+    }
+    disruptions_allowed_local_var = malloc(sizeof(int));
+    if(!disruptions_allowed_local_var)
+    {
+        goto end;
+    }
+    *disruptions_allowed_local_var = disruptions_allowed->valuedouble;
     }
 
     // v1_pod_disruption_budget_status->expected_pods
@@ -276,14 +349,17 @@ v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_parseFromJSON
     if (cJSON_IsNull(expected_pods)) {
         expected_pods = NULL;
     }
-    if (!expected_pods) {
-        goto end;
-    }
-
-    
+    if (expected_pods) { 
     if(!cJSON_IsNumber(expected_pods))
     {
     goto end; //Numeric
+    }
+    expected_pods_local_var = malloc(sizeof(int));
+    if(!expected_pods_local_var)
+    {
+        goto end;
+    }
+    *expected_pods_local_var = expected_pods->valuedouble;
     }
 
     // v1_pod_disruption_budget_status->observed_generation
@@ -296,18 +372,29 @@ v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_parseFromJSON
     {
     goto end; //Numeric
     }
+    observed_generation_local_var = malloc(sizeof(long));
+    if(!observed_generation_local_var)
+    {
+        goto end;
     }
+    *observed_generation_local_var = observed_generation->valuedouble;
+    }
+
 
 
     v1_pod_disruption_budget_status_local_var = v1_pod_disruption_budget_status_create_internal (
         conditions ? conditionsList : NULL,
-        current_healthy->valuedouble,
-        desired_healthy->valuedouble,
+        current_healthy_local_var,
+        desired_healthy_local_var,
         disrupted_pods ? disrupted_podsList : NULL,
-        disruptions_allowed->valuedouble,
-        expected_pods->valuedouble,
-        observed_generation ? observed_generation->valuedouble : 0
+        disruptions_allowed_local_var,
+        expected_pods_local_var,
+        observed_generation_local_var
         );
+
+    if (!v1_pod_disruption_budget_status_local_var) {
+        goto end;
+    }
 
     return v1_pod_disruption_budget_status_local_var;
 end:
@@ -320,6 +407,14 @@ end:
         list_freeList(conditionsList);
         conditionsList = NULL;
     }
+    if (current_healthy_local_var) {
+        free(current_healthy_local_var);
+        current_healthy_local_var = NULL;
+    }
+    if (desired_healthy_local_var) {
+        free(desired_healthy_local_var);
+        desired_healthy_local_var = NULL;
+    }
     if (disrupted_podsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, disrupted_podsList) {
@@ -331,6 +426,18 @@ end:
         }
         list_freeList(disrupted_podsList);
         disrupted_podsList = NULL;
+    }
+    if (disruptions_allowed_local_var) {
+        free(disruptions_allowed_local_var);
+        disruptions_allowed_local_var = NULL;
+    }
+    if (expected_pods_local_var) {
+        free(expected_pods_local_var);
+        expected_pods_local_var = NULL;
+    }
+    if (observed_generation_local_var) {
+        free(observed_generation_local_var);
+        observed_generation_local_var = NULL;
     }
     return NULL;
 

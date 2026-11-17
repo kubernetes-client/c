@@ -13,10 +13,10 @@ static v1_local_volume_source_t *v1_local_volume_source_create_internal(
     if (!v1_local_volume_source_local_var) {
         return NULL;
     }
+    memset(v1_local_volume_source_local_var, 0, sizeof(v1_local_volume_source_t));
+    v1_local_volume_source_local_var->_library_owned = 1;
     v1_local_volume_source_local_var->fs_type = fs_type;
     v1_local_volume_source_local_var->path = path;
-
-    v1_local_volume_source_local_var->_library_owned = 1;
     return v1_local_volume_source_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_local_volume_source_t *v1_local_volume_source_cre
     char *fs_type,
     char *path
     ) {
-    return v1_local_volume_source_create_internal (
+    v1_local_volume_source_t *result = v1_local_volume_source_create_internal (
         fs_type,
         path
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_local_volume_source_free(v1_local_volume_source_t *v1_local_volume_source) {
@@ -81,6 +84,10 @@ v1_local_volume_source_t *v1_local_volume_source_parseFromJSON(cJSON *v1_local_v
 
     v1_local_volume_source_t *v1_local_volume_source_local_var = NULL;
 
+    char *fs_type_local_str = NULL;
+
+    char *path_local_str = NULL;
+
     // v1_local_volume_source->fs_type
     cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_local_volume_sourceJSON, "fsType");
     if (cJSON_IsNull(fs_type)) {
@@ -109,13 +116,28 @@ v1_local_volume_source_t *v1_local_volume_source_parseFromJSON(cJSON *v1_local_v
     }
 
 
+    if (fs_type && !cJSON_IsNull(fs_type)) fs_type_local_str = strdup(fs_type->valuestring);
+    if (path && !cJSON_IsNull(path)) path_local_str = strdup(path->valuestring);
+
     v1_local_volume_source_local_var = v1_local_volume_source_create_internal (
-        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
-        strdup(path->valuestring)
+        fs_type_local_str,
+        path_local_str
         );
+
+    if (!v1_local_volume_source_local_var) {
+        goto end;
+    }
 
     return v1_local_volume_source_local_var;
 end:
+    if (fs_type_local_str) {
+        free(fs_type_local_str);
+        fs_type_local_str = NULL;
+    }
+    if (path_local_str) {
+        free(path_local_str);
+        path_local_str = NULL;
+    }
     return NULL;
 
 }

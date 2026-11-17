@@ -26,12 +26,14 @@ v1_http_get_action_t* instantiate_v1_http_get_action(int include_optional) {
       list_createList(),
       "0",
       "0",
+      "0",
       "0"
     );
   } else {
     v1_http_get_action = v1_http_get_action_create(
       "0",
       list_createList(),
+      "0",
       "0",
       "0",
       "0"

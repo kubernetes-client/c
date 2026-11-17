@@ -15,12 +15,12 @@ static rbac_v1_subject_t *rbac_v1_subject_create_internal(
     if (!rbac_v1_subject_local_var) {
         return NULL;
     }
+    memset(rbac_v1_subject_local_var, 0, sizeof(rbac_v1_subject_t));
+    rbac_v1_subject_local_var->_library_owned = 1;
     rbac_v1_subject_local_var->api_group = api_group;
     rbac_v1_subject_local_var->kind = kind;
     rbac_v1_subject_local_var->name = name;
     rbac_v1_subject_local_var->_namespace = _namespace;
-
-    rbac_v1_subject_local_var->_library_owned = 1;
     return rbac_v1_subject_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) rbac_v1_subject_t *rbac_v1_subject_create(
     char *name,
     char *_namespace
     ) {
-    return rbac_v1_subject_create_internal (
+    rbac_v1_subject_t *result = rbac_v1_subject_create_internal (
         api_group,
         kind,
         name,
         _namespace
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void rbac_v1_subject_free(rbac_v1_subject_t *rbac_v1_subject) {
@@ -114,6 +117,14 @@ rbac_v1_subject_t *rbac_v1_subject_parseFromJSON(cJSON *rbac_v1_subjectJSON){
 
     rbac_v1_subject_t *rbac_v1_subject_local_var = NULL;
 
+    char *api_group_local_str = NULL;
+
+    char *kind_local_str = NULL;
+
+    char *name_local_str = NULL;
+
+    char *_namespace_local_str = NULL;
+
     // rbac_v1_subject->api_group
     cJSON *api_group = cJSON_GetObjectItemCaseSensitive(rbac_v1_subjectJSON, "apiGroup");
     if (cJSON_IsNull(api_group)) {
@@ -169,15 +180,40 @@ rbac_v1_subject_t *rbac_v1_subject_parseFromJSON(cJSON *rbac_v1_subjectJSON){
     }
 
 
+    if (api_group && !cJSON_IsNull(api_group)) api_group_local_str = strdup(api_group->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (_namespace && !cJSON_IsNull(_namespace)) _namespace_local_str = strdup(_namespace->valuestring);
+
     rbac_v1_subject_local_var = rbac_v1_subject_create_internal (
-        api_group && !cJSON_IsNull(api_group) ? strdup(api_group->valuestring) : NULL,
-        strdup(kind->valuestring),
-        strdup(name->valuestring),
-        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL
+        api_group_local_str,
+        kind_local_str,
+        name_local_str,
+        _namespace_local_str
         );
+
+    if (!rbac_v1_subject_local_var) {
+        goto end;
+    }
 
     return rbac_v1_subject_local_var;
 end:
+    if (api_group_local_str) {
+        free(api_group_local_str);
+        api_group_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (_namespace_local_str) {
+        free(_namespace_local_str);
+        _namespace_local_str = NULL;
+    }
     return NULL;
 
 }

@@ -16,13 +16,13 @@ static v1beta2_resource_claim_t *v1beta2_resource_claim_create_internal(
     if (!v1beta2_resource_claim_local_var) {
         return NULL;
     }
+    memset(v1beta2_resource_claim_local_var, 0, sizeof(v1beta2_resource_claim_t));
+    v1beta2_resource_claim_local_var->_library_owned = 1;
     v1beta2_resource_claim_local_var->api_version = api_version;
     v1beta2_resource_claim_local_var->kind = kind;
     v1beta2_resource_claim_local_var->metadata = metadata;
     v1beta2_resource_claim_local_var->spec = spec;
     v1beta2_resource_claim_local_var->status = status;
-
-    v1beta2_resource_claim_local_var->_library_owned = 1;
     return v1beta2_resource_claim_local_var;
 }
 
@@ -33,13 +33,16 @@ __attribute__((deprecated)) v1beta2_resource_claim_t *v1beta2_resource_claim_cre
     v1beta2_resource_claim_spec_t *spec,
     v1beta2_resource_claim_status_t *status
     ) {
-    return v1beta2_resource_claim_create_internal (
+    v1beta2_resource_claim_t *result = v1beta2_resource_claim_create_internal (
         api_version,
         kind,
         metadata,
         spec,
         status
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1beta2_resource_claim_free(v1beta2_resource_claim_t *v1beta2_resource_claim) {
@@ -107,9 +110,7 @@ cJSON *v1beta2_resource_claim_convertToJSON(v1beta2_resource_claim_t *v1beta2_re
 
 
     // v1beta2_resource_claim->spec
-    if (!v1beta2_resource_claim->spec) {
-        goto fail;
-    }
+    if(v1beta2_resource_claim->spec) {
     cJSON *spec_local_JSON = v1beta2_resource_claim_spec_convertToJSON(v1beta2_resource_claim->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -117,6 +118,7 @@ cJSON *v1beta2_resource_claim_convertToJSON(v1beta2_resource_claim_t *v1beta2_re
     cJSON_AddItemToObject(item, "spec", spec_local_JSON);
     if(item->child == NULL) {
     goto fail;
+    }
     }
 
 
@@ -143,6 +145,10 @@ fail:
 v1beta2_resource_claim_t *v1beta2_resource_claim_parseFromJSON(cJSON *v1beta2_resource_claimJSON){
 
     v1beta2_resource_claim_t *v1beta2_resource_claim_local_var = NULL;
+
+    char *api_version_local_str = NULL;
+
+    char *kind_local_str = NULL;
 
     // define the local variable for v1beta2_resource_claim->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
@@ -191,12 +197,9 @@ v1beta2_resource_claim_t *v1beta2_resource_claim_parseFromJSON(cJSON *v1beta2_re
     if (cJSON_IsNull(spec)) {
         spec = NULL;
     }
-    if (!spec) {
-        goto end;
-    }
-
-    
+    if (spec) { 
     spec_local_nonprim = v1beta2_resource_claim_spec_parseFromJSON(spec); //nonprimitive
+    }
 
     // v1beta2_resource_claim->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1beta2_resource_claimJSON, "status");
@@ -208,16 +211,31 @@ v1beta2_resource_claim_t *v1beta2_resource_claim_parseFromJSON(cJSON *v1beta2_re
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+
     v1beta2_resource_claim_local_var = v1beta2_resource_claim_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version_local_str,
+        kind_local_str,
         metadata ? metadata_local_nonprim : NULL,
-        spec_local_nonprim,
+        spec ? spec_local_nonprim : NULL,
         status ? status_local_nonprim : NULL
         );
 
+    if (!v1beta2_resource_claim_local_var) {
+        goto end;
+    }
+
     return v1beta2_resource_claim_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;

@@ -1697,7 +1697,7 @@ end:
 // delete collection of CSIDriver
 //
 v1_status_t*
-StorageV1API_deleteCollectionCSIDriver(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+StorageV1API_deleteCollectionCSIDriver(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1879,6 +1879,18 @@ StorageV1API_deleteCollectionCSIDriver(apiClient_t *apiClient, char *pretty, cha
     }
 
     // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -2107,6 +2119,18 @@ StorageV1API_deleteCollectionCSIDriver(apiClient_t *apiClient, char *pretty, cha
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -2129,7 +2153,7 @@ end:
 // delete collection of CSINode
 //
 v1_status_t*
-StorageV1API_deleteCollectionCSINode(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+StorageV1API_deleteCollectionCSINode(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2311,6 +2335,18 @@ StorageV1API_deleteCollectionCSINode(apiClient_t *apiClient, char *pretty, char 
     }
 
     // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -2539,6 +2575,18 @@ StorageV1API_deleteCollectionCSINode(apiClient_t *apiClient, char *pretty, char 
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -2561,7 +2609,7 @@ end:
 // delete collection of CSIStorageCapacity
 //
 v1_status_t*
-StorageV1API_deleteCollectionNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+StorageV1API_deleteCollectionNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2752,6 +2800,18 @@ StorageV1API_deleteCollectionNamespacedCSIStorageCapacity(apiClient_t *apiClient
         snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
     }
 
     // query parameters
@@ -2984,6 +3044,18 @@ StorageV1API_deleteCollectionNamespacedCSIStorageCapacity(apiClient_t *apiClient
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -3006,7 +3078,7 @@ end:
 // delete collection of StorageClass
 //
 v1_status_t*
-StorageV1API_deleteCollectionStorageClass(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+StorageV1API_deleteCollectionStorageClass(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3188,6 +3260,18 @@ StorageV1API_deleteCollectionStorageClass(apiClient_t *apiClient, char *pretty, 
     }
 
     // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -3416,6 +3500,18 @@ StorageV1API_deleteCollectionStorageClass(apiClient_t *apiClient, char *pretty, 
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -3438,7 +3534,7 @@ end:
 // delete collection of VolumeAttachment
 //
 v1_status_t*
-StorageV1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+StorageV1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3620,6 +3716,18 @@ StorageV1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient, char *pret
     }
 
     // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -3848,6 +3956,18 @@ StorageV1API_deleteCollectionVolumeAttachment(apiClient_t *apiClient, char *pret
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -3870,7 +3990,7 @@ end:
 // delete collection of VolumeAttributesClass
 //
 v1_status_t*
-StorageV1API_deleteCollectionVolumeAttributesClass(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+StorageV1API_deleteCollectionVolumeAttributesClass(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4052,6 +4172,18 @@ StorageV1API_deleteCollectionVolumeAttributesClass(apiClient_t *apiClient, char 
     }
 
     // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -4279,6 +4411,18 @@ StorageV1API_deleteCollectionVolumeAttributesClass(apiClient_t *apiClient, char 
     if(keyPairQuery_sendInitialEvents){
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
+    }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
     }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
@@ -5406,7 +5550,7 @@ end:
 // list or watch objects of kind CSIDriver
 //
 v1_csi_driver_list_t*
-StorageV1API_listCSIDriver(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+StorageV1API_listCSIDriver(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -5535,6 +5679,18 @@ StorageV1API_listCSIDriver(apiClient_t *apiClient, char *pretty, int *allowWatch
         snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
     }
 
     // query parameters
@@ -5719,6 +5875,18 @@ StorageV1API_listCSIDriver(apiClient_t *apiClient, char *pretty, int *allowWatch
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -5753,7 +5921,7 @@ end:
 // list or watch objects of kind CSINode
 //
 v1_csi_node_list_t*
-StorageV1API_listCSINode(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+StorageV1API_listCSINode(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -5882,6 +6050,18 @@ StorageV1API_listCSINode(apiClient_t *apiClient, char *pretty, int *allowWatchBo
         snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
     }
 
     // query parameters
@@ -6066,6 +6246,18 @@ StorageV1API_listCSINode(apiClient_t *apiClient, char *pretty, int *allowWatchBo
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -6100,7 +6292,7 @@ end:
 // list or watch objects of kind CSIStorageCapacity
 //
 v1_csi_storage_capacity_list_t*
-StorageV1API_listCSIStorageCapacityForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+StorageV1API_listCSIStorageCapacityForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -6229,6 +6421,18 @@ StorageV1API_listCSIStorageCapacityForAllNamespaces(apiClient_t *apiClient, int 
         snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
     }
 
     // query parameters
@@ -6413,6 +6617,18 @@ StorageV1API_listCSIStorageCapacityForAllNamespaces(apiClient_t *apiClient, int 
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -6447,7 +6663,7 @@ end:
 // list or watch objects of kind CSIStorageCapacity
 //
 v1_csi_storage_capacity_list_t*
-StorageV1API_listNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+StorageV1API_listNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -6588,6 +6804,18 @@ StorageV1API_listNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *_nam
         snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
     }
 
     // query parameters
@@ -6773,6 +7001,18 @@ StorageV1API_listNamespacedCSIStorageCapacity(apiClient_t *apiClient, char *_nam
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -6807,7 +7047,7 @@ end:
 // list or watch objects of kind StorageClass
 //
 v1_storage_class_list_t*
-StorageV1API_listStorageClass(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+StorageV1API_listStorageClass(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -6936,6 +7176,18 @@ StorageV1API_listStorageClass(apiClient_t *apiClient, char *pretty, int *allowWa
         snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
     }
 
     // query parameters
@@ -7120,6 +7372,18 @@ StorageV1API_listStorageClass(apiClient_t *apiClient, char *pretty, int *allowWa
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -7154,7 +7418,7 @@ end:
 // list or watch objects of kind VolumeAttachment
 //
 v1_volume_attachment_list_t*
-StorageV1API_listVolumeAttachment(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+StorageV1API_listVolumeAttachment(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -7283,6 +7547,18 @@ StorageV1API_listVolumeAttachment(apiClient_t *apiClient, char *pretty, int *all
         snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
     }
 
     // query parameters
@@ -7467,6 +7743,18 @@ StorageV1API_listVolumeAttachment(apiClient_t *apiClient, char *pretty, int *all
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -7501,7 +7789,7 @@ end:
 // list or watch objects of kind VolumeAttributesClass
 //
 v1_volume_attributes_class_list_t*
-StorageV1API_listVolumeAttributesClass(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+StorageV1API_listVolumeAttributesClass(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -7630,6 +7918,18 @@ StorageV1API_listVolumeAttributesClass(apiClient_t *apiClient, char *pretty, int
         snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
     }
 
     // query parameters
@@ -7813,6 +8113,18 @@ StorageV1API_listVolumeAttributesClass(apiClient_t *apiClient, char *pretty, int
     if(keyPairQuery_sendInitialEvents){
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
+    }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
     }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
@@ -8096,6 +8408,239 @@ StorageV1API_patchCSINode(apiClient_t *apiClient, char *name, object_t *body, ch
 
     // create the path
     char *localVarPath = strdup("/apis/storage.k8s.io/v1/csinodes/{name}");
+
+    if(!name)
+        goto end;
+
+
+    // Path Params
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
+    if(name == NULL) {
+        goto end;
+    }
+    char* localVarToReplace_name = malloc(sizeOfPathParams_name);
+    sprintf(localVarToReplace_name, "{%s}", "name");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
+
+
+
+    // query parameters
+    char *keyQuery_pretty = NULL;
+    char * valueQuery_pretty = NULL;
+    keyValuePair_t *keyPairQuery_pretty = 0;
+    if (pretty)
+    {
+        keyQuery_pretty = strdup("pretty");
+        valueQuery_pretty = strdup((pretty));
+        keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
+        list_addElement(localVarQueryParameters,keyPairQuery_pretty);
+    }
+
+    // query parameters
+    char *keyQuery_dryRun = NULL;
+    char * valueQuery_dryRun = NULL;
+    keyValuePair_t *keyPairQuery_dryRun = 0;
+    if (dryRun)
+    {
+        keyQuery_dryRun = strdup("dryRun");
+        valueQuery_dryRun = strdup((dryRun));
+        keyPairQuery_dryRun = keyValuePair_create(keyQuery_dryRun, valueQuery_dryRun);
+        list_addElement(localVarQueryParameters,keyPairQuery_dryRun);
+    }
+
+    // query parameters
+    char *keyQuery_fieldManager = NULL;
+    char * valueQuery_fieldManager = NULL;
+    keyValuePair_t *keyPairQuery_fieldManager = 0;
+    if (fieldManager)
+    {
+        keyQuery_fieldManager = strdup("fieldManager");
+        valueQuery_fieldManager = strdup((fieldManager));
+        keyPairQuery_fieldManager = keyValuePair_create(keyQuery_fieldManager, valueQuery_fieldManager);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
+    }
+
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // query parameters
+    char *keyQuery_force = NULL;
+    char * valueQuery_force = NULL;
+    keyValuePair_t *keyPairQuery_force = 0;
+    if (force)
+    {
+        keyQuery_force = strdup("force");
+        valueQuery_force = calloc(1,MAX_NUMBER_LENGTH);
+        snprintf(valueQuery_force, MAX_NUMBER_LENGTH, "%d", *force);
+        keyPairQuery_force = keyValuePair_create(keyQuery_force, valueQuery_force);
+        list_addElement(localVarQueryParameters,keyPairQuery_force);
+    }
+
+    // Body Param
+    cJSON *localVarSingleItemJSON_body = NULL;
+    if (body != NULL)
+    {
+        //not string, not binary
+        localVarSingleItemJSON_body = object_convertToJSON(body);
+        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
+    }
+    list_addElement(localVarHeaderType,"application/json"); //produces
+    list_addElement(localVarHeaderType,"application/yaml"); //produces
+    list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
+    list_addElement(localVarContentType,"application/json-patch+json"); //consumes
+    list_addElement(localVarContentType,"application/merge-patch+json"); //consumes
+    list_addElement(localVarContentType,"application/strategic-merge-patch+json"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+yaml"); //consumes
+    list_addElement(localVarContentType,"application/apply-patch+cbor"); //consumes
+    apiClient_invoke(apiClient,
+                    localVarPath,
+                    localVarQueryParameters,
+                    localVarHeaderParameters,
+                    localVarFormParameters,
+                    localVarHeaderType,
+                    localVarContentType,
+                    localVarBodyParameters,
+                    localVarBodyLength,
+                    "PATCH");
+
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
+    //nonprimitive not container
+    v1_csi_node_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_csi_node_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
+    }
+
+    //return type
+    if (apiClient->dataReceived) {
+        free(apiClient->dataReceived);
+        apiClient->dataReceived = NULL;
+        apiClient->dataReceivedLen = 0;
+    }
+    list_freeList(localVarQueryParameters);
+    
+    
+    list_freeList(localVarHeaderType);
+    list_freeList(localVarContentType);
+    free(localVarPath);
+    free(localVarToReplace_name);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
+    free(localVarBodyParameters);
+    if(keyQuery_pretty){
+        free(keyQuery_pretty);
+        keyQuery_pretty = NULL;
+    }
+    if(valueQuery_pretty){
+        free(valueQuery_pretty);
+        valueQuery_pretty = NULL;
+    }
+    if(keyPairQuery_pretty){
+        keyValuePair_free(keyPairQuery_pretty);
+        keyPairQuery_pretty = NULL;
+    }
+    if(keyQuery_dryRun){
+        free(keyQuery_dryRun);
+        keyQuery_dryRun = NULL;
+    }
+    if(valueQuery_dryRun){
+        free(valueQuery_dryRun);
+        valueQuery_dryRun = NULL;
+    }
+    if(keyPairQuery_dryRun){
+        keyValuePair_free(keyPairQuery_dryRun);
+        keyPairQuery_dryRun = NULL;
+    }
+    if(keyQuery_fieldManager){
+        free(keyQuery_fieldManager);
+        keyQuery_fieldManager = NULL;
+    }
+    if(valueQuery_fieldManager){
+        free(valueQuery_fieldManager);
+        valueQuery_fieldManager = NULL;
+    }
+    if(keyPairQuery_fieldManager){
+        keyValuePair_free(keyPairQuery_fieldManager);
+        keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
+    if(keyQuery_force){
+        free(keyQuery_force);
+        keyQuery_force = NULL;
+    }
+    if(valueQuery_force){
+        free(valueQuery_force);
+        valueQuery_force = NULL;
+    }
+    if(keyPairQuery_force){
+        keyValuePair_free(keyPairQuery_force);
+        keyPairQuery_force = NULL;
+    }
+    return elementToReturn;
+end:
+    free(localVarPath);
+    return NULL;
+
+}
+
+// partially update status of the specified CSINode
+//
+v1_csi_node_t*
+StorageV1API_patchCSINodeStatus(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force)
+{
+    list_t    *localVarQueryParameters = list_createList();
+    list_t    *localVarHeaderParameters = NULL;
+    list_t    *localVarFormParameters = NULL;
+    list_t *localVarHeaderType = list_createList();
+    list_t *localVarContentType = list_createList();
+    char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
+
+    // create the path
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/csinodes/{name}/status");
 
     if(!name)
         goto end;
@@ -9713,6 +10258,118 @@ end:
 
 }
 
+// read status of the specified CSINode
+//
+v1_csi_node_t*
+StorageV1API_readCSINodeStatus(apiClient_t *apiClient, char *name, char *pretty)
+{
+    list_t    *localVarQueryParameters = list_createList();
+    list_t    *localVarHeaderParameters = NULL;
+    list_t    *localVarFormParameters = NULL;
+    list_t *localVarHeaderType = list_createList();
+    list_t *localVarContentType = NULL;
+    char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
+
+    // create the path
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/csinodes/{name}/status");
+
+    if(!name)
+        goto end;
+
+
+    // Path Params
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
+    if(name == NULL) {
+        goto end;
+    }
+    char* localVarToReplace_name = malloc(sizeOfPathParams_name);
+    sprintf(localVarToReplace_name, "{%s}", "name");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
+
+
+
+    // query parameters
+    char *keyQuery_pretty = NULL;
+    char * valueQuery_pretty = NULL;
+    keyValuePair_t *keyPairQuery_pretty = 0;
+    if (pretty)
+    {
+        keyQuery_pretty = strdup("pretty");
+        valueQuery_pretty = strdup((pretty));
+        keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
+        list_addElement(localVarQueryParameters,keyPairQuery_pretty);
+    }
+    list_addElement(localVarHeaderType,"application/json"); //produces
+    list_addElement(localVarHeaderType,"application/yaml"); //produces
+    list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
+    apiClient_invoke(apiClient,
+                    localVarPath,
+                    localVarQueryParameters,
+                    localVarHeaderParameters,
+                    localVarFormParameters,
+                    localVarHeaderType,
+                    localVarContentType,
+                    localVarBodyParameters,
+                    localVarBodyLength,
+                    "GET");
+
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
+    //nonprimitive not container
+    v1_csi_node_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_csi_node_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
+    }
+
+    //return type
+    if (apiClient->dataReceived) {
+        free(apiClient->dataReceived);
+        apiClient->dataReceived = NULL;
+        apiClient->dataReceivedLen = 0;
+    }
+    list_freeList(localVarQueryParameters);
+    
+    
+    list_freeList(localVarHeaderType);
+    
+    free(localVarPath);
+    free(localVarToReplace_name);
+    if(keyQuery_pretty){
+        free(keyQuery_pretty);
+        keyQuery_pretty = NULL;
+    }
+    if(valueQuery_pretty){
+        free(valueQuery_pretty);
+        valueQuery_pretty = NULL;
+    }
+    if(keyPairQuery_pretty){
+        keyValuePair_free(keyPairQuery_pretty);
+        keyPairQuery_pretty = NULL;
+    }
+    return elementToReturn;
+end:
+    free(localVarPath);
+    return NULL;
+
+}
+
 // read the specified CSIStorageCapacity
 //
 v1_csi_storage_capacity_t*
@@ -10507,6 +11164,209 @@ StorageV1API_replaceCSINode(apiClient_t *apiClient, char *name, v1_csi_node_t *b
 
     // create the path
     char *localVarPath = strdup("/apis/storage.k8s.io/v1/csinodes/{name}");
+
+    if(!name)
+        goto end;
+
+
+    // Path Params
+    long sizeOfPathParams_name = strlen(name)+3 + sizeof("{ name }") - 1;
+    if(name == NULL) {
+        goto end;
+    }
+    char* localVarToReplace_name = malloc(sizeOfPathParams_name);
+    sprintf(localVarToReplace_name, "{%s}", "name");
+
+    localVarPath = strReplace(localVarPath, localVarToReplace_name, name);
+
+
+
+    // query parameters
+    char *keyQuery_pretty = NULL;
+    char * valueQuery_pretty = NULL;
+    keyValuePair_t *keyPairQuery_pretty = 0;
+    if (pretty)
+    {
+        keyQuery_pretty = strdup("pretty");
+        valueQuery_pretty = strdup((pretty));
+        keyPairQuery_pretty = keyValuePair_create(keyQuery_pretty, valueQuery_pretty);
+        list_addElement(localVarQueryParameters,keyPairQuery_pretty);
+    }
+
+    // query parameters
+    char *keyQuery_dryRun = NULL;
+    char * valueQuery_dryRun = NULL;
+    keyValuePair_t *keyPairQuery_dryRun = 0;
+    if (dryRun)
+    {
+        keyQuery_dryRun = strdup("dryRun");
+        valueQuery_dryRun = strdup((dryRun));
+        keyPairQuery_dryRun = keyValuePair_create(keyQuery_dryRun, valueQuery_dryRun);
+        list_addElement(localVarQueryParameters,keyPairQuery_dryRun);
+    }
+
+    // query parameters
+    char *keyQuery_fieldManager = NULL;
+    char * valueQuery_fieldManager = NULL;
+    keyValuePair_t *keyPairQuery_fieldManager = 0;
+    if (fieldManager)
+    {
+        keyQuery_fieldManager = strdup("fieldManager");
+        valueQuery_fieldManager = strdup((fieldManager));
+        keyPairQuery_fieldManager = keyValuePair_create(keyQuery_fieldManager, valueQuery_fieldManager);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldManager);
+    }
+
+    // query parameters
+    char *keyQuery_fieldValidation = NULL;
+    char * valueQuery_fieldValidation = NULL;
+    keyValuePair_t *keyPairQuery_fieldValidation = 0;
+    if (fieldValidation)
+    {
+        keyQuery_fieldValidation = strdup("fieldValidation");
+        valueQuery_fieldValidation = strdup((fieldValidation));
+        keyPairQuery_fieldValidation = keyValuePair_create(keyQuery_fieldValidation, valueQuery_fieldValidation);
+        list_addElement(localVarQueryParameters,keyPairQuery_fieldValidation);
+    }
+
+    // Body Param
+    cJSON *localVarSingleItemJSON_body = NULL;
+    if (body != NULL)
+    {
+        //not string, not binary
+        localVarSingleItemJSON_body = v1_csi_node_convertToJSON(body);
+        localVarBodyParameters = cJSON_Print(localVarSingleItemJSON_body);
+        localVarBodyLength = strlen(localVarBodyParameters);
+    }
+    list_addElement(localVarHeaderType,"application/json"); //produces
+    list_addElement(localVarHeaderType,"application/yaml"); //produces
+    list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
+    apiClient_invoke(apiClient,
+                    localVarPath,
+                    localVarQueryParameters,
+                    localVarHeaderParameters,
+                    localVarFormParameters,
+                    localVarHeaderType,
+                    localVarContentType,
+                    localVarBodyParameters,
+                    localVarBodyLength,
+                    "PUT");
+
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 200) {
+    //    printf("%s\n","OK");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 201) {
+    //    printf("%s\n","Created");
+    //}
+    // uncomment below to debug the error response
+    //if (apiClient->response_code == 401) {
+    //    printf("%s\n","Unauthorized");
+    //}
+    //nonprimitive not container
+    v1_csi_node_t *elementToReturn = NULL;
+    if(apiClient->response_code >= 200 && apiClient->response_code < 300) {
+        cJSON *StorageV1APIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+        elementToReturn = v1_csi_node_parseFromJSON(StorageV1APIlocalVarJSON);
+        cJSON_Delete(StorageV1APIlocalVarJSON);
+        if(elementToReturn == NULL) {
+            // return 0;
+        }
+    }
+
+    //return type
+    if (apiClient->dataReceived) {
+        free(apiClient->dataReceived);
+        apiClient->dataReceived = NULL;
+        apiClient->dataReceivedLen = 0;
+    }
+    list_freeList(localVarQueryParameters);
+    
+    
+    list_freeList(localVarHeaderType);
+    
+    free(localVarPath);
+    free(localVarToReplace_name);
+    if (localVarSingleItemJSON_body) {
+        cJSON_Delete(localVarSingleItemJSON_body);
+        localVarSingleItemJSON_body = NULL;
+    }
+    free(localVarBodyParameters);
+    if(keyQuery_pretty){
+        free(keyQuery_pretty);
+        keyQuery_pretty = NULL;
+    }
+    if(valueQuery_pretty){
+        free(valueQuery_pretty);
+        valueQuery_pretty = NULL;
+    }
+    if(keyPairQuery_pretty){
+        keyValuePair_free(keyPairQuery_pretty);
+        keyPairQuery_pretty = NULL;
+    }
+    if(keyQuery_dryRun){
+        free(keyQuery_dryRun);
+        keyQuery_dryRun = NULL;
+    }
+    if(valueQuery_dryRun){
+        free(valueQuery_dryRun);
+        valueQuery_dryRun = NULL;
+    }
+    if(keyPairQuery_dryRun){
+        keyValuePair_free(keyPairQuery_dryRun);
+        keyPairQuery_dryRun = NULL;
+    }
+    if(keyQuery_fieldManager){
+        free(keyQuery_fieldManager);
+        keyQuery_fieldManager = NULL;
+    }
+    if(valueQuery_fieldManager){
+        free(valueQuery_fieldManager);
+        valueQuery_fieldManager = NULL;
+    }
+    if(keyPairQuery_fieldManager){
+        keyValuePair_free(keyPairQuery_fieldManager);
+        keyPairQuery_fieldManager = NULL;
+    }
+    if(keyQuery_fieldValidation){
+        free(keyQuery_fieldValidation);
+        keyQuery_fieldValidation = NULL;
+    }
+    if(valueQuery_fieldValidation){
+        free(valueQuery_fieldValidation);
+        valueQuery_fieldValidation = NULL;
+    }
+    if(keyPairQuery_fieldValidation){
+        keyValuePair_free(keyPairQuery_fieldValidation);
+        keyPairQuery_fieldValidation = NULL;
+    }
+    return elementToReturn;
+end:
+    free(localVarPath);
+    return NULL;
+
+}
+
+// replace status of the specified CSINode
+//
+v1_csi_node_t*
+StorageV1API_replaceCSINodeStatus(apiClient_t *apiClient, char *name, v1_csi_node_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation)
+{
+    list_t    *localVarQueryParameters = list_createList();
+    list_t    *localVarHeaderParameters = NULL;
+    list_t    *localVarFormParameters = NULL;
+    list_t *localVarHeaderType = list_createList();
+    list_t *localVarContentType = NULL;
+    char      *localVarBodyParameters = NULL;
+    size_t     localVarBodyLength = 0;
+
+    // clear the error code from the previous api call
+    apiClient->response_code = 0;
+
+    // create the path
+    char *localVarPath = strdup("/apis/storage.k8s.io/v1/csinodes/{name}/status");
 
     if(!name)
         goto end;

@@ -6,32 +6,47 @@
 
 
 static v1_linux_container_user_t *v1_linux_container_user_create_internal(
-    long gid,
+    long *gid,
     list_t *supplemental_groups,
-    long uid
+    long *uid
     ) {
     v1_linux_container_user_t *v1_linux_container_user_local_var = malloc(sizeof(v1_linux_container_user_t));
     if (!v1_linux_container_user_local_var) {
         return NULL;
     }
+    memset(v1_linux_container_user_local_var, 0, sizeof(v1_linux_container_user_t));
+    v1_linux_container_user_local_var->_library_owned = 1;
     v1_linux_container_user_local_var->gid = gid;
     v1_linux_container_user_local_var->supplemental_groups = supplemental_groups;
     v1_linux_container_user_local_var->uid = uid;
-
-    v1_linux_container_user_local_var->_library_owned = 1;
     return v1_linux_container_user_local_var;
 }
 
 __attribute__((deprecated)) v1_linux_container_user_t *v1_linux_container_user_create(
-    long gid,
+    long *gid,
     list_t *supplemental_groups,
-    long uid
+    long *uid
     ) {
-    return v1_linux_container_user_create_internal (
-        gid,
+    long *gid_copy = NULL;
+    if (gid) {
+        gid_copy = malloc(sizeof(long));
+        if (gid_copy) *gid_copy = *gid;
+    }
+    long *uid_copy = NULL;
+    if (uid) {
+        uid_copy = malloc(sizeof(long));
+        if (uid_copy) *uid_copy = *uid;
+    }
+    v1_linux_container_user_t *result = v1_linux_container_user_create_internal (
+        gid_copy,
         supplemental_groups,
-        uid
+        uid_copy
         );
+    if (!result) {
+        free(gid_copy);
+        free(uid_copy);
+    }
+    return result;
 }
 
 void v1_linux_container_user_free(v1_linux_container_user_t *v1_linux_container_user) {
@@ -43,12 +58,20 @@ void v1_linux_container_user_free(v1_linux_container_user_t *v1_linux_container_
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_linux_container_user->gid) {
+        free(v1_linux_container_user->gid);
+        v1_linux_container_user->gid = NULL;
+    }
     if (v1_linux_container_user->supplemental_groups) {
         list_ForEach(listEntry, v1_linux_container_user->supplemental_groups) {
             free(listEntry->data);
         }
         list_freeList(v1_linux_container_user->supplemental_groups);
         v1_linux_container_user->supplemental_groups = NULL;
+    }
+    if (v1_linux_container_user->uid) {
+        free(v1_linux_container_user->uid);
+        v1_linux_container_user->uid = NULL;
     }
     free(v1_linux_container_user);
 }
@@ -60,7 +83,7 @@ cJSON *v1_linux_container_user_convertToJSON(v1_linux_container_user_t *v1_linux
     if (!v1_linux_container_user->gid) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "gid", v1_linux_container_user->gid) == NULL) {
+    if(cJSON_AddNumberToObject(item, "gid", *v1_linux_container_user->gid) == NULL) {
     goto fail; //Numeric
     }
 
@@ -86,7 +109,7 @@ cJSON *v1_linux_container_user_convertToJSON(v1_linux_container_user_t *v1_linux
     if (!v1_linux_container_user->uid) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "uid", v1_linux_container_user->uid) == NULL) {
+    if(cJSON_AddNumberToObject(item, "uid", *v1_linux_container_user->uid) == NULL) {
     goto fail; //Numeric
     }
 
@@ -102,8 +125,14 @@ v1_linux_container_user_t *v1_linux_container_user_parseFromJSON(cJSON *v1_linux
 
     v1_linux_container_user_t *v1_linux_container_user_local_var = NULL;
 
+    // define the local variable for v1_linux_container_user->gid
+    long *gid_local_var = NULL;
+
     // define the local list for v1_linux_container_user->supplemental_groups
     list_t *supplemental_groupsList = NULL;
+
+    // define the local variable for v1_linux_container_user->uid
+    long *uid_local_var = NULL;
 
     // v1_linux_container_user->gid
     cJSON *gid = cJSON_GetObjectItemCaseSensitive(v1_linux_container_userJSON, "gid");
@@ -119,6 +148,12 @@ v1_linux_container_user_t *v1_linux_container_user_parseFromJSON(cJSON *v1_linux
     {
     goto end; //Numeric
     }
+    gid_local_var = malloc(sizeof(long));
+    if(!gid_local_var)
+    {
+        goto end;
+    }
+    *gid_local_var = gid->valuedouble;
 
     // v1_linux_container_user->supplemental_groups
     cJSON *supplemental_groups = cJSON_GetObjectItemCaseSensitive(v1_linux_container_userJSON, "supplementalGroups");
@@ -162,16 +197,31 @@ v1_linux_container_user_t *v1_linux_container_user_parseFromJSON(cJSON *v1_linux
     {
     goto end; //Numeric
     }
+    uid_local_var = malloc(sizeof(long));
+    if(!uid_local_var)
+    {
+        goto end;
+    }
+    *uid_local_var = uid->valuedouble;
+
 
 
     v1_linux_container_user_local_var = v1_linux_container_user_create_internal (
-        gid->valuedouble,
+        gid_local_var,
         supplemental_groups ? supplemental_groupsList : NULL,
-        uid->valuedouble
+        uid_local_var
         );
+
+    if (!v1_linux_container_user_local_var) {
+        goto end;
+    }
 
     return v1_linux_container_user_local_var;
 end:
+    if (gid_local_var) {
+        free(gid_local_var);
+        gid_local_var = NULL;
+    }
     if (supplemental_groupsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, supplemental_groupsList) {
@@ -180,6 +230,10 @@ end:
         }
         list_freeList(supplemental_groupsList);
         supplemental_groupsList = NULL;
+    }
+    if (uid_local_var) {
+        free(uid_local_var);
+        uid_local_var = NULL;
     }
     return NULL;
 

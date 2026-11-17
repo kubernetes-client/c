@@ -1047,7 +1047,7 @@ end:
 // delete collection of ControllerRevision
 //
 v1_status_t*
-AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1241,6 +1241,18 @@ AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, c
     }
 
     // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -1470,6 +1482,18 @@ AppsV1API_deleteCollectionNamespacedControllerRevision(apiClient_t *apiClient, c
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -1492,7 +1516,7 @@ end:
 // delete collection of DaemonSet
 //
 v1_status_t*
-AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1686,6 +1710,18 @@ AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char *_nam
     }
 
     // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -1915,6 +1951,18 @@ AppsV1API_deleteCollectionNamespacedDaemonSet(apiClient_t *apiClient, char *_nam
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -1937,7 +1985,7 @@ end:
 // delete collection of Deployment
 //
 v1_status_t*
-AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2131,6 +2179,18 @@ AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char *_na
     }
 
     // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -2360,6 +2420,18 @@ AppsV1API_deleteCollectionNamespacedDeployment(apiClient_t *apiClient, char *_na
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -2382,7 +2454,7 @@ end:
 // delete collection of ReplicaSet
 //
 v1_status_t*
-AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -2576,6 +2648,18 @@ AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char *_na
     }
 
     // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -2805,6 +2889,18 @@ AppsV1API_deleteCollectionNamespacedReplicaSet(apiClient_t *apiClient, char *_na
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -2827,7 +2923,7 @@ end:
 // delete collection of StatefulSet
 //
 v1_status_t*
-AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -3021,6 +3117,18 @@ AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char *_n
     }
 
     // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -3249,6 +3357,18 @@ AppsV1API_deleteCollectionNamespacedStatefulSet(apiClient_t *apiClient, char *_n
     if(keyPairQuery_sendInitialEvents){
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
+    }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
     }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
@@ -4682,7 +4802,7 @@ end:
 // list or watch objects of kind ControllerRevision
 //
 v1_controller_revision_list_t*
-AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -4811,6 +4931,18 @@ AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int *al
         snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
     }
 
     // query parameters
@@ -4995,6 +5127,18 @@ AppsV1API_listControllerRevisionForAllNamespaces(apiClient_t *apiClient, int *al
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -5029,7 +5173,7 @@ end:
 // list or watch objects of kind DaemonSet
 //
 v1_daemon_set_list_t*
-AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -5158,6 +5302,18 @@ AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int *allowWatchB
         snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
     }
 
     // query parameters
@@ -5342,6 +5498,18 @@ AppsV1API_listDaemonSetForAllNamespaces(apiClient_t *apiClient, int *allowWatchB
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -5376,7 +5544,7 @@ end:
 // list or watch objects of kind Deployment
 //
 v1_deployment_list_t*
-AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -5505,6 +5673,18 @@ AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int *allowWatch
         snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
     }
 
     // query parameters
@@ -5689,6 +5869,18 @@ AppsV1API_listDeploymentForAllNamespaces(apiClient_t *apiClient, int *allowWatch
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -5723,7 +5915,7 @@ end:
 // list or watch objects of kind ControllerRevision
 //
 v1_controller_revision_list_t*
-AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -5867,6 +6059,18 @@ AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char *_namesp
     }
 
     // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -6049,6 +6253,18 @@ AppsV1API_listNamespacedControllerRevision(apiClient_t *apiClient, char *_namesp
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -6083,7 +6299,7 @@ end:
 // list or watch objects of kind DaemonSet
 //
 v1_daemon_set_list_t*
-AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -6224,6 +6440,18 @@ AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char *_namespace, char
         snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
     }
 
     // query parameters
@@ -6409,6 +6637,18 @@ AppsV1API_listNamespacedDaemonSet(apiClient_t *apiClient, char *_namespace, char
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -6443,7 +6683,7 @@ end:
 // list or watch objects of kind Deployment
 //
 v1_deployment_list_t*
-AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -6584,6 +6824,18 @@ AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char *_namespace, cha
         snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
     }
 
     // query parameters
@@ -6769,6 +7021,18 @@ AppsV1API_listNamespacedDeployment(apiClient_t *apiClient, char *_namespace, cha
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -6803,7 +7067,7 @@ end:
 // list or watch objects of kind ReplicaSet
 //
 v1_replica_set_list_t*
-AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -6947,6 +7211,18 @@ AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char *_namespace, cha
     }
 
     // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -7129,6 +7405,18 @@ AppsV1API_listNamespacedReplicaSet(apiClient_t *apiClient, char *_namespace, cha
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -7163,7 +7451,7 @@ end:
 // list or watch objects of kind StatefulSet
 //
 v1_stateful_set_list_t*
-AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -7307,6 +7595,18 @@ AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char *_namespace, ch
     }
 
     // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
+    }
+
+    // query parameters
     char *keyQuery_timeoutSeconds = NULL;
     char * valueQuery_timeoutSeconds = NULL;
     keyValuePair_t *keyPairQuery_timeoutSeconds = 0;
@@ -7489,6 +7789,18 @@ AppsV1API_listNamespacedStatefulSet(apiClient_t *apiClient, char *_namespace, ch
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -7523,7 +7835,7 @@ end:
 // list or watch objects of kind ReplicaSet
 //
 v1_replica_set_list_t*
-AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -7652,6 +7964,18 @@ AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int *allowWatch
         snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
     }
 
     // query parameters
@@ -7836,6 +8160,18 @@ AppsV1API_listReplicaSetForAllNamespaces(apiClient_t *apiClient, int *allowWatch
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -7870,7 +8206,7 @@ end:
 // list or watch objects of kind StatefulSet
 //
 v1_stateful_set_list_t*
-AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -7999,6 +8335,18 @@ AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int *allowWatc
         snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
     }
 
     // query parameters
@@ -8182,6 +8530,18 @@ AppsV1API_listStatefulSetForAllNamespaces(apiClient_t *apiClient, int *allowWatc
     if(keyPairQuery_sendInitialEvents){
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
+    }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
     }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);

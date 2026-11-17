@@ -20,8 +20,8 @@ typedef struct v1_owner_reference_t v1_owner_reference_t;
 
 typedef struct v1_owner_reference_t {
     char *api_version; // string
-    int block_owner_deletion; //boolean
-    int controller; //boolean
+    int *block_owner_deletion; //boolean
+    int *controller; //boolean
     char *kind; // string
     char *name; // string
     char *uid; // string
@@ -31,8 +31,8 @@ typedef struct v1_owner_reference_t {
 
 __attribute__((deprecated)) v1_owner_reference_t *v1_owner_reference_create(
     char *api_version,
-    int block_owner_deletion,
-    int controller,
+    int *block_owner_deletion,
+    int *controller,
     char *kind,
     char *name,
     char *uid

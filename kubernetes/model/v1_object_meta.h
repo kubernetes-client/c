@@ -23,11 +23,11 @@ typedef struct v1_object_meta_t v1_object_meta_t;
 typedef struct v1_object_meta_t {
     list_t* annotations; //map
     char *creation_timestamp; //date time
-    long deletion_grace_period_seconds; //numeric
+    long *deletion_grace_period_seconds; //numeric
     char *deletion_timestamp; //date time
     list_t *finalizers; //primitive container
     char *generate_name; // string
-    long generation; //numeric
+    long *generation; //numeric
     list_t* labels; //map
     list_t *managed_fields; //nonprimitive container
     char *name; // string
@@ -43,11 +43,11 @@ typedef struct v1_object_meta_t {
 __attribute__((deprecated)) v1_object_meta_t *v1_object_meta_create(
     list_t* annotations,
     char *creation_timestamp,
-    long deletion_grace_period_seconds,
+    long *deletion_grace_period_seconds,
     char *deletion_timestamp,
     list_t *finalizers,
     char *generate_name,
-    long generation,
+    long *generation,
     list_t* labels,
     list_t *managed_fields,
     char *name,

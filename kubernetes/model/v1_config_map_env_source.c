@@ -7,27 +7,36 @@
 
 static v1_config_map_env_source_t *v1_config_map_env_source_create_internal(
     char *name,
-    int optional
+    int *optional
     ) {
     v1_config_map_env_source_t *v1_config_map_env_source_local_var = malloc(sizeof(v1_config_map_env_source_t));
     if (!v1_config_map_env_source_local_var) {
         return NULL;
     }
+    memset(v1_config_map_env_source_local_var, 0, sizeof(v1_config_map_env_source_t));
+    v1_config_map_env_source_local_var->_library_owned = 1;
     v1_config_map_env_source_local_var->name = name;
     v1_config_map_env_source_local_var->optional = optional;
-
-    v1_config_map_env_source_local_var->_library_owned = 1;
     return v1_config_map_env_source_local_var;
 }
 
 __attribute__((deprecated)) v1_config_map_env_source_t *v1_config_map_env_source_create(
     char *name,
-    int optional
+    int *optional
     ) {
-    return v1_config_map_env_source_create_internal (
+    int *optional_copy = NULL;
+    if (optional) {
+        optional_copy = malloc(sizeof(int));
+        if (optional_copy) *optional_copy = *optional;
+    }
+    v1_config_map_env_source_t *result = v1_config_map_env_source_create_internal (
         name,
-        optional
+        optional_copy
         );
+    if (!result) {
+        free(optional_copy);
+    }
+    return result;
 }
 
 void v1_config_map_env_source_free(v1_config_map_env_source_t *v1_config_map_env_source) {
@@ -42,6 +51,10 @@ void v1_config_map_env_source_free(v1_config_map_env_source_t *v1_config_map_env
     if (v1_config_map_env_source->name) {
         free(v1_config_map_env_source->name);
         v1_config_map_env_source->name = NULL;
+    }
+    if (v1_config_map_env_source->optional) {
+        free(v1_config_map_env_source->optional);
+        v1_config_map_env_source->optional = NULL;
     }
     free(v1_config_map_env_source);
 }
@@ -59,7 +72,7 @@ cJSON *v1_config_map_env_source_convertToJSON(v1_config_map_env_source_t *v1_con
 
     // v1_config_map_env_source->optional
     if(v1_config_map_env_source->optional) {
-    if(cJSON_AddBoolToObject(item, "optional", v1_config_map_env_source->optional) == NULL) {
+    if(cJSON_AddBoolToObject(item, "optional", *v1_config_map_env_source->optional) == NULL) {
     goto fail; //Bool
     }
     }
@@ -75,6 +88,11 @@ fail:
 v1_config_map_env_source_t *v1_config_map_env_source_parseFromJSON(cJSON *v1_config_map_env_sourceJSON){
 
     v1_config_map_env_source_t *v1_config_map_env_source_local_var = NULL;
+
+    char *name_local_str = NULL;
+
+    // define the local variable for v1_config_map_env_source->optional
+    int *optional_local_var = NULL;
 
     // v1_config_map_env_source->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_config_map_env_sourceJSON, "name");
@@ -98,16 +116,36 @@ v1_config_map_env_source_t *v1_config_map_env_source_parseFromJSON(cJSON *v1_con
     {
     goto end; //Bool
     }
+    optional_local_var = malloc(sizeof(int));
+    if(!optional_local_var)
+    {
+        goto end;
+    }
+    *optional_local_var = optional->valueint;
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v1_config_map_env_source_local_var = v1_config_map_env_source_create_internal (
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
-        optional ? optional->valueint : 0
+        name_local_str,
+        optional_local_var
         );
+
+    if (!v1_config_map_env_source_local_var) {
+        goto end;
+    }
 
     return v1_config_map_env_source_local_var;
 end:
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (optional_local_var) {
+        free(optional_local_var);
+        optional_local_var = NULL;
+    }
     return NULL;
 
 }

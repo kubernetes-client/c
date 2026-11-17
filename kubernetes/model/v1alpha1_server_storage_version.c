@@ -15,12 +15,12 @@ static v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_create
     if (!v1alpha1_server_storage_version_local_var) {
         return NULL;
     }
+    memset(v1alpha1_server_storage_version_local_var, 0, sizeof(v1alpha1_server_storage_version_t));
+    v1alpha1_server_storage_version_local_var->_library_owned = 1;
     v1alpha1_server_storage_version_local_var->api_server_id = api_server_id;
     v1alpha1_server_storage_version_local_var->decodable_versions = decodable_versions;
     v1alpha1_server_storage_version_local_var->encoding_version = encoding_version;
     v1alpha1_server_storage_version_local_var->served_versions = served_versions;
-
-    v1alpha1_server_storage_version_local_var->_library_owned = 1;
     return v1alpha1_server_storage_version_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1alpha1_server_storage_version_t *v1alpha1_server_s
     char *encoding_version,
     list_t *served_versions
     ) {
-    return v1alpha1_server_storage_version_create_internal (
+    v1alpha1_server_storage_version_t *result = v1alpha1_server_storage_version_create_internal (
         api_server_id,
         decodable_versions,
         encoding_version,
         served_versions
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1alpha1_server_storage_version_free(v1alpha1_server_storage_version_t *v1alpha1_server_storage_version) {
@@ -76,15 +79,18 @@ cJSON *v1alpha1_server_storage_version_convertToJSON(v1alpha1_server_storage_ver
     cJSON *item = cJSON_CreateObject();
 
     // v1alpha1_server_storage_version->api_server_id
-    if(v1alpha1_server_storage_version->api_server_id) {
+    if (!v1alpha1_server_storage_version->api_server_id) {
+        goto fail;
+    }
     if(cJSON_AddStringToObject(item, "apiServerID", v1alpha1_server_storage_version->api_server_id) == NULL) {
     goto fail; //String
-    }
     }
 
 
     // v1alpha1_server_storage_version->decodable_versions
-    if(v1alpha1_server_storage_version->decodable_versions) {
+    if (!v1alpha1_server_storage_version->decodable_versions) {
+        goto fail;
+    }
     cJSON *decodable_versions = cJSON_AddArrayToObject(item, "decodableVersions");
     if(decodable_versions == NULL) {
         goto fail; //primitive container
@@ -97,14 +103,14 @@ cJSON *v1alpha1_server_storage_version_convertToJSON(v1alpha1_server_storage_ver
         goto fail;
     }
     }
-    }
 
 
     // v1alpha1_server_storage_version->encoding_version
-    if(v1alpha1_server_storage_version->encoding_version) {
+    if (!v1alpha1_server_storage_version->encoding_version) {
+        goto fail;
+    }
     if(cJSON_AddStringToObject(item, "encodingVersion", v1alpha1_server_storage_version->encoding_version) == NULL) {
     goto fail; //String
-    }
     }
 
 
@@ -136,8 +142,12 @@ v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_parseFromJSON
 
     v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_local_var = NULL;
 
+    char *api_server_id_local_str = NULL;
+
     // define the local list for v1alpha1_server_storage_version->decodable_versions
     list_t *decodable_versionsList = NULL;
+
+    char *encoding_version_local_str = NULL;
 
     // define the local list for v1alpha1_server_storage_version->served_versions
     list_t *served_versionsList = NULL;
@@ -147,11 +157,14 @@ v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_parseFromJSON
     if (cJSON_IsNull(api_server_id)) {
         api_server_id = NULL;
     }
-    if (api_server_id) { 
-    if(!cJSON_IsString(api_server_id) && !cJSON_IsNull(api_server_id))
+    if (!api_server_id) {
+        goto end;
+    }
+
+    
+    if(!cJSON_IsString(api_server_id))
     {
     goto end; //String
-    }
     }
 
     // v1alpha1_server_storage_version->decodable_versions
@@ -159,7 +172,11 @@ v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_parseFromJSON
     if (cJSON_IsNull(decodable_versions)) {
         decodable_versions = NULL;
     }
-    if (decodable_versions) { 
+    if (!decodable_versions) {
+        goto end;
+    }
+
+    
     cJSON *decodable_versions_local = NULL;
     if(!cJSON_IsArray(decodable_versions)) {
         goto end;//primitive container
@@ -174,18 +191,20 @@ v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_parseFromJSON
         }
         list_addElement(decodable_versionsList , strdup(decodable_versions_local->valuestring));
     }
-    }
 
     // v1alpha1_server_storage_version->encoding_version
     cJSON *encoding_version = cJSON_GetObjectItemCaseSensitive(v1alpha1_server_storage_versionJSON, "encodingVersion");
     if (cJSON_IsNull(encoding_version)) {
         encoding_version = NULL;
     }
-    if (encoding_version) { 
-    if(!cJSON_IsString(encoding_version) && !cJSON_IsNull(encoding_version))
+    if (!encoding_version) {
+        goto end;
+    }
+
+    
+    if(!cJSON_IsString(encoding_version))
     {
     goto end; //String
-    }
     }
 
     // v1alpha1_server_storage_version->served_versions
@@ -211,15 +230,26 @@ v1alpha1_server_storage_version_t *v1alpha1_server_storage_version_parseFromJSON
     }
 
 
+    if (api_server_id && !cJSON_IsNull(api_server_id)) api_server_id_local_str = strdup(api_server_id->valuestring);
+    if (encoding_version && !cJSON_IsNull(encoding_version)) encoding_version_local_str = strdup(encoding_version->valuestring);
+
     v1alpha1_server_storage_version_local_var = v1alpha1_server_storage_version_create_internal (
-        api_server_id && !cJSON_IsNull(api_server_id) ? strdup(api_server_id->valuestring) : NULL,
-        decodable_versions ? decodable_versionsList : NULL,
-        encoding_version && !cJSON_IsNull(encoding_version) ? strdup(encoding_version->valuestring) : NULL,
+        api_server_id_local_str,
+        decodable_versionsList,
+        encoding_version_local_str,
         served_versions ? served_versionsList : NULL
         );
 
+    if (!v1alpha1_server_storage_version_local_var) {
+        goto end;
+    }
+
     return v1alpha1_server_storage_version_local_var;
 end:
+    if (api_server_id_local_str) {
+        free(api_server_id_local_str);
+        api_server_id_local_str = NULL;
+    }
     if (decodable_versionsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, decodable_versionsList) {
@@ -228,6 +258,10 @@ end:
         }
         list_freeList(decodable_versionsList);
         decodable_versionsList = NULL;
+    }
+    if (encoding_version_local_str) {
+        free(encoding_version_local_str);
+        encoding_version_local_str = NULL;
     }
     if (served_versionsList) {
         listEntry_t *listEntry = NULL;

@@ -6,24 +6,33 @@
 
 
 static v1_node_swap_status_t *v1_node_swap_status_create_internal(
-    long capacity
+    long *capacity
     ) {
     v1_node_swap_status_t *v1_node_swap_status_local_var = malloc(sizeof(v1_node_swap_status_t));
     if (!v1_node_swap_status_local_var) {
         return NULL;
     }
-    v1_node_swap_status_local_var->capacity = capacity;
-
+    memset(v1_node_swap_status_local_var, 0, sizeof(v1_node_swap_status_t));
     v1_node_swap_status_local_var->_library_owned = 1;
+    v1_node_swap_status_local_var->capacity = capacity;
     return v1_node_swap_status_local_var;
 }
 
 __attribute__((deprecated)) v1_node_swap_status_t *v1_node_swap_status_create(
-    long capacity
+    long *capacity
     ) {
-    return v1_node_swap_status_create_internal (
-        capacity
+    long *capacity_copy = NULL;
+    if (capacity) {
+        capacity_copy = malloc(sizeof(long));
+        if (capacity_copy) *capacity_copy = *capacity;
+    }
+    v1_node_swap_status_t *result = v1_node_swap_status_create_internal (
+        capacity_copy
         );
+    if (!result) {
+        free(capacity_copy);
+    }
+    return result;
 }
 
 void v1_node_swap_status_free(v1_node_swap_status_t *v1_node_swap_status) {
@@ -35,6 +44,10 @@ void v1_node_swap_status_free(v1_node_swap_status_t *v1_node_swap_status) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_node_swap_status->capacity) {
+        free(v1_node_swap_status->capacity);
+        v1_node_swap_status->capacity = NULL;
+    }
     free(v1_node_swap_status);
 }
 
@@ -43,7 +56,7 @@ cJSON *v1_node_swap_status_convertToJSON(v1_node_swap_status_t *v1_node_swap_sta
 
     // v1_node_swap_status->capacity
     if(v1_node_swap_status->capacity) {
-    if(cJSON_AddNumberToObject(item, "capacity", v1_node_swap_status->capacity) == NULL) {
+    if(cJSON_AddNumberToObject(item, "capacity", *v1_node_swap_status->capacity) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -60,6 +73,9 @@ v1_node_swap_status_t *v1_node_swap_status_parseFromJSON(cJSON *v1_node_swap_sta
 
     v1_node_swap_status_t *v1_node_swap_status_local_var = NULL;
 
+    // define the local variable for v1_node_swap_status->capacity
+    long *capacity_local_var = NULL;
+
     // v1_node_swap_status->capacity
     cJSON *capacity = cJSON_GetObjectItemCaseSensitive(v1_node_swap_statusJSON, "capacity");
     if (cJSON_IsNull(capacity)) {
@@ -70,15 +86,30 @@ v1_node_swap_status_t *v1_node_swap_status_parseFromJSON(cJSON *v1_node_swap_sta
     {
     goto end; //Numeric
     }
+    capacity_local_var = malloc(sizeof(long));
+    if(!capacity_local_var)
+    {
+        goto end;
+    }
+    *capacity_local_var = capacity->valuedouble;
     }
 
 
+
     v1_node_swap_status_local_var = v1_node_swap_status_create_internal (
-        capacity ? capacity->valuedouble : 0
+        capacity_local_var
         );
+
+    if (!v1_node_swap_status_local_var) {
+        goto end;
+    }
 
     return v1_node_swap_status_local_var;
 end:
+    if (capacity_local_var) {
+        free(capacity_local_var);
+        capacity_local_var = NULL;
+    }
     return NULL;
 
 }

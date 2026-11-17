@@ -12,18 +12,21 @@ static v1_host_ip_t *v1_host_ip_create_internal(
     if (!v1_host_ip_local_var) {
         return NULL;
     }
-    v1_host_ip_local_var->ip = ip;
-
+    memset(v1_host_ip_local_var, 0, sizeof(v1_host_ip_t));
     v1_host_ip_local_var->_library_owned = 1;
+    v1_host_ip_local_var->ip = ip;
     return v1_host_ip_local_var;
 }
 
 __attribute__((deprecated)) v1_host_ip_t *v1_host_ip_create(
     char *ip
     ) {
-    return v1_host_ip_create_internal (
+    v1_host_ip_t *result = v1_host_ip_create_internal (
         ip
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_host_ip_free(v1_host_ip_t *v1_host_ip) {
@@ -65,6 +68,8 @@ v1_host_ip_t *v1_host_ip_parseFromJSON(cJSON *v1_host_ipJSON){
 
     v1_host_ip_t *v1_host_ip_local_var = NULL;
 
+    char *ip_local_str = NULL;
+
     // v1_host_ip->ip
     cJSON *ip = cJSON_GetObjectItemCaseSensitive(v1_host_ipJSON, "ip");
     if (cJSON_IsNull(ip)) {
@@ -81,12 +86,22 @@ v1_host_ip_t *v1_host_ip_parseFromJSON(cJSON *v1_host_ipJSON){
     }
 
 
+    if (ip && !cJSON_IsNull(ip)) ip_local_str = strdup(ip->valuestring);
+
     v1_host_ip_local_var = v1_host_ip_create_internal (
-        strdup(ip->valuestring)
+        ip_local_str
         );
+
+    if (!v1_host_ip_local_var) {
+        goto end;
+    }
 
     return v1_host_ip_local_var;
 end:
+    if (ip_local_str) {
+        free(ip_local_str);
+        ip_local_str = NULL;
+    }
     return NULL;
 
 }

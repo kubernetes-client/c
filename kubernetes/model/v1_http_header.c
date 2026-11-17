@@ -13,10 +13,10 @@ static v1_http_header_t *v1_http_header_create_internal(
     if (!v1_http_header_local_var) {
         return NULL;
     }
+    memset(v1_http_header_local_var, 0, sizeof(v1_http_header_t));
+    v1_http_header_local_var->_library_owned = 1;
     v1_http_header_local_var->name = name;
     v1_http_header_local_var->value = value;
-
-    v1_http_header_local_var->_library_owned = 1;
     return v1_http_header_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_http_header_t *v1_http_header_create(
     char *name,
     char *value
     ) {
-    return v1_http_header_create_internal (
+    v1_http_header_t *result = v1_http_header_create_internal (
         name,
         value
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_http_header_free(v1_http_header_t *v1_http_header) {
@@ -82,6 +85,10 @@ v1_http_header_t *v1_http_header_parseFromJSON(cJSON *v1_http_headerJSON){
 
     v1_http_header_t *v1_http_header_local_var = NULL;
 
+    char *name_local_str = NULL;
+
+    char *value_local_str = NULL;
+
     // v1_http_header->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_http_headerJSON, "name");
     if (cJSON_IsNull(name)) {
@@ -113,13 +120,28 @@ v1_http_header_t *v1_http_header_parseFromJSON(cJSON *v1_http_headerJSON){
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (value && !cJSON_IsNull(value)) value_local_str = strdup(value->valuestring);
+
     v1_http_header_local_var = v1_http_header_create_internal (
-        strdup(name->valuestring),
-        strdup(value->valuestring)
+        name_local_str,
+        value_local_str
         );
+
+    if (!v1_http_header_local_var) {
+        goto end;
+    }
 
     return v1_http_header_local_var;
 end:
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (value_local_str) {
+        free(value_local_str);
+        value_local_str = NULL;
+    }
     return NULL;
 
 }

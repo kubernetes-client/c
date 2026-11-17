@@ -14,11 +14,11 @@ static v1_priority_level_configuration_spec_t *v1_priority_level_configuration_s
     if (!v1_priority_level_configuration_spec_local_var) {
         return NULL;
     }
+    memset(v1_priority_level_configuration_spec_local_var, 0, sizeof(v1_priority_level_configuration_spec_t));
+    v1_priority_level_configuration_spec_local_var->_library_owned = 1;
     v1_priority_level_configuration_spec_local_var->exempt = exempt;
     v1_priority_level_configuration_spec_local_var->limited = limited;
     v1_priority_level_configuration_spec_local_var->type = type;
-
-    v1_priority_level_configuration_spec_local_var->_library_owned = 1;
     return v1_priority_level_configuration_spec_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_priority_level_configuration_spec_t *v1_priority_
     v1_limited_priority_level_configuration_t *limited,
     char *type
     ) {
-    return v1_priority_level_configuration_spec_create_internal (
+    v1_priority_level_configuration_spec_t *result = v1_priority_level_configuration_spec_create_internal (
         exempt,
         limited,
         type
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_priority_level_configuration_spec_free(v1_priority_level_configuration_spec_t *v1_priority_level_configuration_spec) {
@@ -113,6 +116,8 @@ v1_priority_level_configuration_spec_t *v1_priority_level_configuration_spec_par
     // define the local variable for v1_priority_level_configuration_spec->limited
     v1_limited_priority_level_configuration_t *limited_local_nonprim = NULL;
 
+    char *type_local_str = NULL;
+
     // v1_priority_level_configuration_spec->exempt
     cJSON *exempt = cJSON_GetObjectItemCaseSensitive(v1_priority_level_configuration_specJSON, "exempt");
     if (cJSON_IsNull(exempt)) {
@@ -147,11 +152,17 @@ v1_priority_level_configuration_spec_t *v1_priority_level_configuration_spec_par
     }
 
 
+    if (type && !cJSON_IsNull(type)) type_local_str = strdup(type->valuestring);
+
     v1_priority_level_configuration_spec_local_var = v1_priority_level_configuration_spec_create_internal (
         exempt ? exempt_local_nonprim : NULL,
         limited ? limited_local_nonprim : NULL,
-        strdup(type->valuestring)
+        type_local_str
         );
+
+    if (!v1_priority_level_configuration_spec_local_var) {
+        goto end;
+    }
 
     return v1_priority_level_configuration_spec_local_var;
 end:
@@ -162,6 +173,10 @@ end:
     if (limited_local_nonprim) {
         v1_limited_priority_level_configuration_free(limited_local_nonprim);
         limited_local_nonprim = NULL;
+    }
+    if (type_local_str) {
+        free(type_local_str);
+        type_local_str = NULL;
     }
     return NULL;
 

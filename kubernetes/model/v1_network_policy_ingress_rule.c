@@ -13,10 +13,10 @@ static v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_create_i
     if (!v1_network_policy_ingress_rule_local_var) {
         return NULL;
     }
+    memset(v1_network_policy_ingress_rule_local_var, 0, sizeof(v1_network_policy_ingress_rule_t));
+    v1_network_policy_ingress_rule_local_var->_library_owned = 1;
     v1_network_policy_ingress_rule_local_var->from = from;
     v1_network_policy_ingress_rule_local_var->ports = ports;
-
-    v1_network_policy_ingress_rule_local_var->_library_owned = 1;
     return v1_network_policy_ingress_rule_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_network_policy_ingress_rule_t *v1_network_policy_
     list_t *from,
     list_t *ports
     ) {
-    return v1_network_policy_ingress_rule_create_internal (
+    v1_network_policy_ingress_rule_t *result = v1_network_policy_ingress_rule_create_internal (
         from,
         ports
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_network_policy_ingress_rule_free(v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule) {
@@ -165,10 +168,15 @@ v1_network_policy_ingress_rule_t *v1_network_policy_ingress_rule_parseFromJSON(c
     }
 
 
+
     v1_network_policy_ingress_rule_local_var = v1_network_policy_ingress_rule_create_internal (
         from ? fromList : NULL,
         ports ? portsList : NULL
         );
+
+    if (!v1_network_policy_ingress_rule_local_var) {
+        goto end;
+    }
 
     return v1_network_policy_ingress_rule_local_var;
 end:

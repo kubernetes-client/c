@@ -20,18 +20,20 @@ typedef struct v1_secret_volume_source_t v1_secret_volume_source_t;
 
 
 typedef struct v1_secret_volume_source_t {
-    int default_mode; //numeric
+    int *default_mode; //numeric
+    long *default_user; //numeric
     list_t *items; //nonprimitive container
-    int optional; //boolean
+    int *optional; //boolean
     char *secret_name; // string
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_secret_volume_source_t;
 
 __attribute__((deprecated)) v1_secret_volume_source_t *v1_secret_volume_source_create(
-    int default_mode,
+    int *default_mode,
+    long *default_user,
     list_t *items,
-    int optional,
+    int *optional,
     char *secret_name
 );
 

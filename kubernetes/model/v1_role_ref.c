@@ -14,11 +14,11 @@ static v1_role_ref_t *v1_role_ref_create_internal(
     if (!v1_role_ref_local_var) {
         return NULL;
     }
+    memset(v1_role_ref_local_var, 0, sizeof(v1_role_ref_t));
+    v1_role_ref_local_var->_library_owned = 1;
     v1_role_ref_local_var->api_group = api_group;
     v1_role_ref_local_var->kind = kind;
     v1_role_ref_local_var->name = name;
-
-    v1_role_ref_local_var->_library_owned = 1;
     return v1_role_ref_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_role_ref_t *v1_role_ref_create(
     char *kind,
     char *name
     ) {
-    return v1_role_ref_create_internal (
+    v1_role_ref_t *result = v1_role_ref_create_internal (
         api_group,
         kind,
         name
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_role_ref_free(v1_role_ref_t *v1_role_ref) {
@@ -62,11 +65,10 @@ cJSON *v1_role_ref_convertToJSON(v1_role_ref_t *v1_role_ref) {
     cJSON *item = cJSON_CreateObject();
 
     // v1_role_ref->api_group
-    if (!v1_role_ref->api_group) {
-        goto fail;
-    }
+    if(v1_role_ref->api_group) {
     if(cJSON_AddStringToObject(item, "apiGroup", v1_role_ref->api_group) == NULL) {
     goto fail; //String
+    }
     }
 
 
@@ -99,19 +101,22 @@ v1_role_ref_t *v1_role_ref_parseFromJSON(cJSON *v1_role_refJSON){
 
     v1_role_ref_t *v1_role_ref_local_var = NULL;
 
+    char *api_group_local_str = NULL;
+
+    char *kind_local_str = NULL;
+
+    char *name_local_str = NULL;
+
     // v1_role_ref->api_group
     cJSON *api_group = cJSON_GetObjectItemCaseSensitive(v1_role_refJSON, "apiGroup");
     if (cJSON_IsNull(api_group)) {
         api_group = NULL;
     }
-    if (!api_group) {
-        goto end;
-    }
-
-    
-    if(!cJSON_IsString(api_group))
+    if (api_group) { 
+    if(!cJSON_IsString(api_group) && !cJSON_IsNull(api_group))
     {
     goto end; //String
+    }
     }
 
     // v1_role_ref->kind
@@ -145,14 +150,34 @@ v1_role_ref_t *v1_role_ref_parseFromJSON(cJSON *v1_role_refJSON){
     }
 
 
+    if (api_group && !cJSON_IsNull(api_group)) api_group_local_str = strdup(api_group->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v1_role_ref_local_var = v1_role_ref_create_internal (
-        strdup(api_group->valuestring),
-        strdup(kind->valuestring),
-        strdup(name->valuestring)
+        api_group_local_str,
+        kind_local_str,
+        name_local_str
         );
+
+    if (!v1_role_ref_local_var) {
+        goto end;
+    }
 
     return v1_role_ref_local_var;
 end:
+    if (api_group_local_str) {
+        free(api_group_local_str);
+        api_group_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
     return NULL;
 
 }

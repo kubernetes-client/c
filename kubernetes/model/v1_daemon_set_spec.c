@@ -6,8 +6,8 @@
 
 
 static v1_daemon_set_spec_t *v1_daemon_set_spec_create_internal(
-    int min_ready_seconds,
-    int revision_history_limit,
+    int *min_ready_seconds,
+    int *revision_history_limit,
     v1_label_selector_t *selector,
     v1_pod_template_spec_t *_template,
     v1_daemon_set_update_strategy_t *update_strategy
@@ -16,30 +16,45 @@ static v1_daemon_set_spec_t *v1_daemon_set_spec_create_internal(
     if (!v1_daemon_set_spec_local_var) {
         return NULL;
     }
+    memset(v1_daemon_set_spec_local_var, 0, sizeof(v1_daemon_set_spec_t));
+    v1_daemon_set_spec_local_var->_library_owned = 1;
     v1_daemon_set_spec_local_var->min_ready_seconds = min_ready_seconds;
     v1_daemon_set_spec_local_var->revision_history_limit = revision_history_limit;
     v1_daemon_set_spec_local_var->selector = selector;
     v1_daemon_set_spec_local_var->_template = _template;
     v1_daemon_set_spec_local_var->update_strategy = update_strategy;
-
-    v1_daemon_set_spec_local_var->_library_owned = 1;
     return v1_daemon_set_spec_local_var;
 }
 
 __attribute__((deprecated)) v1_daemon_set_spec_t *v1_daemon_set_spec_create(
-    int min_ready_seconds,
-    int revision_history_limit,
+    int *min_ready_seconds,
+    int *revision_history_limit,
     v1_label_selector_t *selector,
     v1_pod_template_spec_t *_template,
     v1_daemon_set_update_strategy_t *update_strategy
     ) {
-    return v1_daemon_set_spec_create_internal (
-        min_ready_seconds,
-        revision_history_limit,
+    int *min_ready_seconds_copy = NULL;
+    if (min_ready_seconds) {
+        min_ready_seconds_copy = malloc(sizeof(int));
+        if (min_ready_seconds_copy) *min_ready_seconds_copy = *min_ready_seconds;
+    }
+    int *revision_history_limit_copy = NULL;
+    if (revision_history_limit) {
+        revision_history_limit_copy = malloc(sizeof(int));
+        if (revision_history_limit_copy) *revision_history_limit_copy = *revision_history_limit;
+    }
+    v1_daemon_set_spec_t *result = v1_daemon_set_spec_create_internal (
+        min_ready_seconds_copy,
+        revision_history_limit_copy,
         selector,
         _template,
         update_strategy
         );
+    if (!result) {
+        free(min_ready_seconds_copy);
+        free(revision_history_limit_copy);
+    }
+    return result;
 }
 
 void v1_daemon_set_spec_free(v1_daemon_set_spec_t *v1_daemon_set_spec) {
@@ -51,6 +66,14 @@ void v1_daemon_set_spec_free(v1_daemon_set_spec_t *v1_daemon_set_spec) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_daemon_set_spec->min_ready_seconds) {
+        free(v1_daemon_set_spec->min_ready_seconds);
+        v1_daemon_set_spec->min_ready_seconds = NULL;
+    }
+    if (v1_daemon_set_spec->revision_history_limit) {
+        free(v1_daemon_set_spec->revision_history_limit);
+        v1_daemon_set_spec->revision_history_limit = NULL;
+    }
     if (v1_daemon_set_spec->selector) {
         v1_label_selector_free(v1_daemon_set_spec->selector);
         v1_daemon_set_spec->selector = NULL;
@@ -71,7 +94,7 @@ cJSON *v1_daemon_set_spec_convertToJSON(v1_daemon_set_spec_t *v1_daemon_set_spec
 
     // v1_daemon_set_spec->min_ready_seconds
     if(v1_daemon_set_spec->min_ready_seconds) {
-    if(cJSON_AddNumberToObject(item, "minReadySeconds", v1_daemon_set_spec->min_ready_seconds) == NULL) {
+    if(cJSON_AddNumberToObject(item, "minReadySeconds", *v1_daemon_set_spec->min_ready_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -79,7 +102,7 @@ cJSON *v1_daemon_set_spec_convertToJSON(v1_daemon_set_spec_t *v1_daemon_set_spec
 
     // v1_daemon_set_spec->revision_history_limit
     if(v1_daemon_set_spec->revision_history_limit) {
-    if(cJSON_AddNumberToObject(item, "revisionHistoryLimit", v1_daemon_set_spec->revision_history_limit) == NULL) {
+    if(cJSON_AddNumberToObject(item, "revisionHistoryLimit", *v1_daemon_set_spec->revision_history_limit) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -137,6 +160,12 @@ v1_daemon_set_spec_t *v1_daemon_set_spec_parseFromJSON(cJSON *v1_daemon_set_spec
 
     v1_daemon_set_spec_t *v1_daemon_set_spec_local_var = NULL;
 
+    // define the local variable for v1_daemon_set_spec->min_ready_seconds
+    int *min_ready_seconds_local_var = NULL;
+
+    // define the local variable for v1_daemon_set_spec->revision_history_limit
+    int *revision_history_limit_local_var = NULL;
+
     // define the local variable for v1_daemon_set_spec->selector
     v1_label_selector_t *selector_local_nonprim = NULL;
 
@@ -156,6 +185,12 @@ v1_daemon_set_spec_t *v1_daemon_set_spec_parseFromJSON(cJSON *v1_daemon_set_spec
     {
     goto end; //Numeric
     }
+    min_ready_seconds_local_var = malloc(sizeof(int));
+    if(!min_ready_seconds_local_var)
+    {
+        goto end;
+    }
+    *min_ready_seconds_local_var = min_ready_seconds->valuedouble;
     }
 
     // v1_daemon_set_spec->revision_history_limit
@@ -168,6 +203,12 @@ v1_daemon_set_spec_t *v1_daemon_set_spec_parseFromJSON(cJSON *v1_daemon_set_spec
     {
     goto end; //Numeric
     }
+    revision_history_limit_local_var = malloc(sizeof(int));
+    if(!revision_history_limit_local_var)
+    {
+        goto end;
+    }
+    *revision_history_limit_local_var = revision_history_limit->valuedouble;
     }
 
     // v1_daemon_set_spec->selector
@@ -204,16 +245,29 @@ v1_daemon_set_spec_t *v1_daemon_set_spec_parseFromJSON(cJSON *v1_daemon_set_spec
     }
 
 
+
     v1_daemon_set_spec_local_var = v1_daemon_set_spec_create_internal (
-        min_ready_seconds ? min_ready_seconds->valuedouble : 0,
-        revision_history_limit ? revision_history_limit->valuedouble : 0,
+        min_ready_seconds_local_var,
+        revision_history_limit_local_var,
         selector_local_nonprim,
         _template_local_nonprim,
         update_strategy ? update_strategy_local_nonprim : NULL
         );
 
+    if (!v1_daemon_set_spec_local_var) {
+        goto end;
+    }
+
     return v1_daemon_set_spec_local_var;
 end:
+    if (min_ready_seconds_local_var) {
+        free(min_ready_seconds_local_var);
+        min_ready_seconds_local_var = NULL;
+    }
+    if (revision_history_limit_local_var) {
+        free(revision_history_limit_local_var);
+        revision_history_limit_local_var = NULL;
+    }
     if (selector_local_nonprim) {
         v1_label_selector_free(selector_local_nonprim);
         selector_local_nonprim = NULL;

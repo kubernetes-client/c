@@ -23,6 +23,7 @@ typedef struct v1_custom_resource_definition_status_t v1_custom_resource_definit
 typedef struct v1_custom_resource_definition_status_t {
     struct v1_custom_resource_definition_names_t *accepted_names; //model
     list_t *conditions; //nonprimitive container
+    long *observed_generation; //numeric
     list_t *stored_versions; //primitive container
 
     int _library_owned; // Is the library responsible for freeing this object?
@@ -31,6 +32,7 @@ typedef struct v1_custom_resource_definition_status_t {
 __attribute__((deprecated)) v1_custom_resource_definition_status_t *v1_custom_resource_definition_status_create(
     v1_custom_resource_definition_names_t *accepted_names,
     list_t *conditions,
+    long *observed_generation,
     list_t *stored_versions
 );
 

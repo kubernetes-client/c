@@ -13,10 +13,10 @@ static v1_app_armor_profile_t *v1_app_armor_profile_create_internal(
     if (!v1_app_armor_profile_local_var) {
         return NULL;
     }
+    memset(v1_app_armor_profile_local_var, 0, sizeof(v1_app_armor_profile_t));
+    v1_app_armor_profile_local_var->_library_owned = 1;
     v1_app_armor_profile_local_var->localhost_profile = localhost_profile;
     v1_app_armor_profile_local_var->type = type;
-
-    v1_app_armor_profile_local_var->_library_owned = 1;
     return v1_app_armor_profile_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_app_armor_profile_t *v1_app_armor_profile_create(
     char *localhost_profile,
     char *type
     ) {
-    return v1_app_armor_profile_create_internal (
+    v1_app_armor_profile_t *result = v1_app_armor_profile_create_internal (
         localhost_profile,
         type
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_app_armor_profile_free(v1_app_armor_profile_t *v1_app_armor_profile) {
@@ -81,6 +84,10 @@ v1_app_armor_profile_t *v1_app_armor_profile_parseFromJSON(cJSON *v1_app_armor_p
 
     v1_app_armor_profile_t *v1_app_armor_profile_local_var = NULL;
 
+    char *localhost_profile_local_str = NULL;
+
+    char *type_local_str = NULL;
+
     // v1_app_armor_profile->localhost_profile
     cJSON *localhost_profile = cJSON_GetObjectItemCaseSensitive(v1_app_armor_profileJSON, "localhostProfile");
     if (cJSON_IsNull(localhost_profile)) {
@@ -109,13 +116,28 @@ v1_app_armor_profile_t *v1_app_armor_profile_parseFromJSON(cJSON *v1_app_armor_p
     }
 
 
+    if (localhost_profile && !cJSON_IsNull(localhost_profile)) localhost_profile_local_str = strdup(localhost_profile->valuestring);
+    if (type && !cJSON_IsNull(type)) type_local_str = strdup(type->valuestring);
+
     v1_app_armor_profile_local_var = v1_app_armor_profile_create_internal (
-        localhost_profile && !cJSON_IsNull(localhost_profile) ? strdup(localhost_profile->valuestring) : NULL,
-        strdup(type->valuestring)
+        localhost_profile_local_str,
+        type_local_str
         );
+
+    if (!v1_app_armor_profile_local_var) {
+        goto end;
+    }
 
     return v1_app_armor_profile_local_var;
 end:
+    if (localhost_profile_local_str) {
+        free(localhost_profile_local_str);
+        localhost_profile_local_str = NULL;
+    }
+    if (type_local_str) {
+        free(type_local_str);
+        type_local_str = NULL;
+    }
     return NULL;
 
 }

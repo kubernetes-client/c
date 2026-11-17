@@ -19,17 +19,17 @@ typedef struct v1_linux_container_user_t v1_linux_container_user_t;
 
 
 typedef struct v1_linux_container_user_t {
-    long gid; //numeric
+    long *gid; //numeric
     list_t *supplemental_groups; //primitive container
-    long uid; //numeric
+    long *uid; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_linux_container_user_t;
 
 __attribute__((deprecated)) v1_linux_container_user_t *v1_linux_container_user_create(
-    long gid,
+    long *gid,
     list_t *supplemental_groups,
-    long uid
+    long *uid
 );
 
 void v1_linux_container_user_free(v1_linux_container_user_t *v1_linux_container_user);

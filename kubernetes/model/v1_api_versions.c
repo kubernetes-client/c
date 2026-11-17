@@ -15,12 +15,12 @@ static v1_api_versions_t *v1_api_versions_create_internal(
     if (!v1_api_versions_local_var) {
         return NULL;
     }
+    memset(v1_api_versions_local_var, 0, sizeof(v1_api_versions_t));
+    v1_api_versions_local_var->_library_owned = 1;
     v1_api_versions_local_var->api_version = api_version;
     v1_api_versions_local_var->kind = kind;
     v1_api_versions_local_var->server_address_by_client_cidrs = server_address_by_client_cidrs;
     v1_api_versions_local_var->versions = versions;
-
-    v1_api_versions_local_var->_library_owned = 1;
     return v1_api_versions_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1_api_versions_t *v1_api_versions_create(
     list_t *server_address_by_client_cidrs,
     list_t *versions
     ) {
-    return v1_api_versions_create_internal (
+    v1_api_versions_t *result = v1_api_versions_create_internal (
         api_version,
         kind,
         server_address_by_client_cidrs,
         versions
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_api_versions_free(v1_api_versions_t *v1_api_versions) {
@@ -141,6 +144,10 @@ v1_api_versions_t *v1_api_versions_parseFromJSON(cJSON *v1_api_versionsJSON){
 
     v1_api_versions_t *v1_api_versions_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
+    char *kind_local_str = NULL;
+
     // define the local list for v1_api_versions->server_address_by_client_cidrs
     list_t *server_address_by_client_cidrsList = NULL;
 
@@ -224,15 +231,30 @@ v1_api_versions_t *v1_api_versions_parseFromJSON(cJSON *v1_api_versionsJSON){
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+
     v1_api_versions_local_var = v1_api_versions_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version_local_str,
+        kind_local_str,
         server_address_by_client_cidrsList,
         versionsList
         );
 
+    if (!v1_api_versions_local_var) {
+        goto end;
+    }
+
     return v1_api_versions_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
     if (server_address_by_client_cidrsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, server_address_by_client_cidrsList) {

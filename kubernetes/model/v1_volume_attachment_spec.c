@@ -14,11 +14,11 @@ static v1_volume_attachment_spec_t *v1_volume_attachment_spec_create_internal(
     if (!v1_volume_attachment_spec_local_var) {
         return NULL;
     }
+    memset(v1_volume_attachment_spec_local_var, 0, sizeof(v1_volume_attachment_spec_t));
+    v1_volume_attachment_spec_local_var->_library_owned = 1;
     v1_volume_attachment_spec_local_var->attacher = attacher;
     v1_volume_attachment_spec_local_var->node_name = node_name;
     v1_volume_attachment_spec_local_var->source = source;
-
-    v1_volume_attachment_spec_local_var->_library_owned = 1;
     return v1_volume_attachment_spec_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_volume_attachment_spec_t *v1_volume_attachment_sp
     char *node_name,
     v1_volume_attachment_source_t *source
     ) {
-    return v1_volume_attachment_spec_create_internal (
+    v1_volume_attachment_spec_t *result = v1_volume_attachment_spec_create_internal (
         attacher,
         node_name,
         source
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_volume_attachment_spec_free(v1_volume_attachment_spec_t *v1_volume_attachment_spec) {
@@ -104,6 +107,10 @@ v1_volume_attachment_spec_t *v1_volume_attachment_spec_parseFromJSON(cJSON *v1_v
 
     v1_volume_attachment_spec_t *v1_volume_attachment_spec_local_var = NULL;
 
+    char *attacher_local_str = NULL;
+
+    char *node_name_local_str = NULL;
+
     // define the local variable for v1_volume_attachment_spec->source
     v1_volume_attachment_source_t *source_local_nonprim = NULL;
 
@@ -150,14 +157,29 @@ v1_volume_attachment_spec_t *v1_volume_attachment_spec_parseFromJSON(cJSON *v1_v
     source_local_nonprim = v1_volume_attachment_source_parseFromJSON(source); //nonprimitive
 
 
+    if (attacher && !cJSON_IsNull(attacher)) attacher_local_str = strdup(attacher->valuestring);
+    if (node_name && !cJSON_IsNull(node_name)) node_name_local_str = strdup(node_name->valuestring);
+
     v1_volume_attachment_spec_local_var = v1_volume_attachment_spec_create_internal (
-        strdup(attacher->valuestring),
-        strdup(node_name->valuestring),
+        attacher_local_str,
+        node_name_local_str,
         source_local_nonprim
         );
 
+    if (!v1_volume_attachment_spec_local_var) {
+        goto end;
+    }
+
     return v1_volume_attachment_spec_local_var;
 end:
+    if (attacher_local_str) {
+        free(attacher_local_str);
+        attacher_local_str = NULL;
+    }
+    if (node_name_local_str) {
+        free(node_name_local_str);
+        node_name_local_str = NULL;
+    }
     if (source_local_nonprim) {
         v1_volume_attachment_source_free(source_local_nonprim);
         source_local_nonprim = NULL;

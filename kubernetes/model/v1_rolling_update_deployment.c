@@ -13,10 +13,10 @@ static v1_rolling_update_deployment_t *v1_rolling_update_deployment_create_inter
     if (!v1_rolling_update_deployment_local_var) {
         return NULL;
     }
+    memset(v1_rolling_update_deployment_local_var, 0, sizeof(v1_rolling_update_deployment_t));
+    v1_rolling_update_deployment_local_var->_library_owned = 1;
     v1_rolling_update_deployment_local_var->max_surge = max_surge;
     v1_rolling_update_deployment_local_var->max_unavailable = max_unavailable;
-
-    v1_rolling_update_deployment_local_var->_library_owned = 1;
     return v1_rolling_update_deployment_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_rolling_update_deployment_t *v1_rolling_update_de
     int_or_string_t *max_surge,
     int_or_string_t *max_unavailable
     ) {
-    return v1_rolling_update_deployment_create_internal (
+    v1_rolling_update_deployment_t *result = v1_rolling_update_deployment_create_internal (
         max_surge,
         max_unavailable
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_rolling_update_deployment_free(v1_rolling_update_deployment_t *v1_rolling_update_deployment) {
@@ -115,10 +118,15 @@ v1_rolling_update_deployment_t *v1_rolling_update_deployment_parseFromJSON(cJSON
     }
 
 
+
     v1_rolling_update_deployment_local_var = v1_rolling_update_deployment_create_internal (
         max_surge ? max_surge_local_nonprim : NULL,
         max_unavailable ? max_unavailable_local_nonprim : NULL
         );
+
+    if (!v1_rolling_update_deployment_local_var) {
+        goto end;
+    }
 
     return v1_rolling_update_deployment_local_var;
 end:

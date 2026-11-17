@@ -6,15 +6,15 @@
 
 
 static v1_iscsi_persistent_volume_source_t *v1_iscsi_persistent_volume_source_create_internal(
-    int chap_auth_discovery,
-    int chap_auth_session,
+    int *chap_auth_discovery,
+    int *chap_auth_session,
     char *fs_type,
     char *initiator_name,
     char *iqn,
     char *iscsi_interface,
-    int lun,
+    int *lun,
     list_t *portals,
-    int read_only,
+    int *read_only,
     v1_secret_reference_t *secret_ref,
     char *target_portal
     ) {
@@ -22,6 +22,8 @@ static v1_iscsi_persistent_volume_source_t *v1_iscsi_persistent_volume_source_cr
     if (!v1_iscsi_persistent_volume_source_local_var) {
         return NULL;
     }
+    memset(v1_iscsi_persistent_volume_source_local_var, 0, sizeof(v1_iscsi_persistent_volume_source_t));
+    v1_iscsi_persistent_volume_source_local_var->_library_owned = 1;
     v1_iscsi_persistent_volume_source_local_var->chap_auth_discovery = chap_auth_discovery;
     v1_iscsi_persistent_volume_source_local_var->chap_auth_session = chap_auth_session;
     v1_iscsi_persistent_volume_source_local_var->fs_type = fs_type;
@@ -33,37 +35,62 @@ static v1_iscsi_persistent_volume_source_t *v1_iscsi_persistent_volume_source_cr
     v1_iscsi_persistent_volume_source_local_var->read_only = read_only;
     v1_iscsi_persistent_volume_source_local_var->secret_ref = secret_ref;
     v1_iscsi_persistent_volume_source_local_var->target_portal = target_portal;
-
-    v1_iscsi_persistent_volume_source_local_var->_library_owned = 1;
     return v1_iscsi_persistent_volume_source_local_var;
 }
 
 __attribute__((deprecated)) v1_iscsi_persistent_volume_source_t *v1_iscsi_persistent_volume_source_create(
-    int chap_auth_discovery,
-    int chap_auth_session,
+    int *chap_auth_discovery,
+    int *chap_auth_session,
     char *fs_type,
     char *initiator_name,
     char *iqn,
     char *iscsi_interface,
-    int lun,
+    int *lun,
     list_t *portals,
-    int read_only,
+    int *read_only,
     v1_secret_reference_t *secret_ref,
     char *target_portal
     ) {
-    return v1_iscsi_persistent_volume_source_create_internal (
-        chap_auth_discovery,
-        chap_auth_session,
+    int *chap_auth_discovery_copy = NULL;
+    if (chap_auth_discovery) {
+        chap_auth_discovery_copy = malloc(sizeof(int));
+        if (chap_auth_discovery_copy) *chap_auth_discovery_copy = *chap_auth_discovery;
+    }
+    int *chap_auth_session_copy = NULL;
+    if (chap_auth_session) {
+        chap_auth_session_copy = malloc(sizeof(int));
+        if (chap_auth_session_copy) *chap_auth_session_copy = *chap_auth_session;
+    }
+    int *lun_copy = NULL;
+    if (lun) {
+        lun_copy = malloc(sizeof(int));
+        if (lun_copy) *lun_copy = *lun;
+    }
+    int *read_only_copy = NULL;
+    if (read_only) {
+        read_only_copy = malloc(sizeof(int));
+        if (read_only_copy) *read_only_copy = *read_only;
+    }
+    v1_iscsi_persistent_volume_source_t *result = v1_iscsi_persistent_volume_source_create_internal (
+        chap_auth_discovery_copy,
+        chap_auth_session_copy,
         fs_type,
         initiator_name,
         iqn,
         iscsi_interface,
-        lun,
+        lun_copy,
         portals,
-        read_only,
+        read_only_copy,
         secret_ref,
         target_portal
         );
+    if (!result) {
+        free(chap_auth_discovery_copy);
+        free(chap_auth_session_copy);
+        free(lun_copy);
+        free(read_only_copy);
+    }
+    return result;
 }
 
 void v1_iscsi_persistent_volume_source_free(v1_iscsi_persistent_volume_source_t *v1_iscsi_persistent_volume_source) {
@@ -75,6 +102,14 @@ void v1_iscsi_persistent_volume_source_free(v1_iscsi_persistent_volume_source_t 
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_iscsi_persistent_volume_source->chap_auth_discovery) {
+        free(v1_iscsi_persistent_volume_source->chap_auth_discovery);
+        v1_iscsi_persistent_volume_source->chap_auth_discovery = NULL;
+    }
+    if (v1_iscsi_persistent_volume_source->chap_auth_session) {
+        free(v1_iscsi_persistent_volume_source->chap_auth_session);
+        v1_iscsi_persistent_volume_source->chap_auth_session = NULL;
+    }
     if (v1_iscsi_persistent_volume_source->fs_type) {
         free(v1_iscsi_persistent_volume_source->fs_type);
         v1_iscsi_persistent_volume_source->fs_type = NULL;
@@ -91,12 +126,20 @@ void v1_iscsi_persistent_volume_source_free(v1_iscsi_persistent_volume_source_t 
         free(v1_iscsi_persistent_volume_source->iscsi_interface);
         v1_iscsi_persistent_volume_source->iscsi_interface = NULL;
     }
+    if (v1_iscsi_persistent_volume_source->lun) {
+        free(v1_iscsi_persistent_volume_source->lun);
+        v1_iscsi_persistent_volume_source->lun = NULL;
+    }
     if (v1_iscsi_persistent_volume_source->portals) {
         list_ForEach(listEntry, v1_iscsi_persistent_volume_source->portals) {
             free(listEntry->data);
         }
         list_freeList(v1_iscsi_persistent_volume_source->portals);
         v1_iscsi_persistent_volume_source->portals = NULL;
+    }
+    if (v1_iscsi_persistent_volume_source->read_only) {
+        free(v1_iscsi_persistent_volume_source->read_only);
+        v1_iscsi_persistent_volume_source->read_only = NULL;
     }
     if (v1_iscsi_persistent_volume_source->secret_ref) {
         v1_secret_reference_free(v1_iscsi_persistent_volume_source->secret_ref);
@@ -114,7 +157,7 @@ cJSON *v1_iscsi_persistent_volume_source_convertToJSON(v1_iscsi_persistent_volum
 
     // v1_iscsi_persistent_volume_source->chap_auth_discovery
     if(v1_iscsi_persistent_volume_source->chap_auth_discovery) {
-    if(cJSON_AddBoolToObject(item, "chapAuthDiscovery", v1_iscsi_persistent_volume_source->chap_auth_discovery) == NULL) {
+    if(cJSON_AddBoolToObject(item, "chapAuthDiscovery", *v1_iscsi_persistent_volume_source->chap_auth_discovery) == NULL) {
     goto fail; //Bool
     }
     }
@@ -122,7 +165,7 @@ cJSON *v1_iscsi_persistent_volume_source_convertToJSON(v1_iscsi_persistent_volum
 
     // v1_iscsi_persistent_volume_source->chap_auth_session
     if(v1_iscsi_persistent_volume_source->chap_auth_session) {
-    if(cJSON_AddBoolToObject(item, "chapAuthSession", v1_iscsi_persistent_volume_source->chap_auth_session) == NULL) {
+    if(cJSON_AddBoolToObject(item, "chapAuthSession", *v1_iscsi_persistent_volume_source->chap_auth_session) == NULL) {
     goto fail; //Bool
     }
     }
@@ -165,7 +208,7 @@ cJSON *v1_iscsi_persistent_volume_source_convertToJSON(v1_iscsi_persistent_volum
     if (!v1_iscsi_persistent_volume_source->lun) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "lun", v1_iscsi_persistent_volume_source->lun) == NULL) {
+    if(cJSON_AddNumberToObject(item, "lun", *v1_iscsi_persistent_volume_source->lun) == NULL) {
     goto fail; //Numeric
     }
 
@@ -189,7 +232,7 @@ cJSON *v1_iscsi_persistent_volume_source_convertToJSON(v1_iscsi_persistent_volum
 
     // v1_iscsi_persistent_volume_source->read_only
     if(v1_iscsi_persistent_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_iscsi_persistent_volume_source->read_only) == NULL) {
+    if(cJSON_AddBoolToObject(item, "readOnly", *v1_iscsi_persistent_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -228,11 +271,33 @@ v1_iscsi_persistent_volume_source_t *v1_iscsi_persistent_volume_source_parseFrom
 
     v1_iscsi_persistent_volume_source_t *v1_iscsi_persistent_volume_source_local_var = NULL;
 
+    // define the local variable for v1_iscsi_persistent_volume_source->chap_auth_discovery
+    int *chap_auth_discovery_local_var = NULL;
+
+    // define the local variable for v1_iscsi_persistent_volume_source->chap_auth_session
+    int *chap_auth_session_local_var = NULL;
+
+    char *fs_type_local_str = NULL;
+
+    char *initiator_name_local_str = NULL;
+
+    char *iqn_local_str = NULL;
+
+    char *iscsi_interface_local_str = NULL;
+
+    // define the local variable for v1_iscsi_persistent_volume_source->lun
+    int *lun_local_var = NULL;
+
     // define the local list for v1_iscsi_persistent_volume_source->portals
     list_t *portalsList = NULL;
 
+    // define the local variable for v1_iscsi_persistent_volume_source->read_only
+    int *read_only_local_var = NULL;
+
     // define the local variable for v1_iscsi_persistent_volume_source->secret_ref
     v1_secret_reference_t *secret_ref_local_nonprim = NULL;
+
+    char *target_portal_local_str = NULL;
 
     // v1_iscsi_persistent_volume_source->chap_auth_discovery
     cJSON *chap_auth_discovery = cJSON_GetObjectItemCaseSensitive(v1_iscsi_persistent_volume_sourceJSON, "chapAuthDiscovery");
@@ -244,6 +309,12 @@ v1_iscsi_persistent_volume_source_t *v1_iscsi_persistent_volume_source_parseFrom
     {
     goto end; //Bool
     }
+    chap_auth_discovery_local_var = malloc(sizeof(int));
+    if(!chap_auth_discovery_local_var)
+    {
+        goto end;
+    }
+    *chap_auth_discovery_local_var = chap_auth_discovery->valueint;
     }
 
     // v1_iscsi_persistent_volume_source->chap_auth_session
@@ -256,6 +327,12 @@ v1_iscsi_persistent_volume_source_t *v1_iscsi_persistent_volume_source_parseFrom
     {
     goto end; //Bool
     }
+    chap_auth_session_local_var = malloc(sizeof(int));
+    if(!chap_auth_session_local_var)
+    {
+        goto end;
+    }
+    *chap_auth_session_local_var = chap_auth_session->valueint;
     }
 
     // v1_iscsi_persistent_volume_source->fs_type
@@ -323,6 +400,12 @@ v1_iscsi_persistent_volume_source_t *v1_iscsi_persistent_volume_source_parseFrom
     {
     goto end; //Numeric
     }
+    lun_local_var = malloc(sizeof(int));
+    if(!lun_local_var)
+    {
+        goto end;
+    }
+    *lun_local_var = lun->valuedouble;
 
     // v1_iscsi_persistent_volume_source->portals
     cJSON *portals = cJSON_GetObjectItemCaseSensitive(v1_iscsi_persistent_volume_sourceJSON, "portals");
@@ -356,6 +439,12 @@ v1_iscsi_persistent_volume_source_t *v1_iscsi_persistent_volume_source_parseFrom
     {
     goto end; //Bool
     }
+    read_only_local_var = malloc(sizeof(int));
+    if(!read_only_local_var)
+    {
+        goto end;
+    }
+    *read_only_local_var = read_only->valueint;
     }
 
     // v1_iscsi_persistent_volume_source->secret_ref
@@ -383,22 +472,60 @@ v1_iscsi_persistent_volume_source_t *v1_iscsi_persistent_volume_source_parseFrom
     }
 
 
+    if (fs_type && !cJSON_IsNull(fs_type)) fs_type_local_str = strdup(fs_type->valuestring);
+    if (initiator_name && !cJSON_IsNull(initiator_name)) initiator_name_local_str = strdup(initiator_name->valuestring);
+    if (iqn && !cJSON_IsNull(iqn)) iqn_local_str = strdup(iqn->valuestring);
+    if (iscsi_interface && !cJSON_IsNull(iscsi_interface)) iscsi_interface_local_str = strdup(iscsi_interface->valuestring);
+    if (target_portal && !cJSON_IsNull(target_portal)) target_portal_local_str = strdup(target_portal->valuestring);
+
     v1_iscsi_persistent_volume_source_local_var = v1_iscsi_persistent_volume_source_create_internal (
-        chap_auth_discovery ? chap_auth_discovery->valueint : 0,
-        chap_auth_session ? chap_auth_session->valueint : 0,
-        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
-        initiator_name && !cJSON_IsNull(initiator_name) ? strdup(initiator_name->valuestring) : NULL,
-        strdup(iqn->valuestring),
-        iscsi_interface && !cJSON_IsNull(iscsi_interface) ? strdup(iscsi_interface->valuestring) : NULL,
-        lun->valuedouble,
+        chap_auth_discovery_local_var,
+        chap_auth_session_local_var,
+        fs_type_local_str,
+        initiator_name_local_str,
+        iqn_local_str,
+        iscsi_interface_local_str,
+        lun_local_var,
         portals ? portalsList : NULL,
-        read_only ? read_only->valueint : 0,
+        read_only_local_var,
         secret_ref ? secret_ref_local_nonprim : NULL,
-        strdup(target_portal->valuestring)
+        target_portal_local_str
         );
+
+    if (!v1_iscsi_persistent_volume_source_local_var) {
+        goto end;
+    }
 
     return v1_iscsi_persistent_volume_source_local_var;
 end:
+    if (chap_auth_discovery_local_var) {
+        free(chap_auth_discovery_local_var);
+        chap_auth_discovery_local_var = NULL;
+    }
+    if (chap_auth_session_local_var) {
+        free(chap_auth_session_local_var);
+        chap_auth_session_local_var = NULL;
+    }
+    if (fs_type_local_str) {
+        free(fs_type_local_str);
+        fs_type_local_str = NULL;
+    }
+    if (initiator_name_local_str) {
+        free(initiator_name_local_str);
+        initiator_name_local_str = NULL;
+    }
+    if (iqn_local_str) {
+        free(iqn_local_str);
+        iqn_local_str = NULL;
+    }
+    if (iscsi_interface_local_str) {
+        free(iscsi_interface_local_str);
+        iscsi_interface_local_str = NULL;
+    }
+    if (lun_local_var) {
+        free(lun_local_var);
+        lun_local_var = NULL;
+    }
     if (portalsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, portalsList) {
@@ -408,9 +535,17 @@ end:
         list_freeList(portalsList);
         portalsList = NULL;
     }
+    if (read_only_local_var) {
+        free(read_only_local_var);
+        read_only_local_var = NULL;
+    }
     if (secret_ref_local_nonprim) {
         v1_secret_reference_free(secret_ref_local_nonprim);
         secret_ref_local_nonprim = NULL;
+    }
+    if (target_portal_local_str) {
+        free(target_portal_local_str);
+        target_portal_local_str = NULL;
     }
     return NULL;
 

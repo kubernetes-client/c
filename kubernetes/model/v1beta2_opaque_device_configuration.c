@@ -13,10 +13,10 @@ static v1beta2_opaque_device_configuration_t *v1beta2_opaque_device_configuratio
     if (!v1beta2_opaque_device_configuration_local_var) {
         return NULL;
     }
+    memset(v1beta2_opaque_device_configuration_local_var, 0, sizeof(v1beta2_opaque_device_configuration_t));
+    v1beta2_opaque_device_configuration_local_var->_library_owned = 1;
     v1beta2_opaque_device_configuration_local_var->driver = driver;
     v1beta2_opaque_device_configuration_local_var->parameters = parameters;
-
-    v1beta2_opaque_device_configuration_local_var->_library_owned = 1;
     return v1beta2_opaque_device_configuration_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1beta2_opaque_device_configuration_t *v1beta2_opaqu
     char *driver,
     object_t *parameters
     ) {
-    return v1beta2_opaque_device_configuration_create_internal (
+    v1beta2_opaque_device_configuration_t *result = v1beta2_opaque_device_configuration_create_internal (
         driver,
         parameters
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1beta2_opaque_device_configuration_free(v1beta2_opaque_device_configuration_t *v1beta2_opaque_device_configuration) {
@@ -87,6 +90,8 @@ v1beta2_opaque_device_configuration_t *v1beta2_opaque_device_configuration_parse
 
     v1beta2_opaque_device_configuration_t *v1beta2_opaque_device_configuration_local_var = NULL;
 
+    char *driver_local_str = NULL;
+
     // v1beta2_opaque_device_configuration->driver
     cJSON *driver = cJSON_GetObjectItemCaseSensitive(v1beta2_opaque_device_configurationJSON, "driver");
     if (cJSON_IsNull(driver)) {
@@ -116,13 +121,23 @@ v1beta2_opaque_device_configuration_t *v1beta2_opaque_device_configuration_parse
     parameters_local_object = object_parseFromJSON(parameters); //object
 
 
+    if (driver && !cJSON_IsNull(driver)) driver_local_str = strdup(driver->valuestring);
+
     v1beta2_opaque_device_configuration_local_var = v1beta2_opaque_device_configuration_create_internal (
-        strdup(driver->valuestring),
+        driver_local_str,
         parameters_local_object
         );
 
+    if (!v1beta2_opaque_device_configuration_local_var) {
+        goto end;
+    }
+
     return v1beta2_opaque_device_configuration_local_var;
 end:
+    if (driver_local_str) {
+        free(driver_local_str);
+        driver_local_str = NULL;
+    }
     return NULL;
 
 }

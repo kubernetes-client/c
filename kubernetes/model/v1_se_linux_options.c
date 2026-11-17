@@ -15,12 +15,12 @@ static v1_se_linux_options_t *v1_se_linux_options_create_internal(
     if (!v1_se_linux_options_local_var) {
         return NULL;
     }
+    memset(v1_se_linux_options_local_var, 0, sizeof(v1_se_linux_options_t));
+    v1_se_linux_options_local_var->_library_owned = 1;
     v1_se_linux_options_local_var->level = level;
     v1_se_linux_options_local_var->role = role;
     v1_se_linux_options_local_var->type = type;
     v1_se_linux_options_local_var->user = user;
-
-    v1_se_linux_options_local_var->_library_owned = 1;
     return v1_se_linux_options_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1_se_linux_options_t *v1_se_linux_options_create(
     char *type,
     char *user
     ) {
-    return v1_se_linux_options_create_internal (
+    v1_se_linux_options_t *result = v1_se_linux_options_create_internal (
         level,
         role,
         type,
         user
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_se_linux_options_free(v1_se_linux_options_t *v1_se_linux_options) {
@@ -112,6 +115,14 @@ v1_se_linux_options_t *v1_se_linux_options_parseFromJSON(cJSON *v1_se_linux_opti
 
     v1_se_linux_options_t *v1_se_linux_options_local_var = NULL;
 
+    char *level_local_str = NULL;
+
+    char *role_local_str = NULL;
+
+    char *type_local_str = NULL;
+
+    char *user_local_str = NULL;
+
     // v1_se_linux_options->level
     cJSON *level = cJSON_GetObjectItemCaseSensitive(v1_se_linux_optionsJSON, "level");
     if (cJSON_IsNull(level)) {
@@ -161,15 +172,40 @@ v1_se_linux_options_t *v1_se_linux_options_parseFromJSON(cJSON *v1_se_linux_opti
     }
 
 
+    if (level && !cJSON_IsNull(level)) level_local_str = strdup(level->valuestring);
+    if (role && !cJSON_IsNull(role)) role_local_str = strdup(role->valuestring);
+    if (type && !cJSON_IsNull(type)) type_local_str = strdup(type->valuestring);
+    if (user && !cJSON_IsNull(user)) user_local_str = strdup(user->valuestring);
+
     v1_se_linux_options_local_var = v1_se_linux_options_create_internal (
-        level && !cJSON_IsNull(level) ? strdup(level->valuestring) : NULL,
-        role && !cJSON_IsNull(role) ? strdup(role->valuestring) : NULL,
-        type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL,
-        user && !cJSON_IsNull(user) ? strdup(user->valuestring) : NULL
+        level_local_str,
+        role_local_str,
+        type_local_str,
+        user_local_str
         );
+
+    if (!v1_se_linux_options_local_var) {
+        goto end;
+    }
 
     return v1_se_linux_options_local_var;
 end:
+    if (level_local_str) {
+        free(level_local_str);
+        level_local_str = NULL;
+    }
+    if (role_local_str) {
+        free(role_local_str);
+        role_local_str = NULL;
+    }
+    if (type_local_str) {
+        free(type_local_str);
+        type_local_str = NULL;
+    }
+    if (user_local_str) {
+        free(user_local_str);
+        user_local_str = NULL;
+    }
     return NULL;
 
 }

@@ -25,11 +25,11 @@ typedef struct v1_pod_security_context_t v1_pod_security_context_t;
 
 typedef struct v1_pod_security_context_t {
     struct v1_app_armor_profile_t *app_armor_profile; //model
-    long fs_group; //numeric
+    long *fs_group; //numeric
     char *fs_group_change_policy; // string
-    long run_as_group; //numeric
-    int run_as_non_root; //boolean
-    long run_as_user; //numeric
+    long *run_as_group; //numeric
+    int *run_as_non_root; //boolean
+    long *run_as_user; //numeric
     char *se_linux_change_policy; // string
     struct v1_se_linux_options_t *se_linux_options; //model
     struct v1_seccomp_profile_t *seccomp_profile; //model
@@ -43,11 +43,11 @@ typedef struct v1_pod_security_context_t {
 
 __attribute__((deprecated)) v1_pod_security_context_t *v1_pod_security_context_create(
     v1_app_armor_profile_t *app_armor_profile,
-    long fs_group,
+    long *fs_group,
     char *fs_group_change_policy,
-    long run_as_group,
-    int run_as_non_root,
-    long run_as_user,
+    long *run_as_group,
+    int *run_as_non_root,
+    long *run_as_user,
     char *se_linux_change_policy,
     v1_se_linux_options_t *se_linux_options,
     v1_seccomp_profile_t *seccomp_profile,

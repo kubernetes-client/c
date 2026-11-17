@@ -104,6 +104,7 @@ void *watch_pod_thread_func(void *arg)
                                 NULL,   /* resourceVersion */
                                 NULL,   /* resourceVersionMatch */
                                 NULL,   /* sendInitialEvents */
+                                NULL,   /* shardSelector */
                                 &timeoutSeconds,    /* timeoutSeconds */
                                 &watch  /* watch */
         );

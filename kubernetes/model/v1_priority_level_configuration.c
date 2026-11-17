@@ -16,13 +16,13 @@ static v1_priority_level_configuration_t *v1_priority_level_configuration_create
     if (!v1_priority_level_configuration_local_var) {
         return NULL;
     }
+    memset(v1_priority_level_configuration_local_var, 0, sizeof(v1_priority_level_configuration_t));
+    v1_priority_level_configuration_local_var->_library_owned = 1;
     v1_priority_level_configuration_local_var->api_version = api_version;
     v1_priority_level_configuration_local_var->kind = kind;
     v1_priority_level_configuration_local_var->metadata = metadata;
     v1_priority_level_configuration_local_var->spec = spec;
     v1_priority_level_configuration_local_var->status = status;
-
-    v1_priority_level_configuration_local_var->_library_owned = 1;
     return v1_priority_level_configuration_local_var;
 }
 
@@ -33,13 +33,16 @@ __attribute__((deprecated)) v1_priority_level_configuration_t *v1_priority_level
     v1_priority_level_configuration_spec_t *spec,
     v1_priority_level_configuration_status_t *status
     ) {
-    return v1_priority_level_configuration_create_internal (
+    v1_priority_level_configuration_t *result = v1_priority_level_configuration_create_internal (
         api_version,
         kind,
         metadata,
         spec,
         status
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_priority_level_configuration_free(v1_priority_level_configuration_t *v1_priority_level_configuration) {
@@ -107,7 +110,9 @@ cJSON *v1_priority_level_configuration_convertToJSON(v1_priority_level_configura
 
 
     // v1_priority_level_configuration->spec
-    if(v1_priority_level_configuration->spec) {
+    if (!v1_priority_level_configuration->spec) {
+        goto fail;
+    }
     cJSON *spec_local_JSON = v1_priority_level_configuration_spec_convertToJSON(v1_priority_level_configuration->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -115,7 +120,6 @@ cJSON *v1_priority_level_configuration_convertToJSON(v1_priority_level_configura
     cJSON_AddItemToObject(item, "spec", spec_local_JSON);
     if(item->child == NULL) {
     goto fail;
-    }
     }
 
 
@@ -142,6 +146,10 @@ fail:
 v1_priority_level_configuration_t *v1_priority_level_configuration_parseFromJSON(cJSON *v1_priority_level_configurationJSON){
 
     v1_priority_level_configuration_t *v1_priority_level_configuration_local_var = NULL;
+
+    char *api_version_local_str = NULL;
+
+    char *kind_local_str = NULL;
 
     // define the local variable for v1_priority_level_configuration->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
@@ -190,9 +198,12 @@ v1_priority_level_configuration_t *v1_priority_level_configuration_parseFromJSON
     if (cJSON_IsNull(spec)) {
         spec = NULL;
     }
-    if (spec) { 
-    spec_local_nonprim = v1_priority_level_configuration_spec_parseFromJSON(spec); //nonprimitive
+    if (!spec) {
+        goto end;
     }
+
+    
+    spec_local_nonprim = v1_priority_level_configuration_spec_parseFromJSON(spec); //nonprimitive
 
     // v1_priority_level_configuration->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_priority_level_configurationJSON, "status");
@@ -204,16 +215,31 @@ v1_priority_level_configuration_t *v1_priority_level_configuration_parseFromJSON
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+
     v1_priority_level_configuration_local_var = v1_priority_level_configuration_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version_local_str,
+        kind_local_str,
         metadata ? metadata_local_nonprim : NULL,
-        spec ? spec_local_nonprim : NULL,
+        spec_local_nonprim,
         status ? status_local_nonprim : NULL
         );
 
+    if (!v1_priority_level_configuration_local_var) {
+        goto end;
+    }
+
     return v1_priority_level_configuration_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;

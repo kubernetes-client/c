@@ -15,12 +15,12 @@ static v1_api_resource_list_t *v1_api_resource_list_create_internal(
     if (!v1_api_resource_list_local_var) {
         return NULL;
     }
+    memset(v1_api_resource_list_local_var, 0, sizeof(v1_api_resource_list_t));
+    v1_api_resource_list_local_var->_library_owned = 1;
     v1_api_resource_list_local_var->api_version = api_version;
     v1_api_resource_list_local_var->group_version = group_version;
     v1_api_resource_list_local_var->kind = kind;
     v1_api_resource_list_local_var->resources = resources;
-
-    v1_api_resource_list_local_var->_library_owned = 1;
     return v1_api_resource_list_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1_api_resource_list_t *v1_api_resource_list_create(
     char *kind,
     list_t *resources
     ) {
-    return v1_api_resource_list_create_internal (
+    v1_api_resource_list_t *result = v1_api_resource_list_create_internal (
         api_version,
         group_version,
         kind,
         resources
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_api_resource_list_free(v1_api_resource_list_t *v1_api_resource_list) {
@@ -129,6 +132,12 @@ v1_api_resource_list_t *v1_api_resource_list_parseFromJSON(cJSON *v1_api_resourc
 
     v1_api_resource_list_t *v1_api_resource_list_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
+    char *group_version_local_str = NULL;
+
+    char *kind_local_str = NULL;
+
     // define the local list for v1_api_resource_list->resources
     list_t *resourcesList = NULL;
 
@@ -199,15 +208,35 @@ v1_api_resource_list_t *v1_api_resource_list_parseFromJSON(cJSON *v1_api_resourc
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (group_version && !cJSON_IsNull(group_version)) group_version_local_str = strdup(group_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+
     v1_api_resource_list_local_var = v1_api_resource_list_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        strdup(group_version->valuestring),
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version_local_str,
+        group_version_local_str,
+        kind_local_str,
         resourcesList
         );
 
+    if (!v1_api_resource_list_local_var) {
+        goto end;
+    }
+
     return v1_api_resource_list_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (group_version_local_str) {
+        free(group_version_local_str);
+        group_version_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
     if (resourcesList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, resourcesList) {

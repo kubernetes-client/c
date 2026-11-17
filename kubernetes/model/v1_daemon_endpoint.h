@@ -19,13 +19,13 @@ typedef struct v1_daemon_endpoint_t v1_daemon_endpoint_t;
 
 
 typedef struct v1_daemon_endpoint_t {
-    int port; //numeric
+    int *port; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_daemon_endpoint_t;
 
 __attribute__((deprecated)) v1_daemon_endpoint_t *v1_daemon_endpoint_create(
-    int port
+    int *port
 );
 
 void v1_daemon_endpoint_free(v1_daemon_endpoint_t *v1_daemon_endpoint);

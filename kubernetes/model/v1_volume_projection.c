@@ -17,14 +17,14 @@ static v1_volume_projection_t *v1_volume_projection_create_internal(
     if (!v1_volume_projection_local_var) {
         return NULL;
     }
+    memset(v1_volume_projection_local_var, 0, sizeof(v1_volume_projection_t));
+    v1_volume_projection_local_var->_library_owned = 1;
     v1_volume_projection_local_var->cluster_trust_bundle = cluster_trust_bundle;
     v1_volume_projection_local_var->config_map = config_map;
     v1_volume_projection_local_var->downward_api = downward_api;
     v1_volume_projection_local_var->pod_certificate = pod_certificate;
     v1_volume_projection_local_var->secret = secret;
     v1_volume_projection_local_var->service_account_token = service_account_token;
-
-    v1_volume_projection_local_var->_library_owned = 1;
     return v1_volume_projection_local_var;
 }
 
@@ -36,7 +36,7 @@ __attribute__((deprecated)) v1_volume_projection_t *v1_volume_projection_create(
     v1_secret_projection_t *secret,
     v1_service_account_token_projection_t *service_account_token
     ) {
-    return v1_volume_projection_create_internal (
+    v1_volume_projection_t *result = v1_volume_projection_create_internal (
         cluster_trust_bundle,
         config_map,
         downward_api,
@@ -44,6 +44,9 @@ __attribute__((deprecated)) v1_volume_projection_t *v1_volume_projection_create(
         secret,
         service_account_token
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_volume_projection_free(v1_volume_projection_t *v1_volume_projection) {
@@ -247,6 +250,7 @@ v1_volume_projection_t *v1_volume_projection_parseFromJSON(cJSON *v1_volume_proj
     }
 
 
+
     v1_volume_projection_local_var = v1_volume_projection_create_internal (
         cluster_trust_bundle ? cluster_trust_bundle_local_nonprim : NULL,
         config_map ? config_map_local_nonprim : NULL,
@@ -255,6 +259,10 @@ v1_volume_projection_t *v1_volume_projection_parseFromJSON(cJSON *v1_volume_proj
         secret ? secret_local_nonprim : NULL,
         service_account_token ? service_account_token_local_nonprim : NULL
         );
+
+    if (!v1_volume_projection_local_var) {
+        goto end;
+    }
 
     return v1_volume_projection_local_var;
 end:

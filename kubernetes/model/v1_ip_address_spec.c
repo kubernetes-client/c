@@ -12,18 +12,21 @@ static v1_ip_address_spec_t *v1_ip_address_spec_create_internal(
     if (!v1_ip_address_spec_local_var) {
         return NULL;
     }
-    v1_ip_address_spec_local_var->parent_ref = parent_ref;
-
+    memset(v1_ip_address_spec_local_var, 0, sizeof(v1_ip_address_spec_t));
     v1_ip_address_spec_local_var->_library_owned = 1;
+    v1_ip_address_spec_local_var->parent_ref = parent_ref;
     return v1_ip_address_spec_local_var;
 }
 
 __attribute__((deprecated)) v1_ip_address_spec_t *v1_ip_address_spec_create(
     v1_parent_reference_t *parent_ref
     ) {
-    return v1_ip_address_spec_create_internal (
+    v1_ip_address_spec_t *result = v1_ip_address_spec_create_internal (
         parent_ref
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_ip_address_spec_free(v1_ip_address_spec_t *v1_ip_address_spec) {
@@ -86,9 +89,14 @@ v1_ip_address_spec_t *v1_ip_address_spec_parseFromJSON(cJSON *v1_ip_address_spec
     parent_ref_local_nonprim = v1_parent_reference_parseFromJSON(parent_ref); //nonprimitive
 
 
+
     v1_ip_address_spec_local_var = v1_ip_address_spec_create_internal (
         parent_ref_local_nonprim
         );
+
+    if (!v1_ip_address_spec_local_var) {
+        goto end;
+    }
 
     return v1_ip_address_spec_local_var;
 end:

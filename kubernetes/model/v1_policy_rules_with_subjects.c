@@ -14,11 +14,11 @@ static v1_policy_rules_with_subjects_t *v1_policy_rules_with_subjects_create_int
     if (!v1_policy_rules_with_subjects_local_var) {
         return NULL;
     }
+    memset(v1_policy_rules_with_subjects_local_var, 0, sizeof(v1_policy_rules_with_subjects_t));
+    v1_policy_rules_with_subjects_local_var->_library_owned = 1;
     v1_policy_rules_with_subjects_local_var->non_resource_rules = non_resource_rules;
     v1_policy_rules_with_subjects_local_var->resource_rules = resource_rules;
     v1_policy_rules_with_subjects_local_var->subjects = subjects;
-
-    v1_policy_rules_with_subjects_local_var->_library_owned = 1;
     return v1_policy_rules_with_subjects_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_policy_rules_with_subjects_t *v1_policy_rules_wit
     list_t *resource_rules,
     list_t *subjects
     ) {
-    return v1_policy_rules_with_subjects_create_internal (
+    v1_policy_rules_with_subjects_t *result = v1_policy_rules_with_subjects_create_internal (
         non_resource_rules,
         resource_rules,
         subjects
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_policy_rules_with_subjects_free(v1_policy_rules_with_subjects_t *v1_policy_rules_with_subjects) {
@@ -227,11 +230,16 @@ v1_policy_rules_with_subjects_t *v1_policy_rules_with_subjects_parseFromJSON(cJS
     }
 
 
+
     v1_policy_rules_with_subjects_local_var = v1_policy_rules_with_subjects_create_internal (
         non_resource_rules ? non_resource_rulesList : NULL,
         resource_rules ? resource_rulesList : NULL,
         subjectsList
         );
+
+    if (!v1_policy_rules_with_subjects_local_var) {
+        goto end;
+    }
 
     return v1_policy_rules_with_subjects_local_var;
 end:

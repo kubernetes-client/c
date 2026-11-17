@@ -23,10 +23,12 @@ v1_projected_volume_source_t* instantiate_v1_projected_volume_source(int include
   if (include_optional) {
     v1_projected_volume_source = v1_projected_volume_source_create(
       56,
+      56,
       list_createList()
     );
   } else {
     v1_projected_volume_source = v1_projected_volume_source_create(
+      56,
       56,
       list_createList()
     );

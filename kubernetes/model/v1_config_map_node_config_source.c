@@ -16,13 +16,13 @@ static v1_config_map_node_config_source_t *v1_config_map_node_config_source_crea
     if (!v1_config_map_node_config_source_local_var) {
         return NULL;
     }
+    memset(v1_config_map_node_config_source_local_var, 0, sizeof(v1_config_map_node_config_source_t));
+    v1_config_map_node_config_source_local_var->_library_owned = 1;
     v1_config_map_node_config_source_local_var->kubelet_config_key = kubelet_config_key;
     v1_config_map_node_config_source_local_var->name = name;
     v1_config_map_node_config_source_local_var->_namespace = _namespace;
     v1_config_map_node_config_source_local_var->resource_version = resource_version;
     v1_config_map_node_config_source_local_var->uid = uid;
-
-    v1_config_map_node_config_source_local_var->_library_owned = 1;
     return v1_config_map_node_config_source_local_var;
 }
 
@@ -33,13 +33,16 @@ __attribute__((deprecated)) v1_config_map_node_config_source_t *v1_config_map_no
     char *resource_version,
     char *uid
     ) {
-    return v1_config_map_node_config_source_create_internal (
+    v1_config_map_node_config_source_t *result = v1_config_map_node_config_source_create_internal (
         kubelet_config_key,
         name,
         _namespace,
         resource_version,
         uid
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_config_map_node_config_source_free(v1_config_map_node_config_source_t *v1_config_map_node_config_source) {
@@ -131,6 +134,16 @@ v1_config_map_node_config_source_t *v1_config_map_node_config_source_parseFromJS
 
     v1_config_map_node_config_source_t *v1_config_map_node_config_source_local_var = NULL;
 
+    char *kubelet_config_key_local_str = NULL;
+
+    char *name_local_str = NULL;
+
+    char *_namespace_local_str = NULL;
+
+    char *resource_version_local_str = NULL;
+
+    char *uid_local_str = NULL;
+
     // v1_config_map_node_config_source->kubelet_config_key
     cJSON *kubelet_config_key = cJSON_GetObjectItemCaseSensitive(v1_config_map_node_config_sourceJSON, "kubeletConfigKey");
     if (cJSON_IsNull(kubelet_config_key)) {
@@ -201,16 +214,46 @@ v1_config_map_node_config_source_t *v1_config_map_node_config_source_parseFromJS
     }
 
 
+    if (kubelet_config_key && !cJSON_IsNull(kubelet_config_key)) kubelet_config_key_local_str = strdup(kubelet_config_key->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (_namespace && !cJSON_IsNull(_namespace)) _namespace_local_str = strdup(_namespace->valuestring);
+    if (resource_version && !cJSON_IsNull(resource_version)) resource_version_local_str = strdup(resource_version->valuestring);
+    if (uid && !cJSON_IsNull(uid)) uid_local_str = strdup(uid->valuestring);
+
     v1_config_map_node_config_source_local_var = v1_config_map_node_config_source_create_internal (
-        strdup(kubelet_config_key->valuestring),
-        strdup(name->valuestring),
-        strdup(_namespace->valuestring),
-        resource_version && !cJSON_IsNull(resource_version) ? strdup(resource_version->valuestring) : NULL,
-        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL
+        kubelet_config_key_local_str,
+        name_local_str,
+        _namespace_local_str,
+        resource_version_local_str,
+        uid_local_str
         );
+
+    if (!v1_config_map_node_config_source_local_var) {
+        goto end;
+    }
 
     return v1_config_map_node_config_source_local_var;
 end:
+    if (kubelet_config_key_local_str) {
+        free(kubelet_config_key_local_str);
+        kubelet_config_key_local_str = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (_namespace_local_str) {
+        free(_namespace_local_str);
+        _namespace_local_str = NULL;
+    }
+    if (resource_version_local_str) {
+        free(resource_version_local_str);
+        resource_version_local_str = NULL;
+    }
+    if (uid_local_str) {
+        free(uid_local_str);
+        uid_local_str = NULL;
+    }
     return NULL;
 
 }

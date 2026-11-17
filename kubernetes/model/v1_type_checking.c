@@ -12,18 +12,21 @@ static v1_type_checking_t *v1_type_checking_create_internal(
     if (!v1_type_checking_local_var) {
         return NULL;
     }
-    v1_type_checking_local_var->expression_warnings = expression_warnings;
-
+    memset(v1_type_checking_local_var, 0, sizeof(v1_type_checking_t));
     v1_type_checking_local_var->_library_owned = 1;
+    v1_type_checking_local_var->expression_warnings = expression_warnings;
     return v1_type_checking_local_var;
 }
 
 __attribute__((deprecated)) v1_type_checking_t *v1_type_checking_create(
     list_t *expression_warnings
     ) {
-    return v1_type_checking_create_internal (
+    v1_type_checking_t *result = v1_type_checking_create_internal (
         expression_warnings
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_type_checking_free(v1_type_checking_t *v1_type_checking) {
@@ -107,9 +110,14 @@ v1_type_checking_t *v1_type_checking_parseFromJSON(cJSON *v1_type_checkingJSON){
     }
 
 
+
     v1_type_checking_local_var = v1_type_checking_create_internal (
         expression_warnings ? expression_warningsList : NULL
         );
+
+    if (!v1_type_checking_local_var) {
+        goto end;
+    }
 
     return v1_type_checking_local_var;
 end:

@@ -31,6 +31,7 @@ v1beta1_device_request_allocation_result_t* instantiate_v1beta1_device_request_a
       "0",
       "0",
       "0",
+      list_createList(),
       list_createList()
     );
   } else {
@@ -44,6 +45,7 @@ v1beta1_device_request_allocation_result_t* instantiate_v1beta1_device_request_a
       "0",
       "0",
       "0",
+      list_createList(),
       list_createList()
     );
   }

@@ -6,32 +6,53 @@
 
 
 static v1_endpoint_conditions_t *v1_endpoint_conditions_create_internal(
-    int ready,
-    int serving,
-    int terminating
+    int *ready,
+    int *serving,
+    int *terminating
     ) {
     v1_endpoint_conditions_t *v1_endpoint_conditions_local_var = malloc(sizeof(v1_endpoint_conditions_t));
     if (!v1_endpoint_conditions_local_var) {
         return NULL;
     }
+    memset(v1_endpoint_conditions_local_var, 0, sizeof(v1_endpoint_conditions_t));
+    v1_endpoint_conditions_local_var->_library_owned = 1;
     v1_endpoint_conditions_local_var->ready = ready;
     v1_endpoint_conditions_local_var->serving = serving;
     v1_endpoint_conditions_local_var->terminating = terminating;
-
-    v1_endpoint_conditions_local_var->_library_owned = 1;
     return v1_endpoint_conditions_local_var;
 }
 
 __attribute__((deprecated)) v1_endpoint_conditions_t *v1_endpoint_conditions_create(
-    int ready,
-    int serving,
-    int terminating
+    int *ready,
+    int *serving,
+    int *terminating
     ) {
-    return v1_endpoint_conditions_create_internal (
-        ready,
-        serving,
-        terminating
+    int *ready_copy = NULL;
+    if (ready) {
+        ready_copy = malloc(sizeof(int));
+        if (ready_copy) *ready_copy = *ready;
+    }
+    int *serving_copy = NULL;
+    if (serving) {
+        serving_copy = malloc(sizeof(int));
+        if (serving_copy) *serving_copy = *serving;
+    }
+    int *terminating_copy = NULL;
+    if (terminating) {
+        terminating_copy = malloc(sizeof(int));
+        if (terminating_copy) *terminating_copy = *terminating;
+    }
+    v1_endpoint_conditions_t *result = v1_endpoint_conditions_create_internal (
+        ready_copy,
+        serving_copy,
+        terminating_copy
         );
+    if (!result) {
+        free(ready_copy);
+        free(serving_copy);
+        free(terminating_copy);
+    }
+    return result;
 }
 
 void v1_endpoint_conditions_free(v1_endpoint_conditions_t *v1_endpoint_conditions) {
@@ -43,6 +64,18 @@ void v1_endpoint_conditions_free(v1_endpoint_conditions_t *v1_endpoint_condition
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_endpoint_conditions->ready) {
+        free(v1_endpoint_conditions->ready);
+        v1_endpoint_conditions->ready = NULL;
+    }
+    if (v1_endpoint_conditions->serving) {
+        free(v1_endpoint_conditions->serving);
+        v1_endpoint_conditions->serving = NULL;
+    }
+    if (v1_endpoint_conditions->terminating) {
+        free(v1_endpoint_conditions->terminating);
+        v1_endpoint_conditions->terminating = NULL;
+    }
     free(v1_endpoint_conditions);
 }
 
@@ -51,7 +84,7 @@ cJSON *v1_endpoint_conditions_convertToJSON(v1_endpoint_conditions_t *v1_endpoin
 
     // v1_endpoint_conditions->ready
     if(v1_endpoint_conditions->ready) {
-    if(cJSON_AddBoolToObject(item, "ready", v1_endpoint_conditions->ready) == NULL) {
+    if(cJSON_AddBoolToObject(item, "ready", *v1_endpoint_conditions->ready) == NULL) {
     goto fail; //Bool
     }
     }
@@ -59,7 +92,7 @@ cJSON *v1_endpoint_conditions_convertToJSON(v1_endpoint_conditions_t *v1_endpoin
 
     // v1_endpoint_conditions->serving
     if(v1_endpoint_conditions->serving) {
-    if(cJSON_AddBoolToObject(item, "serving", v1_endpoint_conditions->serving) == NULL) {
+    if(cJSON_AddBoolToObject(item, "serving", *v1_endpoint_conditions->serving) == NULL) {
     goto fail; //Bool
     }
     }
@@ -67,7 +100,7 @@ cJSON *v1_endpoint_conditions_convertToJSON(v1_endpoint_conditions_t *v1_endpoin
 
     // v1_endpoint_conditions->terminating
     if(v1_endpoint_conditions->terminating) {
-    if(cJSON_AddBoolToObject(item, "terminating", v1_endpoint_conditions->terminating) == NULL) {
+    if(cJSON_AddBoolToObject(item, "terminating", *v1_endpoint_conditions->terminating) == NULL) {
     goto fail; //Bool
     }
     }
@@ -84,6 +117,15 @@ v1_endpoint_conditions_t *v1_endpoint_conditions_parseFromJSON(cJSON *v1_endpoin
 
     v1_endpoint_conditions_t *v1_endpoint_conditions_local_var = NULL;
 
+    // define the local variable for v1_endpoint_conditions->ready
+    int *ready_local_var = NULL;
+
+    // define the local variable for v1_endpoint_conditions->serving
+    int *serving_local_var = NULL;
+
+    // define the local variable for v1_endpoint_conditions->terminating
+    int *terminating_local_var = NULL;
+
     // v1_endpoint_conditions->ready
     cJSON *ready = cJSON_GetObjectItemCaseSensitive(v1_endpoint_conditionsJSON, "ready");
     if (cJSON_IsNull(ready)) {
@@ -94,6 +136,12 @@ v1_endpoint_conditions_t *v1_endpoint_conditions_parseFromJSON(cJSON *v1_endpoin
     {
     goto end; //Bool
     }
+    ready_local_var = malloc(sizeof(int));
+    if(!ready_local_var)
+    {
+        goto end;
+    }
+    *ready_local_var = ready->valueint;
     }
 
     // v1_endpoint_conditions->serving
@@ -106,6 +154,12 @@ v1_endpoint_conditions_t *v1_endpoint_conditions_parseFromJSON(cJSON *v1_endpoin
     {
     goto end; //Bool
     }
+    serving_local_var = malloc(sizeof(int));
+    if(!serving_local_var)
+    {
+        goto end;
+    }
+    *serving_local_var = serving->valueint;
     }
 
     // v1_endpoint_conditions->terminating
@@ -118,17 +172,40 @@ v1_endpoint_conditions_t *v1_endpoint_conditions_parseFromJSON(cJSON *v1_endpoin
     {
     goto end; //Bool
     }
+    terminating_local_var = malloc(sizeof(int));
+    if(!terminating_local_var)
+    {
+        goto end;
+    }
+    *terminating_local_var = terminating->valueint;
     }
 
 
+
     v1_endpoint_conditions_local_var = v1_endpoint_conditions_create_internal (
-        ready ? ready->valueint : 0,
-        serving ? serving->valueint : 0,
-        terminating ? terminating->valueint : 0
+        ready_local_var,
+        serving_local_var,
+        terminating_local_var
         );
+
+    if (!v1_endpoint_conditions_local_var) {
+        goto end;
+    }
 
     return v1_endpoint_conditions_local_var;
 end:
+    if (ready_local_var) {
+        free(ready_local_var);
+        ready_local_var = NULL;
+    }
+    if (serving_local_var) {
+        free(serving_local_var);
+        serving_local_var = NULL;
+    }
+    if (terminating_local_var) {
+        free(terminating_local_var);
+        terminating_local_var = NULL;
+    }
     return NULL;
 
 }

@@ -7,7 +7,7 @@
 
 static v1_status_t *v1_status_create_internal(
     char *api_version,
-    int code,
+    int *code,
     v1_status_details_t *details,
     char *kind,
     char *message,
@@ -19,6 +19,8 @@ static v1_status_t *v1_status_create_internal(
     if (!v1_status_local_var) {
         return NULL;
     }
+    memset(v1_status_local_var, 0, sizeof(v1_status_t));
+    v1_status_local_var->_library_owned = 1;
     v1_status_local_var->api_version = api_version;
     v1_status_local_var->code = code;
     v1_status_local_var->details = details;
@@ -27,14 +29,12 @@ static v1_status_t *v1_status_create_internal(
     v1_status_local_var->metadata = metadata;
     v1_status_local_var->reason = reason;
     v1_status_local_var->status = status;
-
-    v1_status_local_var->_library_owned = 1;
     return v1_status_local_var;
 }
 
 __attribute__((deprecated)) v1_status_t *v1_status_create(
     char *api_version,
-    int code,
+    int *code,
     v1_status_details_t *details,
     char *kind,
     char *message,
@@ -42,9 +42,14 @@ __attribute__((deprecated)) v1_status_t *v1_status_create(
     char *reason,
     char *status
     ) {
-    return v1_status_create_internal (
+    int *code_copy = NULL;
+    if (code) {
+        code_copy = malloc(sizeof(int));
+        if (code_copy) *code_copy = *code;
+    }
+    v1_status_t *result = v1_status_create_internal (
         api_version,
-        code,
+        code_copy,
         details,
         kind,
         message,
@@ -52,6 +57,10 @@ __attribute__((deprecated)) v1_status_t *v1_status_create(
         reason,
         status
         );
+    if (!result) {
+        free(code_copy);
+    }
+    return result;
 }
 
 void v1_status_free(v1_status_t *v1_status) {
@@ -66,6 +75,10 @@ void v1_status_free(v1_status_t *v1_status) {
     if (v1_status->api_version) {
         free(v1_status->api_version);
         v1_status->api_version = NULL;
+    }
+    if (v1_status->code) {
+        free(v1_status->code);
+        v1_status->code = NULL;
     }
     if (v1_status->details) {
         v1_status_details_free(v1_status->details);
@@ -107,7 +120,7 @@ cJSON *v1_status_convertToJSON(v1_status_t *v1_status) {
 
     // v1_status->code
     if(v1_status->code) {
-    if(cJSON_AddNumberToObject(item, "code", v1_status->code) == NULL) {
+    if(cJSON_AddNumberToObject(item, "code", *v1_status->code) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -182,11 +195,24 @@ v1_status_t *v1_status_parseFromJSON(cJSON *v1_statusJSON){
 
     v1_status_t *v1_status_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
+    // define the local variable for v1_status->code
+    int *code_local_var = NULL;
+
     // define the local variable for v1_status->details
     v1_status_details_t *details_local_nonprim = NULL;
 
+    char *kind_local_str = NULL;
+
+    char *message_local_str = NULL;
+
     // define the local variable for v1_status->metadata
     v1_list_meta_t *metadata_local_nonprim = NULL;
+
+    char *reason_local_str = NULL;
+
+    char *status_local_str = NULL;
 
     // v1_status->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_statusJSON, "apiVersion");
@@ -210,6 +236,12 @@ v1_status_t *v1_status_parseFromJSON(cJSON *v1_statusJSON){
     {
     goto end; //Numeric
     }
+    code_local_var = malloc(sizeof(int));
+    if(!code_local_var)
+    {
+        goto end;
+    }
+    *code_local_var = code->valuedouble;
     }
 
     // v1_status->details
@@ -279,26 +311,60 @@ v1_status_t *v1_status_parseFromJSON(cJSON *v1_statusJSON){
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+    if (message && !cJSON_IsNull(message)) message_local_str = strdup(message->valuestring);
+    if (reason && !cJSON_IsNull(reason)) reason_local_str = strdup(reason->valuestring);
+    if (status && !cJSON_IsNull(status)) status_local_str = strdup(status->valuestring);
+
     v1_status_local_var = v1_status_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        code ? code->valuedouble : 0,
+        api_version_local_str,
+        code_local_var,
         details ? details_local_nonprim : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
+        kind_local_str,
+        message_local_str,
         metadata ? metadata_local_nonprim : NULL,
-        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
-        status && !cJSON_IsNull(status) ? strdup(status->valuestring) : NULL
+        reason_local_str,
+        status_local_str
         );
+
+    if (!v1_status_local_var) {
+        goto end;
+    }
 
     return v1_status_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (code_local_var) {
+        free(code_local_var);
+        code_local_var = NULL;
+    }
     if (details_local_nonprim) {
         v1_status_details_free(details_local_nonprim);
         details_local_nonprim = NULL;
     }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
+    if (message_local_str) {
+        free(message_local_str);
+        message_local_str = NULL;
+    }
     if (metadata_local_nonprim) {
         v1_list_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;
+    }
+    if (reason_local_str) {
+        free(reason_local_str);
+        reason_local_str = NULL;
+    }
+    if (status_local_str) {
+        free(status_local_str);
+        status_local_str = NULL;
     }
     return NULL;
 

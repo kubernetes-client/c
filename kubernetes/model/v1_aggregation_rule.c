@@ -12,18 +12,21 @@ static v1_aggregation_rule_t *v1_aggregation_rule_create_internal(
     if (!v1_aggregation_rule_local_var) {
         return NULL;
     }
-    v1_aggregation_rule_local_var->cluster_role_selectors = cluster_role_selectors;
-
+    memset(v1_aggregation_rule_local_var, 0, sizeof(v1_aggregation_rule_t));
     v1_aggregation_rule_local_var->_library_owned = 1;
+    v1_aggregation_rule_local_var->cluster_role_selectors = cluster_role_selectors;
     return v1_aggregation_rule_local_var;
 }
 
 __attribute__((deprecated)) v1_aggregation_rule_t *v1_aggregation_rule_create(
     list_t *cluster_role_selectors
     ) {
-    return v1_aggregation_rule_create_internal (
+    v1_aggregation_rule_t *result = v1_aggregation_rule_create_internal (
         cluster_role_selectors
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_aggregation_rule_free(v1_aggregation_rule_t *v1_aggregation_rule) {
@@ -107,9 +110,14 @@ v1_aggregation_rule_t *v1_aggregation_rule_parseFromJSON(cJSON *v1_aggregation_r
     }
 
 
+
     v1_aggregation_rule_local_var = v1_aggregation_rule_create_internal (
         cluster_role_selectors ? cluster_role_selectorsList : NULL
         );
+
+    if (!v1_aggregation_rule_local_var) {
+        goto end;
+    }
 
     return v1_aggregation_rule_local_var;
 end:

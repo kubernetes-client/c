@@ -21,32 +21,32 @@ typedef struct v1_job_status_t v1_job_status_t;
 
 
 typedef struct v1_job_status_t {
-    int active; //numeric
+    int *active; //numeric
     char *completed_indexes; // string
     char *completion_time; //date time
     list_t *conditions; //nonprimitive container
-    int failed; //numeric
+    int *failed; //numeric
     char *failed_indexes; // string
-    int ready; //numeric
+    int *ready; //numeric
     char *start_time; //date time
-    int succeeded; //numeric
-    int terminating; //numeric
+    int *succeeded; //numeric
+    int *terminating; //numeric
     struct v1_uncounted_terminated_pods_t *uncounted_terminated_pods; //model
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_job_status_t;
 
 __attribute__((deprecated)) v1_job_status_t *v1_job_status_create(
-    int active,
+    int *active,
     char *completed_indexes,
     char *completion_time,
     list_t *conditions,
-    int failed,
+    int *failed,
     char *failed_indexes,
-    int ready,
+    int *ready,
     char *start_time,
-    int succeeded,
-    int terminating,
+    int *succeeded,
+    int *terminating,
     v1_uncounted_terminated_pods_t *uncounted_terminated_pods
 );
 

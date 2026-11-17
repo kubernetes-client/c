@@ -14,11 +14,11 @@ static v1beta1_allocation_result_t *v1beta1_allocation_result_create_internal(
     if (!v1beta1_allocation_result_local_var) {
         return NULL;
     }
+    memset(v1beta1_allocation_result_local_var, 0, sizeof(v1beta1_allocation_result_t));
+    v1beta1_allocation_result_local_var->_library_owned = 1;
     v1beta1_allocation_result_local_var->allocation_timestamp = allocation_timestamp;
     v1beta1_allocation_result_local_var->devices = devices;
     v1beta1_allocation_result_local_var->node_selector = node_selector;
-
-    v1beta1_allocation_result_local_var->_library_owned = 1;
     return v1beta1_allocation_result_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1beta1_allocation_result_t *v1beta1_allocation_resu
     v1beta1_device_allocation_result_t *devices,
     v1_node_selector_t *node_selector
     ) {
-    return v1beta1_allocation_result_create_internal (
+    v1beta1_allocation_result_t *result = v1beta1_allocation_result_create_internal (
         allocation_timestamp,
         devices,
         node_selector
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1beta1_allocation_result_free(v1beta1_allocation_result_t *v1beta1_allocation_result) {
@@ -106,6 +109,8 @@ v1beta1_allocation_result_t *v1beta1_allocation_result_parseFromJSON(cJSON *v1be
 
     v1beta1_allocation_result_t *v1beta1_allocation_result_local_var = NULL;
 
+    char *allocation_timestamp_local_str = NULL;
+
     // define the local variable for v1beta1_allocation_result->devices
     v1beta1_device_allocation_result_t *devices_local_nonprim = NULL;
 
@@ -143,14 +148,24 @@ v1beta1_allocation_result_t *v1beta1_allocation_result_parseFromJSON(cJSON *v1be
     }
 
 
+    if (allocation_timestamp && !cJSON_IsNull(allocation_timestamp)) allocation_timestamp_local_str = strdup(allocation_timestamp->valuestring);
+
     v1beta1_allocation_result_local_var = v1beta1_allocation_result_create_internal (
-        allocation_timestamp && !cJSON_IsNull(allocation_timestamp) ? strdup(allocation_timestamp->valuestring) : NULL,
+        allocation_timestamp_local_str,
         devices ? devices_local_nonprim : NULL,
         node_selector ? node_selector_local_nonprim : NULL
         );
 
+    if (!v1beta1_allocation_result_local_var) {
+        goto end;
+    }
+
     return v1beta1_allocation_result_local_var;
 end:
+    if (allocation_timestamp_local_str) {
+        free(allocation_timestamp_local_str);
+        allocation_timestamp_local_str = NULL;
+    }
     if (devices_local_nonprim) {
         v1beta1_device_allocation_result_free(devices_local_nonprim);
         devices_local_nonprim = NULL;

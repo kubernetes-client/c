@@ -14,11 +14,11 @@ static v1_endpoint_subset_t *v1_endpoint_subset_create_internal(
     if (!v1_endpoint_subset_local_var) {
         return NULL;
     }
+    memset(v1_endpoint_subset_local_var, 0, sizeof(v1_endpoint_subset_t));
+    v1_endpoint_subset_local_var->_library_owned = 1;
     v1_endpoint_subset_local_var->addresses = addresses;
     v1_endpoint_subset_local_var->not_ready_addresses = not_ready_addresses;
     v1_endpoint_subset_local_var->ports = ports;
-
-    v1_endpoint_subset_local_var->_library_owned = 1;
     return v1_endpoint_subset_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_endpoint_subset_t *v1_endpoint_subset_create(
     list_t *not_ready_addresses,
     list_t *ports
     ) {
-    return v1_endpoint_subset_create_internal (
+    v1_endpoint_subset_t *result = v1_endpoint_subset_create_internal (
         addresses,
         not_ready_addresses,
         ports
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_endpoint_subset_free(v1_endpoint_subset_t *v1_endpoint_subset) {
@@ -223,11 +226,16 @@ v1_endpoint_subset_t *v1_endpoint_subset_parseFromJSON(cJSON *v1_endpoint_subset
     }
 
 
+
     v1_endpoint_subset_local_var = v1_endpoint_subset_create_internal (
         addresses ? addressesList : NULL,
         not_ready_addresses ? not_ready_addressesList : NULL,
         ports ? portsList : NULL
         );
+
+    if (!v1_endpoint_subset_local_var) {
+        goto end;
+    }
 
     return v1_endpoint_subset_local_var;
 end:

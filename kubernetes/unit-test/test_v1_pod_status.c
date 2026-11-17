@@ -17,6 +17,7 @@
 v1_pod_status_t* instantiate_v1_pod_status(int include_optional);
 
 #include "test_v1_pod_extended_resource_claim_status.c"
+#include "test_v1_resource_requirements.c"
 
 
 v1_pod_status_t* instantiate_v1_pod_status(int include_optional) {
@@ -26,12 +27,14 @@ v1_pod_status_t* instantiate_v1_pod_status(int include_optional) {
       list_createList(),
       list_createList(),
       list_createList(),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_pod_extended_resource_claim_status(0),
       "0",
       list_createList(),
       list_createList(),
       "0",
+      list_createList(),
       "0",
       56,
       "0",
@@ -41,10 +44,14 @@ v1_pod_status_t* instantiate_v1_pod_status(int include_optional) {
       "0",
       "0",
       list_createList(),
-      "2013-10-20T19:20:30+01:00"
+       // false, not to have infinite recursion
+      instantiate_v1_resource_requirements(0),
+      "2013-10-20T19:20:30+01:00",
+      list_createList()
     );
   } else {
     v1_pod_status = v1_pod_status_create(
+      list_createList(),
       list_createList(),
       list_createList(),
       list_createList(),
@@ -53,6 +60,7 @@ v1_pod_status_t* instantiate_v1_pod_status(int include_optional) {
       list_createList(),
       list_createList(),
       "0",
+      list_createList(),
       "0",
       56,
       "0",
@@ -62,7 +70,9 @@ v1_pod_status_t* instantiate_v1_pod_status(int include_optional) {
       "0",
       "0",
       list_createList(),
-      "2013-10-20T19:20:30+01:00"
+      NULL,
+      "2013-10-20T19:20:30+01:00",
+      list_createList()
     );
   }
 

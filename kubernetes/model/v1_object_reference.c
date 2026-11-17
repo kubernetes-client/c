@@ -18,6 +18,8 @@ static v1_object_reference_t *v1_object_reference_create_internal(
     if (!v1_object_reference_local_var) {
         return NULL;
     }
+    memset(v1_object_reference_local_var, 0, sizeof(v1_object_reference_t));
+    v1_object_reference_local_var->_library_owned = 1;
     v1_object_reference_local_var->api_version = api_version;
     v1_object_reference_local_var->field_path = field_path;
     v1_object_reference_local_var->kind = kind;
@@ -25,8 +27,6 @@ static v1_object_reference_t *v1_object_reference_create_internal(
     v1_object_reference_local_var->_namespace = _namespace;
     v1_object_reference_local_var->resource_version = resource_version;
     v1_object_reference_local_var->uid = uid;
-
-    v1_object_reference_local_var->_library_owned = 1;
     return v1_object_reference_local_var;
 }
 
@@ -39,7 +39,7 @@ __attribute__((deprecated)) v1_object_reference_t *v1_object_reference_create(
     char *resource_version,
     char *uid
     ) {
-    return v1_object_reference_create_internal (
+    v1_object_reference_t *result = v1_object_reference_create_internal (
         api_version,
         field_path,
         kind,
@@ -48,6 +48,9 @@ __attribute__((deprecated)) v1_object_reference_t *v1_object_reference_create(
         resource_version,
         uid
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_object_reference_free(v1_object_reference_t *v1_object_reference) {
@@ -160,6 +163,20 @@ v1_object_reference_t *v1_object_reference_parseFromJSON(cJSON *v1_object_refere
 
     v1_object_reference_t *v1_object_reference_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
+    char *field_path_local_str = NULL;
+
+    char *kind_local_str = NULL;
+
+    char *name_local_str = NULL;
+
+    char *_namespace_local_str = NULL;
+
+    char *resource_version_local_str = NULL;
+
+    char *uid_local_str = NULL;
+
     // v1_object_reference->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_object_referenceJSON, "apiVersion");
     if (cJSON_IsNull(api_version)) {
@@ -245,18 +262,58 @@ v1_object_reference_t *v1_object_reference_parseFromJSON(cJSON *v1_object_refere
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (field_path && !cJSON_IsNull(field_path)) field_path_local_str = strdup(field_path->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (_namespace && !cJSON_IsNull(_namespace)) _namespace_local_str = strdup(_namespace->valuestring);
+    if (resource_version && !cJSON_IsNull(resource_version)) resource_version_local_str = strdup(resource_version->valuestring);
+    if (uid && !cJSON_IsNull(uid)) uid_local_str = strdup(uid->valuestring);
+
     v1_object_reference_local_var = v1_object_reference_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        field_path && !cJSON_IsNull(field_path) ? strdup(field_path->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
-        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
-        resource_version && !cJSON_IsNull(resource_version) ? strdup(resource_version->valuestring) : NULL,
-        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL
+        api_version_local_str,
+        field_path_local_str,
+        kind_local_str,
+        name_local_str,
+        _namespace_local_str,
+        resource_version_local_str,
+        uid_local_str
         );
+
+    if (!v1_object_reference_local_var) {
+        goto end;
+    }
 
     return v1_object_reference_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (field_path_local_str) {
+        free(field_path_local_str);
+        field_path_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (_namespace_local_str) {
+        free(_namespace_local_str);
+        _namespace_local_str = NULL;
+    }
+    if (resource_version_local_str) {
+        free(resource_version_local_str);
+        resource_version_local_str = NULL;
+    }
+    if (uid_local_str) {
+        free(uid_local_str);
+        uid_local_str = NULL;
+    }
     return NULL;
 
 }

@@ -6,14 +6,15 @@
 
 
 static v1beta1_basic_device_t *v1beta1_basic_device_create_internal(
-    int all_nodes,
-    int allow_multiple_allocations,
+    int *all_nodes,
+    int *allow_multiple_allocations,
     list_t* attributes,
     list_t *binding_conditions,
     list_t *binding_failure_conditions,
-    int binds_to_node,
+    int *binds_to_node,
     list_t* capacity,
     list_t *consumes_counters,
+    list_t* node_allocatable_resources,
     char *node_name,
     v1_node_selector_t *node_selector,
     list_t *taints
@@ -22,6 +23,8 @@ static v1beta1_basic_device_t *v1beta1_basic_device_create_internal(
     if (!v1beta1_basic_device_local_var) {
         return NULL;
     }
+    memset(v1beta1_basic_device_local_var, 0, sizeof(v1beta1_basic_device_t));
+    v1beta1_basic_device_local_var->_library_owned = 1;
     v1beta1_basic_device_local_var->all_nodes = all_nodes;
     v1beta1_basic_device_local_var->allow_multiple_allocations = allow_multiple_allocations;
     v1beta1_basic_device_local_var->attributes = attributes;
@@ -30,40 +33,62 @@ static v1beta1_basic_device_t *v1beta1_basic_device_create_internal(
     v1beta1_basic_device_local_var->binds_to_node = binds_to_node;
     v1beta1_basic_device_local_var->capacity = capacity;
     v1beta1_basic_device_local_var->consumes_counters = consumes_counters;
+    v1beta1_basic_device_local_var->node_allocatable_resources = node_allocatable_resources;
     v1beta1_basic_device_local_var->node_name = node_name;
     v1beta1_basic_device_local_var->node_selector = node_selector;
     v1beta1_basic_device_local_var->taints = taints;
-
-    v1beta1_basic_device_local_var->_library_owned = 1;
     return v1beta1_basic_device_local_var;
 }
 
 __attribute__((deprecated)) v1beta1_basic_device_t *v1beta1_basic_device_create(
-    int all_nodes,
-    int allow_multiple_allocations,
+    int *all_nodes,
+    int *allow_multiple_allocations,
     list_t* attributes,
     list_t *binding_conditions,
     list_t *binding_failure_conditions,
-    int binds_to_node,
+    int *binds_to_node,
     list_t* capacity,
     list_t *consumes_counters,
+    list_t* node_allocatable_resources,
     char *node_name,
     v1_node_selector_t *node_selector,
     list_t *taints
     ) {
-    return v1beta1_basic_device_create_internal (
-        all_nodes,
-        allow_multiple_allocations,
+    int *all_nodes_copy = NULL;
+    if (all_nodes) {
+        all_nodes_copy = malloc(sizeof(int));
+        if (all_nodes_copy) *all_nodes_copy = *all_nodes;
+    }
+    int *allow_multiple_allocations_copy = NULL;
+    if (allow_multiple_allocations) {
+        allow_multiple_allocations_copy = malloc(sizeof(int));
+        if (allow_multiple_allocations_copy) *allow_multiple_allocations_copy = *allow_multiple_allocations;
+    }
+    int *binds_to_node_copy = NULL;
+    if (binds_to_node) {
+        binds_to_node_copy = malloc(sizeof(int));
+        if (binds_to_node_copy) *binds_to_node_copy = *binds_to_node;
+    }
+    v1beta1_basic_device_t *result = v1beta1_basic_device_create_internal (
+        all_nodes_copy,
+        allow_multiple_allocations_copy,
         attributes,
         binding_conditions,
         binding_failure_conditions,
-        binds_to_node,
+        binds_to_node_copy,
         capacity,
         consumes_counters,
+        node_allocatable_resources,
         node_name,
         node_selector,
         taints
         );
+    if (!result) {
+        free(all_nodes_copy);
+        free(allow_multiple_allocations_copy);
+        free(binds_to_node_copy);
+    }
+    return result;
 }
 
 void v1beta1_basic_device_free(v1beta1_basic_device_t *v1beta1_basic_device) {
@@ -75,6 +100,14 @@ void v1beta1_basic_device_free(v1beta1_basic_device_t *v1beta1_basic_device) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1beta1_basic_device->all_nodes) {
+        free(v1beta1_basic_device->all_nodes);
+        v1beta1_basic_device->all_nodes = NULL;
+    }
+    if (v1beta1_basic_device->allow_multiple_allocations) {
+        free(v1beta1_basic_device->allow_multiple_allocations);
+        v1beta1_basic_device->allow_multiple_allocations = NULL;
+    }
     if (v1beta1_basic_device->attributes) {
         list_ForEach(listEntry, v1beta1_basic_device->attributes) {
             keyValuePair_t *localKeyValue = listEntry->data;
@@ -99,6 +132,10 @@ void v1beta1_basic_device_free(v1beta1_basic_device_t *v1beta1_basic_device) {
         list_freeList(v1beta1_basic_device->binding_failure_conditions);
         v1beta1_basic_device->binding_failure_conditions = NULL;
     }
+    if (v1beta1_basic_device->binds_to_node) {
+        free(v1beta1_basic_device->binds_to_node);
+        v1beta1_basic_device->binds_to_node = NULL;
+    }
     if (v1beta1_basic_device->capacity) {
         list_ForEach(listEntry, v1beta1_basic_device->capacity) {
             keyValuePair_t *localKeyValue = listEntry->data;
@@ -115,6 +152,16 @@ void v1beta1_basic_device_free(v1beta1_basic_device_t *v1beta1_basic_device) {
         }
         list_freeList(v1beta1_basic_device->consumes_counters);
         v1beta1_basic_device->consumes_counters = NULL;
+    }
+    if (v1beta1_basic_device->node_allocatable_resources) {
+        list_ForEach(listEntry, v1beta1_basic_device->node_allocatable_resources) {
+            keyValuePair_t *localKeyValue = listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_freeList(v1beta1_basic_device->node_allocatable_resources);
+        v1beta1_basic_device->node_allocatable_resources = NULL;
     }
     if (v1beta1_basic_device->node_name) {
         free(v1beta1_basic_device->node_name);
@@ -139,7 +186,7 @@ cJSON *v1beta1_basic_device_convertToJSON(v1beta1_basic_device_t *v1beta1_basic_
 
     // v1beta1_basic_device->all_nodes
     if(v1beta1_basic_device->all_nodes) {
-    if(cJSON_AddBoolToObject(item, "allNodes", v1beta1_basic_device->all_nodes) == NULL) {
+    if(cJSON_AddBoolToObject(item, "allNodes", *v1beta1_basic_device->all_nodes) == NULL) {
     goto fail; //Bool
     }
     }
@@ -147,7 +194,7 @@ cJSON *v1beta1_basic_device_convertToJSON(v1beta1_basic_device_t *v1beta1_basic_
 
     // v1beta1_basic_device->allow_multiple_allocations
     if(v1beta1_basic_device->allow_multiple_allocations) {
-    if(cJSON_AddBoolToObject(item, "allowMultipleAllocations", v1beta1_basic_device->allow_multiple_allocations) == NULL) {
+    if(cJSON_AddBoolToObject(item, "allowMultipleAllocations", *v1beta1_basic_device->allow_multiple_allocations) == NULL) {
     goto fail; //Bool
     }
     }
@@ -205,7 +252,7 @@ cJSON *v1beta1_basic_device_convertToJSON(v1beta1_basic_device_t *v1beta1_basic_
 
     // v1beta1_basic_device->binds_to_node
     if(v1beta1_basic_device->binds_to_node) {
-    if(cJSON_AddBoolToObject(item, "bindsToNode", v1beta1_basic_device->binds_to_node) == NULL) {
+    if(cJSON_AddBoolToObject(item, "bindsToNode", *v1beta1_basic_device->binds_to_node) == NULL) {
     goto fail; //Bool
     }
     }
@@ -242,6 +289,22 @@ cJSON *v1beta1_basic_device_convertToJSON(v1beta1_basic_device_t *v1beta1_basic_
     goto fail;
     }
     cJSON_AddItemToArray(consumes_counters, itemLocal);
+    }
+    }
+    }
+
+
+    // v1beta1_basic_device->node_allocatable_resources
+    if(v1beta1_basic_device->node_allocatable_resources) {
+    cJSON *node_allocatable_resources = cJSON_AddObjectToObject(item, "nodeAllocatableResources");
+    if(node_allocatable_resources == NULL) {
+        goto fail; //primitive map container
+    }
+    cJSON *localMapObject = node_allocatable_resources;
+    listEntry_t *node_allocatable_resourcesListEntry;
+    if (v1beta1_basic_device->node_allocatable_resources) {
+    list_ForEach(node_allocatable_resourcesListEntry, v1beta1_basic_device->node_allocatable_resources) {
+        keyValuePair_t *localKeyValue = node_allocatable_resourcesListEntry->data;
     }
     }
     }
@@ -299,6 +362,12 @@ v1beta1_basic_device_t *v1beta1_basic_device_parseFromJSON(cJSON *v1beta1_basic_
 
     v1beta1_basic_device_t *v1beta1_basic_device_local_var = NULL;
 
+    // define the local variable for v1beta1_basic_device->all_nodes
+    int *all_nodes_local_var = NULL;
+
+    // define the local variable for v1beta1_basic_device->allow_multiple_allocations
+    int *allow_multiple_allocations_local_var = NULL;
+
     // define the local map for v1beta1_basic_device->attributes
     list_t *attributesList = NULL;
 
@@ -308,11 +377,19 @@ v1beta1_basic_device_t *v1beta1_basic_device_parseFromJSON(cJSON *v1beta1_basic_
     // define the local list for v1beta1_basic_device->binding_failure_conditions
     list_t *binding_failure_conditionsList = NULL;
 
+    // define the local variable for v1beta1_basic_device->binds_to_node
+    int *binds_to_node_local_var = NULL;
+
     // define the local map for v1beta1_basic_device->capacity
     list_t *capacityList = NULL;
 
     // define the local list for v1beta1_basic_device->consumes_counters
     list_t *consumes_countersList = NULL;
+
+    // define the local map for v1beta1_basic_device->node_allocatable_resources
+    list_t *node_allocatable_resourcesList = NULL;
+
+    char *node_name_local_str = NULL;
 
     // define the local variable for v1beta1_basic_device->node_selector
     v1_node_selector_t *node_selector_local_nonprim = NULL;
@@ -330,6 +407,12 @@ v1beta1_basic_device_t *v1beta1_basic_device_parseFromJSON(cJSON *v1beta1_basic_
     {
     goto end; //Bool
     }
+    all_nodes_local_var = malloc(sizeof(int));
+    if(!all_nodes_local_var)
+    {
+        goto end;
+    }
+    *all_nodes_local_var = all_nodes->valueint;
     }
 
     // v1beta1_basic_device->allow_multiple_allocations
@@ -342,6 +425,12 @@ v1beta1_basic_device_t *v1beta1_basic_device_parseFromJSON(cJSON *v1beta1_basic_
     {
     goto end; //Bool
     }
+    allow_multiple_allocations_local_var = malloc(sizeof(int));
+    if(!allow_multiple_allocations_local_var)
+    {
+        goto end;
+    }
+    *allow_multiple_allocations_local_var = allow_multiple_allocations->valueint;
     }
 
     // v1beta1_basic_device->attributes
@@ -409,6 +498,12 @@ v1beta1_basic_device_t *v1beta1_basic_device_parseFromJSON(cJSON *v1beta1_basic_
     {
     goto end; //Bool
     }
+    binds_to_node_local_var = malloc(sizeof(int));
+    if(!binds_to_node_local_var)
+    {
+        goto end;
+    }
+    *binds_to_node_local_var = binds_to_node->valueint;
     }
 
     // v1beta1_basic_device->capacity
@@ -444,6 +539,17 @@ v1beta1_basic_device_t *v1beta1_basic_device_parseFromJSON(cJSON *v1beta1_basic_
 
         list_addElement(consumes_countersList, consumes_countersItem);
     }
+    }
+
+    // v1beta1_basic_device->node_allocatable_resources
+    cJSON *node_allocatable_resources = cJSON_GetObjectItemCaseSensitive(v1beta1_basic_deviceJSON, "nodeAllocatableResources");
+    if (cJSON_IsNull(node_allocatable_resources)) {
+        node_allocatable_resources = NULL;
+    }
+    if (node_allocatable_resources) { 
+
+    // The data type of the elements in v1beta1_basic_device->node_allocatable_resources is currently not supported.
+
     }
 
     // v1beta1_basic_device->node_name
@@ -492,22 +598,37 @@ v1beta1_basic_device_t *v1beta1_basic_device_parseFromJSON(cJSON *v1beta1_basic_
     }
 
 
+    if (node_name && !cJSON_IsNull(node_name)) node_name_local_str = strdup(node_name->valuestring);
+
     v1beta1_basic_device_local_var = v1beta1_basic_device_create_internal (
-        all_nodes ? all_nodes->valueint : 0,
-        allow_multiple_allocations ? allow_multiple_allocations->valueint : 0,
+        all_nodes_local_var,
+        allow_multiple_allocations_local_var,
         attributes ? attributesList : NULL,
         binding_conditions ? binding_conditionsList : NULL,
         binding_failure_conditions ? binding_failure_conditionsList : NULL,
-        binds_to_node ? binds_to_node->valueint : 0,
+        binds_to_node_local_var,
         capacity ? capacityList : NULL,
         consumes_counters ? consumes_countersList : NULL,
-        node_name && !cJSON_IsNull(node_name) ? strdup(node_name->valuestring) : NULL,
+        node_allocatable_resources ? node_allocatable_resourcesList : NULL,
+        node_name_local_str,
         node_selector ? node_selector_local_nonprim : NULL,
         taints ? taintsList : NULL
         );
 
+    if (!v1beta1_basic_device_local_var) {
+        goto end;
+    }
+
     return v1beta1_basic_device_local_var;
 end:
+    if (all_nodes_local_var) {
+        free(all_nodes_local_var);
+        all_nodes_local_var = NULL;
+    }
+    if (allow_multiple_allocations_local_var) {
+        free(allow_multiple_allocations_local_var);
+        allow_multiple_allocations_local_var = NULL;
+    }
 
     // The data type of the elements in v1beta1_basic_device->attributes is currently not supported.
 
@@ -529,6 +650,10 @@ end:
         list_freeList(binding_failure_conditionsList);
         binding_failure_conditionsList = NULL;
     }
+    if (binds_to_node_local_var) {
+        free(binds_to_node_local_var);
+        binds_to_node_local_var = NULL;
+    }
 
     // The data type of the elements in v1beta1_basic_device->capacity is currently not supported.
 
@@ -540,6 +665,13 @@ end:
         }
         list_freeList(consumes_countersList);
         consumes_countersList = NULL;
+    }
+
+    // The data type of the elements in v1beta1_basic_device->node_allocatable_resources is currently not supported.
+
+    if (node_name_local_str) {
+        free(node_name_local_str);
+        node_name_local_str = NULL;
     }
     if (node_selector_local_nonprim) {
         v1_node_selector_free(node_selector_local_nonprim);

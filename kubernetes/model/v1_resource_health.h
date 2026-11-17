@@ -20,6 +20,7 @@ typedef struct v1_resource_health_t v1_resource_health_t;
 
 typedef struct v1_resource_health_t {
     char *health; // string
+    char *message; // string
     char *resource_id; // string
 
     int _library_owned; // Is the library responsible for freeing this object?
@@ -27,6 +28,7 @@ typedef struct v1_resource_health_t {
 
 __attribute__((deprecated)) v1_resource_health_t *v1_resource_health_create(
     char *health,
+    char *message,
     char *resource_id
 );
 

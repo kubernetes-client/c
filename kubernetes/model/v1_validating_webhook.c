@@ -16,12 +16,14 @@ static v1_validating_webhook_t *v1_validating_webhook_create_internal(
     v1_label_selector_t *object_selector,
     list_t *rules,
     char *side_effects,
-    int timeout_seconds
+    int *timeout_seconds
     ) {
     v1_validating_webhook_t *v1_validating_webhook_local_var = malloc(sizeof(v1_validating_webhook_t));
     if (!v1_validating_webhook_local_var) {
         return NULL;
     }
+    memset(v1_validating_webhook_local_var, 0, sizeof(v1_validating_webhook_t));
+    v1_validating_webhook_local_var->_library_owned = 1;
     v1_validating_webhook_local_var->admission_review_versions = admission_review_versions;
     v1_validating_webhook_local_var->client_config = client_config;
     v1_validating_webhook_local_var->failure_policy = failure_policy;
@@ -33,8 +35,6 @@ static v1_validating_webhook_t *v1_validating_webhook_create_internal(
     v1_validating_webhook_local_var->rules = rules;
     v1_validating_webhook_local_var->side_effects = side_effects;
     v1_validating_webhook_local_var->timeout_seconds = timeout_seconds;
-
-    v1_validating_webhook_local_var->_library_owned = 1;
     return v1_validating_webhook_local_var;
 }
 
@@ -49,9 +49,14 @@ __attribute__((deprecated)) v1_validating_webhook_t *v1_validating_webhook_creat
     v1_label_selector_t *object_selector,
     list_t *rules,
     char *side_effects,
-    int timeout_seconds
+    int *timeout_seconds
     ) {
-    return v1_validating_webhook_create_internal (
+    int *timeout_seconds_copy = NULL;
+    if (timeout_seconds) {
+        timeout_seconds_copy = malloc(sizeof(int));
+        if (timeout_seconds_copy) *timeout_seconds_copy = *timeout_seconds;
+    }
+    v1_validating_webhook_t *result = v1_validating_webhook_create_internal (
         admission_review_versions,
         client_config,
         failure_policy,
@@ -62,8 +67,12 @@ __attribute__((deprecated)) v1_validating_webhook_t *v1_validating_webhook_creat
         object_selector,
         rules,
         side_effects,
-        timeout_seconds
+        timeout_seconds_copy
         );
+    if (!result) {
+        free(timeout_seconds_copy);
+    }
+    return result;
 }
 
 void v1_validating_webhook_free(v1_validating_webhook_t *v1_validating_webhook) {
@@ -123,6 +132,10 @@ void v1_validating_webhook_free(v1_validating_webhook_t *v1_validating_webhook) 
     if (v1_validating_webhook->side_effects) {
         free(v1_validating_webhook->side_effects);
         v1_validating_webhook->side_effects = NULL;
+    }
+    if (v1_validating_webhook->timeout_seconds) {
+        free(v1_validating_webhook->timeout_seconds);
+        v1_validating_webhook->timeout_seconds = NULL;
     }
     free(v1_validating_webhook);
 }
@@ -264,7 +277,7 @@ cJSON *v1_validating_webhook_convertToJSON(v1_validating_webhook_t *v1_validatin
 
     // v1_validating_webhook->timeout_seconds
     if(v1_validating_webhook->timeout_seconds) {
-    if(cJSON_AddNumberToObject(item, "timeoutSeconds", v1_validating_webhook->timeout_seconds) == NULL) {
+    if(cJSON_AddNumberToObject(item, "timeoutSeconds", *v1_validating_webhook->timeout_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -287,8 +300,14 @@ v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(cJSON *v1_validatin
     // define the local variable for v1_validating_webhook->client_config
     admissionregistration_v1_webhook_client_config_t *client_config_local_nonprim = NULL;
 
+    char *failure_policy_local_str = NULL;
+
     // define the local list for v1_validating_webhook->match_conditions
     list_t *match_conditionsList = NULL;
+
+    char *match_policy_local_str = NULL;
+
+    char *name_local_str = NULL;
 
     // define the local variable for v1_validating_webhook->namespace_selector
     v1_label_selector_t *namespace_selector_local_nonprim = NULL;
@@ -298,6 +317,11 @@ v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(cJSON *v1_validatin
 
     // define the local list for v1_validating_webhook->rules
     list_t *rulesList = NULL;
+
+    char *side_effects_local_str = NULL;
+
+    // define the local variable for v1_validating_webhook->timeout_seconds
+    int *timeout_seconds_local_var = NULL;
 
     // v1_validating_webhook->admission_review_versions
     cJSON *admission_review_versions = cJSON_GetObjectItemCaseSensitive(v1_validating_webhookJSON, "admissionReviewVersions");
@@ -466,22 +490,37 @@ v1_validating_webhook_t *v1_validating_webhook_parseFromJSON(cJSON *v1_validatin
     {
     goto end; //Numeric
     }
+    timeout_seconds_local_var = malloc(sizeof(int));
+    if(!timeout_seconds_local_var)
+    {
+        goto end;
+    }
+    *timeout_seconds_local_var = timeout_seconds->valuedouble;
     }
 
+
+    if (failure_policy && !cJSON_IsNull(failure_policy)) failure_policy_local_str = strdup(failure_policy->valuestring);
+    if (match_policy && !cJSON_IsNull(match_policy)) match_policy_local_str = strdup(match_policy->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (side_effects && !cJSON_IsNull(side_effects)) side_effects_local_str = strdup(side_effects->valuestring);
 
     v1_validating_webhook_local_var = v1_validating_webhook_create_internal (
         admission_review_versionsList,
         client_config_local_nonprim,
-        failure_policy && !cJSON_IsNull(failure_policy) ? strdup(failure_policy->valuestring) : NULL,
+        failure_policy_local_str,
         match_conditions ? match_conditionsList : NULL,
-        match_policy && !cJSON_IsNull(match_policy) ? strdup(match_policy->valuestring) : NULL,
-        strdup(name->valuestring),
+        match_policy_local_str,
+        name_local_str,
         namespace_selector ? namespace_selector_local_nonprim : NULL,
         object_selector ? object_selector_local_nonprim : NULL,
         rules ? rulesList : NULL,
-        strdup(side_effects->valuestring),
-        timeout_seconds ? timeout_seconds->valuedouble : 0
+        side_effects_local_str,
+        timeout_seconds_local_var
         );
+
+    if (!v1_validating_webhook_local_var) {
+        goto end;
+    }
 
     return v1_validating_webhook_local_var;
 end:
@@ -498,6 +537,10 @@ end:
         admissionregistration_v1_webhook_client_config_free(client_config_local_nonprim);
         client_config_local_nonprim = NULL;
     }
+    if (failure_policy_local_str) {
+        free(failure_policy_local_str);
+        failure_policy_local_str = NULL;
+    }
     if (match_conditionsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, match_conditionsList) {
@@ -506,6 +549,14 @@ end:
         }
         list_freeList(match_conditionsList);
         match_conditionsList = NULL;
+    }
+    if (match_policy_local_str) {
+        free(match_policy_local_str);
+        match_policy_local_str = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
     }
     if (namespace_selector_local_nonprim) {
         v1_label_selector_free(namespace_selector_local_nonprim);
@@ -523,6 +574,14 @@ end:
         }
         list_freeList(rulesList);
         rulesList = NULL;
+    }
+    if (side_effects_local_str) {
+        free(side_effects_local_str);
+        side_effects_local_str = NULL;
+    }
+    if (timeout_seconds_local_var) {
+        free(timeout_seconds_local_var);
+        timeout_seconds_local_var = NULL;
     }
     return NULL;
 

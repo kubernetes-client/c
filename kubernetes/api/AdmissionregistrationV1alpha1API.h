@@ -30,13 +30,13 @@ AdmissionregistrationV1alpha1API_createMutatingAdmissionPolicyBinding(apiClient_
 // delete collection of MutatingAdmissionPolicy
 //
 v1_status_t*
-AdmissionregistrationV1alpha1API_deleteCollectionMutatingAdmissionPolicy(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+AdmissionregistrationV1alpha1API_deleteCollectionMutatingAdmissionPolicy(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete collection of MutatingAdmissionPolicyBinding
 //
 v1_status_t*
-AdmissionregistrationV1alpha1API_deleteCollectionMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+AdmissionregistrationV1alpha1API_deleteCollectionMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete a MutatingAdmissionPolicy
@@ -60,13 +60,13 @@ AdmissionregistrationV1alpha1API_getAPIResources(apiClient_t *apiClient);
 // list or watch objects of kind MutatingAdmissionPolicy
 //
 v1alpha1_mutating_admission_policy_list_t*
-AdmissionregistrationV1alpha1API_listMutatingAdmissionPolicy(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+AdmissionregistrationV1alpha1API_listMutatingAdmissionPolicy(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch);
 
 
 // list or watch objects of kind MutatingAdmissionPolicyBinding
 //
 v1alpha1_mutating_admission_policy_binding_list_t*
-AdmissionregistrationV1alpha1API_listMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+AdmissionregistrationV1alpha1API_listMutatingAdmissionPolicyBinding(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch);
 
 
 // partially update the specified MutatingAdmissionPolicy

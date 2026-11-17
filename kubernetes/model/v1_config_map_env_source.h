@@ -1,7 +1,7 @@
 /*
  * v1_config_map_env_source.h
  *
- * ConfigMapEnvSource selects a ConfigMap to populate the environment variables with.  The contents of the target ConfigMap&#39;s Data field will represent the key-value pairs as environment variables.
+ * ConfigMapEnvSource selects a ConfigMap to populate the environment variables with.  The contents of the target ConfigMap&#39;s Data field will represent the key-value pairs as environment variables. Keys in the BinaryData field are not currently propagated to container env vars.
  */
 
 #ifndef _v1_config_map_env_source_H_
@@ -20,14 +20,14 @@ typedef struct v1_config_map_env_source_t v1_config_map_env_source_t;
 
 typedef struct v1_config_map_env_source_t {
     char *name; // string
-    int optional; //boolean
+    int *optional; //boolean
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_config_map_env_source_t;
 
 __attribute__((deprecated)) v1_config_map_env_source_t *v1_config_map_env_source_create(
     char *name,
-    int optional
+    int *optional
 );
 
 void v1_config_map_env_source_free(v1_config_map_env_source_t *v1_config_map_env_source);

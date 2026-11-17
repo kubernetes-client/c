@@ -12,18 +12,21 @@ static v1_service_cidr_spec_t *v1_service_cidr_spec_create_internal(
     if (!v1_service_cidr_spec_local_var) {
         return NULL;
     }
-    v1_service_cidr_spec_local_var->cidrs = cidrs;
-
+    memset(v1_service_cidr_spec_local_var, 0, sizeof(v1_service_cidr_spec_t));
     v1_service_cidr_spec_local_var->_library_owned = 1;
+    v1_service_cidr_spec_local_var->cidrs = cidrs;
     return v1_service_cidr_spec_local_var;
 }
 
 __attribute__((deprecated)) v1_service_cidr_spec_t *v1_service_cidr_spec_create(
     list_t *cidrs
     ) {
-    return v1_service_cidr_spec_create_internal (
+    v1_service_cidr_spec_t *result = v1_service_cidr_spec_create_internal (
         cidrs
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_service_cidr_spec_free(v1_service_cidr_spec_t *v1_service_cidr_spec) {
@@ -102,9 +105,14 @@ v1_service_cidr_spec_t *v1_service_cidr_spec_parseFromJSON(cJSON *v1_service_cid
     }
 
 
+
     v1_service_cidr_spec_local_var = v1_service_cidr_spec_create_internal (
         cidrs ? cidrsList : NULL
         );
+
+    if (!v1_service_cidr_spec_local_var) {
+        goto end;
+    }
 
     return v1_service_cidr_spec_local_var;
 end:

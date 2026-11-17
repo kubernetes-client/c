@@ -7,31 +7,50 @@
 
 static v1_service_account_token_projection_t *v1_service_account_token_projection_create_internal(
     char *audience,
-    long expiration_seconds,
-    char *path
+    long *expiration_seconds,
+    char *path,
+    long *user
     ) {
     v1_service_account_token_projection_t *v1_service_account_token_projection_local_var = malloc(sizeof(v1_service_account_token_projection_t));
     if (!v1_service_account_token_projection_local_var) {
         return NULL;
     }
+    memset(v1_service_account_token_projection_local_var, 0, sizeof(v1_service_account_token_projection_t));
+    v1_service_account_token_projection_local_var->_library_owned = 1;
     v1_service_account_token_projection_local_var->audience = audience;
     v1_service_account_token_projection_local_var->expiration_seconds = expiration_seconds;
     v1_service_account_token_projection_local_var->path = path;
-
-    v1_service_account_token_projection_local_var->_library_owned = 1;
+    v1_service_account_token_projection_local_var->user = user;
     return v1_service_account_token_projection_local_var;
 }
 
 __attribute__((deprecated)) v1_service_account_token_projection_t *v1_service_account_token_projection_create(
     char *audience,
-    long expiration_seconds,
-    char *path
+    long *expiration_seconds,
+    char *path,
+    long *user
     ) {
-    return v1_service_account_token_projection_create_internal (
+    long *expiration_seconds_copy = NULL;
+    if (expiration_seconds) {
+        expiration_seconds_copy = malloc(sizeof(long));
+        if (expiration_seconds_copy) *expiration_seconds_copy = *expiration_seconds;
+    }
+    long *user_copy = NULL;
+    if (user) {
+        user_copy = malloc(sizeof(long));
+        if (user_copy) *user_copy = *user;
+    }
+    v1_service_account_token_projection_t *result = v1_service_account_token_projection_create_internal (
         audience,
-        expiration_seconds,
-        path
+        expiration_seconds_copy,
+        path,
+        user_copy
         );
+    if (!result) {
+        free(expiration_seconds_copy);
+        free(user_copy);
+    }
+    return result;
 }
 
 void v1_service_account_token_projection_free(v1_service_account_token_projection_t *v1_service_account_token_projection) {
@@ -47,9 +66,17 @@ void v1_service_account_token_projection_free(v1_service_account_token_projectio
         free(v1_service_account_token_projection->audience);
         v1_service_account_token_projection->audience = NULL;
     }
+    if (v1_service_account_token_projection->expiration_seconds) {
+        free(v1_service_account_token_projection->expiration_seconds);
+        v1_service_account_token_projection->expiration_seconds = NULL;
+    }
     if (v1_service_account_token_projection->path) {
         free(v1_service_account_token_projection->path);
         v1_service_account_token_projection->path = NULL;
+    }
+    if (v1_service_account_token_projection->user) {
+        free(v1_service_account_token_projection->user);
+        v1_service_account_token_projection->user = NULL;
     }
     free(v1_service_account_token_projection);
 }
@@ -67,7 +94,7 @@ cJSON *v1_service_account_token_projection_convertToJSON(v1_service_account_toke
 
     // v1_service_account_token_projection->expiration_seconds
     if(v1_service_account_token_projection->expiration_seconds) {
-    if(cJSON_AddNumberToObject(item, "expirationSeconds", v1_service_account_token_projection->expiration_seconds) == NULL) {
+    if(cJSON_AddNumberToObject(item, "expirationSeconds", *v1_service_account_token_projection->expiration_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -81,6 +108,14 @@ cJSON *v1_service_account_token_projection_convertToJSON(v1_service_account_toke
     goto fail; //String
     }
 
+
+    // v1_service_account_token_projection->user
+    if(v1_service_account_token_projection->user) {
+    if(cJSON_AddNumberToObject(item, "user", *v1_service_account_token_projection->user) == NULL) {
+    goto fail; //Numeric
+    }
+    }
+
     return item;
 fail:
     if (item) {
@@ -92,6 +127,16 @@ fail:
 v1_service_account_token_projection_t *v1_service_account_token_projection_parseFromJSON(cJSON *v1_service_account_token_projectionJSON){
 
     v1_service_account_token_projection_t *v1_service_account_token_projection_local_var = NULL;
+
+    char *audience_local_str = NULL;
+
+    // define the local variable for v1_service_account_token_projection->expiration_seconds
+    long *expiration_seconds_local_var = NULL;
+
+    char *path_local_str = NULL;
+
+    // define the local variable for v1_service_account_token_projection->user
+    long *user_local_var = NULL;
 
     // v1_service_account_token_projection->audience
     cJSON *audience = cJSON_GetObjectItemCaseSensitive(v1_service_account_token_projectionJSON, "audience");
@@ -115,6 +160,12 @@ v1_service_account_token_projection_t *v1_service_account_token_projection_parse
     {
     goto end; //Numeric
     }
+    expiration_seconds_local_var = malloc(sizeof(long));
+    if(!expiration_seconds_local_var)
+    {
+        goto end;
+    }
+    *expiration_seconds_local_var = expiration_seconds->valuedouble;
     }
 
     // v1_service_account_token_projection->path
@@ -132,15 +183,57 @@ v1_service_account_token_projection_t *v1_service_account_token_projection_parse
     goto end; //String
     }
 
+    // v1_service_account_token_projection->user
+    cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_service_account_token_projectionJSON, "user");
+    if (cJSON_IsNull(user)) {
+        user = NULL;
+    }
+    if (user) { 
+    if(!cJSON_IsNumber(user))
+    {
+    goto end; //Numeric
+    }
+    user_local_var = malloc(sizeof(long));
+    if(!user_local_var)
+    {
+        goto end;
+    }
+    *user_local_var = user->valuedouble;
+    }
+
+
+    if (audience && !cJSON_IsNull(audience)) audience_local_str = strdup(audience->valuestring);
+    if (path && !cJSON_IsNull(path)) path_local_str = strdup(path->valuestring);
 
     v1_service_account_token_projection_local_var = v1_service_account_token_projection_create_internal (
-        audience && !cJSON_IsNull(audience) ? strdup(audience->valuestring) : NULL,
-        expiration_seconds ? expiration_seconds->valuedouble : 0,
-        strdup(path->valuestring)
+        audience_local_str,
+        expiration_seconds_local_var,
+        path_local_str,
+        user_local_var
         );
+
+    if (!v1_service_account_token_projection_local_var) {
+        goto end;
+    }
 
     return v1_service_account_token_projection_local_var;
 end:
+    if (audience_local_str) {
+        free(audience_local_str);
+        audience_local_str = NULL;
+    }
+    if (expiration_seconds_local_var) {
+        free(expiration_seconds_local_var);
+        expiration_seconds_local_var = NULL;
+    }
+    if (path_local_str) {
+        free(path_local_str);
+        path_local_str = NULL;
+    }
+    if (user_local_var) {
+        free(user_local_var);
+        user_local_var = NULL;
+    }
     return NULL;
 
 }

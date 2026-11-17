@@ -13,10 +13,10 @@ static v1_ingress_class_spec_t *v1_ingress_class_spec_create_internal(
     if (!v1_ingress_class_spec_local_var) {
         return NULL;
     }
+    memset(v1_ingress_class_spec_local_var, 0, sizeof(v1_ingress_class_spec_t));
+    v1_ingress_class_spec_local_var->_library_owned = 1;
     v1_ingress_class_spec_local_var->controller = controller;
     v1_ingress_class_spec_local_var->parameters = parameters;
-
-    v1_ingress_class_spec_local_var->_library_owned = 1;
     return v1_ingress_class_spec_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_ingress_class_spec_t *v1_ingress_class_spec_creat
     char *controller,
     v1_ingress_class_parameters_reference_t *parameters
     ) {
-    return v1_ingress_class_spec_create_internal (
+    v1_ingress_class_spec_t *result = v1_ingress_class_spec_create_internal (
         controller,
         parameters
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_ingress_class_spec_free(v1_ingress_class_spec_t *v1_ingress_class_spec) {
@@ -85,6 +88,8 @@ v1_ingress_class_spec_t *v1_ingress_class_spec_parseFromJSON(cJSON *v1_ingress_c
 
     v1_ingress_class_spec_t *v1_ingress_class_spec_local_var = NULL;
 
+    char *controller_local_str = NULL;
+
     // define the local variable for v1_ingress_class_spec->parameters
     v1_ingress_class_parameters_reference_t *parameters_local_nonprim = NULL;
 
@@ -110,13 +115,23 @@ v1_ingress_class_spec_t *v1_ingress_class_spec_parseFromJSON(cJSON *v1_ingress_c
     }
 
 
+    if (controller && !cJSON_IsNull(controller)) controller_local_str = strdup(controller->valuestring);
+
     v1_ingress_class_spec_local_var = v1_ingress_class_spec_create_internal (
-        controller && !cJSON_IsNull(controller) ? strdup(controller->valuestring) : NULL,
+        controller_local_str,
         parameters ? parameters_local_nonprim : NULL
         );
 
+    if (!v1_ingress_class_spec_local_var) {
+        goto end;
+    }
+
     return v1_ingress_class_spec_local_var;
 end:
+    if (controller_local_str) {
+        free(controller_local_str);
+        controller_local_str = NULL;
+    }
     if (parameters_local_nonprim) {
         v1_ingress_class_parameters_reference_free(parameters_local_nonprim);
         parameters_local_nonprim = NULL;

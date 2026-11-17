@@ -13,10 +13,10 @@ static v1_object_field_selector_t *v1_object_field_selector_create_internal(
     if (!v1_object_field_selector_local_var) {
         return NULL;
     }
+    memset(v1_object_field_selector_local_var, 0, sizeof(v1_object_field_selector_t));
+    v1_object_field_selector_local_var->_library_owned = 1;
     v1_object_field_selector_local_var->api_version = api_version;
     v1_object_field_selector_local_var->field_path = field_path;
-
-    v1_object_field_selector_local_var->_library_owned = 1;
     return v1_object_field_selector_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_object_field_selector_t *v1_object_field_selector
     char *api_version,
     char *field_path
     ) {
-    return v1_object_field_selector_create_internal (
+    v1_object_field_selector_t *result = v1_object_field_selector_create_internal (
         api_version,
         field_path
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_object_field_selector_free(v1_object_field_selector_t *v1_object_field_selector) {
@@ -81,6 +84,10 @@ v1_object_field_selector_t *v1_object_field_selector_parseFromJSON(cJSON *v1_obj
 
     v1_object_field_selector_t *v1_object_field_selector_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
+    char *field_path_local_str = NULL;
+
     // v1_object_field_selector->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_object_field_selectorJSON, "apiVersion");
     if (cJSON_IsNull(api_version)) {
@@ -109,13 +116,28 @@ v1_object_field_selector_t *v1_object_field_selector_parseFromJSON(cJSON *v1_obj
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (field_path && !cJSON_IsNull(field_path)) field_path_local_str = strdup(field_path->valuestring);
+
     v1_object_field_selector_local_var = v1_object_field_selector_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        strdup(field_path->valuestring)
+        api_version_local_str,
+        field_path_local_str
         );
+
+    if (!v1_object_field_selector_local_var) {
+        goto end;
+    }
 
     return v1_object_field_selector_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (field_path_local_str) {
+        free(field_path_local_str);
+        field_path_local_str = NULL;
+    }
     return NULL;
 
 }

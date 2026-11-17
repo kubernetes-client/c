@@ -1,7 +1,7 @@
 /*
  * v1_resource_claim_template.h
  *
- * ResourceClaimTemplate is used to produce ResourceClaim objects.  This is an alpha type and requires enabling the DynamicResourceAllocation feature gate.
+ * ResourceClaimTemplate is used to produce ResourceClaim objects.
  */
 
 #ifndef _v1_resource_claim_template_H_

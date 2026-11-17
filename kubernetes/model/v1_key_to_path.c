@@ -7,31 +7,50 @@
 
 static v1_key_to_path_t *v1_key_to_path_create_internal(
     char *key,
-    int mode,
-    char *path
+    int *mode,
+    char *path,
+    long *user
     ) {
     v1_key_to_path_t *v1_key_to_path_local_var = malloc(sizeof(v1_key_to_path_t));
     if (!v1_key_to_path_local_var) {
         return NULL;
     }
+    memset(v1_key_to_path_local_var, 0, sizeof(v1_key_to_path_t));
+    v1_key_to_path_local_var->_library_owned = 1;
     v1_key_to_path_local_var->key = key;
     v1_key_to_path_local_var->mode = mode;
     v1_key_to_path_local_var->path = path;
-
-    v1_key_to_path_local_var->_library_owned = 1;
+    v1_key_to_path_local_var->user = user;
     return v1_key_to_path_local_var;
 }
 
 __attribute__((deprecated)) v1_key_to_path_t *v1_key_to_path_create(
     char *key,
-    int mode,
-    char *path
+    int *mode,
+    char *path,
+    long *user
     ) {
-    return v1_key_to_path_create_internal (
+    int *mode_copy = NULL;
+    if (mode) {
+        mode_copy = malloc(sizeof(int));
+        if (mode_copy) *mode_copy = *mode;
+    }
+    long *user_copy = NULL;
+    if (user) {
+        user_copy = malloc(sizeof(long));
+        if (user_copy) *user_copy = *user;
+    }
+    v1_key_to_path_t *result = v1_key_to_path_create_internal (
         key,
-        mode,
-        path
+        mode_copy,
+        path,
+        user_copy
         );
+    if (!result) {
+        free(mode_copy);
+        free(user_copy);
+    }
+    return result;
 }
 
 void v1_key_to_path_free(v1_key_to_path_t *v1_key_to_path) {
@@ -47,9 +66,17 @@ void v1_key_to_path_free(v1_key_to_path_t *v1_key_to_path) {
         free(v1_key_to_path->key);
         v1_key_to_path->key = NULL;
     }
+    if (v1_key_to_path->mode) {
+        free(v1_key_to_path->mode);
+        v1_key_to_path->mode = NULL;
+    }
     if (v1_key_to_path->path) {
         free(v1_key_to_path->path);
         v1_key_to_path->path = NULL;
+    }
+    if (v1_key_to_path->user) {
+        free(v1_key_to_path->user);
+        v1_key_to_path->user = NULL;
     }
     free(v1_key_to_path);
 }
@@ -68,7 +95,7 @@ cJSON *v1_key_to_path_convertToJSON(v1_key_to_path_t *v1_key_to_path) {
 
     // v1_key_to_path->mode
     if(v1_key_to_path->mode) {
-    if(cJSON_AddNumberToObject(item, "mode", v1_key_to_path->mode) == NULL) {
+    if(cJSON_AddNumberToObject(item, "mode", *v1_key_to_path->mode) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -82,6 +109,14 @@ cJSON *v1_key_to_path_convertToJSON(v1_key_to_path_t *v1_key_to_path) {
     goto fail; //String
     }
 
+
+    // v1_key_to_path->user
+    if(v1_key_to_path->user) {
+    if(cJSON_AddNumberToObject(item, "user", *v1_key_to_path->user) == NULL) {
+    goto fail; //Numeric
+    }
+    }
+
     return item;
 fail:
     if (item) {
@@ -93,6 +128,16 @@ fail:
 v1_key_to_path_t *v1_key_to_path_parseFromJSON(cJSON *v1_key_to_pathJSON){
 
     v1_key_to_path_t *v1_key_to_path_local_var = NULL;
+
+    char *key_local_str = NULL;
+
+    // define the local variable for v1_key_to_path->mode
+    int *mode_local_var = NULL;
+
+    char *path_local_str = NULL;
+
+    // define the local variable for v1_key_to_path->user
+    long *user_local_var = NULL;
 
     // v1_key_to_path->key
     cJSON *key = cJSON_GetObjectItemCaseSensitive(v1_key_to_pathJSON, "key");
@@ -119,6 +164,12 @@ v1_key_to_path_t *v1_key_to_path_parseFromJSON(cJSON *v1_key_to_pathJSON){
     {
     goto end; //Numeric
     }
+    mode_local_var = malloc(sizeof(int));
+    if(!mode_local_var)
+    {
+        goto end;
+    }
+    *mode_local_var = mode->valuedouble;
     }
 
     // v1_key_to_path->path
@@ -136,15 +187,57 @@ v1_key_to_path_t *v1_key_to_path_parseFromJSON(cJSON *v1_key_to_pathJSON){
     goto end; //String
     }
 
+    // v1_key_to_path->user
+    cJSON *user = cJSON_GetObjectItemCaseSensitive(v1_key_to_pathJSON, "user");
+    if (cJSON_IsNull(user)) {
+        user = NULL;
+    }
+    if (user) { 
+    if(!cJSON_IsNumber(user))
+    {
+    goto end; //Numeric
+    }
+    user_local_var = malloc(sizeof(long));
+    if(!user_local_var)
+    {
+        goto end;
+    }
+    *user_local_var = user->valuedouble;
+    }
+
+
+    if (key && !cJSON_IsNull(key)) key_local_str = strdup(key->valuestring);
+    if (path && !cJSON_IsNull(path)) path_local_str = strdup(path->valuestring);
 
     v1_key_to_path_local_var = v1_key_to_path_create_internal (
-        strdup(key->valuestring),
-        mode ? mode->valuedouble : 0,
-        strdup(path->valuestring)
+        key_local_str,
+        mode_local_var,
+        path_local_str,
+        user_local_var
         );
+
+    if (!v1_key_to_path_local_var) {
+        goto end;
+    }
 
     return v1_key_to_path_local_var;
 end:
+    if (key_local_str) {
+        free(key_local_str);
+        key_local_str = NULL;
+    }
+    if (mode_local_var) {
+        free(mode_local_var);
+        mode_local_var = NULL;
+    }
+    if (path_local_str) {
+        free(path_local_str);
+        path_local_str = NULL;
+    }
+    if (user_local_var) {
+        free(user_local_var);
+        user_local_var = NULL;
+    }
     return NULL;
 
 }

@@ -20,14 +20,16 @@ typedef struct v1_projected_volume_source_t v1_projected_volume_source_t;
 
 
 typedef struct v1_projected_volume_source_t {
-    int default_mode; //numeric
+    int *default_mode; //numeric
+    long *default_user; //numeric
     list_t *sources; //nonprimitive container
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_projected_volume_source_t;
 
 __attribute__((deprecated)) v1_projected_volume_source_t *v1_projected_volume_source_create(
-    int default_mode,
+    int *default_mode,
+    long *default_user,
     list_t *sources
 );
 

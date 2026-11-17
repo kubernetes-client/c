@@ -13,10 +13,10 @@ static v1_container_restart_rule_on_exit_codes_t *v1_container_restart_rule_on_e
     if (!v1_container_restart_rule_on_exit_codes_local_var) {
         return NULL;
     }
+    memset(v1_container_restart_rule_on_exit_codes_local_var, 0, sizeof(v1_container_restart_rule_on_exit_codes_t));
+    v1_container_restart_rule_on_exit_codes_local_var->_library_owned = 1;
     v1_container_restart_rule_on_exit_codes_local_var->_operator = _operator;
     v1_container_restart_rule_on_exit_codes_local_var->values = values;
-
-    v1_container_restart_rule_on_exit_codes_local_var->_library_owned = 1;
     return v1_container_restart_rule_on_exit_codes_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_container_restart_rule_on_exit_codes_t *v1_contai
     char *_operator,
     list_t *values
     ) {
-    return v1_container_restart_rule_on_exit_codes_create_internal (
+    v1_container_restart_rule_on_exit_codes_t *result = v1_container_restart_rule_on_exit_codes_create_internal (
         _operator,
         values
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_container_restart_rule_on_exit_codes_free(v1_container_restart_rule_on_exit_codes_t *v1_container_restart_rule_on_exit_codes) {
@@ -93,6 +96,8 @@ v1_container_restart_rule_on_exit_codes_t *v1_container_restart_rule_on_exit_cod
 
     v1_container_restart_rule_on_exit_codes_t *v1_container_restart_rule_on_exit_codes_local_var = NULL;
 
+    char *_operator_local_str = NULL;
+
     // define the local list for v1_container_restart_rule_on_exit_codes->values
     list_t *valuesList = NULL;
 
@@ -140,13 +145,23 @@ v1_container_restart_rule_on_exit_codes_t *v1_container_restart_rule_on_exit_cod
     }
 
 
+    if (_operator && !cJSON_IsNull(_operator)) _operator_local_str = strdup(_operator->valuestring);
+
     v1_container_restart_rule_on_exit_codes_local_var = v1_container_restart_rule_on_exit_codes_create_internal (
-        strdup(_operator->valuestring),
+        _operator_local_str,
         values ? valuesList : NULL
         );
 
+    if (!v1_container_restart_rule_on_exit_codes_local_var) {
+        goto end;
+    }
+
     return v1_container_restart_rule_on_exit_codes_local_var;
 end:
+    if (_operator_local_str) {
+        free(_operator_local_str);
+        _operator_local_str = NULL;
+    }
     if (valuesList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, valuesList) {

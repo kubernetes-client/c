@@ -8,7 +8,8 @@
 static v1beta2_device_sub_request_t *v1beta2_device_sub_request_create_internal(
     char *allocation_mode,
     v1beta2_capacity_requirements_t *capacity,
-    long count,
+    long *count,
+    list_t *derived_attributes,
     char *device_class_name,
     char *name,
     list_t *selectors,
@@ -18,36 +19,48 @@ static v1beta2_device_sub_request_t *v1beta2_device_sub_request_create_internal(
     if (!v1beta2_device_sub_request_local_var) {
         return NULL;
     }
+    memset(v1beta2_device_sub_request_local_var, 0, sizeof(v1beta2_device_sub_request_t));
+    v1beta2_device_sub_request_local_var->_library_owned = 1;
     v1beta2_device_sub_request_local_var->allocation_mode = allocation_mode;
     v1beta2_device_sub_request_local_var->capacity = capacity;
     v1beta2_device_sub_request_local_var->count = count;
+    v1beta2_device_sub_request_local_var->derived_attributes = derived_attributes;
     v1beta2_device_sub_request_local_var->device_class_name = device_class_name;
     v1beta2_device_sub_request_local_var->name = name;
     v1beta2_device_sub_request_local_var->selectors = selectors;
     v1beta2_device_sub_request_local_var->tolerations = tolerations;
-
-    v1beta2_device_sub_request_local_var->_library_owned = 1;
     return v1beta2_device_sub_request_local_var;
 }
 
 __attribute__((deprecated)) v1beta2_device_sub_request_t *v1beta2_device_sub_request_create(
     char *allocation_mode,
     v1beta2_capacity_requirements_t *capacity,
-    long count,
+    long *count,
+    list_t *derived_attributes,
     char *device_class_name,
     char *name,
     list_t *selectors,
     list_t *tolerations
     ) {
-    return v1beta2_device_sub_request_create_internal (
+    long *count_copy = NULL;
+    if (count) {
+        count_copy = malloc(sizeof(long));
+        if (count_copy) *count_copy = *count;
+    }
+    v1beta2_device_sub_request_t *result = v1beta2_device_sub_request_create_internal (
         allocation_mode,
         capacity,
-        count,
+        count_copy,
+        derived_attributes,
         device_class_name,
         name,
         selectors,
         tolerations
         );
+    if (!result) {
+        free(count_copy);
+    }
+    return result;
 }
 
 void v1beta2_device_sub_request_free(v1beta2_device_sub_request_t *v1beta2_device_sub_request) {
@@ -66,6 +79,17 @@ void v1beta2_device_sub_request_free(v1beta2_device_sub_request_t *v1beta2_devic
     if (v1beta2_device_sub_request->capacity) {
         v1beta2_capacity_requirements_free(v1beta2_device_sub_request->capacity);
         v1beta2_device_sub_request->capacity = NULL;
+    }
+    if (v1beta2_device_sub_request->count) {
+        free(v1beta2_device_sub_request->count);
+        v1beta2_device_sub_request->count = NULL;
+    }
+    if (v1beta2_device_sub_request->derived_attributes) {
+        list_ForEach(listEntry, v1beta2_device_sub_request->derived_attributes) {
+            v1beta2_device_derived_attribute_free(listEntry->data);
+        }
+        list_freeList(v1beta2_device_sub_request->derived_attributes);
+        v1beta2_device_sub_request->derived_attributes = NULL;
     }
     if (v1beta2_device_sub_request->device_class_name) {
         free(v1beta2_device_sub_request->device_class_name);
@@ -118,8 +142,28 @@ cJSON *v1beta2_device_sub_request_convertToJSON(v1beta2_device_sub_request_t *v1
 
     // v1beta2_device_sub_request->count
     if(v1beta2_device_sub_request->count) {
-    if(cJSON_AddNumberToObject(item, "count", v1beta2_device_sub_request->count) == NULL) {
+    if(cJSON_AddNumberToObject(item, "count", *v1beta2_device_sub_request->count) == NULL) {
     goto fail; //Numeric
+    }
+    }
+
+
+    // v1beta2_device_sub_request->derived_attributes
+    if(v1beta2_device_sub_request->derived_attributes) {
+    cJSON *derived_attributes = cJSON_AddArrayToObject(item, "derivedAttributes");
+    if(derived_attributes == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *derived_attributesListEntry;
+    if (v1beta2_device_sub_request->derived_attributes) {
+    list_ForEach(derived_attributesListEntry, v1beta2_device_sub_request->derived_attributes) {
+    cJSON *itemLocal = v1beta2_device_derived_attribute_convertToJSON(derived_attributesListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(derived_attributes, itemLocal);
+    }
     }
     }
 
@@ -193,8 +237,20 @@ v1beta2_device_sub_request_t *v1beta2_device_sub_request_parseFromJSON(cJSON *v1
 
     v1beta2_device_sub_request_t *v1beta2_device_sub_request_local_var = NULL;
 
+    char *allocation_mode_local_str = NULL;
+
     // define the local variable for v1beta2_device_sub_request->capacity
     v1beta2_capacity_requirements_t *capacity_local_nonprim = NULL;
+
+    // define the local variable for v1beta2_device_sub_request->count
+    long *count_local_var = NULL;
+
+    // define the local list for v1beta2_device_sub_request->derived_attributes
+    list_t *derived_attributesList = NULL;
+
+    char *device_class_name_local_str = NULL;
+
+    char *name_local_str = NULL;
 
     // define the local list for v1beta2_device_sub_request->selectors
     list_t *selectorsList = NULL;
@@ -232,6 +288,36 @@ v1beta2_device_sub_request_t *v1beta2_device_sub_request_parseFromJSON(cJSON *v1
     if(!cJSON_IsNumber(count))
     {
     goto end; //Numeric
+    }
+    count_local_var = malloc(sizeof(long));
+    if(!count_local_var)
+    {
+        goto end;
+    }
+    *count_local_var = count->valuedouble;
+    }
+
+    // v1beta2_device_sub_request->derived_attributes
+    cJSON *derived_attributes = cJSON_GetObjectItemCaseSensitive(v1beta2_device_sub_requestJSON, "derivedAttributes");
+    if (cJSON_IsNull(derived_attributes)) {
+        derived_attributes = NULL;
+    }
+    if (derived_attributes) { 
+    cJSON *derived_attributes_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(derived_attributes)){
+        goto end; //nonprimitive container
+    }
+
+    derived_attributesList = list_createList();
+
+    cJSON_ArrayForEach(derived_attributes_local_nonprimitive,derived_attributes )
+    {
+        if(!cJSON_IsObject(derived_attributes_local_nonprimitive)){
+            goto end;
+        }
+        v1beta2_device_derived_attribute_t *derived_attributesItem = v1beta2_device_derived_attribute_parseFromJSON(derived_attributes_local_nonprimitive);
+
+        list_addElement(derived_attributesList, derived_attributesItem);
     }
     }
 
@@ -314,21 +400,55 @@ v1beta2_device_sub_request_t *v1beta2_device_sub_request_parseFromJSON(cJSON *v1
     }
 
 
+    if (allocation_mode && !cJSON_IsNull(allocation_mode)) allocation_mode_local_str = strdup(allocation_mode->valuestring);
+    if (device_class_name && !cJSON_IsNull(device_class_name)) device_class_name_local_str = strdup(device_class_name->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v1beta2_device_sub_request_local_var = v1beta2_device_sub_request_create_internal (
-        allocation_mode && !cJSON_IsNull(allocation_mode) ? strdup(allocation_mode->valuestring) : NULL,
+        allocation_mode_local_str,
         capacity ? capacity_local_nonprim : NULL,
-        count ? count->valuedouble : 0,
-        strdup(device_class_name->valuestring),
-        strdup(name->valuestring),
+        count_local_var,
+        derived_attributes ? derived_attributesList : NULL,
+        device_class_name_local_str,
+        name_local_str,
         selectors ? selectorsList : NULL,
         tolerations ? tolerationsList : NULL
         );
 
+    if (!v1beta2_device_sub_request_local_var) {
+        goto end;
+    }
+
     return v1beta2_device_sub_request_local_var;
 end:
+    if (allocation_mode_local_str) {
+        free(allocation_mode_local_str);
+        allocation_mode_local_str = NULL;
+    }
     if (capacity_local_nonprim) {
         v1beta2_capacity_requirements_free(capacity_local_nonprim);
         capacity_local_nonprim = NULL;
+    }
+    if (count_local_var) {
+        free(count_local_var);
+        count_local_var = NULL;
+    }
+    if (derived_attributesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, derived_attributesList) {
+            v1beta2_device_derived_attribute_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(derived_attributesList);
+        derived_attributesList = NULL;
+    }
+    if (device_class_name_local_str) {
+        free(device_class_name_local_str);
+        device_class_name_local_str = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
     }
     if (selectorsList) {
         listEntry_t *listEntry = NULL;

@@ -17,14 +17,14 @@ static v1_custom_resource_definition_names_t *v1_custom_resource_definition_name
     if (!v1_custom_resource_definition_names_local_var) {
         return NULL;
     }
+    memset(v1_custom_resource_definition_names_local_var, 0, sizeof(v1_custom_resource_definition_names_t));
+    v1_custom_resource_definition_names_local_var->_library_owned = 1;
     v1_custom_resource_definition_names_local_var->categories = categories;
     v1_custom_resource_definition_names_local_var->kind = kind;
     v1_custom_resource_definition_names_local_var->list_kind = list_kind;
     v1_custom_resource_definition_names_local_var->plural = plural;
     v1_custom_resource_definition_names_local_var->short_names = short_names;
     v1_custom_resource_definition_names_local_var->singular = singular;
-
-    v1_custom_resource_definition_names_local_var->_library_owned = 1;
     return v1_custom_resource_definition_names_local_var;
 }
 
@@ -36,7 +36,7 @@ __attribute__((deprecated)) v1_custom_resource_definition_names_t *v1_custom_res
     list_t *short_names,
     char *singular
     ) {
-    return v1_custom_resource_definition_names_create_internal (
+    v1_custom_resource_definition_names_t *result = v1_custom_resource_definition_names_create_internal (
         categories,
         kind,
         list_kind,
@@ -44,6 +44,9 @@ __attribute__((deprecated)) v1_custom_resource_definition_names_t *v1_custom_res
         short_names,
         singular
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_custom_resource_definition_names_free(v1_custom_resource_definition_names_t *v1_custom_resource_definition_names) {
@@ -173,8 +176,16 @@ v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_parse
     // define the local list for v1_custom_resource_definition_names->categories
     list_t *categoriesList = NULL;
 
+    char *kind_local_str = NULL;
+
+    char *list_kind_local_str = NULL;
+
+    char *plural_local_str = NULL;
+
     // define the local list for v1_custom_resource_definition_names->short_names
     list_t *short_namesList = NULL;
+
+    char *singular_local_str = NULL;
 
     // v1_custom_resource_definition_names->categories
     cJSON *categories = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_namesJSON, "categories");
@@ -275,14 +286,23 @@ v1_custom_resource_definition_names_t *v1_custom_resource_definition_names_parse
     }
 
 
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+    if (list_kind && !cJSON_IsNull(list_kind)) list_kind_local_str = strdup(list_kind->valuestring);
+    if (plural && !cJSON_IsNull(plural)) plural_local_str = strdup(plural->valuestring);
+    if (singular && !cJSON_IsNull(singular)) singular_local_str = strdup(singular->valuestring);
+
     v1_custom_resource_definition_names_local_var = v1_custom_resource_definition_names_create_internal (
         categories ? categoriesList : NULL,
-        strdup(kind->valuestring),
-        list_kind && !cJSON_IsNull(list_kind) ? strdup(list_kind->valuestring) : NULL,
-        strdup(plural->valuestring),
+        kind_local_str,
+        list_kind_local_str,
+        plural_local_str,
         short_names ? short_namesList : NULL,
-        singular && !cJSON_IsNull(singular) ? strdup(singular->valuestring) : NULL
+        singular_local_str
         );
+
+    if (!v1_custom_resource_definition_names_local_var) {
+        goto end;
+    }
 
     return v1_custom_resource_definition_names_local_var;
 end:
@@ -295,6 +315,18 @@ end:
         list_freeList(categoriesList);
         categoriesList = NULL;
     }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
+    if (list_kind_local_str) {
+        free(list_kind_local_str);
+        list_kind_local_str = NULL;
+    }
+    if (plural_local_str) {
+        free(plural_local_str);
+        plural_local_str = NULL;
+    }
     if (short_namesList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, short_namesList) {
@@ -303,6 +335,10 @@ end:
         }
         list_freeList(short_namesList);
         short_namesList = NULL;
+    }
+    if (singular_local_str) {
+        free(singular_local_str);
+        singular_local_str = NULL;
     }
     return NULL;
 

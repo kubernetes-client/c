@@ -23,7 +23,7 @@ typedef struct v1_flex_persistent_volume_source_t {
     char *driver; // string
     char *fs_type; // string
     list_t* options; //map
-    int read_only; //boolean
+    int *read_only; //boolean
     struct v1_secret_reference_t *secret_ref; //model
 
     int _library_owned; // Is the library responsible for freeing this object?
@@ -33,7 +33,7 @@ __attribute__((deprecated)) v1_flex_persistent_volume_source_t *v1_flex_persiste
     char *driver,
     char *fs_type,
     list_t* options,
-    int read_only,
+    int *read_only,
     v1_secret_reference_t *secret_ref
 );
 

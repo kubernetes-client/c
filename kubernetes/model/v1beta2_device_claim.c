@@ -14,11 +14,11 @@ static v1beta2_device_claim_t *v1beta2_device_claim_create_internal(
     if (!v1beta2_device_claim_local_var) {
         return NULL;
     }
+    memset(v1beta2_device_claim_local_var, 0, sizeof(v1beta2_device_claim_t));
+    v1beta2_device_claim_local_var->_library_owned = 1;
     v1beta2_device_claim_local_var->config = config;
     v1beta2_device_claim_local_var->constraints = constraints;
     v1beta2_device_claim_local_var->requests = requests;
-
-    v1beta2_device_claim_local_var->_library_owned = 1;
     return v1beta2_device_claim_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1beta2_device_claim_t *v1beta2_device_claim_create(
     list_t *constraints,
     list_t *requests
     ) {
-    return v1beta2_device_claim_create_internal (
+    v1beta2_device_claim_t *result = v1beta2_device_claim_create_internal (
         config,
         constraints,
         requests
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1beta2_device_claim_free(v1beta2_device_claim_t *v1beta2_device_claim) {
@@ -223,11 +226,16 @@ v1beta2_device_claim_t *v1beta2_device_claim_parseFromJSON(cJSON *v1beta2_device
     }
 
 
+
     v1beta2_device_claim_local_var = v1beta2_device_claim_create_internal (
         config ? configList : NULL,
         constraints ? constraintsList : NULL,
         requests ? requestsList : NULL
         );
+
+    if (!v1beta2_device_claim_local_var) {
+        goto end;
+    }
 
     return v1beta2_device_claim_local_var;
 end:

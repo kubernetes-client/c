@@ -20,29 +20,29 @@ typedef struct v1_deployment_status_t v1_deployment_status_t;
 
 
 typedef struct v1_deployment_status_t {
-    int available_replicas; //numeric
-    int collision_count; //numeric
+    int *available_replicas; //numeric
+    int *collision_count; //numeric
     list_t *conditions; //nonprimitive container
-    long observed_generation; //numeric
-    int ready_replicas; //numeric
-    int replicas; //numeric
-    int terminating_replicas; //numeric
-    int unavailable_replicas; //numeric
-    int updated_replicas; //numeric
+    long *observed_generation; //numeric
+    int *ready_replicas; //numeric
+    int *replicas; //numeric
+    int *terminating_replicas; //numeric
+    int *unavailable_replicas; //numeric
+    int *updated_replicas; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_deployment_status_t;
 
 __attribute__((deprecated)) v1_deployment_status_t *v1_deployment_status_create(
-    int available_replicas,
-    int collision_count,
+    int *available_replicas,
+    int *collision_count,
     list_t *conditions,
-    long observed_generation,
-    int ready_replicas,
-    int replicas,
-    int terminating_replicas,
-    int unavailable_replicas,
-    int updated_replicas
+    long *observed_generation,
+    int *ready_replicas,
+    int *replicas,
+    int *terminating_replicas,
+    int *unavailable_replicas,
+    int *updated_replicas
 );
 
 void v1_deployment_status_free(v1_deployment_status_t *v1_deployment_status);

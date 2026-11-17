@@ -17,6 +17,7 @@
 v1_node_spec_t* instantiate_v1_node_spec(int include_optional);
 
 #include "test_v1_node_config_source.c"
+#include "test_v1_node_pod_preemption_policy.c"
 
 
 v1_node_spec_t* instantiate_v1_node_spec(int include_optional) {
@@ -28,6 +29,8 @@ v1_node_spec_t* instantiate_v1_node_spec(int include_optional) {
       "0",
       "0",
       list_createList(),
+       // false, not to have infinite recursion
+      instantiate_v1_node_pod_preemption_policy(0),
       "0",
       list_createList(),
       1
@@ -38,6 +41,7 @@ v1_node_spec_t* instantiate_v1_node_spec(int include_optional) {
       "0",
       "0",
       list_createList(),
+      NULL,
       "0",
       list_createList(),
       1

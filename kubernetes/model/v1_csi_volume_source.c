@@ -9,20 +9,20 @@ static v1_csi_volume_source_t *v1_csi_volume_source_create_internal(
     char *driver,
     char *fs_type,
     v1_local_object_reference_t *node_publish_secret_ref,
-    int read_only,
+    int *read_only,
     list_t* volume_attributes
     ) {
     v1_csi_volume_source_t *v1_csi_volume_source_local_var = malloc(sizeof(v1_csi_volume_source_t));
     if (!v1_csi_volume_source_local_var) {
         return NULL;
     }
+    memset(v1_csi_volume_source_local_var, 0, sizeof(v1_csi_volume_source_t));
+    v1_csi_volume_source_local_var->_library_owned = 1;
     v1_csi_volume_source_local_var->driver = driver;
     v1_csi_volume_source_local_var->fs_type = fs_type;
     v1_csi_volume_source_local_var->node_publish_secret_ref = node_publish_secret_ref;
     v1_csi_volume_source_local_var->read_only = read_only;
     v1_csi_volume_source_local_var->volume_attributes = volume_attributes;
-
-    v1_csi_volume_source_local_var->_library_owned = 1;
     return v1_csi_volume_source_local_var;
 }
 
@@ -30,16 +30,25 @@ __attribute__((deprecated)) v1_csi_volume_source_t *v1_csi_volume_source_create(
     char *driver,
     char *fs_type,
     v1_local_object_reference_t *node_publish_secret_ref,
-    int read_only,
+    int *read_only,
     list_t* volume_attributes
     ) {
-    return v1_csi_volume_source_create_internal (
+    int *read_only_copy = NULL;
+    if (read_only) {
+        read_only_copy = malloc(sizeof(int));
+        if (read_only_copy) *read_only_copy = *read_only;
+    }
+    v1_csi_volume_source_t *result = v1_csi_volume_source_create_internal (
         driver,
         fs_type,
         node_publish_secret_ref,
-        read_only,
+        read_only_copy,
         volume_attributes
         );
+    if (!result) {
+        free(read_only_copy);
+    }
+    return result;
 }
 
 void v1_csi_volume_source_free(v1_csi_volume_source_t *v1_csi_volume_source) {
@@ -62,6 +71,10 @@ void v1_csi_volume_source_free(v1_csi_volume_source_t *v1_csi_volume_source) {
     if (v1_csi_volume_source->node_publish_secret_ref) {
         v1_local_object_reference_free(v1_csi_volume_source->node_publish_secret_ref);
         v1_csi_volume_source->node_publish_secret_ref = NULL;
+    }
+    if (v1_csi_volume_source->read_only) {
+        free(v1_csi_volume_source->read_only);
+        v1_csi_volume_source->read_only = NULL;
     }
     if (v1_csi_volume_source->volume_attributes) {
         list_ForEach(listEntry, v1_csi_volume_source->volume_attributes) {
@@ -111,7 +124,7 @@ cJSON *v1_csi_volume_source_convertToJSON(v1_csi_volume_source_t *v1_csi_volume_
 
     // v1_csi_volume_source->read_only
     if(v1_csi_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_csi_volume_source->read_only) == NULL) {
+    if(cJSON_AddBoolToObject(item, "readOnly", *v1_csi_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -148,8 +161,15 @@ v1_csi_volume_source_t *v1_csi_volume_source_parseFromJSON(cJSON *v1_csi_volume_
 
     v1_csi_volume_source_t *v1_csi_volume_source_local_var = NULL;
 
+    char *driver_local_str = NULL;
+
+    char *fs_type_local_str = NULL;
+
     // define the local variable for v1_csi_volume_source->node_publish_secret_ref
     v1_local_object_reference_t *node_publish_secret_ref_local_nonprim = NULL;
+
+    // define the local variable for v1_csi_volume_source->read_only
+    int *read_only_local_var = NULL;
 
     // define the local map for v1_csi_volume_source->volume_attributes
     list_t *volume_attributesList = NULL;
@@ -200,6 +220,12 @@ v1_csi_volume_source_t *v1_csi_volume_source_parseFromJSON(cJSON *v1_csi_volume_
     {
     goto end; //Bool
     }
+    read_only_local_var = malloc(sizeof(int));
+    if(!read_only_local_var)
+    {
+        goto end;
+    }
+    *read_only_local_var = read_only->valueint;
     }
 
     // v1_csi_volume_source->volume_attributes
@@ -231,19 +257,38 @@ v1_csi_volume_source_t *v1_csi_volume_source_parseFromJSON(cJSON *v1_csi_volume_
     }
 
 
+    if (driver && !cJSON_IsNull(driver)) driver_local_str = strdup(driver->valuestring);
+    if (fs_type && !cJSON_IsNull(fs_type)) fs_type_local_str = strdup(fs_type->valuestring);
+
     v1_csi_volume_source_local_var = v1_csi_volume_source_create_internal (
-        strdup(driver->valuestring),
-        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
+        driver_local_str,
+        fs_type_local_str,
         node_publish_secret_ref ? node_publish_secret_ref_local_nonprim : NULL,
-        read_only ? read_only->valueint : 0,
+        read_only_local_var,
         volume_attributes ? volume_attributesList : NULL
         );
 
+    if (!v1_csi_volume_source_local_var) {
+        goto end;
+    }
+
     return v1_csi_volume_source_local_var;
 end:
+    if (driver_local_str) {
+        free(driver_local_str);
+        driver_local_str = NULL;
+    }
+    if (fs_type_local_str) {
+        free(fs_type_local_str);
+        fs_type_local_str = NULL;
+    }
     if (node_publish_secret_ref_local_nonprim) {
         v1_local_object_reference_free(node_publish_secret_ref_local_nonprim);
         node_publish_secret_ref_local_nonprim = NULL;
+    }
+    if (read_only_local_var) {
+        free(read_only_local_var);
+        read_only_local_var = NULL;
     }
     if (volume_attributesList) {
         listEntry_t *listEntry = NULL;

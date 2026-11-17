@@ -15,12 +15,12 @@ static v1_validating_admission_policy_binding_spec_t *v1_validating_admission_po
     if (!v1_validating_admission_policy_binding_spec_local_var) {
         return NULL;
     }
+    memset(v1_validating_admission_policy_binding_spec_local_var, 0, sizeof(v1_validating_admission_policy_binding_spec_t));
+    v1_validating_admission_policy_binding_spec_local_var->_library_owned = 1;
     v1_validating_admission_policy_binding_spec_local_var->match_resources = match_resources;
     v1_validating_admission_policy_binding_spec_local_var->param_ref = param_ref;
     v1_validating_admission_policy_binding_spec_local_var->policy_name = policy_name;
     v1_validating_admission_policy_binding_spec_local_var->validation_actions = validation_actions;
-
-    v1_validating_admission_policy_binding_spec_local_var->_library_owned = 1;
     return v1_validating_admission_policy_binding_spec_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1_validating_admission_policy_binding_spec_t *v1_va
     char *policy_name,
     list_t *validation_actions
     ) {
-    return v1_validating_admission_policy_binding_spec_create_internal (
+    v1_validating_admission_policy_binding_spec_t *result = v1_validating_admission_policy_binding_spec_create_internal (
         match_resources,
         param_ref,
         policy_name,
         validation_actions
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_validating_admission_policy_binding_spec_free(v1_validating_admission_policy_binding_spec_t *v1_validating_admission_policy_binding_spec) {
@@ -99,15 +102,18 @@ cJSON *v1_validating_admission_policy_binding_spec_convertToJSON(v1_validating_a
 
 
     // v1_validating_admission_policy_binding_spec->policy_name
-    if(v1_validating_admission_policy_binding_spec->policy_name) {
+    if (!v1_validating_admission_policy_binding_spec->policy_name) {
+        goto fail;
+    }
     if(cJSON_AddStringToObject(item, "policyName", v1_validating_admission_policy_binding_spec->policy_name) == NULL) {
     goto fail; //String
-    }
     }
 
 
     // v1_validating_admission_policy_binding_spec->validation_actions
-    if(v1_validating_admission_policy_binding_spec->validation_actions) {
+    if (!v1_validating_admission_policy_binding_spec->validation_actions) {
+        goto fail;
+    }
     cJSON *validation_actions = cJSON_AddArrayToObject(item, "validationActions");
     if(validation_actions == NULL) {
         goto fail; //primitive container
@@ -118,7 +124,6 @@ cJSON *v1_validating_admission_policy_binding_spec_convertToJSON(v1_validating_a
     if(cJSON_AddStringToObject(validation_actions, "", validation_actionsListEntry->data) == NULL)
     {
         goto fail;
-    }
     }
     }
 
@@ -139,6 +144,8 @@ v1_validating_admission_policy_binding_spec_t *v1_validating_admission_policy_bi
 
     // define the local variable for v1_validating_admission_policy_binding_spec->param_ref
     v1_param_ref_t *param_ref_local_nonprim = NULL;
+
+    char *policy_name_local_str = NULL;
 
     // define the local list for v1_validating_admission_policy_binding_spec->validation_actions
     list_t *validation_actionsList = NULL;
@@ -166,11 +173,14 @@ v1_validating_admission_policy_binding_spec_t *v1_validating_admission_policy_bi
     if (cJSON_IsNull(policy_name)) {
         policy_name = NULL;
     }
-    if (policy_name) { 
-    if(!cJSON_IsString(policy_name) && !cJSON_IsNull(policy_name))
+    if (!policy_name) {
+        goto end;
+    }
+
+    
+    if(!cJSON_IsString(policy_name))
     {
     goto end; //String
-    }
     }
 
     // v1_validating_admission_policy_binding_spec->validation_actions
@@ -178,7 +188,11 @@ v1_validating_admission_policy_binding_spec_t *v1_validating_admission_policy_bi
     if (cJSON_IsNull(validation_actions)) {
         validation_actions = NULL;
     }
-    if (validation_actions) { 
+    if (!validation_actions) {
+        goto end;
+    }
+
+    
     cJSON *validation_actions_local = NULL;
     if(!cJSON_IsArray(validation_actions)) {
         goto end;//primitive container
@@ -193,15 +207,20 @@ v1_validating_admission_policy_binding_spec_t *v1_validating_admission_policy_bi
         }
         list_addElement(validation_actionsList , strdup(validation_actions_local->valuestring));
     }
-    }
 
+
+    if (policy_name && !cJSON_IsNull(policy_name)) policy_name_local_str = strdup(policy_name->valuestring);
 
     v1_validating_admission_policy_binding_spec_local_var = v1_validating_admission_policy_binding_spec_create_internal (
         match_resources ? match_resources_local_nonprim : NULL,
         param_ref ? param_ref_local_nonprim : NULL,
-        policy_name && !cJSON_IsNull(policy_name) ? strdup(policy_name->valuestring) : NULL,
-        validation_actions ? validation_actionsList : NULL
+        policy_name_local_str,
+        validation_actionsList
         );
+
+    if (!v1_validating_admission_policy_binding_spec_local_var) {
+        goto end;
+    }
 
     return v1_validating_admission_policy_binding_spec_local_var;
 end:
@@ -212,6 +231,10 @@ end:
     if (param_ref_local_nonprim) {
         v1_param_ref_free(param_ref_local_nonprim);
         param_ref_local_nonprim = NULL;
+    }
+    if (policy_name_local_str) {
+        free(policy_name_local_str);
+        policy_name_local_str = NULL;
     }
     if (validation_actionsList) {
         listEntry_t *listEntry = NULL;

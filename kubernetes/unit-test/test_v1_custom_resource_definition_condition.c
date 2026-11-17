@@ -24,6 +24,7 @@ v1_custom_resource_definition_condition_t* instantiate_v1_custom_resource_defini
     v1_custom_resource_definition_condition = v1_custom_resource_definition_condition_create(
       "2013-10-20T19:20:30+01:00",
       "0",
+      56,
       "0",
       "0",
       "0"
@@ -32,6 +33,7 @@ v1_custom_resource_definition_condition_t* instantiate_v1_custom_resource_defini
     v1_custom_resource_definition_condition = v1_custom_resource_definition_condition_create(
       "2013-10-20T19:20:30+01:00",
       "0",
+      56,
       "0",
       "0",
       "0"

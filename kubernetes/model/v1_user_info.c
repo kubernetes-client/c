@@ -15,12 +15,12 @@ static v1_user_info_t *v1_user_info_create_internal(
     if (!v1_user_info_local_var) {
         return NULL;
     }
+    memset(v1_user_info_local_var, 0, sizeof(v1_user_info_t));
+    v1_user_info_local_var->_library_owned = 1;
     v1_user_info_local_var->extra = extra;
     v1_user_info_local_var->groups = groups;
     v1_user_info_local_var->uid = uid;
     v1_user_info_local_var->username = username;
-
-    v1_user_info_local_var->_library_owned = 1;
     return v1_user_info_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1_user_info_t *v1_user_info_create(
     char *uid,
     char *username
     ) {
-    return v1_user_info_create_internal (
+    v1_user_info_t *result = v1_user_info_create_internal (
         extra,
         groups,
         uid,
         username
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_user_info_free(v1_user_info_t *v1_user_info) {
@@ -144,6 +147,10 @@ v1_user_info_t *v1_user_info_parseFromJSON(cJSON *v1_user_infoJSON){
     // define the local list for v1_user_info->groups
     list_t *groupsList = NULL;
 
+    char *uid_local_str = NULL;
+
+    char *username_local_str = NULL;
+
     // v1_user_info->extra
     cJSON *extra = cJSON_GetObjectItemCaseSensitive(v1_user_infoJSON, "extra");
     if (cJSON_IsNull(extra)) {
@@ -214,12 +221,19 @@ v1_user_info_t *v1_user_info_parseFromJSON(cJSON *v1_user_infoJSON){
     }
 
 
+    if (uid && !cJSON_IsNull(uid)) uid_local_str = strdup(uid->valuestring);
+    if (username && !cJSON_IsNull(username)) username_local_str = strdup(username->valuestring);
+
     v1_user_info_local_var = v1_user_info_create_internal (
         extra ? extraList : NULL,
         groups ? groupsList : NULL,
-        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL,
-        username && !cJSON_IsNull(username) ? strdup(username->valuestring) : NULL
+        uid_local_str,
+        username_local_str
         );
+
+    if (!v1_user_info_local_var) {
+        goto end;
+    }
 
     return v1_user_info_local_var;
 end:
@@ -243,6 +257,14 @@ end:
         }
         list_freeList(groupsList);
         groupsList = NULL;
+    }
+    if (uid_local_str) {
+        free(uid_local_str);
+        uid_local_str = NULL;
+    }
+    if (username_local_str) {
+        free(username_local_str);
+        username_local_str = NULL;
     }
     return NULL;
 

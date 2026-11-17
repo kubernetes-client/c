@@ -6,28 +6,37 @@
 
 
 static events_v1_event_series_t *events_v1_event_series_create_internal(
-    int count,
+    int *count,
     char *last_observed_time
     ) {
     events_v1_event_series_t *events_v1_event_series_local_var = malloc(sizeof(events_v1_event_series_t));
     if (!events_v1_event_series_local_var) {
         return NULL;
     }
+    memset(events_v1_event_series_local_var, 0, sizeof(events_v1_event_series_t));
+    events_v1_event_series_local_var->_library_owned = 1;
     events_v1_event_series_local_var->count = count;
     events_v1_event_series_local_var->last_observed_time = last_observed_time;
-
-    events_v1_event_series_local_var->_library_owned = 1;
     return events_v1_event_series_local_var;
 }
 
 __attribute__((deprecated)) events_v1_event_series_t *events_v1_event_series_create(
-    int count,
+    int *count,
     char *last_observed_time
     ) {
-    return events_v1_event_series_create_internal (
-        count,
+    int *count_copy = NULL;
+    if (count) {
+        count_copy = malloc(sizeof(int));
+        if (count_copy) *count_copy = *count;
+    }
+    events_v1_event_series_t *result = events_v1_event_series_create_internal (
+        count_copy,
         last_observed_time
         );
+    if (!result) {
+        free(count_copy);
+    }
+    return result;
 }
 
 void events_v1_event_series_free(events_v1_event_series_t *events_v1_event_series) {
@@ -39,6 +48,10 @@ void events_v1_event_series_free(events_v1_event_series_t *events_v1_event_serie
         return ;
     }
     listEntry_t *listEntry;
+    if (events_v1_event_series->count) {
+        free(events_v1_event_series->count);
+        events_v1_event_series->count = NULL;
+    }
     if (events_v1_event_series->last_observed_time) {
         free(events_v1_event_series->last_observed_time);
         events_v1_event_series->last_observed_time = NULL;
@@ -53,7 +66,7 @@ cJSON *events_v1_event_series_convertToJSON(events_v1_event_series_t *events_v1_
     if (!events_v1_event_series->count) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "count", events_v1_event_series->count) == NULL) {
+    if(cJSON_AddNumberToObject(item, "count", *events_v1_event_series->count) == NULL) {
     goto fail; //Numeric
     }
 
@@ -78,6 +91,11 @@ events_v1_event_series_t *events_v1_event_series_parseFromJSON(cJSON *events_v1_
 
     events_v1_event_series_t *events_v1_event_series_local_var = NULL;
 
+    // define the local variable for events_v1_event_series->count
+    int *count_local_var = NULL;
+
+    char *last_observed_time_local_str = NULL;
+
     // events_v1_event_series->count
     cJSON *count = cJSON_GetObjectItemCaseSensitive(events_v1_event_seriesJSON, "count");
     if (cJSON_IsNull(count)) {
@@ -92,6 +110,12 @@ events_v1_event_series_t *events_v1_event_series_parseFromJSON(cJSON *events_v1_
     {
     goto end; //Numeric
     }
+    count_local_var = malloc(sizeof(int));
+    if(!count_local_var)
+    {
+        goto end;
+    }
+    *count_local_var = count->valuedouble;
 
     // events_v1_event_series->last_observed_time
     cJSON *last_observed_time = cJSON_GetObjectItemCaseSensitive(events_v1_event_seriesJSON, "lastObservedTime");
@@ -109,13 +133,27 @@ events_v1_event_series_t *events_v1_event_series_parseFromJSON(cJSON *events_v1_
     }
 
 
+    if (last_observed_time && !cJSON_IsNull(last_observed_time)) last_observed_time_local_str = strdup(last_observed_time->valuestring);
+
     events_v1_event_series_local_var = events_v1_event_series_create_internal (
-        count->valuedouble,
-        strdup(last_observed_time->valuestring)
+        count_local_var,
+        last_observed_time_local_str
         );
+
+    if (!events_v1_event_series_local_var) {
+        goto end;
+    }
 
     return events_v1_event_series_local_var;
 end:
+    if (count_local_var) {
+        free(count_local_var);
+        count_local_var = NULL;
+    }
+    if (last_observed_time_local_str) {
+        free(last_observed_time_local_str);
+        last_observed_time_local_str = NULL;
+    }
     return NULL;
 
 }

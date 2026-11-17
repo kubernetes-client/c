@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **external_id** | **char \*** | Deprecated. Not all kubelets will set this field. Remove field after 1.13. see: https://issues.k8s.io/61966 | [optional] 
 **pod_cidr** | **char \*** | PodCIDR represents the pod IP range assigned to the node. | [optional] 
 **pod_cidrs** | **list_t \*** | podCIDRs represents the IP ranges assigned to the node for usage by Pods on that node. If this field is specified, the 0th entry must match the podCIDR field. It may contain at most 1 value for each of IPv4 and IPv6. | [optional] 
+**pod_preemption_policy** | [**v1_node_pod_preemption_policy_t**](v1_node_pod_preemption_policy.md) \* |  | [optional] 
 **provider_id** | **char \*** | ID of the node assigned by the cloud provider in the format: &lt;ProviderName&gt;://&lt;ProviderSpecificNodeID&gt; | [optional] 
 **taints** | [**list_t**](v1_taint.md) \* | If specified, the node&#39;s taints. | [optional] 
 **unschedulable** | **int** | Unschedulable controls node schedulability of new pods. By default, node is schedulable. More info: https://kubernetes.io/docs/concepts/nodes/node/#manual-node-administration | [optional] 

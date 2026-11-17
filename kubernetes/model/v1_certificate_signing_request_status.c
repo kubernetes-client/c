@@ -13,10 +13,10 @@ static v1_certificate_signing_request_status_t *v1_certificate_signing_request_s
     if (!v1_certificate_signing_request_status_local_var) {
         return NULL;
     }
+    memset(v1_certificate_signing_request_status_local_var, 0, sizeof(v1_certificate_signing_request_status_t));
+    v1_certificate_signing_request_status_local_var->_library_owned = 1;
     v1_certificate_signing_request_status_local_var->certificate = certificate;
     v1_certificate_signing_request_status_local_var->conditions = conditions;
-
-    v1_certificate_signing_request_status_local_var->_library_owned = 1;
     return v1_certificate_signing_request_status_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_certificate_signing_request_status_t *v1_certific
     char *certificate,
     list_t *conditions
     ) {
-    return v1_certificate_signing_request_status_create_internal (
+    v1_certificate_signing_request_status_t *result = v1_certificate_signing_request_status_create_internal (
         certificate,
         conditions
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_certificate_signing_request_status_free(v1_certificate_signing_request_status_t *v1_certificate_signing_request_status) {
@@ -95,6 +98,8 @@ v1_certificate_signing_request_status_t *v1_certificate_signing_request_status_p
 
     v1_certificate_signing_request_status_t *v1_certificate_signing_request_status_local_var = NULL;
 
+    char *certificate_local_str = NULL;
+
     // define the local list for v1_certificate_signing_request_status->conditions
     list_t *conditionsList = NULL;
 
@@ -135,13 +140,23 @@ v1_certificate_signing_request_status_t *v1_certificate_signing_request_status_p
     }
 
 
+    if (certificate) certificate_local_str = strdup(certificate->valuestring);
+
     v1_certificate_signing_request_status_local_var = v1_certificate_signing_request_status_create_internal (
-        certificate ? strdup(certificate->valuestring) : NULL,
+        certificate_local_str,
         conditions ? conditionsList : NULL
         );
 
+    if (!v1_certificate_signing_request_status_local_var) {
+        goto end;
+    }
+
     return v1_certificate_signing_request_status_local_var;
 end:
+    if (certificate_local_str) {
+        free(certificate_local_str);
+        certificate_local_str = NULL;
+    }
     if (conditionsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, conditionsList) {

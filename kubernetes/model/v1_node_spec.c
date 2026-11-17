@@ -10,23 +10,25 @@ static v1_node_spec_t *v1_node_spec_create_internal(
     char *external_id,
     char *pod_cidr,
     list_t *pod_cidrs,
+    v1_node_pod_preemption_policy_t *pod_preemption_policy,
     char *provider_id,
     list_t *taints,
-    int unschedulable
+    int *unschedulable
     ) {
     v1_node_spec_t *v1_node_spec_local_var = malloc(sizeof(v1_node_spec_t));
     if (!v1_node_spec_local_var) {
         return NULL;
     }
+    memset(v1_node_spec_local_var, 0, sizeof(v1_node_spec_t));
+    v1_node_spec_local_var->_library_owned = 1;
     v1_node_spec_local_var->config_source = config_source;
     v1_node_spec_local_var->external_id = external_id;
     v1_node_spec_local_var->pod_cidr = pod_cidr;
     v1_node_spec_local_var->pod_cidrs = pod_cidrs;
+    v1_node_spec_local_var->pod_preemption_policy = pod_preemption_policy;
     v1_node_spec_local_var->provider_id = provider_id;
     v1_node_spec_local_var->taints = taints;
     v1_node_spec_local_var->unschedulable = unschedulable;
-
-    v1_node_spec_local_var->_library_owned = 1;
     return v1_node_spec_local_var;
 }
 
@@ -35,19 +37,30 @@ __attribute__((deprecated)) v1_node_spec_t *v1_node_spec_create(
     char *external_id,
     char *pod_cidr,
     list_t *pod_cidrs,
+    v1_node_pod_preemption_policy_t *pod_preemption_policy,
     char *provider_id,
     list_t *taints,
-    int unschedulable
+    int *unschedulable
     ) {
-    return v1_node_spec_create_internal (
+    int *unschedulable_copy = NULL;
+    if (unschedulable) {
+        unschedulable_copy = malloc(sizeof(int));
+        if (unschedulable_copy) *unschedulable_copy = *unschedulable;
+    }
+    v1_node_spec_t *result = v1_node_spec_create_internal (
         config_source,
         external_id,
         pod_cidr,
         pod_cidrs,
+        pod_preemption_policy,
         provider_id,
         taints,
-        unschedulable
+        unschedulable_copy
         );
+    if (!result) {
+        free(unschedulable_copy);
+    }
+    return result;
 }
 
 void v1_node_spec_free(v1_node_spec_t *v1_node_spec) {
@@ -78,6 +91,10 @@ void v1_node_spec_free(v1_node_spec_t *v1_node_spec) {
         list_freeList(v1_node_spec->pod_cidrs);
         v1_node_spec->pod_cidrs = NULL;
     }
+    if (v1_node_spec->pod_preemption_policy) {
+        v1_node_pod_preemption_policy_free(v1_node_spec->pod_preemption_policy);
+        v1_node_spec->pod_preemption_policy = NULL;
+    }
     if (v1_node_spec->provider_id) {
         free(v1_node_spec->provider_id);
         v1_node_spec->provider_id = NULL;
@@ -88,6 +105,10 @@ void v1_node_spec_free(v1_node_spec_t *v1_node_spec) {
         }
         list_freeList(v1_node_spec->taints);
         v1_node_spec->taints = NULL;
+    }
+    if (v1_node_spec->unschedulable) {
+        free(v1_node_spec->unschedulable);
+        v1_node_spec->unschedulable = NULL;
     }
     free(v1_node_spec);
 }
@@ -141,6 +162,19 @@ cJSON *v1_node_spec_convertToJSON(v1_node_spec_t *v1_node_spec) {
     }
 
 
+    // v1_node_spec->pod_preemption_policy
+    if(v1_node_spec->pod_preemption_policy) {
+    cJSON *pod_preemption_policy_local_JSON = v1_node_pod_preemption_policy_convertToJSON(v1_node_spec->pod_preemption_policy);
+    if(pod_preemption_policy_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "podPreemptionPolicy", pod_preemption_policy_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+    }
+
+
     // v1_node_spec->provider_id
     if(v1_node_spec->provider_id) {
     if(cJSON_AddStringToObject(item, "providerID", v1_node_spec->provider_id) == NULL) {
@@ -171,7 +205,7 @@ cJSON *v1_node_spec_convertToJSON(v1_node_spec_t *v1_node_spec) {
 
     // v1_node_spec->unschedulable
     if(v1_node_spec->unschedulable) {
-    if(cJSON_AddBoolToObject(item, "unschedulable", v1_node_spec->unschedulable) == NULL) {
+    if(cJSON_AddBoolToObject(item, "unschedulable", *v1_node_spec->unschedulable) == NULL) {
     goto fail; //Bool
     }
     }
@@ -191,11 +225,23 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
     // define the local variable for v1_node_spec->config_source
     v1_node_config_source_t *config_source_local_nonprim = NULL;
 
+    char *external_id_local_str = NULL;
+
+    char *pod_cidr_local_str = NULL;
+
     // define the local list for v1_node_spec->pod_cidrs
     list_t *pod_cidrsList = NULL;
 
+    // define the local variable for v1_node_spec->pod_preemption_policy
+    v1_node_pod_preemption_policy_t *pod_preemption_policy_local_nonprim = NULL;
+
+    char *provider_id_local_str = NULL;
+
     // define the local list for v1_node_spec->taints
     list_t *taintsList = NULL;
+
+    // define the local variable for v1_node_spec->unschedulable
+    int *unschedulable_local_var = NULL;
 
     // v1_node_spec->config_source
     cJSON *config_source = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "configSource");
@@ -252,6 +298,15 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
     }
     }
 
+    // v1_node_spec->pod_preemption_policy
+    cJSON *pod_preemption_policy = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "podPreemptionPolicy");
+    if (cJSON_IsNull(pod_preemption_policy)) {
+        pod_preemption_policy = NULL;
+    }
+    if (pod_preemption_policy) { 
+    pod_preemption_policy_local_nonprim = v1_node_pod_preemption_policy_parseFromJSON(pod_preemption_policy); //nonprimitive
+    }
+
     // v1_node_spec->provider_id
     cJSON *provider_id = cJSON_GetObjectItemCaseSensitive(v1_node_specJSON, "providerID");
     if (cJSON_IsNull(provider_id)) {
@@ -298,24 +353,47 @@ v1_node_spec_t *v1_node_spec_parseFromJSON(cJSON *v1_node_specJSON){
     {
     goto end; //Bool
     }
+    unschedulable_local_var = malloc(sizeof(int));
+    if(!unschedulable_local_var)
+    {
+        goto end;
+    }
+    *unschedulable_local_var = unschedulable->valueint;
     }
 
 
+    if (external_id && !cJSON_IsNull(external_id)) external_id_local_str = strdup(external_id->valuestring);
+    if (pod_cidr && !cJSON_IsNull(pod_cidr)) pod_cidr_local_str = strdup(pod_cidr->valuestring);
+    if (provider_id && !cJSON_IsNull(provider_id)) provider_id_local_str = strdup(provider_id->valuestring);
+
     v1_node_spec_local_var = v1_node_spec_create_internal (
         config_source ? config_source_local_nonprim : NULL,
-        external_id && !cJSON_IsNull(external_id) ? strdup(external_id->valuestring) : NULL,
-        pod_cidr && !cJSON_IsNull(pod_cidr) ? strdup(pod_cidr->valuestring) : NULL,
+        external_id_local_str,
+        pod_cidr_local_str,
         pod_cidrs ? pod_cidrsList : NULL,
-        provider_id && !cJSON_IsNull(provider_id) ? strdup(provider_id->valuestring) : NULL,
+        pod_preemption_policy ? pod_preemption_policy_local_nonprim : NULL,
+        provider_id_local_str,
         taints ? taintsList : NULL,
-        unschedulable ? unschedulable->valueint : 0
+        unschedulable_local_var
         );
+
+    if (!v1_node_spec_local_var) {
+        goto end;
+    }
 
     return v1_node_spec_local_var;
 end:
     if (config_source_local_nonprim) {
         v1_node_config_source_free(config_source_local_nonprim);
         config_source_local_nonprim = NULL;
+    }
+    if (external_id_local_str) {
+        free(external_id_local_str);
+        external_id_local_str = NULL;
+    }
+    if (pod_cidr_local_str) {
+        free(pod_cidr_local_str);
+        pod_cidr_local_str = NULL;
     }
     if (pod_cidrsList) {
         listEntry_t *listEntry = NULL;
@@ -326,6 +404,14 @@ end:
         list_freeList(pod_cidrsList);
         pod_cidrsList = NULL;
     }
+    if (pod_preemption_policy_local_nonprim) {
+        v1_node_pod_preemption_policy_free(pod_preemption_policy_local_nonprim);
+        pod_preemption_policy_local_nonprim = NULL;
+    }
+    if (provider_id_local_str) {
+        free(provider_id_local_str);
+        provider_id_local_str = NULL;
+    }
     if (taintsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, taintsList) {
@@ -334,6 +420,10 @@ end:
         }
         list_freeList(taintsList);
         taintsList = NULL;
+    }
+    if (unschedulable_local_var) {
+        free(unschedulable_local_var);
+        unschedulable_local_var = NULL;
     }
     return NULL;
 

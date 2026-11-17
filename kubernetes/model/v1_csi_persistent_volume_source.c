@@ -13,7 +13,7 @@ static v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_create
     v1_secret_reference_t *node_expand_secret_ref,
     v1_secret_reference_t *node_publish_secret_ref,
     v1_secret_reference_t *node_stage_secret_ref,
-    int read_only,
+    int *read_only,
     list_t* volume_attributes,
     char *volume_handle
     ) {
@@ -21,6 +21,8 @@ static v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_create
     if (!v1_csi_persistent_volume_source_local_var) {
         return NULL;
     }
+    memset(v1_csi_persistent_volume_source_local_var, 0, sizeof(v1_csi_persistent_volume_source_t));
+    v1_csi_persistent_volume_source_local_var->_library_owned = 1;
     v1_csi_persistent_volume_source_local_var->controller_expand_secret_ref = controller_expand_secret_ref;
     v1_csi_persistent_volume_source_local_var->controller_publish_secret_ref = controller_publish_secret_ref;
     v1_csi_persistent_volume_source_local_var->driver = driver;
@@ -31,8 +33,6 @@ static v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_create
     v1_csi_persistent_volume_source_local_var->read_only = read_only;
     v1_csi_persistent_volume_source_local_var->volume_attributes = volume_attributes;
     v1_csi_persistent_volume_source_local_var->volume_handle = volume_handle;
-
-    v1_csi_persistent_volume_source_local_var->_library_owned = 1;
     return v1_csi_persistent_volume_source_local_var;
 }
 
@@ -44,11 +44,16 @@ __attribute__((deprecated)) v1_csi_persistent_volume_source_t *v1_csi_persistent
     v1_secret_reference_t *node_expand_secret_ref,
     v1_secret_reference_t *node_publish_secret_ref,
     v1_secret_reference_t *node_stage_secret_ref,
-    int read_only,
+    int *read_only,
     list_t* volume_attributes,
     char *volume_handle
     ) {
-    return v1_csi_persistent_volume_source_create_internal (
+    int *read_only_copy = NULL;
+    if (read_only) {
+        read_only_copy = malloc(sizeof(int));
+        if (read_only_copy) *read_only_copy = *read_only;
+    }
+    v1_csi_persistent_volume_source_t *result = v1_csi_persistent_volume_source_create_internal (
         controller_expand_secret_ref,
         controller_publish_secret_ref,
         driver,
@@ -56,10 +61,14 @@ __attribute__((deprecated)) v1_csi_persistent_volume_source_t *v1_csi_persistent
         node_expand_secret_ref,
         node_publish_secret_ref,
         node_stage_secret_ref,
-        read_only,
+        read_only_copy,
         volume_attributes,
         volume_handle
         );
+    if (!result) {
+        free(read_only_copy);
+    }
+    return result;
 }
 
 void v1_csi_persistent_volume_source_free(v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source) {
@@ -98,6 +107,10 @@ void v1_csi_persistent_volume_source_free(v1_csi_persistent_volume_source_t *v1_
     if (v1_csi_persistent_volume_source->node_stage_secret_ref) {
         v1_secret_reference_free(v1_csi_persistent_volume_source->node_stage_secret_ref);
         v1_csi_persistent_volume_source->node_stage_secret_ref = NULL;
+    }
+    if (v1_csi_persistent_volume_source->read_only) {
+        free(v1_csi_persistent_volume_source->read_only);
+        v1_csi_persistent_volume_source->read_only = NULL;
     }
     if (v1_csi_persistent_volume_source->volume_attributes) {
         list_ForEach(listEntry, v1_csi_persistent_volume_source->volume_attributes) {
@@ -203,7 +216,7 @@ cJSON *v1_csi_persistent_volume_source_convertToJSON(v1_csi_persistent_volume_so
 
     // v1_csi_persistent_volume_source->read_only
     if(v1_csi_persistent_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_csi_persistent_volume_source->read_only) == NULL) {
+    if(cJSON_AddBoolToObject(item, "readOnly", *v1_csi_persistent_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -255,6 +268,10 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_parseFromJSON
     // define the local variable for v1_csi_persistent_volume_source->controller_publish_secret_ref
     v1_secret_reference_t *controller_publish_secret_ref_local_nonprim = NULL;
 
+    char *driver_local_str = NULL;
+
+    char *fs_type_local_str = NULL;
+
     // define the local variable for v1_csi_persistent_volume_source->node_expand_secret_ref
     v1_secret_reference_t *node_expand_secret_ref_local_nonprim = NULL;
 
@@ -264,8 +281,13 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_parseFromJSON
     // define the local variable for v1_csi_persistent_volume_source->node_stage_secret_ref
     v1_secret_reference_t *node_stage_secret_ref_local_nonprim = NULL;
 
+    // define the local variable for v1_csi_persistent_volume_source->read_only
+    int *read_only_local_var = NULL;
+
     // define the local map for v1_csi_persistent_volume_source->volume_attributes
     list_t *volume_attributesList = NULL;
+
+    char *volume_handle_local_str = NULL;
 
     // v1_csi_persistent_volume_source->controller_expand_secret_ref
     cJSON *controller_expand_secret_ref = cJSON_GetObjectItemCaseSensitive(v1_csi_persistent_volume_sourceJSON, "controllerExpandSecretRef");
@@ -349,6 +371,12 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_parseFromJSON
     {
     goto end; //Bool
     }
+    read_only_local_var = malloc(sizeof(int));
+    if(!read_only_local_var)
+    {
+        goto end;
+    }
+    *read_only_local_var = read_only->valueint;
     }
 
     // v1_csi_persistent_volume_source->volume_attributes
@@ -395,18 +423,26 @@ v1_csi_persistent_volume_source_t *v1_csi_persistent_volume_source_parseFromJSON
     }
 
 
+    if (driver && !cJSON_IsNull(driver)) driver_local_str = strdup(driver->valuestring);
+    if (fs_type && !cJSON_IsNull(fs_type)) fs_type_local_str = strdup(fs_type->valuestring);
+    if (volume_handle && !cJSON_IsNull(volume_handle)) volume_handle_local_str = strdup(volume_handle->valuestring);
+
     v1_csi_persistent_volume_source_local_var = v1_csi_persistent_volume_source_create_internal (
         controller_expand_secret_ref ? controller_expand_secret_ref_local_nonprim : NULL,
         controller_publish_secret_ref ? controller_publish_secret_ref_local_nonprim : NULL,
-        strdup(driver->valuestring),
-        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
+        driver_local_str,
+        fs_type_local_str,
         node_expand_secret_ref ? node_expand_secret_ref_local_nonprim : NULL,
         node_publish_secret_ref ? node_publish_secret_ref_local_nonprim : NULL,
         node_stage_secret_ref ? node_stage_secret_ref_local_nonprim : NULL,
-        read_only ? read_only->valueint : 0,
+        read_only_local_var,
         volume_attributes ? volume_attributesList : NULL,
-        strdup(volume_handle->valuestring)
+        volume_handle_local_str
         );
+
+    if (!v1_csi_persistent_volume_source_local_var) {
+        goto end;
+    }
 
     return v1_csi_persistent_volume_source_local_var;
 end:
@@ -417,6 +453,14 @@ end:
     if (controller_publish_secret_ref_local_nonprim) {
         v1_secret_reference_free(controller_publish_secret_ref_local_nonprim);
         controller_publish_secret_ref_local_nonprim = NULL;
+    }
+    if (driver_local_str) {
+        free(driver_local_str);
+        driver_local_str = NULL;
+    }
+    if (fs_type_local_str) {
+        free(fs_type_local_str);
+        fs_type_local_str = NULL;
     }
     if (node_expand_secret_ref_local_nonprim) {
         v1_secret_reference_free(node_expand_secret_ref_local_nonprim);
@@ -429,6 +473,10 @@ end:
     if (node_stage_secret_ref_local_nonprim) {
         v1_secret_reference_free(node_stage_secret_ref_local_nonprim);
         node_stage_secret_ref_local_nonprim = NULL;
+    }
+    if (read_only_local_var) {
+        free(read_only_local_var);
+        read_only_local_var = NULL;
     }
     if (volume_attributesList) {
         listEntry_t *listEntry = NULL;
@@ -443,6 +491,10 @@ end:
         }
         list_freeList(volume_attributesList);
         volume_attributesList = NULL;
+    }
+    if (volume_handle_local_str) {
+        free(volume_handle_local_str);
+        volume_handle_local_str = NULL;
     }
     return NULL;
 

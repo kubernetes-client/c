@@ -19,17 +19,17 @@ typedef struct v2_hpa_scaling_policy_t v2_hpa_scaling_policy_t;
 
 
 typedef struct v2_hpa_scaling_policy_t {
-    int period_seconds; //numeric
+    int *period_seconds; //numeric
     char *type; // string
-    int value; //numeric
+    int *value; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v2_hpa_scaling_policy_t;
 
 __attribute__((deprecated)) v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_create(
-    int period_seconds,
+    int *period_seconds,
     char *type,
-    int value
+    int *value
 );
 
 void v2_hpa_scaling_policy_free(v2_hpa_scaling_policy_t *v2_hpa_scaling_policy);

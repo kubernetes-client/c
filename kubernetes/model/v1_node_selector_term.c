@@ -13,10 +13,10 @@ static v1_node_selector_term_t *v1_node_selector_term_create_internal(
     if (!v1_node_selector_term_local_var) {
         return NULL;
     }
+    memset(v1_node_selector_term_local_var, 0, sizeof(v1_node_selector_term_t));
+    v1_node_selector_term_local_var->_library_owned = 1;
     v1_node_selector_term_local_var->match_expressions = match_expressions;
     v1_node_selector_term_local_var->match_fields = match_fields;
-
-    v1_node_selector_term_local_var->_library_owned = 1;
     return v1_node_selector_term_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_node_selector_term_t *v1_node_selector_term_creat
     list_t *match_expressions,
     list_t *match_fields
     ) {
-    return v1_node_selector_term_create_internal (
+    v1_node_selector_term_t *result = v1_node_selector_term_create_internal (
         match_expressions,
         match_fields
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_node_selector_term_free(v1_node_selector_term_t *v1_node_selector_term) {
@@ -165,10 +168,15 @@ v1_node_selector_term_t *v1_node_selector_term_parseFromJSON(cJSON *v1_node_sele
     }
 
 
+
     v1_node_selector_term_local_var = v1_node_selector_term_create_internal (
         match_expressions ? match_expressionsList : NULL,
         match_fields ? match_fieldsList : NULL
         );
+
+    if (!v1_node_selector_term_local_var) {
+        goto end;
+    }
 
     return v1_node_selector_term_local_var;
 end:

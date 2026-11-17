@@ -22,10 +22,10 @@ typedef struct v1_delete_options_t v1_delete_options_t;
 typedef struct v1_delete_options_t {
     char *api_version; // string
     list_t *dry_run; //primitive container
-    long grace_period_seconds; //numeric
-    int ignore_store_read_error_with_cluster_breaking_potential; //boolean
+    long *grace_period_seconds; //numeric
+    int *ignore_store_read_error_with_cluster_breaking_potential; //boolean
     char *kind; // string
-    int orphan_dependents; //boolean
+    int *orphan_dependents; //boolean
     struct v1_preconditions_t *preconditions; //model
     char *propagation_policy; // string
 
@@ -35,10 +35,10 @@ typedef struct v1_delete_options_t {
 __attribute__((deprecated)) v1_delete_options_t *v1_delete_options_create(
     char *api_version,
     list_t *dry_run,
-    long grace_period_seconds,
-    int ignore_store_read_error_with_cluster_breaking_potential,
+    long *grace_period_seconds,
+    int *ignore_store_read_error_with_cluster_breaking_potential,
     char *kind,
-    int orphan_dependents,
+    int *orphan_dependents,
     v1_preconditions_t *preconditions,
     char *propagation_policy
 );

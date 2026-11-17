@@ -12,18 +12,21 @@ static v1_local_object_reference_t *v1_local_object_reference_create_internal(
     if (!v1_local_object_reference_local_var) {
         return NULL;
     }
-    v1_local_object_reference_local_var->name = name;
-
+    memset(v1_local_object_reference_local_var, 0, sizeof(v1_local_object_reference_t));
     v1_local_object_reference_local_var->_library_owned = 1;
+    v1_local_object_reference_local_var->name = name;
     return v1_local_object_reference_local_var;
 }
 
 __attribute__((deprecated)) v1_local_object_reference_t *v1_local_object_reference_create(
     char *name
     ) {
-    return v1_local_object_reference_create_internal (
+    v1_local_object_reference_t *result = v1_local_object_reference_create_internal (
         name
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_local_object_reference_free(v1_local_object_reference_t *v1_local_object_reference) {
@@ -64,6 +67,8 @@ v1_local_object_reference_t *v1_local_object_reference_parseFromJSON(cJSON *v1_l
 
     v1_local_object_reference_t *v1_local_object_reference_local_var = NULL;
 
+    char *name_local_str = NULL;
+
     // v1_local_object_reference->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_local_object_referenceJSON, "name");
     if (cJSON_IsNull(name)) {
@@ -77,12 +82,22 @@ v1_local_object_reference_t *v1_local_object_reference_parseFromJSON(cJSON *v1_l
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v1_local_object_reference_local_var = v1_local_object_reference_create_internal (
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL
+        name_local_str
         );
+
+    if (!v1_local_object_reference_local_var) {
+        goto end;
+    }
 
     return v1_local_object_reference_local_var;
 end:
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
     return NULL;
 
 }

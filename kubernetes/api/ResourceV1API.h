@@ -11,6 +11,8 @@
 #include "../model/v1_delete_options.h"
 #include "../model/v1_device_class.h"
 #include "../model/v1_device_class_list.h"
+#include "../model/v1_device_taint_rule.h"
+#include "../model/v1_device_taint_rule_list.h"
 #include "../model/v1_resource_claim_list.h"
 #include "../model/v1_resource_claim_template.h"
 #include "../model/v1_resource_claim_template_list.h"
@@ -23,6 +25,12 @@
 //
 v1_device_class_t*
 ResourceV1API_createDeviceClass(apiClient_t *apiClient, v1_device_class_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+
+
+// create a DeviceTaintRule
+//
+v1_device_taint_rule_t*
+ResourceV1API_createDeviceTaintRule(apiClient_t *apiClient, v1_device_taint_rule_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 
 // create a ResourceClaim
@@ -46,31 +54,43 @@ ResourceV1API_createResourceSlice(apiClient_t *apiClient, v1_resource_slice_t *b
 // delete collection of DeviceClass
 //
 v1_status_t*
-ResourceV1API_deleteCollectionDeviceClass(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+ResourceV1API_deleteCollectionDeviceClass(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body);
+
+
+// delete collection of DeviceTaintRule
+//
+v1_status_t*
+ResourceV1API_deleteCollectionDeviceTaintRule(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete collection of ResourceClaim
 //
 v1_status_t*
-ResourceV1API_deleteCollectionNamespacedResourceClaim(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+ResourceV1API_deleteCollectionNamespacedResourceClaim(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete collection of ResourceClaimTemplate
 //
 v1_status_t*
-ResourceV1API_deleteCollectionNamespacedResourceClaimTemplate(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+ResourceV1API_deleteCollectionNamespacedResourceClaimTemplate(apiClient_t *apiClient, char *_namespace, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete collection of ResourceSlice
 //
 v1_status_t*
-ResourceV1API_deleteCollectionResourceSlice(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body);
+ResourceV1API_deleteCollectionResourceSlice(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body);
 
 
 // delete a DeviceClass
 //
 v1_device_class_t*
 ResourceV1API_deleteDeviceClass(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
+
+
+// delete a DeviceTaintRule
+//
+v1_status_t*
+ResourceV1API_deleteDeviceTaintRule(apiClient_t *apiClient, char *name, char *pretty, char *dryRun, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, int *orphanDependents, char *propagationPolicy, v1_delete_options_t *body);
 
 
 // delete a ResourceClaim
@@ -100,43 +120,61 @@ ResourceV1API_getAPIResources(apiClient_t *apiClient);
 // list or watch objects of kind DeviceClass
 //
 v1_device_class_list_t*
-ResourceV1API_listDeviceClass(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+ResourceV1API_listDeviceClass(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch);
+
+
+// list or watch objects of kind DeviceTaintRule
+//
+v1_device_taint_rule_list_t*
+ResourceV1API_listDeviceTaintRule(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch);
 
 
 // list or watch objects of kind ResourceClaim
 //
 v1_resource_claim_list_t*
-ResourceV1API_listNamespacedResourceClaim(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+ResourceV1API_listNamespacedResourceClaim(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch);
 
 
 // list or watch objects of kind ResourceClaimTemplate
 //
 v1_resource_claim_template_list_t*
-ResourceV1API_listNamespacedResourceClaimTemplate(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+ResourceV1API_listNamespacedResourceClaimTemplate(apiClient_t *apiClient, char *_namespace, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch);
 
 
 // list or watch objects of kind ResourceClaim
 //
 v1_resource_claim_list_t*
-ResourceV1API_listResourceClaimForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+ResourceV1API_listResourceClaimForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch);
 
 
 // list or watch objects of kind ResourceClaimTemplate
 //
 v1_resource_claim_template_list_t*
-ResourceV1API_listResourceClaimTemplateForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+ResourceV1API_listResourceClaimTemplateForAllNamespaces(apiClient_t *apiClient, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *pretty, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch);
 
 
 // list or watch objects of kind ResourceSlice
 //
 v1_resource_slice_list_t*
-ResourceV1API_listResourceSlice(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch);
+ResourceV1API_listResourceSlice(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch);
 
 
 // partially update the specified DeviceClass
 //
 v1_device_class_t*
 ResourceV1API_patchDeviceClass(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+
+
+// partially update the specified DeviceTaintRule
+//
+v1_device_taint_rule_t*
+ResourceV1API_patchDeviceTaintRule(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
+
+
+// partially update status of the specified DeviceTaintRule
+//
+v1_device_taint_rule_t*
+ResourceV1API_patchDeviceTaintRuleStatus(apiClient_t *apiClient, char *name, object_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation, int *force);
 
 
 // partially update the specified ResourceClaim
@@ -169,6 +207,18 @@ v1_device_class_t*
 ResourceV1API_readDeviceClass(apiClient_t *apiClient, char *name, char *pretty);
 
 
+// read the specified DeviceTaintRule
+//
+v1_device_taint_rule_t*
+ResourceV1API_readDeviceTaintRule(apiClient_t *apiClient, char *name, char *pretty);
+
+
+// read status of the specified DeviceTaintRule
+//
+v1_device_taint_rule_t*
+ResourceV1API_readDeviceTaintRuleStatus(apiClient_t *apiClient, char *name, char *pretty);
+
+
 // read the specified ResourceClaim
 //
 resource_v1_resource_claim_t*
@@ -197,6 +247,18 @@ ResourceV1API_readResourceSlice(apiClient_t *apiClient, char *name, char *pretty
 //
 v1_device_class_t*
 ResourceV1API_replaceDeviceClass(apiClient_t *apiClient, char *name, v1_device_class_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+
+
+// replace the specified DeviceTaintRule
+//
+v1_device_taint_rule_t*
+ResourceV1API_replaceDeviceTaintRule(apiClient_t *apiClient, char *name, v1_device_taint_rule_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
+
+
+// replace status of the specified DeviceTaintRule
+//
+v1_device_taint_rule_t*
+ResourceV1API_replaceDeviceTaintRuleStatus(apiClient_t *apiClient, char *name, v1_device_taint_rule_t *body, char *pretty, char *dryRun, char *fieldManager, char *fieldValidation);
 
 
 // replace the specified ResourceClaim

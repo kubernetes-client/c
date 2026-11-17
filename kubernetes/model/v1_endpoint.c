@@ -19,6 +19,8 @@ static v1_endpoint_t *v1_endpoint_create_internal(
     if (!v1_endpoint_local_var) {
         return NULL;
     }
+    memset(v1_endpoint_local_var, 0, sizeof(v1_endpoint_t));
+    v1_endpoint_local_var->_library_owned = 1;
     v1_endpoint_local_var->addresses = addresses;
     v1_endpoint_local_var->conditions = conditions;
     v1_endpoint_local_var->deprecated_topology = deprecated_topology;
@@ -27,8 +29,6 @@ static v1_endpoint_t *v1_endpoint_create_internal(
     v1_endpoint_local_var->node_name = node_name;
     v1_endpoint_local_var->target_ref = target_ref;
     v1_endpoint_local_var->zone = zone;
-
-    v1_endpoint_local_var->_library_owned = 1;
     return v1_endpoint_local_var;
 }
 
@@ -42,7 +42,7 @@ __attribute__((deprecated)) v1_endpoint_t *v1_endpoint_create(
     v1_object_reference_t *target_ref,
     char *zone
     ) {
-    return v1_endpoint_create_internal (
+    v1_endpoint_t *result = v1_endpoint_create_internal (
         addresses,
         conditions,
         deprecated_topology,
@@ -52,6 +52,9 @@ __attribute__((deprecated)) v1_endpoint_t *v1_endpoint_create(
         target_ref,
         zone
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_endpoint_free(v1_endpoint_t *v1_endpoint) {
@@ -234,8 +237,14 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
     // define the local variable for v1_endpoint->hints
     v1_endpoint_hints_t *hints_local_nonprim = NULL;
 
+    char *hostname_local_str = NULL;
+
+    char *node_name_local_str = NULL;
+
     // define the local variable for v1_endpoint->target_ref
     v1_object_reference_t *target_ref_local_nonprim = NULL;
+
+    char *zone_local_str = NULL;
 
     // v1_endpoint->addresses
     cJSON *addresses = cJSON_GetObjectItemCaseSensitive(v1_endpointJSON, "addresses");
@@ -354,16 +363,24 @@ v1_endpoint_t *v1_endpoint_parseFromJSON(cJSON *v1_endpointJSON){
     }
 
 
+    if (hostname && !cJSON_IsNull(hostname)) hostname_local_str = strdup(hostname->valuestring);
+    if (node_name && !cJSON_IsNull(node_name)) node_name_local_str = strdup(node_name->valuestring);
+    if (zone && !cJSON_IsNull(zone)) zone_local_str = strdup(zone->valuestring);
+
     v1_endpoint_local_var = v1_endpoint_create_internal (
         addressesList,
         conditions ? conditions_local_nonprim : NULL,
         deprecated_topology ? deprecated_topologyList : NULL,
         hints ? hints_local_nonprim : NULL,
-        hostname && !cJSON_IsNull(hostname) ? strdup(hostname->valuestring) : NULL,
-        node_name && !cJSON_IsNull(node_name) ? strdup(node_name->valuestring) : NULL,
+        hostname_local_str,
+        node_name_local_str,
         target_ref ? target_ref_local_nonprim : NULL,
-        zone && !cJSON_IsNull(zone) ? strdup(zone->valuestring) : NULL
+        zone_local_str
         );
+
+    if (!v1_endpoint_local_var) {
+        goto end;
+    }
 
     return v1_endpoint_local_var;
 end:
@@ -398,9 +415,21 @@ end:
         v1_endpoint_hints_free(hints_local_nonprim);
         hints_local_nonprim = NULL;
     }
+    if (hostname_local_str) {
+        free(hostname_local_str);
+        hostname_local_str = NULL;
+    }
+    if (node_name_local_str) {
+        free(node_name_local_str);
+        node_name_local_str = NULL;
+    }
     if (target_ref_local_nonprim) {
         v1_object_reference_free(target_ref_local_nonprim);
         target_ref_local_nonprim = NULL;
+    }
+    if (zone_local_str) {
+        free(zone_local_str);
+        zone_local_str = NULL;
     }
     return NULL;
 

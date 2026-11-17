@@ -9,7 +9,7 @@ static v1_config_map_t *v1_config_map_create_internal(
     char *api_version,
     list_t* binary_data,
     list_t* data,
-    int immutable,
+    int *immutable,
     char *kind,
     v1_object_meta_t *metadata
     ) {
@@ -17,14 +17,14 @@ static v1_config_map_t *v1_config_map_create_internal(
     if (!v1_config_map_local_var) {
         return NULL;
     }
+    memset(v1_config_map_local_var, 0, sizeof(v1_config_map_t));
+    v1_config_map_local_var->_library_owned = 1;
     v1_config_map_local_var->api_version = api_version;
     v1_config_map_local_var->binary_data = binary_data;
     v1_config_map_local_var->data = data;
     v1_config_map_local_var->immutable = immutable;
     v1_config_map_local_var->kind = kind;
     v1_config_map_local_var->metadata = metadata;
-
-    v1_config_map_local_var->_library_owned = 1;
     return v1_config_map_local_var;
 }
 
@@ -32,18 +32,27 @@ __attribute__((deprecated)) v1_config_map_t *v1_config_map_create(
     char *api_version,
     list_t* binary_data,
     list_t* data,
-    int immutable,
+    int *immutable,
     char *kind,
     v1_object_meta_t *metadata
     ) {
-    return v1_config_map_create_internal (
+    int *immutable_copy = NULL;
+    if (immutable) {
+        immutable_copy = malloc(sizeof(int));
+        if (immutable_copy) *immutable_copy = *immutable;
+    }
+    v1_config_map_t *result = v1_config_map_create_internal (
         api_version,
         binary_data,
         data,
-        immutable,
+        immutable_copy,
         kind,
         metadata
         );
+    if (!result) {
+        free(immutable_copy);
+    }
+    return result;
 }
 
 void v1_config_map_free(v1_config_map_t *v1_config_map) {
@@ -78,6 +87,10 @@ void v1_config_map_free(v1_config_map_t *v1_config_map) {
         }
         list_freeList(v1_config_map->data);
         v1_config_map->data = NULL;
+    }
+    if (v1_config_map->immutable) {
+        free(v1_config_map->immutable);
+        v1_config_map->immutable = NULL;
     }
     if (v1_config_map->kind) {
         free(v1_config_map->kind);
@@ -143,7 +156,7 @@ cJSON *v1_config_map_convertToJSON(v1_config_map_t *v1_config_map) {
 
     // v1_config_map->immutable
     if(v1_config_map->immutable) {
-    if(cJSON_AddBoolToObject(item, "immutable", v1_config_map->immutable) == NULL) {
+    if(cJSON_AddBoolToObject(item, "immutable", *v1_config_map->immutable) == NULL) {
     goto fail; //Bool
     }
     }
@@ -181,11 +194,18 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
 
     v1_config_map_t *v1_config_map_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
     // define the local map for v1_config_map->binary_data
     list_t *binary_dataList = NULL;
 
     // define the local map for v1_config_map->data
     list_t *dataList = NULL;
+
+    // define the local variable for v1_config_map->immutable
+    int *immutable_local_var = NULL;
+
+    char *kind_local_str = NULL;
 
     // define the local variable for v1_config_map->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
@@ -268,6 +288,12 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
     {
     goto end; //Bool
     }
+    immutable_local_var = malloc(sizeof(int));
+    if(!immutable_local_var)
+    {
+        goto end;
+    }
+    *immutable_local_var = immutable->valueint;
     }
 
     // v1_config_map->kind
@@ -292,17 +318,28 @@ v1_config_map_t *v1_config_map_parseFromJSON(cJSON *v1_config_mapJSON){
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+
     v1_config_map_local_var = v1_config_map_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        api_version_local_str,
         binary_data ? binary_dataList : NULL,
         data ? dataList : NULL,
-        immutable ? immutable->valueint : 0,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        immutable_local_var,
+        kind_local_str,
         metadata ? metadata_local_nonprim : NULL
         );
 
+    if (!v1_config_map_local_var) {
+        goto end;
+    }
+
     return v1_config_map_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
     if (binary_dataList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, binary_dataList) {
@@ -330,6 +367,14 @@ end:
         }
         list_freeList(dataList);
         dataList = NULL;
+    }
+    if (immutable_local_var) {
+        free(immutable_local_var);
+        immutable_local_var = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
     }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);

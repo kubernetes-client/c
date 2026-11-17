@@ -21,14 +21,14 @@ typedef struct v1_weighted_pod_affinity_term_t v1_weighted_pod_affinity_term_t;
 
 typedef struct v1_weighted_pod_affinity_term_t {
     struct v1_pod_affinity_term_t *pod_affinity_term; //model
-    int weight; //numeric
+    int *weight; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_weighted_pod_affinity_term_t;
 
 __attribute__((deprecated)) v1_weighted_pod_affinity_term_t *v1_weighted_pod_affinity_term_create(
     v1_pod_affinity_term_t *pod_affinity_term,
-    int weight
+    int *weight
 );
 
 void v1_weighted_pod_affinity_term_free(v1_weighted_pod_affinity_term_t *v1_weighted_pod_affinity_term);

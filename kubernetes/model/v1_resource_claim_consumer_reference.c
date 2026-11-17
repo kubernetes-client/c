@@ -15,12 +15,12 @@ static v1_resource_claim_consumer_reference_t *v1_resource_claim_consumer_refere
     if (!v1_resource_claim_consumer_reference_local_var) {
         return NULL;
     }
+    memset(v1_resource_claim_consumer_reference_local_var, 0, sizeof(v1_resource_claim_consumer_reference_t));
+    v1_resource_claim_consumer_reference_local_var->_library_owned = 1;
     v1_resource_claim_consumer_reference_local_var->api_group = api_group;
     v1_resource_claim_consumer_reference_local_var->name = name;
     v1_resource_claim_consumer_reference_local_var->resource = resource;
     v1_resource_claim_consumer_reference_local_var->uid = uid;
-
-    v1_resource_claim_consumer_reference_local_var->_library_owned = 1;
     return v1_resource_claim_consumer_reference_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1_resource_claim_consumer_reference_t *v1_resource_
     char *resource,
     char *uid
     ) {
-    return v1_resource_claim_consumer_reference_create_internal (
+    v1_resource_claim_consumer_reference_t *result = v1_resource_claim_consumer_reference_create_internal (
         api_group,
         name,
         resource,
         uid
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_resource_claim_consumer_reference_free(v1_resource_claim_consumer_reference_t *v1_resource_claim_consumer_reference) {
@@ -115,6 +118,14 @@ v1_resource_claim_consumer_reference_t *v1_resource_claim_consumer_reference_par
 
     v1_resource_claim_consumer_reference_t *v1_resource_claim_consumer_reference_local_var = NULL;
 
+    char *api_group_local_str = NULL;
+
+    char *name_local_str = NULL;
+
+    char *resource_local_str = NULL;
+
+    char *uid_local_str = NULL;
+
     // v1_resource_claim_consumer_reference->api_group
     cJSON *api_group = cJSON_GetObjectItemCaseSensitive(v1_resource_claim_consumer_referenceJSON, "apiGroup");
     if (cJSON_IsNull(api_group)) {
@@ -173,15 +184,40 @@ v1_resource_claim_consumer_reference_t *v1_resource_claim_consumer_reference_par
     }
 
 
+    if (api_group && !cJSON_IsNull(api_group)) api_group_local_str = strdup(api_group->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (resource && !cJSON_IsNull(resource)) resource_local_str = strdup(resource->valuestring);
+    if (uid && !cJSON_IsNull(uid)) uid_local_str = strdup(uid->valuestring);
+
     v1_resource_claim_consumer_reference_local_var = v1_resource_claim_consumer_reference_create_internal (
-        api_group && !cJSON_IsNull(api_group) ? strdup(api_group->valuestring) : NULL,
-        strdup(name->valuestring),
-        strdup(resource->valuestring),
-        strdup(uid->valuestring)
+        api_group_local_str,
+        name_local_str,
+        resource_local_str,
+        uid_local_str
         );
+
+    if (!v1_resource_claim_consumer_reference_local_var) {
+        goto end;
+    }
 
     return v1_resource_claim_consumer_reference_local_var;
 end:
+    if (api_group_local_str) {
+        free(api_group_local_str);
+        api_group_local_str = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (resource_local_str) {
+        free(resource_local_str);
+        resource_local_str = NULL;
+    }
+    if (uid_local_str) {
+        free(uid_local_str);
+        uid_local_str = NULL;
+    }
     return NULL;
 
 }

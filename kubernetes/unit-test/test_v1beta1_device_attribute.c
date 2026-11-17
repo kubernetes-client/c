@@ -23,16 +23,24 @@ v1beta1_device_attribute_t* instantiate_v1beta1_device_attribute(int include_opt
   if (include_optional) {
     v1beta1_device_attribute = v1beta1_device_attribute_create(
       1,
+      list_createList(),
       56,
+      list_createList(),
       "0",
-      "0"
+      list_createList(),
+      "0",
+      list_createList()
     );
   } else {
     v1beta1_device_attribute = v1beta1_device_attribute_create(
       1,
+      list_createList(),
       56,
+      list_createList(),
       "0",
-      "0"
+      list_createList(),
+      "0",
+      list_createList()
     );
   }
 

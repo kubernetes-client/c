@@ -20,19 +20,21 @@ typedef struct v1_config_map_volume_source_t v1_config_map_volume_source_t;
 
 
 typedef struct v1_config_map_volume_source_t {
-    int default_mode; //numeric
+    int *default_mode; //numeric
+    long *default_user; //numeric
     list_t *items; //nonprimitive container
     char *name; // string
-    int optional; //boolean
+    int *optional; //boolean
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_config_map_volume_source_t;
 
 __attribute__((deprecated)) v1_config_map_volume_source_t *v1_config_map_volume_source_create(
-    int default_mode,
+    int *default_mode,
+    long *default_user,
     list_t *items,
     char *name,
-    int optional
+    int *optional
 );
 
 void v1_config_map_volume_source_free(v1_config_map_volume_source_t *v1_config_map_volume_source);

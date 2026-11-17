@@ -15,12 +15,12 @@ static v1_endpoint_address_t *v1_endpoint_address_create_internal(
     if (!v1_endpoint_address_local_var) {
         return NULL;
     }
+    memset(v1_endpoint_address_local_var, 0, sizeof(v1_endpoint_address_t));
+    v1_endpoint_address_local_var->_library_owned = 1;
     v1_endpoint_address_local_var->hostname = hostname;
     v1_endpoint_address_local_var->ip = ip;
     v1_endpoint_address_local_var->node_name = node_name;
     v1_endpoint_address_local_var->target_ref = target_ref;
-
-    v1_endpoint_address_local_var->_library_owned = 1;
     return v1_endpoint_address_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1_endpoint_address_t *v1_endpoint_address_create(
     char *node_name,
     v1_object_reference_t *target_ref
     ) {
-    return v1_endpoint_address_create_internal (
+    v1_endpoint_address_t *result = v1_endpoint_address_create_internal (
         hostname,
         ip,
         node_name,
         target_ref
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_endpoint_address_free(v1_endpoint_address_t *v1_endpoint_address) {
@@ -118,6 +121,12 @@ v1_endpoint_address_t *v1_endpoint_address_parseFromJSON(cJSON *v1_endpoint_addr
 
     v1_endpoint_address_t *v1_endpoint_address_local_var = NULL;
 
+    char *hostname_local_str = NULL;
+
+    char *ip_local_str = NULL;
+
+    char *node_name_local_str = NULL;
+
     // define the local variable for v1_endpoint_address->target_ref
     v1_object_reference_t *target_ref_local_nonprim = NULL;
 
@@ -170,15 +179,35 @@ v1_endpoint_address_t *v1_endpoint_address_parseFromJSON(cJSON *v1_endpoint_addr
     }
 
 
+    if (hostname && !cJSON_IsNull(hostname)) hostname_local_str = strdup(hostname->valuestring);
+    if (ip && !cJSON_IsNull(ip)) ip_local_str = strdup(ip->valuestring);
+    if (node_name && !cJSON_IsNull(node_name)) node_name_local_str = strdup(node_name->valuestring);
+
     v1_endpoint_address_local_var = v1_endpoint_address_create_internal (
-        hostname && !cJSON_IsNull(hostname) ? strdup(hostname->valuestring) : NULL,
-        strdup(ip->valuestring),
-        node_name && !cJSON_IsNull(node_name) ? strdup(node_name->valuestring) : NULL,
+        hostname_local_str,
+        ip_local_str,
+        node_name_local_str,
         target_ref ? target_ref_local_nonprim : NULL
         );
 
+    if (!v1_endpoint_address_local_var) {
+        goto end;
+    }
+
     return v1_endpoint_address_local_var;
 end:
+    if (hostname_local_str) {
+        free(hostname_local_str);
+        hostname_local_str = NULL;
+    }
+    if (ip_local_str) {
+        free(ip_local_str);
+        ip_local_str = NULL;
+    }
+    if (node_name_local_str) {
+        free(node_name_local_str);
+        node_name_local_str = NULL;
+    }
     if (target_ref_local_nonprim) {
         v1_object_reference_free(target_ref_local_nonprim);
         target_ref_local_nonprim = NULL;

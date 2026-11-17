@@ -47,11 +47,11 @@ typedef struct v1_container_t {
     list_t *restart_policy_rules; //nonprimitive container
     struct v1_security_context_t *security_context; //model
     struct v1_probe_t *startup_probe; //model
-    int _stdin; //boolean
-    int stdin_once; //boolean
+    int *_stdin; //boolean
+    int *stdin_once; //boolean
     char *termination_message_path; // string
     char *termination_message_policy; // string
-    int tty; //boolean
+    int *tty; //boolean
     list_t *volume_devices; //nonprimitive container
     list_t *volume_mounts; //nonprimitive container
     char *working_dir; // string
@@ -77,11 +77,11 @@ __attribute__((deprecated)) v1_container_t *v1_container_create(
     list_t *restart_policy_rules,
     v1_security_context_t *security_context,
     v1_probe_t *startup_probe,
-    int _stdin,
-    int stdin_once,
+    int *_stdin,
+    int *stdin_once,
     char *termination_message_path,
     char *termination_message_policy,
-    int tty,
+    int *tty,
     list_t *volume_devices,
     list_t *volume_mounts,
     char *working_dir

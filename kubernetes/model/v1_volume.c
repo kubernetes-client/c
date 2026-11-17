@@ -42,6 +42,8 @@ static v1_volume_t *v1_volume_create_internal(
     if (!v1_volume_local_var) {
         return NULL;
     }
+    memset(v1_volume_local_var, 0, sizeof(v1_volume_t));
+    v1_volume_local_var->_library_owned = 1;
     v1_volume_local_var->aws_elastic_block_store = aws_elastic_block_store;
     v1_volume_local_var->azure_disk = azure_disk;
     v1_volume_local_var->azure_file = azure_file;
@@ -73,8 +75,6 @@ static v1_volume_t *v1_volume_create_internal(
     v1_volume_local_var->secret = secret;
     v1_volume_local_var->storageos = storageos;
     v1_volume_local_var->vsphere_volume = vsphere_volume;
-
-    v1_volume_local_var->_library_owned = 1;
     return v1_volume_local_var;
 }
 
@@ -111,7 +111,7 @@ __attribute__((deprecated)) v1_volume_t *v1_volume_create(
     v1_storage_os_volume_source_t *storageos,
     v1_vsphere_virtual_disk_volume_source_t *vsphere_volume
     ) {
-    return v1_volume_create_internal (
+    v1_volume_t *result = v1_volume_create_internal (
         aws_elastic_block_store,
         azure_disk,
         azure_file,
@@ -144,6 +144,9 @@ __attribute__((deprecated)) v1_volume_t *v1_volume_create(
         storageos,
         vsphere_volume
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_volume_free(v1_volume_t *v1_volume) {
@@ -752,6 +755,8 @@ v1_volume_t *v1_volume_parseFromJSON(cJSON *v1_volumeJSON){
     // define the local variable for v1_volume->iscsi
     v1_iscsi_volume_source_t *iscsi_local_nonprim = NULL;
 
+    char *name_local_str = NULL;
+
     // define the local variable for v1_volume->nfs
     v1_nfs_volume_source_t *nfs_local_nonprim = NULL;
 
@@ -1071,6 +1076,8 @@ v1_volume_t *v1_volume_parseFromJSON(cJSON *v1_volumeJSON){
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v1_volume_local_var = v1_volume_create_internal (
         aws_elastic_block_store ? aws_elastic_block_store_local_nonprim : NULL,
         azure_disk ? azure_disk_local_nonprim : NULL,
@@ -1091,7 +1098,7 @@ v1_volume_t *v1_volume_parseFromJSON(cJSON *v1_volumeJSON){
         host_path ? host_path_local_nonprim : NULL,
         image ? image_local_nonprim : NULL,
         iscsi ? iscsi_local_nonprim : NULL,
-        strdup(name->valuestring),
+        name_local_str,
         nfs ? nfs_local_nonprim : NULL,
         persistent_volume_claim ? persistent_volume_claim_local_nonprim : NULL,
         photon_persistent_disk ? photon_persistent_disk_local_nonprim : NULL,
@@ -1104,6 +1111,10 @@ v1_volume_t *v1_volume_parseFromJSON(cJSON *v1_volumeJSON){
         storageos ? storageos_local_nonprim : NULL,
         vsphere_volume ? vsphere_volume_local_nonprim : NULL
         );
+
+    if (!v1_volume_local_var) {
+        goto end;
+    }
 
     return v1_volume_local_var;
 end:
@@ -1182,6 +1193,10 @@ end:
     if (iscsi_local_nonprim) {
         v1_iscsi_volume_source_free(iscsi_local_nonprim);
         iscsi_local_nonprim = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
     }
     if (nfs_local_nonprim) {
         v1_nfs_volume_source_free(nfs_local_nonprim);

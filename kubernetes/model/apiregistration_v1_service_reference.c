@@ -8,30 +8,39 @@
 static apiregistration_v1_service_reference_t *apiregistration_v1_service_reference_create_internal(
     char *name,
     char *_namespace,
-    int port
+    int *port
     ) {
     apiregistration_v1_service_reference_t *apiregistration_v1_service_reference_local_var = malloc(sizeof(apiregistration_v1_service_reference_t));
     if (!apiregistration_v1_service_reference_local_var) {
         return NULL;
     }
+    memset(apiregistration_v1_service_reference_local_var, 0, sizeof(apiregistration_v1_service_reference_t));
+    apiregistration_v1_service_reference_local_var->_library_owned = 1;
     apiregistration_v1_service_reference_local_var->name = name;
     apiregistration_v1_service_reference_local_var->_namespace = _namespace;
     apiregistration_v1_service_reference_local_var->port = port;
-
-    apiregistration_v1_service_reference_local_var->_library_owned = 1;
     return apiregistration_v1_service_reference_local_var;
 }
 
 __attribute__((deprecated)) apiregistration_v1_service_reference_t *apiregistration_v1_service_reference_create(
     char *name,
     char *_namespace,
-    int port
+    int *port
     ) {
-    return apiregistration_v1_service_reference_create_internal (
+    int *port_copy = NULL;
+    if (port) {
+        port_copy = malloc(sizeof(int));
+        if (port_copy) *port_copy = *port;
+    }
+    apiregistration_v1_service_reference_t *result = apiregistration_v1_service_reference_create_internal (
         name,
         _namespace,
-        port
+        port_copy
         );
+    if (!result) {
+        free(port_copy);
+    }
+    return result;
 }
 
 void apiregistration_v1_service_reference_free(apiregistration_v1_service_reference_t *apiregistration_v1_service_reference) {
@@ -50,6 +59,10 @@ void apiregistration_v1_service_reference_free(apiregistration_v1_service_refere
     if (apiregistration_v1_service_reference->_namespace) {
         free(apiregistration_v1_service_reference->_namespace);
         apiregistration_v1_service_reference->_namespace = NULL;
+    }
+    if (apiregistration_v1_service_reference->port) {
+        free(apiregistration_v1_service_reference->port);
+        apiregistration_v1_service_reference->port = NULL;
     }
     free(apiregistration_v1_service_reference);
 }
@@ -75,7 +88,7 @@ cJSON *apiregistration_v1_service_reference_convertToJSON(apiregistration_v1_ser
 
     // apiregistration_v1_service_reference->port
     if(apiregistration_v1_service_reference->port) {
-    if(cJSON_AddNumberToObject(item, "port", apiregistration_v1_service_reference->port) == NULL) {
+    if(cJSON_AddNumberToObject(item, "port", *apiregistration_v1_service_reference->port) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -91,6 +104,13 @@ fail:
 apiregistration_v1_service_reference_t *apiregistration_v1_service_reference_parseFromJSON(cJSON *apiregistration_v1_service_referenceJSON){
 
     apiregistration_v1_service_reference_t *apiregistration_v1_service_reference_local_var = NULL;
+
+    char *name_local_str = NULL;
+
+    char *_namespace_local_str = NULL;
+
+    // define the local variable for apiregistration_v1_service_reference->port
+    int *port_local_var = NULL;
 
     // apiregistration_v1_service_reference->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(apiregistration_v1_service_referenceJSON, "name");
@@ -126,17 +146,42 @@ apiregistration_v1_service_reference_t *apiregistration_v1_service_reference_par
     {
     goto end; //Numeric
     }
+    port_local_var = malloc(sizeof(int));
+    if(!port_local_var)
+    {
+        goto end;
+    }
+    *port_local_var = port->valuedouble;
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (_namespace && !cJSON_IsNull(_namespace)) _namespace_local_str = strdup(_namespace->valuestring);
+
     apiregistration_v1_service_reference_local_var = apiregistration_v1_service_reference_create_internal (
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
-        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
-        port ? port->valuedouble : 0
+        name_local_str,
+        _namespace_local_str,
+        port_local_var
         );
+
+    if (!apiregistration_v1_service_reference_local_var) {
+        goto end;
+    }
 
     return apiregistration_v1_service_reference_local_var;
 end:
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (_namespace_local_str) {
+        free(_namespace_local_str);
+        _namespace_local_str = NULL;
+    }
+    if (port_local_var) {
+        free(port_local_var);
+        port_local_var = NULL;
+    }
     return NULL;
 
 }

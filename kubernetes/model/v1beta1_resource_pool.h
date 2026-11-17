@@ -19,17 +19,17 @@ typedef struct v1beta1_resource_pool_t v1beta1_resource_pool_t;
 
 
 typedef struct v1beta1_resource_pool_t {
-    long generation; //numeric
+    long *generation; //numeric
     char *name; // string
-    long resource_slice_count; //numeric
+    long *resource_slice_count; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1beta1_resource_pool_t;
 
 __attribute__((deprecated)) v1beta1_resource_pool_t *v1beta1_resource_pool_create(
-    long generation,
+    long *generation,
     char *name,
-    long resource_slice_count
+    long *resource_slice_count
 );
 
 void v1beta1_resource_pool_free(v1beta1_resource_pool_t *v1beta1_resource_pool);

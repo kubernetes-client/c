@@ -20,14 +20,14 @@ typedef struct v1_persistent_volume_claim_volume_source_t v1_persistent_volume_c
 
 typedef struct v1_persistent_volume_claim_volume_source_t {
     char *claim_name; // string
-    int read_only; //boolean
+    int *read_only; //boolean
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_persistent_volume_claim_volume_source_t;
 
 __attribute__((deprecated)) v1_persistent_volume_claim_volume_source_t *v1_persistent_volume_claim_volume_source_create(
     char *claim_name,
-    int read_only
+    int *read_only
 );
 
 void v1_persistent_volume_claim_volume_source_free(v1_persistent_volume_claim_volume_source_t *v1_persistent_volume_claim_volume_source);

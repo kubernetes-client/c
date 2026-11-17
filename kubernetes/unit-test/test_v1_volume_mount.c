@@ -22,6 +22,7 @@ v1_volume_mount_t* instantiate_v1_volume_mount(int include_optional) {
   v1_volume_mount_t* v1_volume_mount = NULL;
   if (include_optional) {
     v1_volume_mount = v1_volume_mount_create(
+      list_createList(),
       "0",
       "0",
       "0",
@@ -32,6 +33,7 @@ v1_volume_mount_t* instantiate_v1_volume_mount(int include_optional) {
     );
   } else {
     v1_volume_mount = v1_volume_mount_create(
+      list_createList(),
       "0",
       "0",
       "0",

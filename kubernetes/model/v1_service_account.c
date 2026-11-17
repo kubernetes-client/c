@@ -7,7 +7,7 @@
 
 static v1_service_account_t *v1_service_account_create_internal(
     char *api_version,
-    int automount_service_account_token,
+    int *automount_service_account_token,
     list_t *image_pull_secrets,
     char *kind,
     v1_object_meta_t *metadata,
@@ -17,33 +17,42 @@ static v1_service_account_t *v1_service_account_create_internal(
     if (!v1_service_account_local_var) {
         return NULL;
     }
+    memset(v1_service_account_local_var, 0, sizeof(v1_service_account_t));
+    v1_service_account_local_var->_library_owned = 1;
     v1_service_account_local_var->api_version = api_version;
     v1_service_account_local_var->automount_service_account_token = automount_service_account_token;
     v1_service_account_local_var->image_pull_secrets = image_pull_secrets;
     v1_service_account_local_var->kind = kind;
     v1_service_account_local_var->metadata = metadata;
     v1_service_account_local_var->secrets = secrets;
-
-    v1_service_account_local_var->_library_owned = 1;
     return v1_service_account_local_var;
 }
 
 __attribute__((deprecated)) v1_service_account_t *v1_service_account_create(
     char *api_version,
-    int automount_service_account_token,
+    int *automount_service_account_token,
     list_t *image_pull_secrets,
     char *kind,
     v1_object_meta_t *metadata,
     list_t *secrets
     ) {
-    return v1_service_account_create_internal (
+    int *automount_service_account_token_copy = NULL;
+    if (automount_service_account_token) {
+        automount_service_account_token_copy = malloc(sizeof(int));
+        if (automount_service_account_token_copy) *automount_service_account_token_copy = *automount_service_account_token;
+    }
+    v1_service_account_t *result = v1_service_account_create_internal (
         api_version,
-        automount_service_account_token,
+        automount_service_account_token_copy,
         image_pull_secrets,
         kind,
         metadata,
         secrets
         );
+    if (!result) {
+        free(automount_service_account_token_copy);
+    }
+    return result;
 }
 
 void v1_service_account_free(v1_service_account_t *v1_service_account) {
@@ -58,6 +67,10 @@ void v1_service_account_free(v1_service_account_t *v1_service_account) {
     if (v1_service_account->api_version) {
         free(v1_service_account->api_version);
         v1_service_account->api_version = NULL;
+    }
+    if (v1_service_account->automount_service_account_token) {
+        free(v1_service_account->automount_service_account_token);
+        v1_service_account->automount_service_account_token = NULL;
     }
     if (v1_service_account->image_pull_secrets) {
         list_ForEach(listEntry, v1_service_account->image_pull_secrets) {
@@ -97,7 +110,7 @@ cJSON *v1_service_account_convertToJSON(v1_service_account_t *v1_service_account
 
     // v1_service_account->automount_service_account_token
     if(v1_service_account->automount_service_account_token) {
-    if(cJSON_AddBoolToObject(item, "automountServiceAccountToken", v1_service_account->automount_service_account_token) == NULL) {
+    if(cJSON_AddBoolToObject(item, "automountServiceAccountToken", *v1_service_account->automount_service_account_token) == NULL) {
     goto fail; //Bool
     }
     }
@@ -175,8 +188,15 @@ v1_service_account_t *v1_service_account_parseFromJSON(cJSON *v1_service_account
 
     v1_service_account_t *v1_service_account_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
+    // define the local variable for v1_service_account->automount_service_account_token
+    int *automount_service_account_token_local_var = NULL;
+
     // define the local list for v1_service_account->image_pull_secrets
     list_t *image_pull_secretsList = NULL;
+
+    char *kind_local_str = NULL;
 
     // define the local variable for v1_service_account->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
@@ -206,6 +226,12 @@ v1_service_account_t *v1_service_account_parseFromJSON(cJSON *v1_service_account
     {
     goto end; //Bool
     }
+    automount_service_account_token_local_var = malloc(sizeof(int));
+    if(!automount_service_account_token_local_var)
+    {
+        goto end;
+    }
+    *automount_service_account_token_local_var = automount_service_account_token->valueint;
     }
 
     // v1_service_account->image_pull_secrets
@@ -278,17 +304,32 @@ v1_service_account_t *v1_service_account_parseFromJSON(cJSON *v1_service_account
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+
     v1_service_account_local_var = v1_service_account_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        automount_service_account_token ? automount_service_account_token->valueint : 0,
+        api_version_local_str,
+        automount_service_account_token_local_var,
         image_pull_secrets ? image_pull_secretsList : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        kind_local_str,
         metadata ? metadata_local_nonprim : NULL,
         secrets ? secretsList : NULL
         );
 
+    if (!v1_service_account_local_var) {
+        goto end;
+    }
+
     return v1_service_account_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (automount_service_account_token_local_var) {
+        free(automount_service_account_token_local_var);
+        automount_service_account_token_local_var = NULL;
+    }
     if (image_pull_secretsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, image_pull_secretsList) {
@@ -297,6 +338,10 @@ end:
         }
         list_freeList(image_pull_secretsList);
         image_pull_secretsList = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
     }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);

@@ -17,14 +17,14 @@ static v1_certificate_signing_request_condition_t *v1_certificate_signing_reques
     if (!v1_certificate_signing_request_condition_local_var) {
         return NULL;
     }
+    memset(v1_certificate_signing_request_condition_local_var, 0, sizeof(v1_certificate_signing_request_condition_t));
+    v1_certificate_signing_request_condition_local_var->_library_owned = 1;
     v1_certificate_signing_request_condition_local_var->last_transition_time = last_transition_time;
     v1_certificate_signing_request_condition_local_var->last_update_time = last_update_time;
     v1_certificate_signing_request_condition_local_var->message = message;
     v1_certificate_signing_request_condition_local_var->reason = reason;
     v1_certificate_signing_request_condition_local_var->status = status;
     v1_certificate_signing_request_condition_local_var->type = type;
-
-    v1_certificate_signing_request_condition_local_var->_library_owned = 1;
     return v1_certificate_signing_request_condition_local_var;
 }
 
@@ -36,7 +36,7 @@ __attribute__((deprecated)) v1_certificate_signing_request_condition_t *v1_certi
     char *status,
     char *type
     ) {
-    return v1_certificate_signing_request_condition_create_internal (
+    v1_certificate_signing_request_condition_t *result = v1_certificate_signing_request_condition_create_internal (
         last_transition_time,
         last_update_time,
         message,
@@ -44,6 +44,9 @@ __attribute__((deprecated)) v1_certificate_signing_request_condition_t *v1_certi
         status,
         type
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_certificate_signing_request_condition_free(v1_certificate_signing_request_condition_t *v1_certificate_signing_request_condition) {
@@ -146,6 +149,18 @@ v1_certificate_signing_request_condition_t *v1_certificate_signing_request_condi
 
     v1_certificate_signing_request_condition_t *v1_certificate_signing_request_condition_local_var = NULL;
 
+    char *last_transition_time_local_str = NULL;
+
+    char *last_update_time_local_str = NULL;
+
+    char *message_local_str = NULL;
+
+    char *reason_local_str = NULL;
+
+    char *status_local_str = NULL;
+
+    char *type_local_str = NULL;
+
     // v1_certificate_signing_request_condition->last_transition_time
     cJSON *last_transition_time = cJSON_GetObjectItemCaseSensitive(v1_certificate_signing_request_conditionJSON, "lastTransitionTime");
     if (cJSON_IsNull(last_transition_time)) {
@@ -225,17 +240,52 @@ v1_certificate_signing_request_condition_t *v1_certificate_signing_request_condi
     }
 
 
+    if (last_transition_time && !cJSON_IsNull(last_transition_time)) last_transition_time_local_str = strdup(last_transition_time->valuestring);
+    if (last_update_time && !cJSON_IsNull(last_update_time)) last_update_time_local_str = strdup(last_update_time->valuestring);
+    if (message && !cJSON_IsNull(message)) message_local_str = strdup(message->valuestring);
+    if (reason && !cJSON_IsNull(reason)) reason_local_str = strdup(reason->valuestring);
+    if (status && !cJSON_IsNull(status)) status_local_str = strdup(status->valuestring);
+    if (type && !cJSON_IsNull(type)) type_local_str = strdup(type->valuestring);
+
     v1_certificate_signing_request_condition_local_var = v1_certificate_signing_request_condition_create_internal (
-        last_transition_time && !cJSON_IsNull(last_transition_time) ? strdup(last_transition_time->valuestring) : NULL,
-        last_update_time && !cJSON_IsNull(last_update_time) ? strdup(last_update_time->valuestring) : NULL,
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
-        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
-        strdup(status->valuestring),
-        strdup(type->valuestring)
+        last_transition_time_local_str,
+        last_update_time_local_str,
+        message_local_str,
+        reason_local_str,
+        status_local_str,
+        type_local_str
         );
+
+    if (!v1_certificate_signing_request_condition_local_var) {
+        goto end;
+    }
 
     return v1_certificate_signing_request_condition_local_var;
 end:
+    if (last_transition_time_local_str) {
+        free(last_transition_time_local_str);
+        last_transition_time_local_str = NULL;
+    }
+    if (last_update_time_local_str) {
+        free(last_update_time_local_str);
+        last_update_time_local_str = NULL;
+    }
+    if (message_local_str) {
+        free(message_local_str);
+        message_local_str = NULL;
+    }
+    if (reason_local_str) {
+        free(reason_local_str);
+        reason_local_str = NULL;
+    }
+    if (status_local_str) {
+        free(status_local_str);
+        status_local_str = NULL;
+    }
+    if (type_local_str) {
+        free(type_local_str);
+        type_local_str = NULL;
+    }
     return NULL;
 
 }

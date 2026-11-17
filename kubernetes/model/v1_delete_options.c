@@ -8,10 +8,10 @@
 static v1_delete_options_t *v1_delete_options_create_internal(
     char *api_version,
     list_t *dry_run,
-    long grace_period_seconds,
-    int ignore_store_read_error_with_cluster_breaking_potential,
+    long *grace_period_seconds,
+    int *ignore_store_read_error_with_cluster_breaking_potential,
     char *kind,
-    int orphan_dependents,
+    int *orphan_dependents,
     v1_preconditions_t *preconditions,
     char *propagation_policy
     ) {
@@ -19,6 +19,8 @@ static v1_delete_options_t *v1_delete_options_create_internal(
     if (!v1_delete_options_local_var) {
         return NULL;
     }
+    memset(v1_delete_options_local_var, 0, sizeof(v1_delete_options_t));
+    v1_delete_options_local_var->_library_owned = 1;
     v1_delete_options_local_var->api_version = api_version;
     v1_delete_options_local_var->dry_run = dry_run;
     v1_delete_options_local_var->grace_period_seconds = grace_period_seconds;
@@ -27,31 +29,50 @@ static v1_delete_options_t *v1_delete_options_create_internal(
     v1_delete_options_local_var->orphan_dependents = orphan_dependents;
     v1_delete_options_local_var->preconditions = preconditions;
     v1_delete_options_local_var->propagation_policy = propagation_policy;
-
-    v1_delete_options_local_var->_library_owned = 1;
     return v1_delete_options_local_var;
 }
 
 __attribute__((deprecated)) v1_delete_options_t *v1_delete_options_create(
     char *api_version,
     list_t *dry_run,
-    long grace_period_seconds,
-    int ignore_store_read_error_with_cluster_breaking_potential,
+    long *grace_period_seconds,
+    int *ignore_store_read_error_with_cluster_breaking_potential,
     char *kind,
-    int orphan_dependents,
+    int *orphan_dependents,
     v1_preconditions_t *preconditions,
     char *propagation_policy
     ) {
-    return v1_delete_options_create_internal (
+    long *grace_period_seconds_copy = NULL;
+    if (grace_period_seconds) {
+        grace_period_seconds_copy = malloc(sizeof(long));
+        if (grace_period_seconds_copy) *grace_period_seconds_copy = *grace_period_seconds;
+    }
+    int *ignore_store_read_error_with_cluster_breaking_potential_copy = NULL;
+    if (ignore_store_read_error_with_cluster_breaking_potential) {
+        ignore_store_read_error_with_cluster_breaking_potential_copy = malloc(sizeof(int));
+        if (ignore_store_read_error_with_cluster_breaking_potential_copy) *ignore_store_read_error_with_cluster_breaking_potential_copy = *ignore_store_read_error_with_cluster_breaking_potential;
+    }
+    int *orphan_dependents_copy = NULL;
+    if (orphan_dependents) {
+        orphan_dependents_copy = malloc(sizeof(int));
+        if (orphan_dependents_copy) *orphan_dependents_copy = *orphan_dependents;
+    }
+    v1_delete_options_t *result = v1_delete_options_create_internal (
         api_version,
         dry_run,
-        grace_period_seconds,
-        ignore_store_read_error_with_cluster_breaking_potential,
+        grace_period_seconds_copy,
+        ignore_store_read_error_with_cluster_breaking_potential_copy,
         kind,
-        orphan_dependents,
+        orphan_dependents_copy,
         preconditions,
         propagation_policy
         );
+    if (!result) {
+        free(grace_period_seconds_copy);
+        free(ignore_store_read_error_with_cluster_breaking_potential_copy);
+        free(orphan_dependents_copy);
+    }
+    return result;
 }
 
 void v1_delete_options_free(v1_delete_options_t *v1_delete_options) {
@@ -74,9 +95,21 @@ void v1_delete_options_free(v1_delete_options_t *v1_delete_options) {
         list_freeList(v1_delete_options->dry_run);
         v1_delete_options->dry_run = NULL;
     }
+    if (v1_delete_options->grace_period_seconds) {
+        free(v1_delete_options->grace_period_seconds);
+        v1_delete_options->grace_period_seconds = NULL;
+    }
+    if (v1_delete_options->ignore_store_read_error_with_cluster_breaking_potential) {
+        free(v1_delete_options->ignore_store_read_error_with_cluster_breaking_potential);
+        v1_delete_options->ignore_store_read_error_with_cluster_breaking_potential = NULL;
+    }
     if (v1_delete_options->kind) {
         free(v1_delete_options->kind);
         v1_delete_options->kind = NULL;
+    }
+    if (v1_delete_options->orphan_dependents) {
+        free(v1_delete_options->orphan_dependents);
+        v1_delete_options->orphan_dependents = NULL;
     }
     if (v1_delete_options->preconditions) {
         v1_preconditions_free(v1_delete_options->preconditions);
@@ -119,7 +152,7 @@ cJSON *v1_delete_options_convertToJSON(v1_delete_options_t *v1_delete_options) {
 
     // v1_delete_options->grace_period_seconds
     if(v1_delete_options->grace_period_seconds) {
-    if(cJSON_AddNumberToObject(item, "gracePeriodSeconds", v1_delete_options->grace_period_seconds) == NULL) {
+    if(cJSON_AddNumberToObject(item, "gracePeriodSeconds", *v1_delete_options->grace_period_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -127,7 +160,7 @@ cJSON *v1_delete_options_convertToJSON(v1_delete_options_t *v1_delete_options) {
 
     // v1_delete_options->ignore_store_read_error_with_cluster_breaking_potential
     if(v1_delete_options->ignore_store_read_error_with_cluster_breaking_potential) {
-    if(cJSON_AddBoolToObject(item, "ignoreStoreReadErrorWithClusterBreakingPotential", v1_delete_options->ignore_store_read_error_with_cluster_breaking_potential) == NULL) {
+    if(cJSON_AddBoolToObject(item, "ignoreStoreReadErrorWithClusterBreakingPotential", *v1_delete_options->ignore_store_read_error_with_cluster_breaking_potential) == NULL) {
     goto fail; //Bool
     }
     }
@@ -143,7 +176,7 @@ cJSON *v1_delete_options_convertToJSON(v1_delete_options_t *v1_delete_options) {
 
     // v1_delete_options->orphan_dependents
     if(v1_delete_options->orphan_dependents) {
-    if(cJSON_AddBoolToObject(item, "orphanDependents", v1_delete_options->orphan_dependents) == NULL) {
+    if(cJSON_AddBoolToObject(item, "orphanDependents", *v1_delete_options->orphan_dependents) == NULL) {
     goto fail; //Bool
     }
     }
@@ -181,11 +214,26 @@ v1_delete_options_t *v1_delete_options_parseFromJSON(cJSON *v1_delete_optionsJSO
 
     v1_delete_options_t *v1_delete_options_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
     // define the local list for v1_delete_options->dry_run
     list_t *dry_runList = NULL;
 
+    // define the local variable for v1_delete_options->grace_period_seconds
+    long *grace_period_seconds_local_var = NULL;
+
+    // define the local variable for v1_delete_options->ignore_store_read_error_with_cluster_breaking_potential
+    int *ignore_store_read_error_with_cluster_breaking_potential_local_var = NULL;
+
+    char *kind_local_str = NULL;
+
+    // define the local variable for v1_delete_options->orphan_dependents
+    int *orphan_dependents_local_var = NULL;
+
     // define the local variable for v1_delete_options->preconditions
     v1_preconditions_t *preconditions_local_nonprim = NULL;
+
+    char *propagation_policy_local_str = NULL;
 
     // v1_delete_options->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_delete_optionsJSON, "apiVersion");
@@ -231,6 +279,12 @@ v1_delete_options_t *v1_delete_options_parseFromJSON(cJSON *v1_delete_optionsJSO
     {
     goto end; //Numeric
     }
+    grace_period_seconds_local_var = malloc(sizeof(long));
+    if(!grace_period_seconds_local_var)
+    {
+        goto end;
+    }
+    *grace_period_seconds_local_var = grace_period_seconds->valuedouble;
     }
 
     // v1_delete_options->ignore_store_read_error_with_cluster_breaking_potential
@@ -243,6 +297,12 @@ v1_delete_options_t *v1_delete_options_parseFromJSON(cJSON *v1_delete_optionsJSO
     {
     goto end; //Bool
     }
+    ignore_store_read_error_with_cluster_breaking_potential_local_var = malloc(sizeof(int));
+    if(!ignore_store_read_error_with_cluster_breaking_potential_local_var)
+    {
+        goto end;
+    }
+    *ignore_store_read_error_with_cluster_breaking_potential_local_var = ignore_store_read_error_with_cluster_breaking_potential->valueint;
     }
 
     // v1_delete_options->kind
@@ -267,6 +327,12 @@ v1_delete_options_t *v1_delete_options_parseFromJSON(cJSON *v1_delete_optionsJSO
     {
     goto end; //Bool
     }
+    orphan_dependents_local_var = malloc(sizeof(int));
+    if(!orphan_dependents_local_var)
+    {
+        goto end;
+    }
+    *orphan_dependents_local_var = orphan_dependents->valueint;
     }
 
     // v1_delete_options->preconditions
@@ -291,19 +357,31 @@ v1_delete_options_t *v1_delete_options_parseFromJSON(cJSON *v1_delete_optionsJSO
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+    if (propagation_policy && !cJSON_IsNull(propagation_policy)) propagation_policy_local_str = strdup(propagation_policy->valuestring);
+
     v1_delete_options_local_var = v1_delete_options_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        api_version_local_str,
         dry_run ? dry_runList : NULL,
-        grace_period_seconds ? grace_period_seconds->valuedouble : 0,
-        ignore_store_read_error_with_cluster_breaking_potential ? ignore_store_read_error_with_cluster_breaking_potential->valueint : 0,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
-        orphan_dependents ? orphan_dependents->valueint : 0,
+        grace_period_seconds_local_var,
+        ignore_store_read_error_with_cluster_breaking_potential_local_var,
+        kind_local_str,
+        orphan_dependents_local_var,
         preconditions ? preconditions_local_nonprim : NULL,
-        propagation_policy && !cJSON_IsNull(propagation_policy) ? strdup(propagation_policy->valuestring) : NULL
+        propagation_policy_local_str
         );
+
+    if (!v1_delete_options_local_var) {
+        goto end;
+    }
 
     return v1_delete_options_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
     if (dry_runList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, dry_runList) {
@@ -313,9 +391,29 @@ end:
         list_freeList(dry_runList);
         dry_runList = NULL;
     }
+    if (grace_period_seconds_local_var) {
+        free(grace_period_seconds_local_var);
+        grace_period_seconds_local_var = NULL;
+    }
+    if (ignore_store_read_error_with_cluster_breaking_potential_local_var) {
+        free(ignore_store_read_error_with_cluster_breaking_potential_local_var);
+        ignore_store_read_error_with_cluster_breaking_potential_local_var = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
+    if (orphan_dependents_local_var) {
+        free(orphan_dependents_local_var);
+        orphan_dependents_local_var = NULL;
+    }
     if (preconditions_local_nonprim) {
         v1_preconditions_free(preconditions_local_nonprim);
         preconditions_local_nonprim = NULL;
+    }
+    if (propagation_policy_local_str) {
+        free(propagation_policy_local_str);
+        propagation_policy_local_str = NULL;
     }
     return NULL;
 

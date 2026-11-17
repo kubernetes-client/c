@@ -15,6 +15,7 @@
 
 typedef struct v1_job_spec_t v1_job_spec_t;
 
+#include "v1_job_scheduling_configuration.h"
 #include "v1_label_selector.h"
 #include "v1_pod_failure_policy.h"
 #include "v1_pod_template_spec.h"
@@ -23,43 +24,45 @@ typedef struct v1_job_spec_t v1_job_spec_t;
 
 
 typedef struct v1_job_spec_t {
-    long active_deadline_seconds; //numeric
-    int backoff_limit; //numeric
-    int backoff_limit_per_index; //numeric
+    long *active_deadline_seconds; //numeric
+    int *backoff_limit; //numeric
+    int *backoff_limit_per_index; //numeric
     char *completion_mode; // string
-    int completions; //numeric
+    int *completions; //numeric
     char *managed_by; // string
-    int manual_selector; //boolean
-    int max_failed_indexes; //numeric
-    int parallelism; //numeric
+    int *manual_selector; //boolean
+    int *max_failed_indexes; //numeric
+    int *parallelism; //numeric
     struct v1_pod_failure_policy_t *pod_failure_policy; //model
     char *pod_replacement_policy; // string
+    struct v1_job_scheduling_configuration_t *scheduling; //model
     struct v1_label_selector_t *selector; //model
     struct v1_success_policy_t *success_policy; //model
-    int suspend; //boolean
+    int *suspend; //boolean
     struct v1_pod_template_spec_t *_template; //model
-    int ttl_seconds_after_finished; //numeric
+    int *ttl_seconds_after_finished; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_job_spec_t;
 
 __attribute__((deprecated)) v1_job_spec_t *v1_job_spec_create(
-    long active_deadline_seconds,
-    int backoff_limit,
-    int backoff_limit_per_index,
+    long *active_deadline_seconds,
+    int *backoff_limit,
+    int *backoff_limit_per_index,
     char *completion_mode,
-    int completions,
+    int *completions,
     char *managed_by,
-    int manual_selector,
-    int max_failed_indexes,
-    int parallelism,
+    int *manual_selector,
+    int *max_failed_indexes,
+    int *parallelism,
     v1_pod_failure_policy_t *pod_failure_policy,
     char *pod_replacement_policy,
+    v1_job_scheduling_configuration_t *scheduling,
     v1_label_selector_t *selector,
     v1_success_policy_t *success_policy,
-    int suspend,
+    int *suspend,
     v1_pod_template_spec_t *_template,
-    int ttl_seconds_after_finished
+    int *ttl_seconds_after_finished
 );
 
 void v1_job_spec_free(v1_job_spec_t *v1_job_spec);

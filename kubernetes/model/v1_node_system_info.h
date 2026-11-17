@@ -29,6 +29,7 @@ typedef struct v1_node_system_info_t {
     char *machine_id; // string
     char *operating_system; // string
     char *os_image; // string
+    int *running_in_user_namespace; //boolean
     struct v1_node_swap_status_t *swap; //model
     char *system_uuid; // string
 
@@ -45,6 +46,7 @@ __attribute__((deprecated)) v1_node_system_info_t *v1_node_system_info_create(
     char *machine_id,
     char *operating_system,
     char *os_image,
+    int *running_in_user_namespace,
     v1_node_swap_status_t *swap,
     char *system_uuid
 );

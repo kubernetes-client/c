@@ -6,32 +6,47 @@
 
 
 static v1beta2_resource_pool_t *v1beta2_resource_pool_create_internal(
-    long generation,
+    long *generation,
     char *name,
-    long resource_slice_count
+    long *resource_slice_count
     ) {
     v1beta2_resource_pool_t *v1beta2_resource_pool_local_var = malloc(sizeof(v1beta2_resource_pool_t));
     if (!v1beta2_resource_pool_local_var) {
         return NULL;
     }
+    memset(v1beta2_resource_pool_local_var, 0, sizeof(v1beta2_resource_pool_t));
+    v1beta2_resource_pool_local_var->_library_owned = 1;
     v1beta2_resource_pool_local_var->generation = generation;
     v1beta2_resource_pool_local_var->name = name;
     v1beta2_resource_pool_local_var->resource_slice_count = resource_slice_count;
-
-    v1beta2_resource_pool_local_var->_library_owned = 1;
     return v1beta2_resource_pool_local_var;
 }
 
 __attribute__((deprecated)) v1beta2_resource_pool_t *v1beta2_resource_pool_create(
-    long generation,
+    long *generation,
     char *name,
-    long resource_slice_count
+    long *resource_slice_count
     ) {
-    return v1beta2_resource_pool_create_internal (
-        generation,
+    long *generation_copy = NULL;
+    if (generation) {
+        generation_copy = malloc(sizeof(long));
+        if (generation_copy) *generation_copy = *generation;
+    }
+    long *resource_slice_count_copy = NULL;
+    if (resource_slice_count) {
+        resource_slice_count_copy = malloc(sizeof(long));
+        if (resource_slice_count_copy) *resource_slice_count_copy = *resource_slice_count;
+    }
+    v1beta2_resource_pool_t *result = v1beta2_resource_pool_create_internal (
+        generation_copy,
         name,
-        resource_slice_count
+        resource_slice_count_copy
         );
+    if (!result) {
+        free(generation_copy);
+        free(resource_slice_count_copy);
+    }
+    return result;
 }
 
 void v1beta2_resource_pool_free(v1beta2_resource_pool_t *v1beta2_resource_pool) {
@@ -43,9 +58,17 @@ void v1beta2_resource_pool_free(v1beta2_resource_pool_t *v1beta2_resource_pool) 
         return ;
     }
     listEntry_t *listEntry;
+    if (v1beta2_resource_pool->generation) {
+        free(v1beta2_resource_pool->generation);
+        v1beta2_resource_pool->generation = NULL;
+    }
     if (v1beta2_resource_pool->name) {
         free(v1beta2_resource_pool->name);
         v1beta2_resource_pool->name = NULL;
+    }
+    if (v1beta2_resource_pool->resource_slice_count) {
+        free(v1beta2_resource_pool->resource_slice_count);
+        v1beta2_resource_pool->resource_slice_count = NULL;
     }
     free(v1beta2_resource_pool);
 }
@@ -57,7 +80,7 @@ cJSON *v1beta2_resource_pool_convertToJSON(v1beta2_resource_pool_t *v1beta2_reso
     if (!v1beta2_resource_pool->generation) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "generation", v1beta2_resource_pool->generation) == NULL) {
+    if(cJSON_AddNumberToObject(item, "generation", *v1beta2_resource_pool->generation) == NULL) {
     goto fail; //Numeric
     }
 
@@ -75,7 +98,7 @@ cJSON *v1beta2_resource_pool_convertToJSON(v1beta2_resource_pool_t *v1beta2_reso
     if (!v1beta2_resource_pool->resource_slice_count) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "resourceSliceCount", v1beta2_resource_pool->resource_slice_count) == NULL) {
+    if(cJSON_AddNumberToObject(item, "resourceSliceCount", *v1beta2_resource_pool->resource_slice_count) == NULL) {
     goto fail; //Numeric
     }
 
@@ -91,6 +114,14 @@ v1beta2_resource_pool_t *v1beta2_resource_pool_parseFromJSON(cJSON *v1beta2_reso
 
     v1beta2_resource_pool_t *v1beta2_resource_pool_local_var = NULL;
 
+    // define the local variable for v1beta2_resource_pool->generation
+    long *generation_local_var = NULL;
+
+    char *name_local_str = NULL;
+
+    // define the local variable for v1beta2_resource_pool->resource_slice_count
+    long *resource_slice_count_local_var = NULL;
+
     // v1beta2_resource_pool->generation
     cJSON *generation = cJSON_GetObjectItemCaseSensitive(v1beta2_resource_poolJSON, "generation");
     if (cJSON_IsNull(generation)) {
@@ -105,6 +136,12 @@ v1beta2_resource_pool_t *v1beta2_resource_pool_parseFromJSON(cJSON *v1beta2_reso
     {
     goto end; //Numeric
     }
+    generation_local_var = malloc(sizeof(long));
+    if(!generation_local_var)
+    {
+        goto end;
+    }
+    *generation_local_var = generation->valuedouble;
 
     // v1beta2_resource_pool->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1beta2_resource_poolJSON, "name");
@@ -135,16 +172,40 @@ v1beta2_resource_pool_t *v1beta2_resource_pool_parseFromJSON(cJSON *v1beta2_reso
     {
     goto end; //Numeric
     }
+    resource_slice_count_local_var = malloc(sizeof(long));
+    if(!resource_slice_count_local_var)
+    {
+        goto end;
+    }
+    *resource_slice_count_local_var = resource_slice_count->valuedouble;
 
+
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
 
     v1beta2_resource_pool_local_var = v1beta2_resource_pool_create_internal (
-        generation->valuedouble,
-        strdup(name->valuestring),
-        resource_slice_count->valuedouble
+        generation_local_var,
+        name_local_str,
+        resource_slice_count_local_var
         );
+
+    if (!v1beta2_resource_pool_local_var) {
+        goto end;
+    }
 
     return v1beta2_resource_pool_local_var;
 end:
+    if (generation_local_var) {
+        free(generation_local_var);
+        generation_local_var = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (resource_slice_count_local_var) {
+        free(resource_slice_count_local_var);
+        resource_slice_count_local_var = NULL;
+    }
     return NULL;
 
 }

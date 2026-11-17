@@ -19,6 +19,7 @@ void list_pod(apiClient_t * apiClient)
                                            NULL,    /* resourceVersion */
                                            NULL,    /* resourceVersionMatch */
                                            NULL,    /* sendInitialEvents */
+                                           NULL,    /* shardSelector */
                                            NULL,    /* timeoutSeconds */
                                            NULL /* watch */
         );

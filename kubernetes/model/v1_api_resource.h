@@ -23,7 +23,7 @@ typedef struct v1_api_resource_t {
     char *group; // string
     char *kind; // string
     char *name; // string
-    int namespaced; //boolean
+    int *namespaced; //boolean
     list_t *short_names; //primitive container
     char *singular_name; // string
     char *storage_version_hash; // string
@@ -38,7 +38,7 @@ __attribute__((deprecated)) v1_api_resource_t *v1_api_resource_create(
     char *group,
     char *kind,
     char *name,
-    int namespaced,
+    int *namespaced,
     list_t *short_names,
     char *singular_name,
     char *storage_version_hash,

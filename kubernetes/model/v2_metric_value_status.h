@@ -19,7 +19,7 @@ typedef struct v2_metric_value_status_t v2_metric_value_status_t;
 
 
 typedef struct v2_metric_value_status_t {
-    int average_utilization; //numeric
+    int *average_utilization; //numeric
     char *average_value; // string
     char *value; // string
 
@@ -27,7 +27,7 @@ typedef struct v2_metric_value_status_t {
 } v2_metric_value_status_t;
 
 __attribute__((deprecated)) v2_metric_value_status_t *v2_metric_value_status_create(
-    int average_utilization,
+    int *average_utilization,
     char *average_value,
     char *value
 );

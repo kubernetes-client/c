@@ -10,21 +10,21 @@ static v1_custom_resource_column_definition_t *v1_custom_resource_column_definit
     char *format,
     char *json_path,
     char *name,
-    int priority,
+    int *priority,
     char *type
     ) {
     v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_local_var = malloc(sizeof(v1_custom_resource_column_definition_t));
     if (!v1_custom_resource_column_definition_local_var) {
         return NULL;
     }
+    memset(v1_custom_resource_column_definition_local_var, 0, sizeof(v1_custom_resource_column_definition_t));
+    v1_custom_resource_column_definition_local_var->_library_owned = 1;
     v1_custom_resource_column_definition_local_var->description = description;
     v1_custom_resource_column_definition_local_var->format = format;
     v1_custom_resource_column_definition_local_var->json_path = json_path;
     v1_custom_resource_column_definition_local_var->name = name;
     v1_custom_resource_column_definition_local_var->priority = priority;
     v1_custom_resource_column_definition_local_var->type = type;
-
-    v1_custom_resource_column_definition_local_var->_library_owned = 1;
     return v1_custom_resource_column_definition_local_var;
 }
 
@@ -33,17 +33,26 @@ __attribute__((deprecated)) v1_custom_resource_column_definition_t *v1_custom_re
     char *format,
     char *json_path,
     char *name,
-    int priority,
+    int *priority,
     char *type
     ) {
-    return v1_custom_resource_column_definition_create_internal (
+    int *priority_copy = NULL;
+    if (priority) {
+        priority_copy = malloc(sizeof(int));
+        if (priority_copy) *priority_copy = *priority;
+    }
+    v1_custom_resource_column_definition_t *result = v1_custom_resource_column_definition_create_internal (
         description,
         format,
         json_path,
         name,
-        priority,
+        priority_copy,
         type
         );
+    if (!result) {
+        free(priority_copy);
+    }
+    return result;
 }
 
 void v1_custom_resource_column_definition_free(v1_custom_resource_column_definition_t *v1_custom_resource_column_definition) {
@@ -70,6 +79,10 @@ void v1_custom_resource_column_definition_free(v1_custom_resource_column_definit
     if (v1_custom_resource_column_definition->name) {
         free(v1_custom_resource_column_definition->name);
         v1_custom_resource_column_definition->name = NULL;
+    }
+    if (v1_custom_resource_column_definition->priority) {
+        free(v1_custom_resource_column_definition->priority);
+        v1_custom_resource_column_definition->priority = NULL;
     }
     if (v1_custom_resource_column_definition->type) {
         free(v1_custom_resource_column_definition->type);
@@ -117,7 +130,7 @@ cJSON *v1_custom_resource_column_definition_convertToJSON(v1_custom_resource_col
 
     // v1_custom_resource_column_definition->priority
     if(v1_custom_resource_column_definition->priority) {
-    if(cJSON_AddNumberToObject(item, "priority", v1_custom_resource_column_definition->priority) == NULL) {
+    if(cJSON_AddNumberToObject(item, "priority", *v1_custom_resource_column_definition->priority) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -142,6 +155,19 @@ fail:
 v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_parseFromJSON(cJSON *v1_custom_resource_column_definitionJSON){
 
     v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_local_var = NULL;
+
+    char *description_local_str = NULL;
+
+    char *format_local_str = NULL;
+
+    char *json_path_local_str = NULL;
+
+    char *name_local_str = NULL;
+
+    // define the local variable for v1_custom_resource_column_definition->priority
+    int *priority_local_var = NULL;
+
+    char *type_local_str = NULL;
 
     // v1_custom_resource_column_definition->description
     cJSON *description = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_column_definitionJSON, "description");
@@ -207,6 +233,12 @@ v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_par
     {
     goto end; //Numeric
     }
+    priority_local_var = malloc(sizeof(int));
+    if(!priority_local_var)
+    {
+        goto end;
+    }
+    *priority_local_var = priority->valuedouble;
     }
 
     // v1_custom_resource_column_definition->type
@@ -225,17 +257,51 @@ v1_custom_resource_column_definition_t *v1_custom_resource_column_definition_par
     }
 
 
+    if (description && !cJSON_IsNull(description)) description_local_str = strdup(description->valuestring);
+    if (format && !cJSON_IsNull(format)) format_local_str = strdup(format->valuestring);
+    if (json_path && !cJSON_IsNull(json_path)) json_path_local_str = strdup(json_path->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (type && !cJSON_IsNull(type)) type_local_str = strdup(type->valuestring);
+
     v1_custom_resource_column_definition_local_var = v1_custom_resource_column_definition_create_internal (
-        description && !cJSON_IsNull(description) ? strdup(description->valuestring) : NULL,
-        format && !cJSON_IsNull(format) ? strdup(format->valuestring) : NULL,
-        strdup(json_path->valuestring),
-        strdup(name->valuestring),
-        priority ? priority->valuedouble : 0,
-        strdup(type->valuestring)
+        description_local_str,
+        format_local_str,
+        json_path_local_str,
+        name_local_str,
+        priority_local_var,
+        type_local_str
         );
+
+    if (!v1_custom_resource_column_definition_local_var) {
+        goto end;
+    }
 
     return v1_custom_resource_column_definition_local_var;
 end:
+    if (description_local_str) {
+        free(description_local_str);
+        description_local_str = NULL;
+    }
+    if (format_local_str) {
+        free(format_local_str);
+        format_local_str = NULL;
+    }
+    if (json_path_local_str) {
+        free(json_path_local_str);
+        json_path_local_str = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (priority_local_var) {
+        free(priority_local_var);
+        priority_local_var = NULL;
+    }
+    if (type_local_str) {
+        free(type_local_str);
+        type_local_str = NULL;
+    }
     return NULL;
 
 }

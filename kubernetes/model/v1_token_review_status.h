@@ -21,7 +21,7 @@ typedef struct v1_token_review_status_t v1_token_review_status_t;
 
 typedef struct v1_token_review_status_t {
     list_t *audiences; //primitive container
-    int authenticated; //boolean
+    int *authenticated; //boolean
     char *error; // string
     struct v1_user_info_t *user; //model
 
@@ -30,7 +30,7 @@ typedef struct v1_token_review_status_t {
 
 __attribute__((deprecated)) v1_token_review_status_t *v1_token_review_status_create(
     list_t *audiences,
-    int authenticated,
+    int *authenticated,
     char *error,
     v1_user_info_t *user
 );

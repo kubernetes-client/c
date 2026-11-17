@@ -16,13 +16,13 @@ static v1_cluster_role_t *v1_cluster_role_create_internal(
     if (!v1_cluster_role_local_var) {
         return NULL;
     }
+    memset(v1_cluster_role_local_var, 0, sizeof(v1_cluster_role_t));
+    v1_cluster_role_local_var->_library_owned = 1;
     v1_cluster_role_local_var->aggregation_rule = aggregation_rule;
     v1_cluster_role_local_var->api_version = api_version;
     v1_cluster_role_local_var->kind = kind;
     v1_cluster_role_local_var->metadata = metadata;
     v1_cluster_role_local_var->rules = rules;
-
-    v1_cluster_role_local_var->_library_owned = 1;
     return v1_cluster_role_local_var;
 }
 
@@ -33,13 +33,16 @@ __attribute__((deprecated)) v1_cluster_role_t *v1_cluster_role_create(
     v1_object_meta_t *metadata,
     list_t *rules
     ) {
-    return v1_cluster_role_create_internal (
+    v1_cluster_role_t *result = v1_cluster_role_create_internal (
         aggregation_rule,
         api_version,
         kind,
         metadata,
         rules
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_cluster_role_free(v1_cluster_role_t *v1_cluster_role) {
@@ -156,6 +159,10 @@ v1_cluster_role_t *v1_cluster_role_parseFromJSON(cJSON *v1_cluster_roleJSON){
     // define the local variable for v1_cluster_role->aggregation_rule
     v1_aggregation_rule_t *aggregation_rule_local_nonprim = NULL;
 
+    char *api_version_local_str = NULL;
+
+    char *kind_local_str = NULL;
+
     // define the local variable for v1_cluster_role->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
 
@@ -229,19 +236,34 @@ v1_cluster_role_t *v1_cluster_role_parseFromJSON(cJSON *v1_cluster_roleJSON){
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+
     v1_cluster_role_local_var = v1_cluster_role_create_internal (
         aggregation_rule ? aggregation_rule_local_nonprim : NULL,
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version_local_str,
+        kind_local_str,
         metadata ? metadata_local_nonprim : NULL,
         rules ? rulesList : NULL
         );
+
+    if (!v1_cluster_role_local_var) {
+        goto end;
+    }
 
     return v1_cluster_role_local_var;
 end:
     if (aggregation_rule_local_nonprim) {
         v1_aggregation_rule_free(aggregation_rule_local_nonprim);
         aggregation_rule_local_nonprim = NULL;
+    }
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
     }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);

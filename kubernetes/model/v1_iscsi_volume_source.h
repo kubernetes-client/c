@@ -20,15 +20,15 @@ typedef struct v1_iscsi_volume_source_t v1_iscsi_volume_source_t;
 
 
 typedef struct v1_iscsi_volume_source_t {
-    int chap_auth_discovery; //boolean
-    int chap_auth_session; //boolean
+    int *chap_auth_discovery; //boolean
+    int *chap_auth_session; //boolean
     char *fs_type; // string
     char *initiator_name; // string
     char *iqn; // string
     char *iscsi_interface; // string
-    int lun; //numeric
+    int *lun; //numeric
     list_t *portals; //primitive container
-    int read_only; //boolean
+    int *read_only; //boolean
     struct v1_local_object_reference_t *secret_ref; //model
     char *target_portal; // string
 
@@ -36,15 +36,15 @@ typedef struct v1_iscsi_volume_source_t {
 } v1_iscsi_volume_source_t;
 
 __attribute__((deprecated)) v1_iscsi_volume_source_t *v1_iscsi_volume_source_create(
-    int chap_auth_discovery,
-    int chap_auth_session,
+    int *chap_auth_discovery,
+    int *chap_auth_session,
     char *fs_type,
     char *initiator_name,
     char *iqn,
     char *iscsi_interface,
-    int lun,
+    int *lun,
     list_t *portals,
-    int read_only,
+    int *read_only,
     v1_local_object_reference_t *secret_ref,
     char *target_portal
 );

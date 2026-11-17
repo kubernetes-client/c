@@ -25,7 +25,7 @@ typedef struct v1_controller_revision_t {
     object_t *data; //object
     char *kind; // string
     struct v1_object_meta_t *metadata; //model
-    long revision; //numeric
+    long *revision; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_controller_revision_t;
@@ -35,7 +35,7 @@ __attribute__((deprecated)) v1_controller_revision_t *v1_controller_revision_cre
     object_t *data,
     char *kind,
     v1_object_meta_t *metadata,
-    long revision
+    long *revision
 );
 
 void v1_controller_revision_free(v1_controller_revision_t *v1_controller_revision);

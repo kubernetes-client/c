@@ -23,10 +23,12 @@ v1_resource_health_t* instantiate_v1_resource_health(int include_optional) {
   if (include_optional) {
     v1_resource_health = v1_resource_health_create(
       "0",
+      "0",
       "0"
     );
   } else {
     v1_resource_health = v1_resource_health_create(
+      "0",
       "0",
       "0"
     );

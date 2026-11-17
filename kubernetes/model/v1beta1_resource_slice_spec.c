@@ -6,52 +6,75 @@
 
 
 static v1beta1_resource_slice_spec_t *v1beta1_resource_slice_spec_create_internal(
-    int all_nodes,
+    int *all_nodes,
     list_t *devices,
     char *driver,
     char *node_name,
     v1_node_selector_t *node_selector,
-    int per_device_node_selection,
+    char *partition_type_attribute,
+    int *per_device_node_selection,
     v1beta1_resource_pool_t *pool,
-    list_t *shared_counters
+    list_t *shared_counters,
+    list_t *skip_node_operations
     ) {
     v1beta1_resource_slice_spec_t *v1beta1_resource_slice_spec_local_var = malloc(sizeof(v1beta1_resource_slice_spec_t));
     if (!v1beta1_resource_slice_spec_local_var) {
         return NULL;
     }
+    memset(v1beta1_resource_slice_spec_local_var, 0, sizeof(v1beta1_resource_slice_spec_t));
+    v1beta1_resource_slice_spec_local_var->_library_owned = 1;
     v1beta1_resource_slice_spec_local_var->all_nodes = all_nodes;
     v1beta1_resource_slice_spec_local_var->devices = devices;
     v1beta1_resource_slice_spec_local_var->driver = driver;
     v1beta1_resource_slice_spec_local_var->node_name = node_name;
     v1beta1_resource_slice_spec_local_var->node_selector = node_selector;
+    v1beta1_resource_slice_spec_local_var->partition_type_attribute = partition_type_attribute;
     v1beta1_resource_slice_spec_local_var->per_device_node_selection = per_device_node_selection;
     v1beta1_resource_slice_spec_local_var->pool = pool;
     v1beta1_resource_slice_spec_local_var->shared_counters = shared_counters;
-
-    v1beta1_resource_slice_spec_local_var->_library_owned = 1;
+    v1beta1_resource_slice_spec_local_var->skip_node_operations = skip_node_operations;
     return v1beta1_resource_slice_spec_local_var;
 }
 
 __attribute__((deprecated)) v1beta1_resource_slice_spec_t *v1beta1_resource_slice_spec_create(
-    int all_nodes,
+    int *all_nodes,
     list_t *devices,
     char *driver,
     char *node_name,
     v1_node_selector_t *node_selector,
-    int per_device_node_selection,
+    char *partition_type_attribute,
+    int *per_device_node_selection,
     v1beta1_resource_pool_t *pool,
-    list_t *shared_counters
+    list_t *shared_counters,
+    list_t *skip_node_operations
     ) {
-    return v1beta1_resource_slice_spec_create_internal (
-        all_nodes,
+    int *all_nodes_copy = NULL;
+    if (all_nodes) {
+        all_nodes_copy = malloc(sizeof(int));
+        if (all_nodes_copy) *all_nodes_copy = *all_nodes;
+    }
+    int *per_device_node_selection_copy = NULL;
+    if (per_device_node_selection) {
+        per_device_node_selection_copy = malloc(sizeof(int));
+        if (per_device_node_selection_copy) *per_device_node_selection_copy = *per_device_node_selection;
+    }
+    v1beta1_resource_slice_spec_t *result = v1beta1_resource_slice_spec_create_internal (
+        all_nodes_copy,
         devices,
         driver,
         node_name,
         node_selector,
-        per_device_node_selection,
+        partition_type_attribute,
+        per_device_node_selection_copy,
         pool,
-        shared_counters
+        shared_counters,
+        skip_node_operations
         );
+    if (!result) {
+        free(all_nodes_copy);
+        free(per_device_node_selection_copy);
+    }
+    return result;
 }
 
 void v1beta1_resource_slice_spec_free(v1beta1_resource_slice_spec_t *v1beta1_resource_slice_spec) {
@@ -63,6 +86,10 @@ void v1beta1_resource_slice_spec_free(v1beta1_resource_slice_spec_t *v1beta1_res
         return ;
     }
     listEntry_t *listEntry;
+    if (v1beta1_resource_slice_spec->all_nodes) {
+        free(v1beta1_resource_slice_spec->all_nodes);
+        v1beta1_resource_slice_spec->all_nodes = NULL;
+    }
     if (v1beta1_resource_slice_spec->devices) {
         list_ForEach(listEntry, v1beta1_resource_slice_spec->devices) {
             v1beta1_device_free(listEntry->data);
@@ -82,6 +109,14 @@ void v1beta1_resource_slice_spec_free(v1beta1_resource_slice_spec_t *v1beta1_res
         v1_node_selector_free(v1beta1_resource_slice_spec->node_selector);
         v1beta1_resource_slice_spec->node_selector = NULL;
     }
+    if (v1beta1_resource_slice_spec->partition_type_attribute) {
+        free(v1beta1_resource_slice_spec->partition_type_attribute);
+        v1beta1_resource_slice_spec->partition_type_attribute = NULL;
+    }
+    if (v1beta1_resource_slice_spec->per_device_node_selection) {
+        free(v1beta1_resource_slice_spec->per_device_node_selection);
+        v1beta1_resource_slice_spec->per_device_node_selection = NULL;
+    }
     if (v1beta1_resource_slice_spec->pool) {
         v1beta1_resource_pool_free(v1beta1_resource_slice_spec->pool);
         v1beta1_resource_slice_spec->pool = NULL;
@@ -93,6 +128,13 @@ void v1beta1_resource_slice_spec_free(v1beta1_resource_slice_spec_t *v1beta1_res
         list_freeList(v1beta1_resource_slice_spec->shared_counters);
         v1beta1_resource_slice_spec->shared_counters = NULL;
     }
+    if (v1beta1_resource_slice_spec->skip_node_operations) {
+        list_ForEach(listEntry, v1beta1_resource_slice_spec->skip_node_operations) {
+            free(listEntry->data);
+        }
+        list_freeList(v1beta1_resource_slice_spec->skip_node_operations);
+        v1beta1_resource_slice_spec->skip_node_operations = NULL;
+    }
     free(v1beta1_resource_slice_spec);
 }
 
@@ -101,7 +143,7 @@ cJSON *v1beta1_resource_slice_spec_convertToJSON(v1beta1_resource_slice_spec_t *
 
     // v1beta1_resource_slice_spec->all_nodes
     if(v1beta1_resource_slice_spec->all_nodes) {
-    if(cJSON_AddBoolToObject(item, "allNodes", v1beta1_resource_slice_spec->all_nodes) == NULL) {
+    if(cJSON_AddBoolToObject(item, "allNodes", *v1beta1_resource_slice_spec->all_nodes) == NULL) {
     goto fail; //Bool
     }
     }
@@ -157,9 +199,17 @@ cJSON *v1beta1_resource_slice_spec_convertToJSON(v1beta1_resource_slice_spec_t *
     }
 
 
+    // v1beta1_resource_slice_spec->partition_type_attribute
+    if(v1beta1_resource_slice_spec->partition_type_attribute) {
+    if(cJSON_AddStringToObject(item, "partitionTypeAttribute", v1beta1_resource_slice_spec->partition_type_attribute) == NULL) {
+    goto fail; //String
+    }
+    }
+
+
     // v1beta1_resource_slice_spec->per_device_node_selection
     if(v1beta1_resource_slice_spec->per_device_node_selection) {
-    if(cJSON_AddBoolToObject(item, "perDeviceNodeSelection", v1beta1_resource_slice_spec->per_device_node_selection) == NULL) {
+    if(cJSON_AddBoolToObject(item, "perDeviceNodeSelection", *v1beta1_resource_slice_spec->per_device_node_selection) == NULL) {
     goto fail; //Bool
     }
     }
@@ -198,6 +248,23 @@ cJSON *v1beta1_resource_slice_spec_convertToJSON(v1beta1_resource_slice_spec_t *
     }
     }
 
+
+    // v1beta1_resource_slice_spec->skip_node_operations
+    if(v1beta1_resource_slice_spec->skip_node_operations) {
+    cJSON *skip_node_operations = cJSON_AddArrayToObject(item, "skipNodeOperations");
+    if(skip_node_operations == NULL) {
+        goto fail; //primitive container
+    }
+
+    listEntry_t *skip_node_operationsListEntry;
+    list_ForEach(skip_node_operationsListEntry, v1beta1_resource_slice_spec->skip_node_operations) {
+    if(cJSON_AddStringToObject(skip_node_operations, "", skip_node_operationsListEntry->data) == NULL)
+    {
+        goto fail;
+    }
+    }
+    }
+
     return item;
 fail:
     if (item) {
@@ -210,17 +277,32 @@ v1beta1_resource_slice_spec_t *v1beta1_resource_slice_spec_parseFromJSON(cJSON *
 
     v1beta1_resource_slice_spec_t *v1beta1_resource_slice_spec_local_var = NULL;
 
+    // define the local variable for v1beta1_resource_slice_spec->all_nodes
+    int *all_nodes_local_var = NULL;
+
     // define the local list for v1beta1_resource_slice_spec->devices
     list_t *devicesList = NULL;
 
+    char *driver_local_str = NULL;
+
+    char *node_name_local_str = NULL;
+
     // define the local variable for v1beta1_resource_slice_spec->node_selector
     v1_node_selector_t *node_selector_local_nonprim = NULL;
+
+    char *partition_type_attribute_local_str = NULL;
+
+    // define the local variable for v1beta1_resource_slice_spec->per_device_node_selection
+    int *per_device_node_selection_local_var = NULL;
 
     // define the local variable for v1beta1_resource_slice_spec->pool
     v1beta1_resource_pool_t *pool_local_nonprim = NULL;
 
     // define the local list for v1beta1_resource_slice_spec->shared_counters
     list_t *shared_countersList = NULL;
+
+    // define the local list for v1beta1_resource_slice_spec->skip_node_operations
+    list_t *skip_node_operationsList = NULL;
 
     // v1beta1_resource_slice_spec->all_nodes
     cJSON *all_nodes = cJSON_GetObjectItemCaseSensitive(v1beta1_resource_slice_specJSON, "allNodes");
@@ -232,6 +314,12 @@ v1beta1_resource_slice_spec_t *v1beta1_resource_slice_spec_parseFromJSON(cJSON *
     {
     goto end; //Bool
     }
+    all_nodes_local_var = malloc(sizeof(int));
+    if(!all_nodes_local_var)
+    {
+        goto end;
+    }
+    *all_nodes_local_var = all_nodes->valueint;
     }
 
     // v1beta1_resource_slice_spec->devices
@@ -294,6 +382,18 @@ v1beta1_resource_slice_spec_t *v1beta1_resource_slice_spec_parseFromJSON(cJSON *
     node_selector_local_nonprim = v1_node_selector_parseFromJSON(node_selector); //nonprimitive
     }
 
+    // v1beta1_resource_slice_spec->partition_type_attribute
+    cJSON *partition_type_attribute = cJSON_GetObjectItemCaseSensitive(v1beta1_resource_slice_specJSON, "partitionTypeAttribute");
+    if (cJSON_IsNull(partition_type_attribute)) {
+        partition_type_attribute = NULL;
+    }
+    if (partition_type_attribute) { 
+    if(!cJSON_IsString(partition_type_attribute) && !cJSON_IsNull(partition_type_attribute))
+    {
+    goto end; //String
+    }
+    }
+
     // v1beta1_resource_slice_spec->per_device_node_selection
     cJSON *per_device_node_selection = cJSON_GetObjectItemCaseSensitive(v1beta1_resource_slice_specJSON, "perDeviceNodeSelection");
     if (cJSON_IsNull(per_device_node_selection)) {
@@ -304,6 +404,12 @@ v1beta1_resource_slice_spec_t *v1beta1_resource_slice_spec_parseFromJSON(cJSON *
     {
     goto end; //Bool
     }
+    per_device_node_selection_local_var = malloc(sizeof(int));
+    if(!per_device_node_selection_local_var)
+    {
+        goto end;
+    }
+    *per_device_node_selection_local_var = per_device_node_selection->valueint;
     }
 
     // v1beta1_resource_slice_spec->pool
@@ -342,20 +448,56 @@ v1beta1_resource_slice_spec_t *v1beta1_resource_slice_spec_parseFromJSON(cJSON *
     }
     }
 
+    // v1beta1_resource_slice_spec->skip_node_operations
+    cJSON *skip_node_operations = cJSON_GetObjectItemCaseSensitive(v1beta1_resource_slice_specJSON, "skipNodeOperations");
+    if (cJSON_IsNull(skip_node_operations)) {
+        skip_node_operations = NULL;
+    }
+    if (skip_node_operations) { 
+    cJSON *skip_node_operations_local = NULL;
+    if(!cJSON_IsArray(skip_node_operations)) {
+        goto end;//primitive container
+    }
+    skip_node_operationsList = list_createList();
+
+    cJSON_ArrayForEach(skip_node_operations_local, skip_node_operations)
+    {
+        if(!cJSON_IsString(skip_node_operations_local))
+        {
+            goto end;
+        }
+        list_addElement(skip_node_operationsList , strdup(skip_node_operations_local->valuestring));
+    }
+    }
+
+
+    if (driver && !cJSON_IsNull(driver)) driver_local_str = strdup(driver->valuestring);
+    if (node_name && !cJSON_IsNull(node_name)) node_name_local_str = strdup(node_name->valuestring);
+    if (partition_type_attribute && !cJSON_IsNull(partition_type_attribute)) partition_type_attribute_local_str = strdup(partition_type_attribute->valuestring);
 
     v1beta1_resource_slice_spec_local_var = v1beta1_resource_slice_spec_create_internal (
-        all_nodes ? all_nodes->valueint : 0,
+        all_nodes_local_var,
         devices ? devicesList : NULL,
-        strdup(driver->valuestring),
-        node_name && !cJSON_IsNull(node_name) ? strdup(node_name->valuestring) : NULL,
+        driver_local_str,
+        node_name_local_str,
         node_selector ? node_selector_local_nonprim : NULL,
-        per_device_node_selection ? per_device_node_selection->valueint : 0,
+        partition_type_attribute_local_str,
+        per_device_node_selection_local_var,
         pool_local_nonprim,
-        shared_counters ? shared_countersList : NULL
+        shared_counters ? shared_countersList : NULL,
+        skip_node_operations ? skip_node_operationsList : NULL
         );
+
+    if (!v1beta1_resource_slice_spec_local_var) {
+        goto end;
+    }
 
     return v1beta1_resource_slice_spec_local_var;
 end:
+    if (all_nodes_local_var) {
+        free(all_nodes_local_var);
+        all_nodes_local_var = NULL;
+    }
     if (devicesList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, devicesList) {
@@ -365,9 +507,25 @@ end:
         list_freeList(devicesList);
         devicesList = NULL;
     }
+    if (driver_local_str) {
+        free(driver_local_str);
+        driver_local_str = NULL;
+    }
+    if (node_name_local_str) {
+        free(node_name_local_str);
+        node_name_local_str = NULL;
+    }
     if (node_selector_local_nonprim) {
         v1_node_selector_free(node_selector_local_nonprim);
         node_selector_local_nonprim = NULL;
+    }
+    if (partition_type_attribute_local_str) {
+        free(partition_type_attribute_local_str);
+        partition_type_attribute_local_str = NULL;
+    }
+    if (per_device_node_selection_local_var) {
+        free(per_device_node_selection_local_var);
+        per_device_node_selection_local_var = NULL;
     }
     if (pool_local_nonprim) {
         v1beta1_resource_pool_free(pool_local_nonprim);
@@ -381,6 +539,15 @@ end:
         }
         list_freeList(shared_countersList);
         shared_countersList = NULL;
+    }
+    if (skip_node_operationsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, skip_node_operationsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(skip_node_operationsList);
+        skip_node_operationsList = NULL;
     }
     return NULL;
 

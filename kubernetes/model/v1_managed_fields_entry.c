@@ -18,6 +18,8 @@ static v1_managed_fields_entry_t *v1_managed_fields_entry_create_internal(
     if (!v1_managed_fields_entry_local_var) {
         return NULL;
     }
+    memset(v1_managed_fields_entry_local_var, 0, sizeof(v1_managed_fields_entry_t));
+    v1_managed_fields_entry_local_var->_library_owned = 1;
     v1_managed_fields_entry_local_var->api_version = api_version;
     v1_managed_fields_entry_local_var->fields_type = fields_type;
     v1_managed_fields_entry_local_var->fields_v1 = fields_v1;
@@ -25,8 +27,6 @@ static v1_managed_fields_entry_t *v1_managed_fields_entry_create_internal(
     v1_managed_fields_entry_local_var->operation = operation;
     v1_managed_fields_entry_local_var->subresource = subresource;
     v1_managed_fields_entry_local_var->time = time;
-
-    v1_managed_fields_entry_local_var->_library_owned = 1;
     return v1_managed_fields_entry_local_var;
 }
 
@@ -39,7 +39,7 @@ __attribute__((deprecated)) v1_managed_fields_entry_t *v1_managed_fields_entry_c
     char *subresource,
     char *time
     ) {
-    return v1_managed_fields_entry_create_internal (
+    v1_managed_fields_entry_t *result = v1_managed_fields_entry_create_internal (
         api_version,
         fields_type,
         fields_v1,
@@ -48,6 +48,9 @@ __attribute__((deprecated)) v1_managed_fields_entry_t *v1_managed_fields_entry_c
         subresource,
         time
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_managed_fields_entry_free(v1_managed_fields_entry_t *v1_managed_fields_entry) {
@@ -165,6 +168,18 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_manag
 
     v1_managed_fields_entry_t *v1_managed_fields_entry_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
+    char *fields_type_local_str = NULL;
+
+    char *manager_local_str = NULL;
+
+    char *operation_local_str = NULL;
+
+    char *subresource_local_str = NULL;
+
+    char *time_local_str = NULL;
+
     // v1_managed_fields_entry->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_managed_fields_entryJSON, "apiVersion");
     if (cJSON_IsNull(api_version)) {
@@ -248,18 +263,53 @@ v1_managed_fields_entry_t *v1_managed_fields_entry_parseFromJSON(cJSON *v1_manag
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (fields_type && !cJSON_IsNull(fields_type)) fields_type_local_str = strdup(fields_type->valuestring);
+    if (manager && !cJSON_IsNull(manager)) manager_local_str = strdup(manager->valuestring);
+    if (operation && !cJSON_IsNull(operation)) operation_local_str = strdup(operation->valuestring);
+    if (subresource && !cJSON_IsNull(subresource)) subresource_local_str = strdup(subresource->valuestring);
+    if (time && !cJSON_IsNull(time)) time_local_str = strdup(time->valuestring);
+
     v1_managed_fields_entry_local_var = v1_managed_fields_entry_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        fields_type && !cJSON_IsNull(fields_type) ? strdup(fields_type->valuestring) : NULL,
+        api_version_local_str,
+        fields_type_local_str,
         fields_v1 ? fields_v1_local_object : NULL,
-        manager && !cJSON_IsNull(manager) ? strdup(manager->valuestring) : NULL,
-        operation && !cJSON_IsNull(operation) ? strdup(operation->valuestring) : NULL,
-        subresource && !cJSON_IsNull(subresource) ? strdup(subresource->valuestring) : NULL,
-        time && !cJSON_IsNull(time) ? strdup(time->valuestring) : NULL
+        manager_local_str,
+        operation_local_str,
+        subresource_local_str,
+        time_local_str
         );
+
+    if (!v1_managed_fields_entry_local_var) {
+        goto end;
+    }
 
     return v1_managed_fields_entry_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (fields_type_local_str) {
+        free(fields_type_local_str);
+        fields_type_local_str = NULL;
+    }
+    if (manager_local_str) {
+        free(manager_local_str);
+        manager_local_str = NULL;
+    }
+    if (operation_local_str) {
+        free(operation_local_str);
+        operation_local_str = NULL;
+    }
+    if (subresource_local_str) {
+        free(subresource_local_str);
+        subresource_local_str = NULL;
+    }
+    if (time_local_str) {
+        free(time_local_str);
+        time_local_str = NULL;
+    }
     return NULL;
 
 }

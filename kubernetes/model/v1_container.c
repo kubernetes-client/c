@@ -23,11 +23,11 @@ static v1_container_t *v1_container_create_internal(
     list_t *restart_policy_rules,
     v1_security_context_t *security_context,
     v1_probe_t *startup_probe,
-    int _stdin,
-    int stdin_once,
+    int *_stdin,
+    int *stdin_once,
     char *termination_message_path,
     char *termination_message_policy,
-    int tty,
+    int *tty,
     list_t *volume_devices,
     list_t *volume_mounts,
     char *working_dir
@@ -36,6 +36,8 @@ static v1_container_t *v1_container_create_internal(
     if (!v1_container_local_var) {
         return NULL;
     }
+    memset(v1_container_local_var, 0, sizeof(v1_container_t));
+    v1_container_local_var->_library_owned = 1;
     v1_container_local_var->args = args;
     v1_container_local_var->command = command;
     v1_container_local_var->env = env;
@@ -61,8 +63,6 @@ static v1_container_t *v1_container_create_internal(
     v1_container_local_var->volume_devices = volume_devices;
     v1_container_local_var->volume_mounts = volume_mounts;
     v1_container_local_var->working_dir = working_dir;
-
-    v1_container_local_var->_library_owned = 1;
     return v1_container_local_var;
 }
 
@@ -84,16 +84,31 @@ __attribute__((deprecated)) v1_container_t *v1_container_create(
     list_t *restart_policy_rules,
     v1_security_context_t *security_context,
     v1_probe_t *startup_probe,
-    int _stdin,
-    int stdin_once,
+    int *_stdin,
+    int *stdin_once,
     char *termination_message_path,
     char *termination_message_policy,
-    int tty,
+    int *tty,
     list_t *volume_devices,
     list_t *volume_mounts,
     char *working_dir
     ) {
-    return v1_container_create_internal (
+    int *_stdin_copy = NULL;
+    if (_stdin) {
+        _stdin_copy = malloc(sizeof(int));
+        if (_stdin_copy) *_stdin_copy = *_stdin;
+    }
+    int *stdin_once_copy = NULL;
+    if (stdin_once) {
+        stdin_once_copy = malloc(sizeof(int));
+        if (stdin_once_copy) *stdin_once_copy = *stdin_once;
+    }
+    int *tty_copy = NULL;
+    if (tty) {
+        tty_copy = malloc(sizeof(int));
+        if (tty_copy) *tty_copy = *tty;
+    }
+    v1_container_t *result = v1_container_create_internal (
         args,
         command,
         env,
@@ -111,15 +126,21 @@ __attribute__((deprecated)) v1_container_t *v1_container_create(
         restart_policy_rules,
         security_context,
         startup_probe,
-        _stdin,
-        stdin_once,
+        _stdin_copy,
+        stdin_once_copy,
         termination_message_path,
         termination_message_policy,
-        tty,
+        tty_copy,
         volume_devices,
         volume_mounts,
         working_dir
         );
+    if (!result) {
+        free(_stdin_copy);
+        free(stdin_once_copy);
+        free(tty_copy);
+    }
+    return result;
 }
 
 void v1_container_free(v1_container_t *v1_container) {
@@ -220,6 +241,14 @@ void v1_container_free(v1_container_t *v1_container) {
         v1_probe_free(v1_container->startup_probe);
         v1_container->startup_probe = NULL;
     }
+    if (v1_container->_stdin) {
+        free(v1_container->_stdin);
+        v1_container->_stdin = NULL;
+    }
+    if (v1_container->stdin_once) {
+        free(v1_container->stdin_once);
+        v1_container->stdin_once = NULL;
+    }
     if (v1_container->termination_message_path) {
         free(v1_container->termination_message_path);
         v1_container->termination_message_path = NULL;
@@ -227,6 +256,10 @@ void v1_container_free(v1_container_t *v1_container) {
     if (v1_container->termination_message_policy) {
         free(v1_container->termination_message_policy);
         v1_container->termination_message_policy = NULL;
+    }
+    if (v1_container->tty) {
+        free(v1_container->tty);
+        v1_container->tty = NULL;
     }
     if (v1_container->volume_devices) {
         list_ForEach(listEntry, v1_container->volume_devices) {
@@ -499,7 +532,7 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
 
     // v1_container->_stdin
     if(v1_container->_stdin) {
-    if(cJSON_AddBoolToObject(item, "stdin", v1_container->_stdin) == NULL) {
+    if(cJSON_AddBoolToObject(item, "stdin", *v1_container->_stdin) == NULL) {
     goto fail; //Bool
     }
     }
@@ -507,7 +540,7 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
 
     // v1_container->stdin_once
     if(v1_container->stdin_once) {
-    if(cJSON_AddBoolToObject(item, "stdinOnce", v1_container->stdin_once) == NULL) {
+    if(cJSON_AddBoolToObject(item, "stdinOnce", *v1_container->stdin_once) == NULL) {
     goto fail; //Bool
     }
     }
@@ -531,7 +564,7 @@ cJSON *v1_container_convertToJSON(v1_container_t *v1_container) {
 
     // v1_container->tty
     if(v1_container->tty) {
-    if(cJSON_AddBoolToObject(item, "tty", v1_container->tty) == NULL) {
+    if(cJSON_AddBoolToObject(item, "tty", *v1_container->tty) == NULL) {
     goto fail; //Bool
     }
     }
@@ -608,11 +641,17 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
     // define the local list for v1_container->env_from
     list_t *env_fromList = NULL;
 
+    char *image_local_str = NULL;
+
+    char *image_pull_policy_local_str = NULL;
+
     // define the local variable for v1_container->lifecycle
     v1_lifecycle_t *lifecycle_local_nonprim = NULL;
 
     // define the local variable for v1_container->liveness_probe
     v1_probe_t *liveness_probe_local_nonprim = NULL;
+
+    char *name_local_str = NULL;
 
     // define the local list for v1_container->ports
     list_t *portsList = NULL;
@@ -626,6 +665,8 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
     // define the local variable for v1_container->resources
     v1_resource_requirements_t *resources_local_nonprim = NULL;
 
+    char *restart_policy_local_str = NULL;
+
     // define the local list for v1_container->restart_policy_rules
     list_t *restart_policy_rulesList = NULL;
 
@@ -635,11 +676,26 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
     // define the local variable for v1_container->startup_probe
     v1_probe_t *startup_probe_local_nonprim = NULL;
 
+    // define the local variable for v1_container->_stdin
+    int *_stdin_local_var = NULL;
+
+    // define the local variable for v1_container->stdin_once
+    int *stdin_once_local_var = NULL;
+
+    char *termination_message_path_local_str = NULL;
+
+    char *termination_message_policy_local_str = NULL;
+
+    // define the local variable for v1_container->tty
+    int *tty_local_var = NULL;
+
     // define the local list for v1_container->volume_devices
     list_t *volume_devicesList = NULL;
 
     // define the local list for v1_container->volume_mounts
     list_t *volume_mountsList = NULL;
+
+    char *working_dir_local_str = NULL;
 
     // v1_container->args
     cJSON *args = cJSON_GetObjectItemCaseSensitive(v1_containerJSON, "args");
@@ -920,6 +976,12 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
     {
     goto end; //Bool
     }
+    _stdin_local_var = malloc(sizeof(int));
+    if(!_stdin_local_var)
+    {
+        goto end;
+    }
+    *_stdin_local_var = _stdin->valueint;
     }
 
     // v1_container->stdin_once
@@ -932,6 +994,12 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
     {
     goto end; //Bool
     }
+    stdin_once_local_var = malloc(sizeof(int));
+    if(!stdin_once_local_var)
+    {
+        goto end;
+    }
+    *stdin_once_local_var = stdin_once->valueint;
     }
 
     // v1_container->termination_message_path
@@ -968,6 +1036,12 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
     {
     goto end; //Bool
     }
+    tty_local_var = malloc(sizeof(int));
+    if(!tty_local_var)
+    {
+        goto end;
+    }
+    *tty_local_var = tty->valueint;
     }
 
     // v1_container->volume_devices
@@ -1031,33 +1105,45 @@ v1_container_t *v1_container_parseFromJSON(cJSON *v1_containerJSON){
     }
 
 
+    if (image && !cJSON_IsNull(image)) image_local_str = strdup(image->valuestring);
+    if (image_pull_policy && !cJSON_IsNull(image_pull_policy)) image_pull_policy_local_str = strdup(image_pull_policy->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (restart_policy && !cJSON_IsNull(restart_policy)) restart_policy_local_str = strdup(restart_policy->valuestring);
+    if (termination_message_path && !cJSON_IsNull(termination_message_path)) termination_message_path_local_str = strdup(termination_message_path->valuestring);
+    if (termination_message_policy && !cJSON_IsNull(termination_message_policy)) termination_message_policy_local_str = strdup(termination_message_policy->valuestring);
+    if (working_dir && !cJSON_IsNull(working_dir)) working_dir_local_str = strdup(working_dir->valuestring);
+
     v1_container_local_var = v1_container_create_internal (
         args ? argsList : NULL,
         command ? commandList : NULL,
         env ? envList : NULL,
         env_from ? env_fromList : NULL,
-        image && !cJSON_IsNull(image) ? strdup(image->valuestring) : NULL,
-        image_pull_policy && !cJSON_IsNull(image_pull_policy) ? strdup(image_pull_policy->valuestring) : NULL,
+        image_local_str,
+        image_pull_policy_local_str,
         lifecycle ? lifecycle_local_nonprim : NULL,
         liveness_probe ? liveness_probe_local_nonprim : NULL,
-        strdup(name->valuestring),
+        name_local_str,
         ports ? portsList : NULL,
         readiness_probe ? readiness_probe_local_nonprim : NULL,
         resize_policy ? resize_policyList : NULL,
         resources ? resources_local_nonprim : NULL,
-        restart_policy && !cJSON_IsNull(restart_policy) ? strdup(restart_policy->valuestring) : NULL,
+        restart_policy_local_str,
         restart_policy_rules ? restart_policy_rulesList : NULL,
         security_context ? security_context_local_nonprim : NULL,
         startup_probe ? startup_probe_local_nonprim : NULL,
-        _stdin ? _stdin->valueint : 0,
-        stdin_once ? stdin_once->valueint : 0,
-        termination_message_path && !cJSON_IsNull(termination_message_path) ? strdup(termination_message_path->valuestring) : NULL,
-        termination_message_policy && !cJSON_IsNull(termination_message_policy) ? strdup(termination_message_policy->valuestring) : NULL,
-        tty ? tty->valueint : 0,
+        _stdin_local_var,
+        stdin_once_local_var,
+        termination_message_path_local_str,
+        termination_message_policy_local_str,
+        tty_local_var,
         volume_devices ? volume_devicesList : NULL,
         volume_mounts ? volume_mountsList : NULL,
-        working_dir && !cJSON_IsNull(working_dir) ? strdup(working_dir->valuestring) : NULL
+        working_dir_local_str
         );
+
+    if (!v1_container_local_var) {
+        goto end;
+    }
 
     return v1_container_local_var;
 end:
@@ -1097,6 +1183,14 @@ end:
         list_freeList(env_fromList);
         env_fromList = NULL;
     }
+    if (image_local_str) {
+        free(image_local_str);
+        image_local_str = NULL;
+    }
+    if (image_pull_policy_local_str) {
+        free(image_pull_policy_local_str);
+        image_pull_policy_local_str = NULL;
+    }
     if (lifecycle_local_nonprim) {
         v1_lifecycle_free(lifecycle_local_nonprim);
         lifecycle_local_nonprim = NULL;
@@ -1104,6 +1198,10 @@ end:
     if (liveness_probe_local_nonprim) {
         v1_probe_free(liveness_probe_local_nonprim);
         liveness_probe_local_nonprim = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
     }
     if (portsList) {
         listEntry_t *listEntry = NULL;
@@ -1131,6 +1229,10 @@ end:
         v1_resource_requirements_free(resources_local_nonprim);
         resources_local_nonprim = NULL;
     }
+    if (restart_policy_local_str) {
+        free(restart_policy_local_str);
+        restart_policy_local_str = NULL;
+    }
     if (restart_policy_rulesList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, restart_policy_rulesList) {
@@ -1147,6 +1249,26 @@ end:
     if (startup_probe_local_nonprim) {
         v1_probe_free(startup_probe_local_nonprim);
         startup_probe_local_nonprim = NULL;
+    }
+    if (_stdin_local_var) {
+        free(_stdin_local_var);
+        _stdin_local_var = NULL;
+    }
+    if (stdin_once_local_var) {
+        free(stdin_once_local_var);
+        stdin_once_local_var = NULL;
+    }
+    if (termination_message_path_local_str) {
+        free(termination_message_path_local_str);
+        termination_message_path_local_str = NULL;
+    }
+    if (termination_message_policy_local_str) {
+        free(termination_message_policy_local_str);
+        termination_message_policy_local_str = NULL;
+    }
+    if (tty_local_var) {
+        free(tty_local_var);
+        tty_local_var = NULL;
     }
     if (volume_devicesList) {
         listEntry_t *listEntry = NULL;
@@ -1165,6 +1287,10 @@ end:
         }
         list_freeList(volume_mountsList);
         volume_mountsList = NULL;
+    }
+    if (working_dir_local_str) {
+        free(working_dir_local_str);
+        working_dir_local_str = NULL;
     }
     return NULL;
 

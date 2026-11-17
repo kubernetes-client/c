@@ -24,7 +24,7 @@ typedef struct v1_azure_disk_volume_source_t {
     char *disk_uri; // string
     char *fs_type; // string
     char *kind; // string
-    int read_only; //boolean
+    int *read_only; //boolean
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_azure_disk_volume_source_t;
@@ -35,7 +35,7 @@ __attribute__((deprecated)) v1_azure_disk_volume_source_t *v1_azure_disk_volume_
     char *disk_uri,
     char *fs_type,
     char *kind,
-    int read_only
+    int *read_only
 );
 
 void v1_azure_disk_volume_source_free(v1_azure_disk_volume_source_t *v1_azure_disk_volume_source);

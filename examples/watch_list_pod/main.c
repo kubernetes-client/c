@@ -85,6 +85,7 @@ void watch_list_pod(apiClient_t * apiClient)
                                 NULL,   /* resourceVersion */
                                 NULL,   /* resourceVersionMatch */
                                 NULL,   /* sendInitialEvents */
+                                NULL,    /* shardSelector */
                                 &timeoutSeconds,    /* timeoutSeconds */
                                 &watch  /* watch */
         );

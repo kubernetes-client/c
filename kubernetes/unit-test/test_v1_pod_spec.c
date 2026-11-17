@@ -20,6 +20,7 @@ v1_pod_spec_t* instantiate_v1_pod_spec(int include_optional);
 #include "test_v1_pod_dns_config.c"
 #include "test_v1_pod_os.c"
 #include "test_v1_resource_requirements.c"
+#include "test_v1_pod_scheduling_group.c"
 #include "test_v1_pod_security_context.c"
 
 
@@ -36,6 +37,7 @@ v1_pod_spec_t* instantiate_v1_pod_spec(int include_optional) {
       instantiate_v1_pod_dns_config(0),
       "0",
       1,
+      list_createList(),
       list_createList(),
       list_createList(),
       1,
@@ -63,6 +65,8 @@ v1_pod_spec_t* instantiate_v1_pod_spec(int include_optional) {
       "0",
       list_createList(),
        // false, not to have infinite recursion
+      instantiate_v1_pod_scheduling_group(0),
+       // false, not to have infinite recursion
       instantiate_v1_pod_security_context(0),
       "0",
       "0",
@@ -85,6 +89,7 @@ v1_pod_spec_t* instantiate_v1_pod_spec(int include_optional) {
       1,
       list_createList(),
       list_createList(),
+      list_createList(),
       1,
       1,
       1,
@@ -107,6 +112,7 @@ v1_pod_spec_t* instantiate_v1_pod_spec(int include_optional) {
       "0",
       "0",
       list_createList(),
+      NULL,
       NULL,
       "0",
       "0",

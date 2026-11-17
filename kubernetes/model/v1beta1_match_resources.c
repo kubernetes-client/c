@@ -16,13 +16,13 @@ static v1beta1_match_resources_t *v1beta1_match_resources_create_internal(
     if (!v1beta1_match_resources_local_var) {
         return NULL;
     }
+    memset(v1beta1_match_resources_local_var, 0, sizeof(v1beta1_match_resources_t));
+    v1beta1_match_resources_local_var->_library_owned = 1;
     v1beta1_match_resources_local_var->exclude_resource_rules = exclude_resource_rules;
     v1beta1_match_resources_local_var->match_policy = match_policy;
     v1beta1_match_resources_local_var->namespace_selector = namespace_selector;
     v1beta1_match_resources_local_var->object_selector = object_selector;
     v1beta1_match_resources_local_var->resource_rules = resource_rules;
-
-    v1beta1_match_resources_local_var->_library_owned = 1;
     return v1beta1_match_resources_local_var;
 }
 
@@ -33,13 +33,16 @@ __attribute__((deprecated)) v1beta1_match_resources_t *v1beta1_match_resources_c
     v1_label_selector_t *object_selector,
     list_t *resource_rules
     ) {
-    return v1beta1_match_resources_create_internal (
+    v1beta1_match_resources_t *result = v1beta1_match_resources_create_internal (
         exclude_resource_rules,
         match_policy,
         namespace_selector,
         object_selector,
         resource_rules
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1beta1_match_resources_free(v1beta1_match_resources_t *v1beta1_match_resources) {
@@ -171,6 +174,8 @@ v1beta1_match_resources_t *v1beta1_match_resources_parseFromJSON(cJSON *v1beta1_
     // define the local list for v1beta1_match_resources->exclude_resource_rules
     list_t *exclude_resource_rulesList = NULL;
 
+    char *match_policy_local_str = NULL;
+
     // define the local variable for v1beta1_match_resources->namespace_selector
     v1_label_selector_t *namespace_selector_local_nonprim = NULL;
 
@@ -259,13 +264,19 @@ v1beta1_match_resources_t *v1beta1_match_resources_parseFromJSON(cJSON *v1beta1_
     }
 
 
+    if (match_policy && !cJSON_IsNull(match_policy)) match_policy_local_str = strdup(match_policy->valuestring);
+
     v1beta1_match_resources_local_var = v1beta1_match_resources_create_internal (
         exclude_resource_rules ? exclude_resource_rulesList : NULL,
-        match_policy && !cJSON_IsNull(match_policy) ? strdup(match_policy->valuestring) : NULL,
+        match_policy_local_str,
         namespace_selector ? namespace_selector_local_nonprim : NULL,
         object_selector ? object_selector_local_nonprim : NULL,
         resource_rules ? resource_rulesList : NULL
         );
+
+    if (!v1beta1_match_resources_local_var) {
+        goto end;
+    }
 
     return v1beta1_match_resources_local_var;
 end:
@@ -277,6 +288,10 @@ end:
         }
         list_freeList(exclude_resource_rulesList);
         exclude_resource_rulesList = NULL;
+    }
+    if (match_policy_local_str) {
+        free(match_policy_local_str);
+        match_policy_local_str = NULL;
     }
     if (namespace_selector_local_nonprim) {
         v1_label_selector_free(namespace_selector_local_nonprim);

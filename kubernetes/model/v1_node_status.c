@@ -12,6 +12,7 @@ static v1_node_status_t *v1_node_status_create_internal(
     list_t *conditions,
     v1_node_config_status_t *config,
     v1_node_daemon_endpoints_t *daemon_endpoints,
+    list_t *declared_features,
     v1_node_features_t *features,
     list_t *images,
     v1_node_system_info_t *node_info,
@@ -24,12 +25,15 @@ static v1_node_status_t *v1_node_status_create_internal(
     if (!v1_node_status_local_var) {
         return NULL;
     }
+    memset(v1_node_status_local_var, 0, sizeof(v1_node_status_t));
+    v1_node_status_local_var->_library_owned = 1;
     v1_node_status_local_var->addresses = addresses;
     v1_node_status_local_var->allocatable = allocatable;
     v1_node_status_local_var->capacity = capacity;
     v1_node_status_local_var->conditions = conditions;
     v1_node_status_local_var->config = config;
     v1_node_status_local_var->daemon_endpoints = daemon_endpoints;
+    v1_node_status_local_var->declared_features = declared_features;
     v1_node_status_local_var->features = features;
     v1_node_status_local_var->images = images;
     v1_node_status_local_var->node_info = node_info;
@@ -37,8 +41,6 @@ static v1_node_status_t *v1_node_status_create_internal(
     v1_node_status_local_var->runtime_handlers = runtime_handlers;
     v1_node_status_local_var->volumes_attached = volumes_attached;
     v1_node_status_local_var->volumes_in_use = volumes_in_use;
-
-    v1_node_status_local_var->_library_owned = 1;
     return v1_node_status_local_var;
 }
 
@@ -49,6 +51,7 @@ __attribute__((deprecated)) v1_node_status_t *v1_node_status_create(
     list_t *conditions,
     v1_node_config_status_t *config,
     v1_node_daemon_endpoints_t *daemon_endpoints,
+    list_t *declared_features,
     v1_node_features_t *features,
     list_t *images,
     v1_node_system_info_t *node_info,
@@ -57,13 +60,14 @@ __attribute__((deprecated)) v1_node_status_t *v1_node_status_create(
     list_t *volumes_attached,
     list_t *volumes_in_use
     ) {
-    return v1_node_status_create_internal (
+    v1_node_status_t *result = v1_node_status_create_internal (
         addresses,
         allocatable,
         capacity,
         conditions,
         config,
         daemon_endpoints,
+        declared_features,
         features,
         images,
         node_info,
@@ -72,6 +76,9 @@ __attribute__((deprecated)) v1_node_status_t *v1_node_status_create(
         volumes_attached,
         volumes_in_use
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_node_status_free(v1_node_status_t *v1_node_status) {
@@ -124,6 +131,13 @@ void v1_node_status_free(v1_node_status_t *v1_node_status) {
     if (v1_node_status->daemon_endpoints) {
         v1_node_daemon_endpoints_free(v1_node_status->daemon_endpoints);
         v1_node_status->daemon_endpoints = NULL;
+    }
+    if (v1_node_status->declared_features) {
+        list_ForEach(listEntry, v1_node_status->declared_features) {
+            free(listEntry->data);
+        }
+        list_freeList(v1_node_status->declared_features);
+        v1_node_status->declared_features = NULL;
     }
     if (v1_node_status->features) {
         v1_node_features_free(v1_node_status->features);
@@ -277,6 +291,23 @@ cJSON *v1_node_status_convertToJSON(v1_node_status_t *v1_node_status) {
     }
 
 
+    // v1_node_status->declared_features
+    if(v1_node_status->declared_features) {
+    cJSON *declared_features = cJSON_AddArrayToObject(item, "declaredFeatures");
+    if(declared_features == NULL) {
+        goto fail; //primitive container
+    }
+
+    listEntry_t *declared_featuresListEntry;
+    list_ForEach(declared_featuresListEntry, v1_node_status->declared_features) {
+    if(cJSON_AddStringToObject(declared_features, "", declared_featuresListEntry->data) == NULL)
+    {
+        goto fail;
+    }
+    }
+    }
+
+
     // v1_node_status->features
     if(v1_node_status->features) {
     cJSON *features_local_JSON = v1_node_features_convertToJSON(v1_node_status->features);
@@ -417,6 +448,9 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
     // define the local variable for v1_node_status->daemon_endpoints
     v1_node_daemon_endpoints_t *daemon_endpoints_local_nonprim = NULL;
 
+    // define the local list for v1_node_status->declared_features
+    list_t *declared_featuresList = NULL;
+
     // define the local variable for v1_node_status->features
     v1_node_features_t *features_local_nonprim = NULL;
 
@@ -425,6 +459,8 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
 
     // define the local variable for v1_node_status->node_info
     v1_node_system_info_t *node_info_local_nonprim = NULL;
+
+    char *phase_local_str = NULL;
 
     // define the local list for v1_node_status->runtime_handlers
     list_t *runtime_handlersList = NULL;
@@ -557,6 +593,28 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
     daemon_endpoints_local_nonprim = v1_node_daemon_endpoints_parseFromJSON(daemon_endpoints); //nonprimitive
     }
 
+    // v1_node_status->declared_features
+    cJSON *declared_features = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "declaredFeatures");
+    if (cJSON_IsNull(declared_features)) {
+        declared_features = NULL;
+    }
+    if (declared_features) { 
+    cJSON *declared_features_local = NULL;
+    if(!cJSON_IsArray(declared_features)) {
+        goto end;//primitive container
+    }
+    declared_featuresList = list_createList();
+
+    cJSON_ArrayForEach(declared_features_local, declared_features)
+    {
+        if(!cJSON_IsString(declared_features_local))
+        {
+            goto end;
+        }
+        list_addElement(declared_featuresList , strdup(declared_features_local->valuestring));
+    }
+    }
+
     // v1_node_status->features
     cJSON *features = cJSON_GetObjectItemCaseSensitive(v1_node_statusJSON, "features");
     if (cJSON_IsNull(features)) {
@@ -682,6 +740,8 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
     }
 
 
+    if (phase && !cJSON_IsNull(phase)) phase_local_str = strdup(phase->valuestring);
+
     v1_node_status_local_var = v1_node_status_create_internal (
         addresses ? addressesList : NULL,
         allocatable ? allocatableList : NULL,
@@ -689,14 +749,19 @@ v1_node_status_t *v1_node_status_parseFromJSON(cJSON *v1_node_statusJSON){
         conditions ? conditionsList : NULL,
         config ? config_local_nonprim : NULL,
         daemon_endpoints ? daemon_endpoints_local_nonprim : NULL,
+        declared_features ? declared_featuresList : NULL,
         features ? features_local_nonprim : NULL,
         images ? imagesList : NULL,
         node_info ? node_info_local_nonprim : NULL,
-        phase && !cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL,
+        phase_local_str,
         runtime_handlers ? runtime_handlersList : NULL,
         volumes_attached ? volumes_attachedList : NULL,
         volumes_in_use ? volumes_in_useList : NULL
         );
+
+    if (!v1_node_status_local_var) {
+        goto end;
+    }
 
     return v1_node_status_local_var;
 end:
@@ -754,6 +819,15 @@ end:
         v1_node_daemon_endpoints_free(daemon_endpoints_local_nonprim);
         daemon_endpoints_local_nonprim = NULL;
     }
+    if (declared_featuresList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, declared_featuresList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(declared_featuresList);
+        declared_featuresList = NULL;
+    }
     if (features_local_nonprim) {
         v1_node_features_free(features_local_nonprim);
         features_local_nonprim = NULL;
@@ -770,6 +844,10 @@ end:
     if (node_info_local_nonprim) {
         v1_node_system_info_free(node_info_local_nonprim);
         node_info_local_nonprim = NULL;
+    }
+    if (phase_local_str) {
+        free(phase_local_str);
+        phase_local_str = NULL;
     }
     if (runtime_handlersList) {
         listEntry_t *listEntry = NULL;

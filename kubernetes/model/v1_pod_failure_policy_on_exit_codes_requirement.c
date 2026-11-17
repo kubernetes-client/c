@@ -14,11 +14,11 @@ static v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_
     if (!v1_pod_failure_policy_on_exit_codes_requirement_local_var) {
         return NULL;
     }
+    memset(v1_pod_failure_policy_on_exit_codes_requirement_local_var, 0, sizeof(v1_pod_failure_policy_on_exit_codes_requirement_t));
+    v1_pod_failure_policy_on_exit_codes_requirement_local_var->_library_owned = 1;
     v1_pod_failure_policy_on_exit_codes_requirement_local_var->container_name = container_name;
     v1_pod_failure_policy_on_exit_codes_requirement_local_var->_operator = _operator;
     v1_pod_failure_policy_on_exit_codes_requirement_local_var->values = values;
-
-    v1_pod_failure_policy_on_exit_codes_requirement_local_var->_library_owned = 1;
     return v1_pod_failure_policy_on_exit_codes_requirement_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_pod_failure_policy_on_exit_codes_requirement_t *v
     char *_operator,
     list_t *values
     ) {
-    return v1_pod_failure_policy_on_exit_codes_requirement_create_internal (
+    v1_pod_failure_policy_on_exit_codes_requirement_t *result = v1_pod_failure_policy_on_exit_codes_requirement_create_internal (
         container_name,
         _operator,
         values
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_pod_failure_policy_on_exit_codes_requirement_free(v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit_codes_requirement) {
@@ -110,6 +113,10 @@ v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit
 
     v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit_codes_requirement_local_var = NULL;
 
+    char *container_name_local_str = NULL;
+
+    char *_operator_local_str = NULL;
+
     // define the local list for v1_pod_failure_policy_on_exit_codes_requirement->values
     list_t *valuesList = NULL;
 
@@ -172,14 +179,29 @@ v1_pod_failure_policy_on_exit_codes_requirement_t *v1_pod_failure_policy_on_exit
     }
 
 
+    if (container_name && !cJSON_IsNull(container_name)) container_name_local_str = strdup(container_name->valuestring);
+    if (_operator && !cJSON_IsNull(_operator)) _operator_local_str = strdup(_operator->valuestring);
+
     v1_pod_failure_policy_on_exit_codes_requirement_local_var = v1_pod_failure_policy_on_exit_codes_requirement_create_internal (
-        container_name && !cJSON_IsNull(container_name) ? strdup(container_name->valuestring) : NULL,
-        strdup(_operator->valuestring),
+        container_name_local_str,
+        _operator_local_str,
         valuesList
         );
 
+    if (!v1_pod_failure_policy_on_exit_codes_requirement_local_var) {
+        goto end;
+    }
+
     return v1_pod_failure_policy_on_exit_codes_requirement_local_var;
 end:
+    if (container_name_local_str) {
+        free(container_name_local_str);
+        container_name_local_str = NULL;
+    }
+    if (_operator_local_str) {
+        free(_operator_local_str);
+        _operator_local_str = NULL;
+    }
     if (valuesList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, valuesList) {

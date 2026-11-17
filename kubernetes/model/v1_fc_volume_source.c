@@ -7,8 +7,8 @@
 
 static v1_fc_volume_source_t *v1_fc_volume_source_create_internal(
     char *fs_type,
-    int lun,
-    int read_only,
+    int *lun,
+    int *read_only,
     list_t *target_wwns,
     list_t *wwids
     ) {
@@ -16,30 +16,45 @@ static v1_fc_volume_source_t *v1_fc_volume_source_create_internal(
     if (!v1_fc_volume_source_local_var) {
         return NULL;
     }
+    memset(v1_fc_volume_source_local_var, 0, sizeof(v1_fc_volume_source_t));
+    v1_fc_volume_source_local_var->_library_owned = 1;
     v1_fc_volume_source_local_var->fs_type = fs_type;
     v1_fc_volume_source_local_var->lun = lun;
     v1_fc_volume_source_local_var->read_only = read_only;
     v1_fc_volume_source_local_var->target_wwns = target_wwns;
     v1_fc_volume_source_local_var->wwids = wwids;
-
-    v1_fc_volume_source_local_var->_library_owned = 1;
     return v1_fc_volume_source_local_var;
 }
 
 __attribute__((deprecated)) v1_fc_volume_source_t *v1_fc_volume_source_create(
     char *fs_type,
-    int lun,
-    int read_only,
+    int *lun,
+    int *read_only,
     list_t *target_wwns,
     list_t *wwids
     ) {
-    return v1_fc_volume_source_create_internal (
+    int *lun_copy = NULL;
+    if (lun) {
+        lun_copy = malloc(sizeof(int));
+        if (lun_copy) *lun_copy = *lun;
+    }
+    int *read_only_copy = NULL;
+    if (read_only) {
+        read_only_copy = malloc(sizeof(int));
+        if (read_only_copy) *read_only_copy = *read_only;
+    }
+    v1_fc_volume_source_t *result = v1_fc_volume_source_create_internal (
         fs_type,
-        lun,
-        read_only,
+        lun_copy,
+        read_only_copy,
         target_wwns,
         wwids
         );
+    if (!result) {
+        free(lun_copy);
+        free(read_only_copy);
+    }
+    return result;
 }
 
 void v1_fc_volume_source_free(v1_fc_volume_source_t *v1_fc_volume_source) {
@@ -54,6 +69,14 @@ void v1_fc_volume_source_free(v1_fc_volume_source_t *v1_fc_volume_source) {
     if (v1_fc_volume_source->fs_type) {
         free(v1_fc_volume_source->fs_type);
         v1_fc_volume_source->fs_type = NULL;
+    }
+    if (v1_fc_volume_source->lun) {
+        free(v1_fc_volume_source->lun);
+        v1_fc_volume_source->lun = NULL;
+    }
+    if (v1_fc_volume_source->read_only) {
+        free(v1_fc_volume_source->read_only);
+        v1_fc_volume_source->read_only = NULL;
     }
     if (v1_fc_volume_source->target_wwns) {
         list_ForEach(listEntry, v1_fc_volume_source->target_wwns) {
@@ -85,7 +108,7 @@ cJSON *v1_fc_volume_source_convertToJSON(v1_fc_volume_source_t *v1_fc_volume_sou
 
     // v1_fc_volume_source->lun
     if(v1_fc_volume_source->lun) {
-    if(cJSON_AddNumberToObject(item, "lun", v1_fc_volume_source->lun) == NULL) {
+    if(cJSON_AddNumberToObject(item, "lun", *v1_fc_volume_source->lun) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -93,7 +116,7 @@ cJSON *v1_fc_volume_source_convertToJSON(v1_fc_volume_source_t *v1_fc_volume_sou
 
     // v1_fc_volume_source->read_only
     if(v1_fc_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_fc_volume_source->read_only) == NULL) {
+    if(cJSON_AddBoolToObject(item, "readOnly", *v1_fc_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -144,6 +167,14 @@ v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sou
 
     v1_fc_volume_source_t *v1_fc_volume_source_local_var = NULL;
 
+    char *fs_type_local_str = NULL;
+
+    // define the local variable for v1_fc_volume_source->lun
+    int *lun_local_var = NULL;
+
+    // define the local variable for v1_fc_volume_source->read_only
+    int *read_only_local_var = NULL;
+
     // define the local list for v1_fc_volume_source->target_wwns
     list_t *target_wwnsList = NULL;
 
@@ -172,6 +203,12 @@ v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sou
     {
     goto end; //Numeric
     }
+    lun_local_var = malloc(sizeof(int));
+    if(!lun_local_var)
+    {
+        goto end;
+    }
+    *lun_local_var = lun->valuedouble;
     }
 
     // v1_fc_volume_source->read_only
@@ -184,6 +221,12 @@ v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sou
     {
     goto end; //Bool
     }
+    read_only_local_var = malloc(sizeof(int));
+    if(!read_only_local_var)
+    {
+        goto end;
+    }
+    *read_only_local_var = read_only->valueint;
     }
 
     // v1_fc_volume_source->target_wwns
@@ -231,16 +274,34 @@ v1_fc_volume_source_t *v1_fc_volume_source_parseFromJSON(cJSON *v1_fc_volume_sou
     }
 
 
+    if (fs_type && !cJSON_IsNull(fs_type)) fs_type_local_str = strdup(fs_type->valuestring);
+
     v1_fc_volume_source_local_var = v1_fc_volume_source_create_internal (
-        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
-        lun ? lun->valuedouble : 0,
-        read_only ? read_only->valueint : 0,
+        fs_type_local_str,
+        lun_local_var,
+        read_only_local_var,
         target_wwns ? target_wwnsList : NULL,
         wwids ? wwidsList : NULL
         );
 
+    if (!v1_fc_volume_source_local_var) {
+        goto end;
+    }
+
     return v1_fc_volume_source_local_var;
 end:
+    if (fs_type_local_str) {
+        free(fs_type_local_str);
+        fs_type_local_str = NULL;
+    }
+    if (lun_local_var) {
+        free(lun_local_var);
+        lun_local_var = NULL;
+    }
+    if (read_only_local_var) {
+        free(read_only_local_var);
+        read_only_local_var = NULL;
+    }
     if (target_wwnsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, target_wwnsList) {

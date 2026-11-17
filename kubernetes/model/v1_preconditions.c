@@ -13,10 +13,10 @@ static v1_preconditions_t *v1_preconditions_create_internal(
     if (!v1_preconditions_local_var) {
         return NULL;
     }
+    memset(v1_preconditions_local_var, 0, sizeof(v1_preconditions_t));
+    v1_preconditions_local_var->_library_owned = 1;
     v1_preconditions_local_var->resource_version = resource_version;
     v1_preconditions_local_var->uid = uid;
-
-    v1_preconditions_local_var->_library_owned = 1;
     return v1_preconditions_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_preconditions_t *v1_preconditions_create(
     char *resource_version,
     char *uid
     ) {
-    return v1_preconditions_create_internal (
+    v1_preconditions_t *result = v1_preconditions_create_internal (
         resource_version,
         uid
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_preconditions_free(v1_preconditions_t *v1_preconditions) {
@@ -80,6 +83,10 @@ v1_preconditions_t *v1_preconditions_parseFromJSON(cJSON *v1_preconditionsJSON){
 
     v1_preconditions_t *v1_preconditions_local_var = NULL;
 
+    char *resource_version_local_str = NULL;
+
+    char *uid_local_str = NULL;
+
     // v1_preconditions->resource_version
     cJSON *resource_version = cJSON_GetObjectItemCaseSensitive(v1_preconditionsJSON, "resourceVersion");
     if (cJSON_IsNull(resource_version)) {
@@ -105,13 +112,28 @@ v1_preconditions_t *v1_preconditions_parseFromJSON(cJSON *v1_preconditionsJSON){
     }
 
 
+    if (resource_version && !cJSON_IsNull(resource_version)) resource_version_local_str = strdup(resource_version->valuestring);
+    if (uid && !cJSON_IsNull(uid)) uid_local_str = strdup(uid->valuestring);
+
     v1_preconditions_local_var = v1_preconditions_create_internal (
-        resource_version && !cJSON_IsNull(resource_version) ? strdup(resource_version->valuestring) : NULL,
-        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL
+        resource_version_local_str,
+        uid_local_str
         );
+
+    if (!v1_preconditions_local_var) {
+        goto end;
+    }
 
     return v1_preconditions_local_var;
 end:
+    if (resource_version_local_str) {
+        free(resource_version_local_str);
+        resource_version_local_str = NULL;
+    }
+    if (uid_local_str) {
+        free(uid_local_str);
+        uid_local_str = NULL;
+    }
     return NULL;
 
 }

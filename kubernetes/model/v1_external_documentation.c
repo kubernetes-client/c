@@ -13,10 +13,10 @@ static v1_external_documentation_t *v1_external_documentation_create_internal(
     if (!v1_external_documentation_local_var) {
         return NULL;
     }
+    memset(v1_external_documentation_local_var, 0, sizeof(v1_external_documentation_t));
+    v1_external_documentation_local_var->_library_owned = 1;
     v1_external_documentation_local_var->description = description;
     v1_external_documentation_local_var->url = url;
-
-    v1_external_documentation_local_var->_library_owned = 1;
     return v1_external_documentation_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_external_documentation_t *v1_external_documentati
     char *description,
     char *url
     ) {
-    return v1_external_documentation_create_internal (
+    v1_external_documentation_t *result = v1_external_documentation_create_internal (
         description,
         url
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_external_documentation_free(v1_external_documentation_t *v1_external_documentation) {
@@ -80,6 +83,10 @@ v1_external_documentation_t *v1_external_documentation_parseFromJSON(cJSON *v1_e
 
     v1_external_documentation_t *v1_external_documentation_local_var = NULL;
 
+    char *description_local_str = NULL;
+
+    char *url_local_str = NULL;
+
     // v1_external_documentation->description
     cJSON *description = cJSON_GetObjectItemCaseSensitive(v1_external_documentationJSON, "description");
     if (cJSON_IsNull(description)) {
@@ -105,13 +112,28 @@ v1_external_documentation_t *v1_external_documentation_parseFromJSON(cJSON *v1_e
     }
 
 
+    if (description && !cJSON_IsNull(description)) description_local_str = strdup(description->valuestring);
+    if (url && !cJSON_IsNull(url)) url_local_str = strdup(url->valuestring);
+
     v1_external_documentation_local_var = v1_external_documentation_create_internal (
-        description && !cJSON_IsNull(description) ? strdup(description->valuestring) : NULL,
-        url && !cJSON_IsNull(url) ? strdup(url->valuestring) : NULL
+        description_local_str,
+        url_local_str
         );
+
+    if (!v1_external_documentation_local_var) {
+        goto end;
+    }
 
     return v1_external_documentation_local_var;
 end:
+    if (description_local_str) {
+        free(description_local_str);
+        description_local_str = NULL;
+    }
+    if (url_local_str) {
+        free(url_local_str);
+        url_local_str = NULL;
+    }
     return NULL;
 
 }

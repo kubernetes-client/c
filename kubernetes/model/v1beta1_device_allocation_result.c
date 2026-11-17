@@ -13,10 +13,10 @@ static v1beta1_device_allocation_result_t *v1beta1_device_allocation_result_crea
     if (!v1beta1_device_allocation_result_local_var) {
         return NULL;
     }
+    memset(v1beta1_device_allocation_result_local_var, 0, sizeof(v1beta1_device_allocation_result_t));
+    v1beta1_device_allocation_result_local_var->_library_owned = 1;
     v1beta1_device_allocation_result_local_var->config = config;
     v1beta1_device_allocation_result_local_var->results = results;
-
-    v1beta1_device_allocation_result_local_var->_library_owned = 1;
     return v1beta1_device_allocation_result_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1beta1_device_allocation_result_t *v1beta1_device_a
     list_t *config,
     list_t *results
     ) {
-    return v1beta1_device_allocation_result_create_internal (
+    v1beta1_device_allocation_result_t *result = v1beta1_device_allocation_result_create_internal (
         config,
         results
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1beta1_device_allocation_result_free(v1beta1_device_allocation_result_t *v1beta1_device_allocation_result) {
@@ -165,10 +168,15 @@ v1beta1_device_allocation_result_t *v1beta1_device_allocation_result_parseFromJS
     }
 
 
+
     v1beta1_device_allocation_result_local_var = v1beta1_device_allocation_result_create_internal (
         config ? configList : NULL,
         results ? resultsList : NULL
         );
+
+    if (!v1beta1_device_allocation_result_local_var) {
+        goto end;
+    }
 
     return v1beta1_device_allocation_result_local_var;
 end:

@@ -20,8 +20,8 @@ typedef struct v1_aws_elastic_block_store_volume_source_t v1_aws_elastic_block_s
 
 typedef struct v1_aws_elastic_block_store_volume_source_t {
     char *fs_type; // string
-    int partition; //numeric
-    int read_only; //boolean
+    int *partition; //numeric
+    int *read_only; //boolean
     char *volume_id; // string
 
     int _library_owned; // Is the library responsible for freeing this object?
@@ -29,8 +29,8 @@ typedef struct v1_aws_elastic_block_store_volume_source_t {
 
 __attribute__((deprecated)) v1_aws_elastic_block_store_volume_source_t *v1_aws_elastic_block_store_volume_source_create(
     char *fs_type,
-    int partition,
-    int read_only,
+    int *partition,
+    int *read_only,
     char *volume_id
 );
 

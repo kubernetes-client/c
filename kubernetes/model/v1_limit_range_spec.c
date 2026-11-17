@@ -12,18 +12,21 @@ static v1_limit_range_spec_t *v1_limit_range_spec_create_internal(
     if (!v1_limit_range_spec_local_var) {
         return NULL;
     }
-    v1_limit_range_spec_local_var->limits = limits;
-
+    memset(v1_limit_range_spec_local_var, 0, sizeof(v1_limit_range_spec_t));
     v1_limit_range_spec_local_var->_library_owned = 1;
+    v1_limit_range_spec_local_var->limits = limits;
     return v1_limit_range_spec_local_var;
 }
 
 __attribute__((deprecated)) v1_limit_range_spec_t *v1_limit_range_spec_create(
     list_t *limits
     ) {
-    return v1_limit_range_spec_create_internal (
+    v1_limit_range_spec_t *result = v1_limit_range_spec_create_internal (
         limits
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_limit_range_spec_free(v1_limit_range_spec_t *v1_limit_range_spec) {
@@ -111,9 +114,14 @@ v1_limit_range_spec_t *v1_limit_range_spec_parseFromJSON(cJSON *v1_limit_range_s
     }
 
 
+
     v1_limit_range_spec_local_var = v1_limit_range_spec_create_internal (
         limitsList
         );
+
+    if (!v1_limit_range_spec_local_var) {
+        goto end;
+    }
 
     return v1_limit_range_spec_local_var;
 end:

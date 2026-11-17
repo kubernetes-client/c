@@ -1,0 +1,249 @@
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include "v1_storage_version_migration_list.h"
+
+
+
+static v1_storage_version_migration_list_t *v1_storage_version_migration_list_create_internal(
+    char *api_version,
+    list_t *items,
+    char *kind,
+    v1_list_meta_t *metadata
+    ) {
+    v1_storage_version_migration_list_t *v1_storage_version_migration_list_local_var = malloc(sizeof(v1_storage_version_migration_list_t));
+    if (!v1_storage_version_migration_list_local_var) {
+        return NULL;
+    }
+    memset(v1_storage_version_migration_list_local_var, 0, sizeof(v1_storage_version_migration_list_t));
+    v1_storage_version_migration_list_local_var->_library_owned = 1;
+    v1_storage_version_migration_list_local_var->api_version = api_version;
+    v1_storage_version_migration_list_local_var->items = items;
+    v1_storage_version_migration_list_local_var->kind = kind;
+    v1_storage_version_migration_list_local_var->metadata = metadata;
+    return v1_storage_version_migration_list_local_var;
+}
+
+__attribute__((deprecated)) v1_storage_version_migration_list_t *v1_storage_version_migration_list_create(
+    char *api_version,
+    list_t *items,
+    char *kind,
+    v1_list_meta_t *metadata
+    ) {
+    v1_storage_version_migration_list_t *result = v1_storage_version_migration_list_create_internal (
+        api_version,
+        items,
+        kind,
+        metadata
+        );
+    if (!result) {
+    }
+    return result;
+}
+
+void v1_storage_version_migration_list_free(v1_storage_version_migration_list_t *v1_storage_version_migration_list) {
+    if(NULL == v1_storage_version_migration_list){
+        return ;
+    }
+    if(v1_storage_version_migration_list->_library_owned != 1){
+        fprintf(stderr, "WARNING: %s() does NOT free objects allocated by the user\n", "v1_storage_version_migration_list_free");
+        return ;
+    }
+    listEntry_t *listEntry;
+    if (v1_storage_version_migration_list->api_version) {
+        free(v1_storage_version_migration_list->api_version);
+        v1_storage_version_migration_list->api_version = NULL;
+    }
+    if (v1_storage_version_migration_list->items) {
+        list_ForEach(listEntry, v1_storage_version_migration_list->items) {
+            v1_storage_version_migration_free(listEntry->data);
+        }
+        list_freeList(v1_storage_version_migration_list->items);
+        v1_storage_version_migration_list->items = NULL;
+    }
+    if (v1_storage_version_migration_list->kind) {
+        free(v1_storage_version_migration_list->kind);
+        v1_storage_version_migration_list->kind = NULL;
+    }
+    if (v1_storage_version_migration_list->metadata) {
+        v1_list_meta_free(v1_storage_version_migration_list->metadata);
+        v1_storage_version_migration_list->metadata = NULL;
+    }
+    free(v1_storage_version_migration_list);
+}
+
+cJSON *v1_storage_version_migration_list_convertToJSON(v1_storage_version_migration_list_t *v1_storage_version_migration_list) {
+    cJSON *item = cJSON_CreateObject();
+
+    // v1_storage_version_migration_list->api_version
+    if(v1_storage_version_migration_list->api_version) {
+    if(cJSON_AddStringToObject(item, "apiVersion", v1_storage_version_migration_list->api_version) == NULL) {
+    goto fail; //String
+    }
+    }
+
+
+    // v1_storage_version_migration_list->items
+    if (!v1_storage_version_migration_list->items) {
+        goto fail;
+    }
+    cJSON *items = cJSON_AddArrayToObject(item, "items");
+    if(items == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *itemsListEntry;
+    if (v1_storage_version_migration_list->items) {
+    list_ForEach(itemsListEntry, v1_storage_version_migration_list->items) {
+    cJSON *itemLocal = v1_storage_version_migration_convertToJSON(itemsListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(items, itemLocal);
+    }
+    }
+
+
+    // v1_storage_version_migration_list->kind
+    if(v1_storage_version_migration_list->kind) {
+    if(cJSON_AddStringToObject(item, "kind", v1_storage_version_migration_list->kind) == NULL) {
+    goto fail; //String
+    }
+    }
+
+
+    // v1_storage_version_migration_list->metadata
+    if(v1_storage_version_migration_list->metadata) {
+    cJSON *metadata_local_JSON = v1_list_meta_convertToJSON(v1_storage_version_migration_list->metadata);
+    if(metadata_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "metadata", metadata_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+    }
+
+    return item;
+fail:
+    if (item) {
+        cJSON_Delete(item);
+    }
+    return NULL;
+}
+
+v1_storage_version_migration_list_t *v1_storage_version_migration_list_parseFromJSON(cJSON *v1_storage_version_migration_listJSON){
+
+    v1_storage_version_migration_list_t *v1_storage_version_migration_list_local_var = NULL;
+
+    char *api_version_local_str = NULL;
+
+    // define the local list for v1_storage_version_migration_list->items
+    list_t *itemsList = NULL;
+
+    char *kind_local_str = NULL;
+
+    // define the local variable for v1_storage_version_migration_list->metadata
+    v1_list_meta_t *metadata_local_nonprim = NULL;
+
+    // v1_storage_version_migration_list->api_version
+    cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_storage_version_migration_listJSON, "apiVersion");
+    if (cJSON_IsNull(api_version)) {
+        api_version = NULL;
+    }
+    if (api_version) { 
+    if(!cJSON_IsString(api_version) && !cJSON_IsNull(api_version))
+    {
+    goto end; //String
+    }
+    }
+
+    // v1_storage_version_migration_list->items
+    cJSON *items = cJSON_GetObjectItemCaseSensitive(v1_storage_version_migration_listJSON, "items");
+    if (cJSON_IsNull(items)) {
+        items = NULL;
+    }
+    if (!items) {
+        goto end;
+    }
+
+    
+    cJSON *items_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(items)){
+        goto end; //nonprimitive container
+    }
+
+    itemsList = list_createList();
+
+    cJSON_ArrayForEach(items_local_nonprimitive,items )
+    {
+        if(!cJSON_IsObject(items_local_nonprimitive)){
+            goto end;
+        }
+        v1_storage_version_migration_t *itemsItem = v1_storage_version_migration_parseFromJSON(items_local_nonprimitive);
+
+        list_addElement(itemsList, itemsItem);
+    }
+
+    // v1_storage_version_migration_list->kind
+    cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_storage_version_migration_listJSON, "kind");
+    if (cJSON_IsNull(kind)) {
+        kind = NULL;
+    }
+    if (kind) { 
+    if(!cJSON_IsString(kind) && !cJSON_IsNull(kind))
+    {
+    goto end; //String
+    }
+    }
+
+    // v1_storage_version_migration_list->metadata
+    cJSON *metadata = cJSON_GetObjectItemCaseSensitive(v1_storage_version_migration_listJSON, "metadata");
+    if (cJSON_IsNull(metadata)) {
+        metadata = NULL;
+    }
+    if (metadata) { 
+    metadata_local_nonprim = v1_list_meta_parseFromJSON(metadata); //nonprimitive
+    }
+
+
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+
+    v1_storage_version_migration_list_local_var = v1_storage_version_migration_list_create_internal (
+        api_version_local_str,
+        itemsList,
+        kind_local_str,
+        metadata ? metadata_local_nonprim : NULL
+        );
+
+    if (!v1_storage_version_migration_list_local_var) {
+        goto end;
+    }
+
+    return v1_storage_version_migration_list_local_var;
+end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (itemsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, itemsList) {
+            v1_storage_version_migration_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(itemsList);
+        itemsList = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
+    if (metadata_local_nonprim) {
+        v1_list_meta_free(metadata_local_nonprim);
+        metadata_local_nonprim = NULL;
+    }
+    return NULL;
+
+}

@@ -16,13 +16,13 @@ static resource_v1_resource_claim_t *resource_v1_resource_claim_create_internal(
     if (!resource_v1_resource_claim_local_var) {
         return NULL;
     }
+    memset(resource_v1_resource_claim_local_var, 0, sizeof(resource_v1_resource_claim_t));
+    resource_v1_resource_claim_local_var->_library_owned = 1;
     resource_v1_resource_claim_local_var->api_version = api_version;
     resource_v1_resource_claim_local_var->kind = kind;
     resource_v1_resource_claim_local_var->metadata = metadata;
     resource_v1_resource_claim_local_var->spec = spec;
     resource_v1_resource_claim_local_var->status = status;
-
-    resource_v1_resource_claim_local_var->_library_owned = 1;
     return resource_v1_resource_claim_local_var;
 }
 
@@ -33,13 +33,16 @@ __attribute__((deprecated)) resource_v1_resource_claim_t *resource_v1_resource_c
     v1_resource_claim_spec_t *spec,
     v1_resource_claim_status_t *status
     ) {
-    return resource_v1_resource_claim_create_internal (
+    resource_v1_resource_claim_t *result = resource_v1_resource_claim_create_internal (
         api_version,
         kind,
         metadata,
         spec,
         status
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void resource_v1_resource_claim_free(resource_v1_resource_claim_t *resource_v1_resource_claim) {
@@ -107,9 +110,7 @@ cJSON *resource_v1_resource_claim_convertToJSON(resource_v1_resource_claim_t *re
 
 
     // resource_v1_resource_claim->spec
-    if (!resource_v1_resource_claim->spec) {
-        goto fail;
-    }
+    if(resource_v1_resource_claim->spec) {
     cJSON *spec_local_JSON = v1_resource_claim_spec_convertToJSON(resource_v1_resource_claim->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -117,6 +118,7 @@ cJSON *resource_v1_resource_claim_convertToJSON(resource_v1_resource_claim_t *re
     cJSON_AddItemToObject(item, "spec", spec_local_JSON);
     if(item->child == NULL) {
     goto fail;
+    }
     }
 
 
@@ -143,6 +145,10 @@ fail:
 resource_v1_resource_claim_t *resource_v1_resource_claim_parseFromJSON(cJSON *resource_v1_resource_claimJSON){
 
     resource_v1_resource_claim_t *resource_v1_resource_claim_local_var = NULL;
+
+    char *api_version_local_str = NULL;
+
+    char *kind_local_str = NULL;
 
     // define the local variable for resource_v1_resource_claim->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
@@ -191,12 +197,9 @@ resource_v1_resource_claim_t *resource_v1_resource_claim_parseFromJSON(cJSON *re
     if (cJSON_IsNull(spec)) {
         spec = NULL;
     }
-    if (!spec) {
-        goto end;
-    }
-
-    
+    if (spec) { 
     spec_local_nonprim = v1_resource_claim_spec_parseFromJSON(spec); //nonprimitive
+    }
 
     // resource_v1_resource_claim->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(resource_v1_resource_claimJSON, "status");
@@ -208,16 +211,31 @@ resource_v1_resource_claim_t *resource_v1_resource_claim_parseFromJSON(cJSON *re
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+
     resource_v1_resource_claim_local_var = resource_v1_resource_claim_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version_local_str,
+        kind_local_str,
         metadata ? metadata_local_nonprim : NULL,
-        spec_local_nonprim,
+        spec ? spec_local_nonprim : NULL,
         status ? status_local_nonprim : NULL
         );
 
+    if (!resource_v1_resource_claim_local_var) {
+        goto end;
+    }
+
     return resource_v1_resource_claim_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;

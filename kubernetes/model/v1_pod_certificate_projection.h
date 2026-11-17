@@ -23,8 +23,10 @@ typedef struct v1_pod_certificate_projection_t {
     char *credential_bundle_path; // string
     char *key_path; // string
     char *key_type; // string
-    int max_expiration_seconds; //numeric
+    int *max_expiration_seconds; //numeric
     char *signer_name; // string
+    long *user; //numeric
+    list_t* user_annotations; //map
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_pod_certificate_projection_t;
@@ -34,8 +36,10 @@ __attribute__((deprecated)) v1_pod_certificate_projection_t *v1_pod_certificate_
     char *credential_bundle_path,
     char *key_path,
     char *key_type,
-    int max_expiration_seconds,
-    char *signer_name
+    int *max_expiration_seconds,
+    char *signer_name,
+    long *user,
+    list_t* user_annotations
 );
 
 void v1_pod_certificate_projection_free(v1_pod_certificate_projection_t *v1_pod_certificate_projection);

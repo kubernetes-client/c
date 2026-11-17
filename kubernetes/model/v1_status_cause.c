@@ -14,11 +14,11 @@ static v1_status_cause_t *v1_status_cause_create_internal(
     if (!v1_status_cause_local_var) {
         return NULL;
     }
+    memset(v1_status_cause_local_var, 0, sizeof(v1_status_cause_t));
+    v1_status_cause_local_var->_library_owned = 1;
     v1_status_cause_local_var->field = field;
     v1_status_cause_local_var->message = message;
     v1_status_cause_local_var->reason = reason;
-
-    v1_status_cause_local_var->_library_owned = 1;
     return v1_status_cause_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_status_cause_t *v1_status_cause_create(
     char *message,
     char *reason
     ) {
-    return v1_status_cause_create_internal (
+    v1_status_cause_t *result = v1_status_cause_create_internal (
         field,
         message,
         reason
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_status_cause_free(v1_status_cause_t *v1_status_cause) {
@@ -96,6 +99,12 @@ v1_status_cause_t *v1_status_cause_parseFromJSON(cJSON *v1_status_causeJSON){
 
     v1_status_cause_t *v1_status_cause_local_var = NULL;
 
+    char *field_local_str = NULL;
+
+    char *message_local_str = NULL;
+
+    char *reason_local_str = NULL;
+
     // v1_status_cause->field
     cJSON *field = cJSON_GetObjectItemCaseSensitive(v1_status_causeJSON, "field");
     if (cJSON_IsNull(field)) {
@@ -133,14 +142,34 @@ v1_status_cause_t *v1_status_cause_parseFromJSON(cJSON *v1_status_causeJSON){
     }
 
 
+    if (field && !cJSON_IsNull(field)) field_local_str = strdup(field->valuestring);
+    if (message && !cJSON_IsNull(message)) message_local_str = strdup(message->valuestring);
+    if (reason && !cJSON_IsNull(reason)) reason_local_str = strdup(reason->valuestring);
+
     v1_status_cause_local_var = v1_status_cause_create_internal (
-        field && !cJSON_IsNull(field) ? strdup(field->valuestring) : NULL,
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
-        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL
+        field_local_str,
+        message_local_str,
+        reason_local_str
         );
+
+    if (!v1_status_cause_local_var) {
+        goto end;
+    }
 
     return v1_status_cause_local_var;
 end:
+    if (field_local_str) {
+        free(field_local_str);
+        field_local_str = NULL;
+    }
+    if (message_local_str) {
+        free(message_local_str);
+        message_local_str = NULL;
+    }
+    if (reason_local_str) {
+        free(reason_local_str);
+        reason_local_str = NULL;
+    }
     return NULL;
 
 }

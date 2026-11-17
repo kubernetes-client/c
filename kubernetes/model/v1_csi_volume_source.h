@@ -23,7 +23,7 @@ typedef struct v1_csi_volume_source_t {
     char *driver; // string
     char *fs_type; // string
     struct v1_local_object_reference_t *node_publish_secret_ref; //model
-    int read_only; //boolean
+    int *read_only; //boolean
     list_t* volume_attributes; //map
 
     int _library_owned; // Is the library responsible for freeing this object?
@@ -33,7 +33,7 @@ __attribute__((deprecated)) v1_csi_volume_source_t *v1_csi_volume_source_create(
     char *driver,
     char *fs_type,
     v1_local_object_reference_t *node_publish_secret_ref,
-    int read_only,
+    int *read_only,
     list_t* volume_attributes
 );
 

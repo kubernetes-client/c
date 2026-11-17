@@ -15,12 +15,12 @@ static v1_csi_node_driver_t *v1_csi_node_driver_create_internal(
     if (!v1_csi_node_driver_local_var) {
         return NULL;
     }
+    memset(v1_csi_node_driver_local_var, 0, sizeof(v1_csi_node_driver_t));
+    v1_csi_node_driver_local_var->_library_owned = 1;
     v1_csi_node_driver_local_var->allocatable = allocatable;
     v1_csi_node_driver_local_var->name = name;
     v1_csi_node_driver_local_var->node_id = node_id;
     v1_csi_node_driver_local_var->topology_keys = topology_keys;
-
-    v1_csi_node_driver_local_var->_library_owned = 1;
     return v1_csi_node_driver_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1_csi_node_driver_t *v1_csi_node_driver_create(
     char *node_id,
     list_t *topology_keys
     ) {
-    return v1_csi_node_driver_create_internal (
+    v1_csi_node_driver_t *result = v1_csi_node_driver_create_internal (
         allocatable,
         name,
         node_id,
         topology_keys
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_csi_node_driver_free(v1_csi_node_driver_t *v1_csi_node_driver) {
@@ -134,6 +137,10 @@ v1_csi_node_driver_t *v1_csi_node_driver_parseFromJSON(cJSON *v1_csi_node_driver
     // define the local variable for v1_csi_node_driver->allocatable
     v1_volume_node_resources_t *allocatable_local_nonprim = NULL;
 
+    char *name_local_str = NULL;
+
+    char *node_id_local_str = NULL;
+
     // define the local list for v1_csi_node_driver->topology_keys
     list_t *topology_keysList = NULL;
 
@@ -199,18 +206,33 @@ v1_csi_node_driver_t *v1_csi_node_driver_parseFromJSON(cJSON *v1_csi_node_driver
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (node_id && !cJSON_IsNull(node_id)) node_id_local_str = strdup(node_id->valuestring);
+
     v1_csi_node_driver_local_var = v1_csi_node_driver_create_internal (
         allocatable ? allocatable_local_nonprim : NULL,
-        strdup(name->valuestring),
-        strdup(node_id->valuestring),
+        name_local_str,
+        node_id_local_str,
         topology_keys ? topology_keysList : NULL
         );
+
+    if (!v1_csi_node_driver_local_var) {
+        goto end;
+    }
 
     return v1_csi_node_driver_local_var;
 end:
     if (allocatable_local_nonprim) {
         v1_volume_node_resources_free(allocatable_local_nonprim);
         allocatable_local_nonprim = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (node_id_local_str) {
+        free(node_id_local_str);
+        node_id_local_str = NULL;
     }
     if (topology_keysList) {
         listEntry_t *listEntry = NULL;

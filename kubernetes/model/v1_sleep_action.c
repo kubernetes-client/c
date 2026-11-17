@@ -6,24 +6,33 @@
 
 
 static v1_sleep_action_t *v1_sleep_action_create_internal(
-    long seconds
+    long *seconds
     ) {
     v1_sleep_action_t *v1_sleep_action_local_var = malloc(sizeof(v1_sleep_action_t));
     if (!v1_sleep_action_local_var) {
         return NULL;
     }
-    v1_sleep_action_local_var->seconds = seconds;
-
+    memset(v1_sleep_action_local_var, 0, sizeof(v1_sleep_action_t));
     v1_sleep_action_local_var->_library_owned = 1;
+    v1_sleep_action_local_var->seconds = seconds;
     return v1_sleep_action_local_var;
 }
 
 __attribute__((deprecated)) v1_sleep_action_t *v1_sleep_action_create(
-    long seconds
+    long *seconds
     ) {
-    return v1_sleep_action_create_internal (
-        seconds
+    long *seconds_copy = NULL;
+    if (seconds) {
+        seconds_copy = malloc(sizeof(long));
+        if (seconds_copy) *seconds_copy = *seconds;
+    }
+    v1_sleep_action_t *result = v1_sleep_action_create_internal (
+        seconds_copy
         );
+    if (!result) {
+        free(seconds_copy);
+    }
+    return result;
 }
 
 void v1_sleep_action_free(v1_sleep_action_t *v1_sleep_action) {
@@ -35,6 +44,10 @@ void v1_sleep_action_free(v1_sleep_action_t *v1_sleep_action) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_sleep_action->seconds) {
+        free(v1_sleep_action->seconds);
+        v1_sleep_action->seconds = NULL;
+    }
     free(v1_sleep_action);
 }
 
@@ -45,7 +58,7 @@ cJSON *v1_sleep_action_convertToJSON(v1_sleep_action_t *v1_sleep_action) {
     if (!v1_sleep_action->seconds) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "seconds", v1_sleep_action->seconds) == NULL) {
+    if(cJSON_AddNumberToObject(item, "seconds", *v1_sleep_action->seconds) == NULL) {
     goto fail; //Numeric
     }
 
@@ -61,6 +74,9 @@ v1_sleep_action_t *v1_sleep_action_parseFromJSON(cJSON *v1_sleep_actionJSON){
 
     v1_sleep_action_t *v1_sleep_action_local_var = NULL;
 
+    // define the local variable for v1_sleep_action->seconds
+    long *seconds_local_var = NULL;
+
     // v1_sleep_action->seconds
     cJSON *seconds = cJSON_GetObjectItemCaseSensitive(v1_sleep_actionJSON, "seconds");
     if (cJSON_IsNull(seconds)) {
@@ -75,14 +91,29 @@ v1_sleep_action_t *v1_sleep_action_parseFromJSON(cJSON *v1_sleep_actionJSON){
     {
     goto end; //Numeric
     }
+    seconds_local_var = malloc(sizeof(long));
+    if(!seconds_local_var)
+    {
+        goto end;
+    }
+    *seconds_local_var = seconds->valuedouble;
+
 
 
     v1_sleep_action_local_var = v1_sleep_action_create_internal (
-        seconds->valuedouble
+        seconds_local_var
         );
+
+    if (!v1_sleep_action_local_var) {
+        goto end;
+    }
 
     return v1_sleep_action_local_var;
 end:
+    if (seconds_local_var) {
+        free(seconds_local_var);
+        seconds_local_var = NULL;
+    }
     return NULL;
 
 }
