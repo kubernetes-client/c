@@ -21,12 +21,12 @@ typedef struct v1_cron_job_spec_t v1_cron_job_spec_t;
 
 typedef struct v1_cron_job_spec_t {
     char *concurrency_policy; // string
-    int failed_jobs_history_limit; //numeric
+    int *failed_jobs_history_limit; //numeric
     struct v1_job_template_spec_t *job_template; //model
     char *schedule; // string
-    long starting_deadline_seconds; //numeric
-    int successful_jobs_history_limit; //numeric
-    int suspend; //boolean
+    long *starting_deadline_seconds; //numeric
+    int *successful_jobs_history_limit; //numeric
+    int *suspend; //boolean
     char *time_zone; // string
 
     int _library_owned; // Is the library responsible for freeing this object?
@@ -34,12 +34,12 @@ typedef struct v1_cron_job_spec_t {
 
 __attribute__((deprecated)) v1_cron_job_spec_t *v1_cron_job_spec_create(
     char *concurrency_policy,
-    int failed_jobs_history_limit,
+    int *failed_jobs_history_limit,
     v1_job_template_spec_t *job_template,
     char *schedule,
-    long starting_deadline_seconds,
-    int successful_jobs_history_limit,
-    int suspend,
+    long *starting_deadline_seconds,
+    int *successful_jobs_history_limit,
+    int *suspend,
     char *time_zone
 );
 

@@ -7,7 +7,7 @@
 
 static v1_volume_attachment_status_t *v1_volume_attachment_status_create_internal(
     v1_volume_error_t *attach_error,
-    int attached,
+    int *attached,
     list_t* attachment_metadata,
     v1_volume_error_t *detach_error
     ) {
@@ -15,27 +15,36 @@ static v1_volume_attachment_status_t *v1_volume_attachment_status_create_interna
     if (!v1_volume_attachment_status_local_var) {
         return NULL;
     }
+    memset(v1_volume_attachment_status_local_var, 0, sizeof(v1_volume_attachment_status_t));
+    v1_volume_attachment_status_local_var->_library_owned = 1;
     v1_volume_attachment_status_local_var->attach_error = attach_error;
     v1_volume_attachment_status_local_var->attached = attached;
     v1_volume_attachment_status_local_var->attachment_metadata = attachment_metadata;
     v1_volume_attachment_status_local_var->detach_error = detach_error;
-
-    v1_volume_attachment_status_local_var->_library_owned = 1;
     return v1_volume_attachment_status_local_var;
 }
 
 __attribute__((deprecated)) v1_volume_attachment_status_t *v1_volume_attachment_status_create(
     v1_volume_error_t *attach_error,
-    int attached,
+    int *attached,
     list_t* attachment_metadata,
     v1_volume_error_t *detach_error
     ) {
-    return v1_volume_attachment_status_create_internal (
+    int *attached_copy = NULL;
+    if (attached) {
+        attached_copy = malloc(sizeof(int));
+        if (attached_copy) *attached_copy = *attached;
+    }
+    v1_volume_attachment_status_t *result = v1_volume_attachment_status_create_internal (
         attach_error,
-        attached,
+        attached_copy,
         attachment_metadata,
         detach_error
         );
+    if (!result) {
+        free(attached_copy);
+    }
+    return result;
 }
 
 void v1_volume_attachment_status_free(v1_volume_attachment_status_t *v1_volume_attachment_status) {
@@ -50,6 +59,10 @@ void v1_volume_attachment_status_free(v1_volume_attachment_status_t *v1_volume_a
     if (v1_volume_attachment_status->attach_error) {
         v1_volume_error_free(v1_volume_attachment_status->attach_error);
         v1_volume_attachment_status->attach_error = NULL;
+    }
+    if (v1_volume_attachment_status->attached) {
+        free(v1_volume_attachment_status->attached);
+        v1_volume_attachment_status->attached = NULL;
     }
     if (v1_volume_attachment_status->attachment_metadata) {
         list_ForEach(listEntry, v1_volume_attachment_status->attachment_metadata) {
@@ -88,7 +101,7 @@ cJSON *v1_volume_attachment_status_convertToJSON(v1_volume_attachment_status_t *
     if (!v1_volume_attachment_status->attached) {
         goto fail;
     }
-    if(cJSON_AddBoolToObject(item, "attached", v1_volume_attachment_status->attached) == NULL) {
+    if(cJSON_AddBoolToObject(item, "attached", *v1_volume_attachment_status->attached) == NULL) {
     goto fail; //Bool
     }
 
@@ -140,6 +153,9 @@ v1_volume_attachment_status_t *v1_volume_attachment_status_parseFromJSON(cJSON *
     // define the local variable for v1_volume_attachment_status->attach_error
     v1_volume_error_t *attach_error_local_nonprim = NULL;
 
+    // define the local variable for v1_volume_attachment_status->attached
+    int *attached_local_var = NULL;
+
     // define the local map for v1_volume_attachment_status->attachment_metadata
     list_t *attachment_metadataList = NULL;
 
@@ -169,6 +185,12 @@ v1_volume_attachment_status_t *v1_volume_attachment_status_parseFromJSON(cJSON *
     {
     goto end; //Bool
     }
+    attached_local_var = malloc(sizeof(int));
+    if(!attached_local_var)
+    {
+        goto end;
+    }
+    *attached_local_var = attached->valueint;
 
     // v1_volume_attachment_status->attachment_metadata
     cJSON *attachment_metadata = cJSON_GetObjectItemCaseSensitive(v1_volume_attachment_statusJSON, "attachmentMetadata");
@@ -208,18 +230,27 @@ v1_volume_attachment_status_t *v1_volume_attachment_status_parseFromJSON(cJSON *
     }
 
 
+
     v1_volume_attachment_status_local_var = v1_volume_attachment_status_create_internal (
         attach_error ? attach_error_local_nonprim : NULL,
-        attached->valueint,
+        attached_local_var,
         attachment_metadata ? attachment_metadataList : NULL,
         detach_error ? detach_error_local_nonprim : NULL
         );
+
+    if (!v1_volume_attachment_status_local_var) {
+        goto end;
+    }
 
     return v1_volume_attachment_status_local_var;
 end:
     if (attach_error_local_nonprim) {
         v1_volume_error_free(attach_error_local_nonprim);
         attach_error_local_nonprim = NULL;
+    }
+    if (attached_local_var) {
+        free(attached_local_var);
+        attached_local_var = NULL;
     }
     if (attachment_metadataList) {
         listEntry_t *listEntry = NULL;

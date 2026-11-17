@@ -15,12 +15,12 @@ static v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_create_int
     if (!v1_pod_disruption_budget_spec_local_var) {
         return NULL;
     }
+    memset(v1_pod_disruption_budget_spec_local_var, 0, sizeof(v1_pod_disruption_budget_spec_t));
+    v1_pod_disruption_budget_spec_local_var->_library_owned = 1;
     v1_pod_disruption_budget_spec_local_var->max_unavailable = max_unavailable;
     v1_pod_disruption_budget_spec_local_var->min_available = min_available;
     v1_pod_disruption_budget_spec_local_var->selector = selector;
     v1_pod_disruption_budget_spec_local_var->unhealthy_pod_eviction_policy = unhealthy_pod_eviction_policy;
-
-    v1_pod_disruption_budget_spec_local_var->_library_owned = 1;
     return v1_pod_disruption_budget_spec_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1_pod_disruption_budget_spec_t *v1_pod_disruption_b
     v1_label_selector_t *selector,
     char *unhealthy_pod_eviction_policy
     ) {
-    return v1_pod_disruption_budget_spec_create_internal (
+    v1_pod_disruption_budget_spec_t *result = v1_pod_disruption_budget_spec_create_internal (
         max_unavailable,
         min_available,
         selector,
         unhealthy_pod_eviction_policy
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_pod_disruption_budget_spec_free(v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec) {
@@ -136,6 +139,8 @@ v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_parseFromJSON(cJS
     // define the local variable for v1_pod_disruption_budget_spec->selector
     v1_label_selector_t *selector_local_nonprim = NULL;
 
+    char *unhealthy_pod_eviction_policy_local_str = NULL;
+
     // v1_pod_disruption_budget_spec->max_unavailable
     cJSON *max_unavailable = cJSON_GetObjectItemCaseSensitive(v1_pod_disruption_budget_specJSON, "maxUnavailable");
     if (cJSON_IsNull(max_unavailable)) {
@@ -176,12 +181,18 @@ v1_pod_disruption_budget_spec_t *v1_pod_disruption_budget_spec_parseFromJSON(cJS
     }
 
 
+    if (unhealthy_pod_eviction_policy && !cJSON_IsNull(unhealthy_pod_eviction_policy)) unhealthy_pod_eviction_policy_local_str = strdup(unhealthy_pod_eviction_policy->valuestring);
+
     v1_pod_disruption_budget_spec_local_var = v1_pod_disruption_budget_spec_create_internal (
         max_unavailable ? max_unavailable_local_nonprim : NULL,
         min_available ? min_available_local_nonprim : NULL,
         selector ? selector_local_nonprim : NULL,
-        unhealthy_pod_eviction_policy && !cJSON_IsNull(unhealthy_pod_eviction_policy) ? strdup(unhealthy_pod_eviction_policy->valuestring) : NULL
+        unhealthy_pod_eviction_policy_local_str
         );
+
+    if (!v1_pod_disruption_budget_spec_local_var) {
+        goto end;
+    }
 
     return v1_pod_disruption_budget_spec_local_var;
 end:
@@ -196,6 +207,10 @@ end:
     if (selector_local_nonprim) {
         v1_label_selector_free(selector_local_nonprim);
         selector_local_nonprim = NULL;
+    }
+    if (unhealthy_pod_eviction_policy_local_str) {
+        free(unhealthy_pod_eviction_policy_local_str);
+        unhealthy_pod_eviction_policy_local_str = NULL;
     }
     return NULL;
 

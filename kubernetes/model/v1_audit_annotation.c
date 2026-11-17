@@ -13,10 +13,10 @@ static v1_audit_annotation_t *v1_audit_annotation_create_internal(
     if (!v1_audit_annotation_local_var) {
         return NULL;
     }
+    memset(v1_audit_annotation_local_var, 0, sizeof(v1_audit_annotation_t));
+    v1_audit_annotation_local_var->_library_owned = 1;
     v1_audit_annotation_local_var->key = key;
     v1_audit_annotation_local_var->value_expression = value_expression;
-
-    v1_audit_annotation_local_var->_library_owned = 1;
     return v1_audit_annotation_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_audit_annotation_t *v1_audit_annotation_create(
     char *key,
     char *value_expression
     ) {
-    return v1_audit_annotation_create_internal (
+    v1_audit_annotation_t *result = v1_audit_annotation_create_internal (
         key,
         value_expression
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_audit_annotation_free(v1_audit_annotation_t *v1_audit_annotation) {
@@ -82,6 +85,10 @@ v1_audit_annotation_t *v1_audit_annotation_parseFromJSON(cJSON *v1_audit_annotat
 
     v1_audit_annotation_t *v1_audit_annotation_local_var = NULL;
 
+    char *key_local_str = NULL;
+
+    char *value_expression_local_str = NULL;
+
     // v1_audit_annotation->key
     cJSON *key = cJSON_GetObjectItemCaseSensitive(v1_audit_annotationJSON, "key");
     if (cJSON_IsNull(key)) {
@@ -113,13 +120,28 @@ v1_audit_annotation_t *v1_audit_annotation_parseFromJSON(cJSON *v1_audit_annotat
     }
 
 
+    if (key && !cJSON_IsNull(key)) key_local_str = strdup(key->valuestring);
+    if (value_expression && !cJSON_IsNull(value_expression)) value_expression_local_str = strdup(value_expression->valuestring);
+
     v1_audit_annotation_local_var = v1_audit_annotation_create_internal (
-        strdup(key->valuestring),
-        strdup(value_expression->valuestring)
+        key_local_str,
+        value_expression_local_str
         );
+
+    if (!v1_audit_annotation_local_var) {
+        goto end;
+    }
 
     return v1_audit_annotation_local_var;
 end:
+    if (key_local_str) {
+        free(key_local_str);
+        key_local_str = NULL;
+    }
+    if (value_expression_local_str) {
+        free(value_expression_local_str);
+        value_expression_local_str = NULL;
+    }
     return NULL;
 
 }

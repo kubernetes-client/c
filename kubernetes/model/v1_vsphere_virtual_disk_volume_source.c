@@ -15,12 +15,12 @@ static v1_vsphere_virtual_disk_volume_source_t *v1_vsphere_virtual_disk_volume_s
     if (!v1_vsphere_virtual_disk_volume_source_local_var) {
         return NULL;
     }
+    memset(v1_vsphere_virtual_disk_volume_source_local_var, 0, sizeof(v1_vsphere_virtual_disk_volume_source_t));
+    v1_vsphere_virtual_disk_volume_source_local_var->_library_owned = 1;
     v1_vsphere_virtual_disk_volume_source_local_var->fs_type = fs_type;
     v1_vsphere_virtual_disk_volume_source_local_var->storage_policy_id = storage_policy_id;
     v1_vsphere_virtual_disk_volume_source_local_var->storage_policy_name = storage_policy_name;
     v1_vsphere_virtual_disk_volume_source_local_var->volume_path = volume_path;
-
-    v1_vsphere_virtual_disk_volume_source_local_var->_library_owned = 1;
     return v1_vsphere_virtual_disk_volume_source_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1_vsphere_virtual_disk_volume_source_t *v1_vsphere_
     char *storage_policy_name,
     char *volume_path
     ) {
-    return v1_vsphere_virtual_disk_volume_source_create_internal (
+    v1_vsphere_virtual_disk_volume_source_t *result = v1_vsphere_virtual_disk_volume_source_create_internal (
         fs_type,
         storage_policy_id,
         storage_policy_name,
         volume_path
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_vsphere_virtual_disk_volume_source_free(v1_vsphere_virtual_disk_volume_source_t *v1_vsphere_virtual_disk_volume_source) {
@@ -113,6 +116,14 @@ v1_vsphere_virtual_disk_volume_source_t *v1_vsphere_virtual_disk_volume_source_p
 
     v1_vsphere_virtual_disk_volume_source_t *v1_vsphere_virtual_disk_volume_source_local_var = NULL;
 
+    char *fs_type_local_str = NULL;
+
+    char *storage_policy_id_local_str = NULL;
+
+    char *storage_policy_name_local_str = NULL;
+
+    char *volume_path_local_str = NULL;
+
     // v1_vsphere_virtual_disk_volume_source->fs_type
     cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_vsphere_virtual_disk_volume_sourceJSON, "fsType");
     if (cJSON_IsNull(fs_type)) {
@@ -165,15 +176,40 @@ v1_vsphere_virtual_disk_volume_source_t *v1_vsphere_virtual_disk_volume_source_p
     }
 
 
+    if (fs_type && !cJSON_IsNull(fs_type)) fs_type_local_str = strdup(fs_type->valuestring);
+    if (storage_policy_id && !cJSON_IsNull(storage_policy_id)) storage_policy_id_local_str = strdup(storage_policy_id->valuestring);
+    if (storage_policy_name && !cJSON_IsNull(storage_policy_name)) storage_policy_name_local_str = strdup(storage_policy_name->valuestring);
+    if (volume_path && !cJSON_IsNull(volume_path)) volume_path_local_str = strdup(volume_path->valuestring);
+
     v1_vsphere_virtual_disk_volume_source_local_var = v1_vsphere_virtual_disk_volume_source_create_internal (
-        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
-        storage_policy_id && !cJSON_IsNull(storage_policy_id) ? strdup(storage_policy_id->valuestring) : NULL,
-        storage_policy_name && !cJSON_IsNull(storage_policy_name) ? strdup(storage_policy_name->valuestring) : NULL,
-        strdup(volume_path->valuestring)
+        fs_type_local_str,
+        storage_policy_id_local_str,
+        storage_policy_name_local_str,
+        volume_path_local_str
         );
+
+    if (!v1_vsphere_virtual_disk_volume_source_local_var) {
+        goto end;
+    }
 
     return v1_vsphere_virtual_disk_volume_source_local_var;
 end:
+    if (fs_type_local_str) {
+        free(fs_type_local_str);
+        fs_type_local_str = NULL;
+    }
+    if (storage_policy_id_local_str) {
+        free(storage_policy_id_local_str);
+        storage_policy_id_local_str = NULL;
+    }
+    if (storage_policy_name_local_str) {
+        free(storage_policy_name_local_str);
+        storage_policy_name_local_str = NULL;
+    }
+    if (volume_path_local_str) {
+        free(volume_path_local_str);
+        volume_path_local_str = NULL;
+    }
     return NULL;
 
 }

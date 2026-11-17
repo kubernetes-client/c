@@ -16,6 +16,7 @@
 typedef struct v1_csi_node_t v1_csi_node_t;
 
 #include "v1_csi_node_spec.h"
+#include "v1_csi_node_status.h"
 #include "v1_object_meta.h"
 
 
@@ -25,6 +26,7 @@ typedef struct v1_csi_node_t {
     char *kind; // string
     struct v1_object_meta_t *metadata; //model
     struct v1_csi_node_spec_t *spec; //model
+    struct v1_csi_node_status_t *status; //model
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_csi_node_t;
@@ -33,7 +35,8 @@ __attribute__((deprecated)) v1_csi_node_t *v1_csi_node_create(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,
-    v1_csi_node_spec_t *spec
+    v1_csi_node_spec_t *spec,
+    v1_csi_node_status_t *status
 );
 
 void v1_csi_node_free(v1_csi_node_t *v1_csi_node);

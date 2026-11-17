@@ -23,7 +23,7 @@ typedef struct v1_flow_schema_spec_t v1_flow_schema_spec_t;
 
 typedef struct v1_flow_schema_spec_t {
     struct v1_flow_distinguisher_method_t *distinguisher_method; //model
-    int matching_precedence; //numeric
+    int *matching_precedence; //numeric
     struct v1_priority_level_configuration_reference_t *priority_level_configuration; //model
     list_t *rules; //nonprimitive container
 
@@ -32,7 +32,7 @@ typedef struct v1_flow_schema_spec_t {
 
 __attribute__((deprecated)) v1_flow_schema_spec_t *v1_flow_schema_spec_create(
     v1_flow_distinguisher_method_t *distinguisher_method,
-    int matching_precedence,
+    int *matching_precedence,
     v1_priority_level_configuration_reference_t *priority_level_configuration,
     list_t *rules
 );

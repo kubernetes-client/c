@@ -12,18 +12,21 @@ static v1beta2_cel_device_selector_t *v1beta2_cel_device_selector_create_interna
     if (!v1beta2_cel_device_selector_local_var) {
         return NULL;
     }
-    v1beta2_cel_device_selector_local_var->expression = expression;
-
+    memset(v1beta2_cel_device_selector_local_var, 0, sizeof(v1beta2_cel_device_selector_t));
     v1beta2_cel_device_selector_local_var->_library_owned = 1;
+    v1beta2_cel_device_selector_local_var->expression = expression;
     return v1beta2_cel_device_selector_local_var;
 }
 
 __attribute__((deprecated)) v1beta2_cel_device_selector_t *v1beta2_cel_device_selector_create(
     char *expression
     ) {
-    return v1beta2_cel_device_selector_create_internal (
+    v1beta2_cel_device_selector_t *result = v1beta2_cel_device_selector_create_internal (
         expression
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1beta2_cel_device_selector_free(v1beta2_cel_device_selector_t *v1beta2_cel_device_selector) {
@@ -65,6 +68,8 @@ v1beta2_cel_device_selector_t *v1beta2_cel_device_selector_parseFromJSON(cJSON *
 
     v1beta2_cel_device_selector_t *v1beta2_cel_device_selector_local_var = NULL;
 
+    char *expression_local_str = NULL;
+
     // v1beta2_cel_device_selector->expression
     cJSON *expression = cJSON_GetObjectItemCaseSensitive(v1beta2_cel_device_selectorJSON, "expression");
     if (cJSON_IsNull(expression)) {
@@ -81,12 +86,22 @@ v1beta2_cel_device_selector_t *v1beta2_cel_device_selector_parseFromJSON(cJSON *
     }
 
 
+    if (expression && !cJSON_IsNull(expression)) expression_local_str = strdup(expression->valuestring);
+
     v1beta2_cel_device_selector_local_var = v1beta2_cel_device_selector_create_internal (
-        strdup(expression->valuestring)
+        expression_local_str
         );
+
+    if (!v1beta2_cel_device_selector_local_var) {
+        goto end;
+    }
 
     return v1beta2_cel_device_selector_local_var;
 end:
+    if (expression_local_str) {
+        free(expression_local_str);
+        expression_local_str = NULL;
+    }
     return NULL;
 
 }

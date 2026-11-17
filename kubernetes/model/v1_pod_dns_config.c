@@ -14,11 +14,11 @@ static v1_pod_dns_config_t *v1_pod_dns_config_create_internal(
     if (!v1_pod_dns_config_local_var) {
         return NULL;
     }
+    memset(v1_pod_dns_config_local_var, 0, sizeof(v1_pod_dns_config_t));
+    v1_pod_dns_config_local_var->_library_owned = 1;
     v1_pod_dns_config_local_var->nameservers = nameservers;
     v1_pod_dns_config_local_var->options = options;
     v1_pod_dns_config_local_var->searches = searches;
-
-    v1_pod_dns_config_local_var->_library_owned = 1;
     return v1_pod_dns_config_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_pod_dns_config_t *v1_pod_dns_config_create(
     list_t *options,
     list_t *searches
     ) {
-    return v1_pod_dns_config_create_internal (
+    v1_pod_dns_config_t *result = v1_pod_dns_config_create_internal (
         nameservers,
         options,
         searches
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_pod_dns_config_free(v1_pod_dns_config_t *v1_pod_dns_config) {
@@ -213,11 +216,16 @@ v1_pod_dns_config_t *v1_pod_dns_config_parseFromJSON(cJSON *v1_pod_dns_configJSO
     }
 
 
+
     v1_pod_dns_config_local_var = v1_pod_dns_config_create_internal (
         nameservers ? nameserversList : NULL,
         options ? optionsList : NULL,
         searches ? searchesList : NULL
         );
+
+    if (!v1_pod_dns_config_local_var) {
+        goto end;
+    }
 
     return v1_pod_dns_config_local_var;
 end:

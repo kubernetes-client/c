@@ -6,24 +6,33 @@
 
 
 static v1_scale_spec_t *v1_scale_spec_create_internal(
-    int replicas
+    int *replicas
     ) {
     v1_scale_spec_t *v1_scale_spec_local_var = malloc(sizeof(v1_scale_spec_t));
     if (!v1_scale_spec_local_var) {
         return NULL;
     }
-    v1_scale_spec_local_var->replicas = replicas;
-
+    memset(v1_scale_spec_local_var, 0, sizeof(v1_scale_spec_t));
     v1_scale_spec_local_var->_library_owned = 1;
+    v1_scale_spec_local_var->replicas = replicas;
     return v1_scale_spec_local_var;
 }
 
 __attribute__((deprecated)) v1_scale_spec_t *v1_scale_spec_create(
-    int replicas
+    int *replicas
     ) {
-    return v1_scale_spec_create_internal (
-        replicas
+    int *replicas_copy = NULL;
+    if (replicas) {
+        replicas_copy = malloc(sizeof(int));
+        if (replicas_copy) *replicas_copy = *replicas;
+    }
+    v1_scale_spec_t *result = v1_scale_spec_create_internal (
+        replicas_copy
         );
+    if (!result) {
+        free(replicas_copy);
+    }
+    return result;
 }
 
 void v1_scale_spec_free(v1_scale_spec_t *v1_scale_spec) {
@@ -35,6 +44,10 @@ void v1_scale_spec_free(v1_scale_spec_t *v1_scale_spec) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_scale_spec->replicas) {
+        free(v1_scale_spec->replicas);
+        v1_scale_spec->replicas = NULL;
+    }
     free(v1_scale_spec);
 }
 
@@ -43,7 +56,7 @@ cJSON *v1_scale_spec_convertToJSON(v1_scale_spec_t *v1_scale_spec) {
 
     // v1_scale_spec->replicas
     if(v1_scale_spec->replicas) {
-    if(cJSON_AddNumberToObject(item, "replicas", v1_scale_spec->replicas) == NULL) {
+    if(cJSON_AddNumberToObject(item, "replicas", *v1_scale_spec->replicas) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -60,6 +73,9 @@ v1_scale_spec_t *v1_scale_spec_parseFromJSON(cJSON *v1_scale_specJSON){
 
     v1_scale_spec_t *v1_scale_spec_local_var = NULL;
 
+    // define the local variable for v1_scale_spec->replicas
+    int *replicas_local_var = NULL;
+
     // v1_scale_spec->replicas
     cJSON *replicas = cJSON_GetObjectItemCaseSensitive(v1_scale_specJSON, "replicas");
     if (cJSON_IsNull(replicas)) {
@@ -70,15 +86,30 @@ v1_scale_spec_t *v1_scale_spec_parseFromJSON(cJSON *v1_scale_specJSON){
     {
     goto end; //Numeric
     }
+    replicas_local_var = malloc(sizeof(int));
+    if(!replicas_local_var)
+    {
+        goto end;
+    }
+    *replicas_local_var = replicas->valuedouble;
     }
 
 
+
     v1_scale_spec_local_var = v1_scale_spec_create_internal (
-        replicas ? replicas->valuedouble : 0
+        replicas_local_var
         );
+
+    if (!v1_scale_spec_local_var) {
+        goto end;
+    }
 
     return v1_scale_spec_local_var;
 end:
+    if (replicas_local_var) {
+        free(replicas_local_var);
+        replicas_local_var = NULL;
+    }
     return NULL;
 
 }

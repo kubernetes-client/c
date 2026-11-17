@@ -6,7 +6,7 @@
 
 
 static v2_metric_target_t *v2_metric_target_create_internal(
-    int average_utilization,
+    int *average_utilization,
     char *average_value,
     char *type,
     char *value
@@ -15,27 +15,36 @@ static v2_metric_target_t *v2_metric_target_create_internal(
     if (!v2_metric_target_local_var) {
         return NULL;
     }
+    memset(v2_metric_target_local_var, 0, sizeof(v2_metric_target_t));
+    v2_metric_target_local_var->_library_owned = 1;
     v2_metric_target_local_var->average_utilization = average_utilization;
     v2_metric_target_local_var->average_value = average_value;
     v2_metric_target_local_var->type = type;
     v2_metric_target_local_var->value = value;
-
-    v2_metric_target_local_var->_library_owned = 1;
     return v2_metric_target_local_var;
 }
 
 __attribute__((deprecated)) v2_metric_target_t *v2_metric_target_create(
-    int average_utilization,
+    int *average_utilization,
     char *average_value,
     char *type,
     char *value
     ) {
-    return v2_metric_target_create_internal (
-        average_utilization,
+    int *average_utilization_copy = NULL;
+    if (average_utilization) {
+        average_utilization_copy = malloc(sizeof(int));
+        if (average_utilization_copy) *average_utilization_copy = *average_utilization;
+    }
+    v2_metric_target_t *result = v2_metric_target_create_internal (
+        average_utilization_copy,
         average_value,
         type,
         value
         );
+    if (!result) {
+        free(average_utilization_copy);
+    }
+    return result;
 }
 
 void v2_metric_target_free(v2_metric_target_t *v2_metric_target) {
@@ -47,6 +56,10 @@ void v2_metric_target_free(v2_metric_target_t *v2_metric_target) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v2_metric_target->average_utilization) {
+        free(v2_metric_target->average_utilization);
+        v2_metric_target->average_utilization = NULL;
+    }
     if (v2_metric_target->average_value) {
         free(v2_metric_target->average_value);
         v2_metric_target->average_value = NULL;
@@ -67,7 +80,7 @@ cJSON *v2_metric_target_convertToJSON(v2_metric_target_t *v2_metric_target) {
 
     // v2_metric_target->average_utilization
     if(v2_metric_target->average_utilization) {
-    if(cJSON_AddNumberToObject(item, "averageUtilization", v2_metric_target->average_utilization) == NULL) {
+    if(cJSON_AddNumberToObject(item, "averageUtilization", *v2_metric_target->average_utilization) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -109,6 +122,15 @@ v2_metric_target_t *v2_metric_target_parseFromJSON(cJSON *v2_metric_targetJSON){
 
     v2_metric_target_t *v2_metric_target_local_var = NULL;
 
+    // define the local variable for v2_metric_target->average_utilization
+    int *average_utilization_local_var = NULL;
+
+    char *average_value_local_str = NULL;
+
+    char *type_local_str = NULL;
+
+    char *value_local_str = NULL;
+
     // v2_metric_target->average_utilization
     cJSON *average_utilization = cJSON_GetObjectItemCaseSensitive(v2_metric_targetJSON, "averageUtilization");
     if (cJSON_IsNull(average_utilization)) {
@@ -119,6 +141,12 @@ v2_metric_target_t *v2_metric_target_parseFromJSON(cJSON *v2_metric_targetJSON){
     {
     goto end; //Numeric
     }
+    average_utilization_local_var = malloc(sizeof(int));
+    if(!average_utilization_local_var)
+    {
+        goto end;
+    }
+    *average_utilization_local_var = average_utilization->valuedouble;
     }
 
     // v2_metric_target->average_value
@@ -161,15 +189,39 @@ v2_metric_target_t *v2_metric_target_parseFromJSON(cJSON *v2_metric_targetJSON){
     }
 
 
+    if (average_value && !cJSON_IsNull(average_value)) average_value_local_str = strdup(average_value->valuestring);
+    if (type && !cJSON_IsNull(type)) type_local_str = strdup(type->valuestring);
+    if (value && !cJSON_IsNull(value)) value_local_str = strdup(value->valuestring);
+
     v2_metric_target_local_var = v2_metric_target_create_internal (
-        average_utilization ? average_utilization->valuedouble : 0,
-        average_value && !cJSON_IsNull(average_value) ? strdup(average_value->valuestring) : NULL,
-        strdup(type->valuestring),
-        value && !cJSON_IsNull(value) ? strdup(value->valuestring) : NULL
+        average_utilization_local_var,
+        average_value_local_str,
+        type_local_str,
+        value_local_str
         );
+
+    if (!v2_metric_target_local_var) {
+        goto end;
+    }
 
     return v2_metric_target_local_var;
 end:
+    if (average_utilization_local_var) {
+        free(average_utilization_local_var);
+        average_utilization_local_var = NULL;
+    }
+    if (average_value_local_str) {
+        free(average_value_local_str);
+        average_value_local_str = NULL;
+    }
+    if (type_local_str) {
+        free(type_local_str);
+        type_local_str = NULL;
+    }
+    if (value_local_str) {
+        free(value_local_str);
+        value_local_str = NULL;
+    }
     return NULL;
 
 }

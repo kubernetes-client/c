@@ -8,11 +8,11 @@
 static v1_object_meta_t *v1_object_meta_create_internal(
     list_t* annotations,
     char *creation_timestamp,
-    long deletion_grace_period_seconds,
+    long *deletion_grace_period_seconds,
     char *deletion_timestamp,
     list_t *finalizers,
     char *generate_name,
-    long generation,
+    long *generation,
     list_t* labels,
     list_t *managed_fields,
     char *name,
@@ -26,6 +26,8 @@ static v1_object_meta_t *v1_object_meta_create_internal(
     if (!v1_object_meta_local_var) {
         return NULL;
     }
+    memset(v1_object_meta_local_var, 0, sizeof(v1_object_meta_t));
+    v1_object_meta_local_var->_library_owned = 1;
     v1_object_meta_local_var->annotations = annotations;
     v1_object_meta_local_var->creation_timestamp = creation_timestamp;
     v1_object_meta_local_var->deletion_grace_period_seconds = deletion_grace_period_seconds;
@@ -41,19 +43,17 @@ static v1_object_meta_t *v1_object_meta_create_internal(
     v1_object_meta_local_var->resource_version = resource_version;
     v1_object_meta_local_var->self_link = self_link;
     v1_object_meta_local_var->uid = uid;
-
-    v1_object_meta_local_var->_library_owned = 1;
     return v1_object_meta_local_var;
 }
 
 __attribute__((deprecated)) v1_object_meta_t *v1_object_meta_create(
     list_t* annotations,
     char *creation_timestamp,
-    long deletion_grace_period_seconds,
+    long *deletion_grace_period_seconds,
     char *deletion_timestamp,
     list_t *finalizers,
     char *generate_name,
-    long generation,
+    long *generation,
     list_t* labels,
     list_t *managed_fields,
     char *name,
@@ -63,14 +63,24 @@ __attribute__((deprecated)) v1_object_meta_t *v1_object_meta_create(
     char *self_link,
     char *uid
     ) {
-    return v1_object_meta_create_internal (
+    long *deletion_grace_period_seconds_copy = NULL;
+    if (deletion_grace_period_seconds) {
+        deletion_grace_period_seconds_copy = malloc(sizeof(long));
+        if (deletion_grace_period_seconds_copy) *deletion_grace_period_seconds_copy = *deletion_grace_period_seconds;
+    }
+    long *generation_copy = NULL;
+    if (generation) {
+        generation_copy = malloc(sizeof(long));
+        if (generation_copy) *generation_copy = *generation;
+    }
+    v1_object_meta_t *result = v1_object_meta_create_internal (
         annotations,
         creation_timestamp,
-        deletion_grace_period_seconds,
+        deletion_grace_period_seconds_copy,
         deletion_timestamp,
         finalizers,
         generate_name,
-        generation,
+        generation_copy,
         labels,
         managed_fields,
         name,
@@ -80,6 +90,11 @@ __attribute__((deprecated)) v1_object_meta_t *v1_object_meta_create(
         self_link,
         uid
         );
+    if (!result) {
+        free(deletion_grace_period_seconds_copy);
+        free(generation_copy);
+    }
+    return result;
 }
 
 void v1_object_meta_free(v1_object_meta_t *v1_object_meta) {
@@ -105,6 +120,10 @@ void v1_object_meta_free(v1_object_meta_t *v1_object_meta) {
         free(v1_object_meta->creation_timestamp);
         v1_object_meta->creation_timestamp = NULL;
     }
+    if (v1_object_meta->deletion_grace_period_seconds) {
+        free(v1_object_meta->deletion_grace_period_seconds);
+        v1_object_meta->deletion_grace_period_seconds = NULL;
+    }
     if (v1_object_meta->deletion_timestamp) {
         free(v1_object_meta->deletion_timestamp);
         v1_object_meta->deletion_timestamp = NULL;
@@ -119,6 +138,10 @@ void v1_object_meta_free(v1_object_meta_t *v1_object_meta) {
     if (v1_object_meta->generate_name) {
         free(v1_object_meta->generate_name);
         v1_object_meta->generate_name = NULL;
+    }
+    if (v1_object_meta->generation) {
+        free(v1_object_meta->generation);
+        v1_object_meta->generation = NULL;
     }
     if (v1_object_meta->labels) {
         list_ForEach(listEntry, v1_object_meta->labels) {
@@ -200,7 +223,7 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
 
     // v1_object_meta->deletion_grace_period_seconds
     if(v1_object_meta->deletion_grace_period_seconds) {
-    if(cJSON_AddNumberToObject(item, "deletionGracePeriodSeconds", v1_object_meta->deletion_grace_period_seconds) == NULL) {
+    if(cJSON_AddNumberToObject(item, "deletionGracePeriodSeconds", *v1_object_meta->deletion_grace_period_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -241,7 +264,7 @@ cJSON *v1_object_meta_convertToJSON(v1_object_meta_t *v1_object_meta) {
 
     // v1_object_meta->generation
     if(v1_object_meta->generation) {
-    if(cJSON_AddNumberToObject(item, "generation", v1_object_meta->generation) == NULL) {
+    if(cJSON_AddNumberToObject(item, "generation", *v1_object_meta->generation) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -361,8 +384,20 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     // define the local map for v1_object_meta->annotations
     list_t *annotationsList = NULL;
 
+    char *creation_timestamp_local_str = NULL;
+
+    // define the local variable for v1_object_meta->deletion_grace_period_seconds
+    long *deletion_grace_period_seconds_local_var = NULL;
+
+    char *deletion_timestamp_local_str = NULL;
+
     // define the local list for v1_object_meta->finalizers
     list_t *finalizersList = NULL;
+
+    char *generate_name_local_str = NULL;
+
+    // define the local variable for v1_object_meta->generation
+    long *generation_local_var = NULL;
 
     // define the local map for v1_object_meta->labels
     list_t *labelsList = NULL;
@@ -370,8 +405,18 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     // define the local list for v1_object_meta->managed_fields
     list_t *managed_fieldsList = NULL;
 
+    char *name_local_str = NULL;
+
+    char *_namespace_local_str = NULL;
+
     // define the local list for v1_object_meta->owner_references
     list_t *owner_referencesList = NULL;
+
+    char *resource_version_local_str = NULL;
+
+    char *self_link_local_str = NULL;
+
+    char *uid_local_str = NULL;
 
     // v1_object_meta->annotations
     cJSON *annotations = cJSON_GetObjectItemCaseSensitive(v1_object_metaJSON, "annotations");
@@ -423,6 +468,12 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     {
     goto end; //Numeric
     }
+    deletion_grace_period_seconds_local_var = malloc(sizeof(long));
+    if(!deletion_grace_period_seconds_local_var)
+    {
+        goto end;
+    }
+    *deletion_grace_period_seconds_local_var = deletion_grace_period_seconds->valuedouble;
     }
 
     // v1_object_meta->deletion_timestamp
@@ -481,6 +532,12 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     {
     goto end; //Numeric
     }
+    generation_local_var = malloc(sizeof(long));
+    if(!generation_local_var)
+    {
+        goto end;
+    }
+    *generation_local_var = generation->valuedouble;
     }
 
     // v1_object_meta->labels
@@ -620,23 +677,36 @@ v1_object_meta_t *v1_object_meta_parseFromJSON(cJSON *v1_object_metaJSON){
     }
 
 
+    if (creation_timestamp && !cJSON_IsNull(creation_timestamp)) creation_timestamp_local_str = strdup(creation_timestamp->valuestring);
+    if (deletion_timestamp && !cJSON_IsNull(deletion_timestamp)) deletion_timestamp_local_str = strdup(deletion_timestamp->valuestring);
+    if (generate_name && !cJSON_IsNull(generate_name)) generate_name_local_str = strdup(generate_name->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (_namespace && !cJSON_IsNull(_namespace)) _namespace_local_str = strdup(_namespace->valuestring);
+    if (resource_version && !cJSON_IsNull(resource_version)) resource_version_local_str = strdup(resource_version->valuestring);
+    if (self_link && !cJSON_IsNull(self_link)) self_link_local_str = strdup(self_link->valuestring);
+    if (uid && !cJSON_IsNull(uid)) uid_local_str = strdup(uid->valuestring);
+
     v1_object_meta_local_var = v1_object_meta_create_internal (
         annotations ? annotationsList : NULL,
-        creation_timestamp && !cJSON_IsNull(creation_timestamp) ? strdup(creation_timestamp->valuestring) : NULL,
-        deletion_grace_period_seconds ? deletion_grace_period_seconds->valuedouble : 0,
-        deletion_timestamp && !cJSON_IsNull(deletion_timestamp) ? strdup(deletion_timestamp->valuestring) : NULL,
+        creation_timestamp_local_str,
+        deletion_grace_period_seconds_local_var,
+        deletion_timestamp_local_str,
         finalizers ? finalizersList : NULL,
-        generate_name && !cJSON_IsNull(generate_name) ? strdup(generate_name->valuestring) : NULL,
-        generation ? generation->valuedouble : 0,
+        generate_name_local_str,
+        generation_local_var,
         labels ? labelsList : NULL,
         managed_fields ? managed_fieldsList : NULL,
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
-        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
+        name_local_str,
+        _namespace_local_str,
         owner_references ? owner_referencesList : NULL,
-        resource_version && !cJSON_IsNull(resource_version) ? strdup(resource_version->valuestring) : NULL,
-        self_link && !cJSON_IsNull(self_link) ? strdup(self_link->valuestring) : NULL,
-        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL
+        resource_version_local_str,
+        self_link_local_str,
+        uid_local_str
         );
+
+    if (!v1_object_meta_local_var) {
+        goto end;
+    }
 
     return v1_object_meta_local_var;
 end:
@@ -654,6 +724,18 @@ end:
         list_freeList(annotationsList);
         annotationsList = NULL;
     }
+    if (creation_timestamp_local_str) {
+        free(creation_timestamp_local_str);
+        creation_timestamp_local_str = NULL;
+    }
+    if (deletion_grace_period_seconds_local_var) {
+        free(deletion_grace_period_seconds_local_var);
+        deletion_grace_period_seconds_local_var = NULL;
+    }
+    if (deletion_timestamp_local_str) {
+        free(deletion_timestamp_local_str);
+        deletion_timestamp_local_str = NULL;
+    }
     if (finalizersList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, finalizersList) {
@@ -662,6 +744,14 @@ end:
         }
         list_freeList(finalizersList);
         finalizersList = NULL;
+    }
+    if (generate_name_local_str) {
+        free(generate_name_local_str);
+        generate_name_local_str = NULL;
+    }
+    if (generation_local_var) {
+        free(generation_local_var);
+        generation_local_var = NULL;
     }
     if (labelsList) {
         listEntry_t *listEntry = NULL;
@@ -686,6 +776,14 @@ end:
         list_freeList(managed_fieldsList);
         managed_fieldsList = NULL;
     }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (_namespace_local_str) {
+        free(_namespace_local_str);
+        _namespace_local_str = NULL;
+    }
     if (owner_referencesList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, owner_referencesList) {
@@ -694,6 +792,18 @@ end:
         }
         list_freeList(owner_referencesList);
         owner_referencesList = NULL;
+    }
+    if (resource_version_local_str) {
+        free(resource_version_local_str);
+        resource_version_local_str = NULL;
+    }
+    if (self_link_local_str) {
+        free(self_link_local_str);
+        self_link_local_str = NULL;
+    }
+    if (uid_local_str) {
+        free(uid_local_str);
+        uid_local_str = NULL;
     }
     return NULL;
 

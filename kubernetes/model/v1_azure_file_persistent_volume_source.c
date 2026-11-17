@@ -6,7 +6,7 @@
 
 
 static v1_azure_file_persistent_volume_source_t *v1_azure_file_persistent_volume_source_create_internal(
-    int read_only,
+    int *read_only,
     char *secret_name,
     char *secret_namespace,
     char *share_name
@@ -15,27 +15,36 @@ static v1_azure_file_persistent_volume_source_t *v1_azure_file_persistent_volume
     if (!v1_azure_file_persistent_volume_source_local_var) {
         return NULL;
     }
+    memset(v1_azure_file_persistent_volume_source_local_var, 0, sizeof(v1_azure_file_persistent_volume_source_t));
+    v1_azure_file_persistent_volume_source_local_var->_library_owned = 1;
     v1_azure_file_persistent_volume_source_local_var->read_only = read_only;
     v1_azure_file_persistent_volume_source_local_var->secret_name = secret_name;
     v1_azure_file_persistent_volume_source_local_var->secret_namespace = secret_namespace;
     v1_azure_file_persistent_volume_source_local_var->share_name = share_name;
-
-    v1_azure_file_persistent_volume_source_local_var->_library_owned = 1;
     return v1_azure_file_persistent_volume_source_local_var;
 }
 
 __attribute__((deprecated)) v1_azure_file_persistent_volume_source_t *v1_azure_file_persistent_volume_source_create(
-    int read_only,
+    int *read_only,
     char *secret_name,
     char *secret_namespace,
     char *share_name
     ) {
-    return v1_azure_file_persistent_volume_source_create_internal (
-        read_only,
+    int *read_only_copy = NULL;
+    if (read_only) {
+        read_only_copy = malloc(sizeof(int));
+        if (read_only_copy) *read_only_copy = *read_only;
+    }
+    v1_azure_file_persistent_volume_source_t *result = v1_azure_file_persistent_volume_source_create_internal (
+        read_only_copy,
         secret_name,
         secret_namespace,
         share_name
         );
+    if (!result) {
+        free(read_only_copy);
+    }
+    return result;
 }
 
 void v1_azure_file_persistent_volume_source_free(v1_azure_file_persistent_volume_source_t *v1_azure_file_persistent_volume_source) {
@@ -47,6 +56,10 @@ void v1_azure_file_persistent_volume_source_free(v1_azure_file_persistent_volume
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_azure_file_persistent_volume_source->read_only) {
+        free(v1_azure_file_persistent_volume_source->read_only);
+        v1_azure_file_persistent_volume_source->read_only = NULL;
+    }
     if (v1_azure_file_persistent_volume_source->secret_name) {
         free(v1_azure_file_persistent_volume_source->secret_name);
         v1_azure_file_persistent_volume_source->secret_name = NULL;
@@ -67,7 +80,7 @@ cJSON *v1_azure_file_persistent_volume_source_convertToJSON(v1_azure_file_persis
 
     // v1_azure_file_persistent_volume_source->read_only
     if(v1_azure_file_persistent_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_azure_file_persistent_volume_source->read_only) == NULL) {
+    if(cJSON_AddBoolToObject(item, "readOnly", *v1_azure_file_persistent_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -110,6 +123,15 @@ v1_azure_file_persistent_volume_source_t *v1_azure_file_persistent_volume_source
 
     v1_azure_file_persistent_volume_source_t *v1_azure_file_persistent_volume_source_local_var = NULL;
 
+    // define the local variable for v1_azure_file_persistent_volume_source->read_only
+    int *read_only_local_var = NULL;
+
+    char *secret_name_local_str = NULL;
+
+    char *secret_namespace_local_str = NULL;
+
+    char *share_name_local_str = NULL;
+
     // v1_azure_file_persistent_volume_source->read_only
     cJSON *read_only = cJSON_GetObjectItemCaseSensitive(v1_azure_file_persistent_volume_sourceJSON, "readOnly");
     if (cJSON_IsNull(read_only)) {
@@ -120,6 +142,12 @@ v1_azure_file_persistent_volume_source_t *v1_azure_file_persistent_volume_source
     {
     goto end; //Bool
     }
+    read_only_local_var = malloc(sizeof(int));
+    if(!read_only_local_var)
+    {
+        goto end;
+    }
+    *read_only_local_var = read_only->valueint;
     }
 
     // v1_azure_file_persistent_volume_source->secret_name
@@ -165,15 +193,39 @@ v1_azure_file_persistent_volume_source_t *v1_azure_file_persistent_volume_source
     }
 
 
+    if (secret_name && !cJSON_IsNull(secret_name)) secret_name_local_str = strdup(secret_name->valuestring);
+    if (secret_namespace && !cJSON_IsNull(secret_namespace)) secret_namespace_local_str = strdup(secret_namespace->valuestring);
+    if (share_name && !cJSON_IsNull(share_name)) share_name_local_str = strdup(share_name->valuestring);
+
     v1_azure_file_persistent_volume_source_local_var = v1_azure_file_persistent_volume_source_create_internal (
-        read_only ? read_only->valueint : 0,
-        strdup(secret_name->valuestring),
-        secret_namespace && !cJSON_IsNull(secret_namespace) ? strdup(secret_namespace->valuestring) : NULL,
-        strdup(share_name->valuestring)
+        read_only_local_var,
+        secret_name_local_str,
+        secret_namespace_local_str,
+        share_name_local_str
         );
+
+    if (!v1_azure_file_persistent_volume_source_local_var) {
+        goto end;
+    }
 
     return v1_azure_file_persistent_volume_source_local_var;
 end:
+    if (read_only_local_var) {
+        free(read_only_local_var);
+        read_only_local_var = NULL;
+    }
+    if (secret_name_local_str) {
+        free(secret_name_local_str);
+        secret_name_local_str = NULL;
+    }
+    if (secret_namespace_local_str) {
+        free(secret_namespace_local_str);
+        secret_namespace_local_str = NULL;
+    }
+    if (share_name_local_str) {
+        free(share_name_local_str);
+        share_name_local_str = NULL;
+    }
     return NULL;
 
 }

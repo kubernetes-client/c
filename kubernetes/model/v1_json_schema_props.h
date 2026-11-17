@@ -34,23 +34,23 @@ typedef struct v1_json_schema_props_t {
     char *description; // string
     list_t *_enum; //nonprimitive container
     object_t *example; //object
-    int exclusive_maximum; //boolean
-    int exclusive_minimum; //boolean
+    int *exclusive_maximum; //boolean
+    int *exclusive_minimum; //boolean
     struct v1_external_documentation_t *external_docs; //model
     char *format; // string
     char *id; // string
     object_t *items; //object
-    long max_items; //numeric
-    long max_length; //numeric
-    long max_properties; //numeric
-    double maximum; //numeric
-    long min_items; //numeric
-    long min_length; //numeric
-    long min_properties; //numeric
-    double minimum; //numeric
-    double multiple_of; //numeric
+    long *max_items; //numeric
+    long *max_length; //numeric
+    long *max_properties; //numeric
+    double *maximum; //numeric
+    long *min_items; //numeric
+    long *min_length; //numeric
+    long *min_properties; //numeric
+    double *minimum; //numeric
+    double *multiple_of; //numeric
     struct v1_json_schema_props_t *_not; //model
-    int nullable; //boolean
+    int *nullable; //boolean
     list_t *one_of; //nonprimitive container
     char *pattern; // string
     list_t* pattern_properties; //map
@@ -58,13 +58,13 @@ typedef struct v1_json_schema_props_t {
     list_t *required; //primitive container
     char *title; // string
     char *type; // string
-    int unique_items; //boolean
-    int x_kubernetes_embedded_resource; //boolean
-    int x_kubernetes_int_or_string; //boolean
+    int *unique_items; //boolean
+    int *x_kubernetes_embedded_resource; //boolean
+    int *x_kubernetes_int_or_string; //boolean
     list_t *x_kubernetes_list_map_keys; //primitive container
     char *x_kubernetes_list_type; // string
     char *x_kubernetes_map_type; // string
-    int x_kubernetes_preserve_unknown_fields; //boolean
+    int *x_kubernetes_preserve_unknown_fields; //boolean
     list_t *x_kubernetes_validations; //nonprimitive container
 
     int _library_owned; // Is the library responsible for freeing this object?
@@ -83,23 +83,23 @@ __attribute__((deprecated)) v1_json_schema_props_t *v1_json_schema_props_create(
     char *description,
     list_t *_enum,
     object_t *example,
-    int exclusive_maximum,
-    int exclusive_minimum,
+    int *exclusive_maximum,
+    int *exclusive_minimum,
     v1_external_documentation_t *external_docs,
     char *format,
     char *id,
     object_t *items,
-    long max_items,
-    long max_length,
-    long max_properties,
-    double maximum,
-    long min_items,
-    long min_length,
-    long min_properties,
-    double minimum,
-    double multiple_of,
+    long *max_items,
+    long *max_length,
+    long *max_properties,
+    double *maximum,
+    long *min_items,
+    long *min_length,
+    long *min_properties,
+    double *minimum,
+    double *multiple_of,
     v1_json_schema_props_t *_not,
-    int nullable,
+    int *nullable,
     list_t *one_of,
     char *pattern,
     list_t* pattern_properties,
@@ -107,13 +107,13 @@ __attribute__((deprecated)) v1_json_schema_props_t *v1_json_schema_props_create(
     list_t *required,
     char *title,
     char *type,
-    int unique_items,
-    int x_kubernetes_embedded_resource,
-    int x_kubernetes_int_or_string,
+    int *unique_items,
+    int *x_kubernetes_embedded_resource,
+    int *x_kubernetes_int_or_string,
     list_t *x_kubernetes_list_map_keys,
     char *x_kubernetes_list_type,
     char *x_kubernetes_map_type,
-    int x_kubernetes_preserve_unknown_fields,
+    int *x_kubernetes_preserve_unknown_fields,
     list_t *x_kubernetes_validations
 );
 

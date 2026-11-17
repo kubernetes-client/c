@@ -13,10 +13,10 @@ static v1_namespace_status_t *v1_namespace_status_create_internal(
     if (!v1_namespace_status_local_var) {
         return NULL;
     }
+    memset(v1_namespace_status_local_var, 0, sizeof(v1_namespace_status_t));
+    v1_namespace_status_local_var->_library_owned = 1;
     v1_namespace_status_local_var->conditions = conditions;
     v1_namespace_status_local_var->phase = phase;
-
-    v1_namespace_status_local_var->_library_owned = 1;
     return v1_namespace_status_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_namespace_status_t *v1_namespace_status_create(
     list_t *conditions,
     char *phase
     ) {
-    return v1_namespace_status_create_internal (
+    v1_namespace_status_t *result = v1_namespace_status_create_internal (
         conditions,
         phase
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_namespace_status_free(v1_namespace_status_t *v1_namespace_status) {
@@ -98,6 +101,8 @@ v1_namespace_status_t *v1_namespace_status_parseFromJSON(cJSON *v1_namespace_sta
     // define the local list for v1_namespace_status->conditions
     list_t *conditionsList = NULL;
 
+    char *phase_local_str = NULL;
+
     // v1_namespace_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_namespace_statusJSON, "conditions");
     if (cJSON_IsNull(conditions)) {
@@ -135,10 +140,16 @@ v1_namespace_status_t *v1_namespace_status_parseFromJSON(cJSON *v1_namespace_sta
     }
 
 
+    if (phase && !cJSON_IsNull(phase)) phase_local_str = strdup(phase->valuestring);
+
     v1_namespace_status_local_var = v1_namespace_status_create_internal (
         conditions ? conditionsList : NULL,
-        phase && !cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL
+        phase_local_str
         );
+
+    if (!v1_namespace_status_local_var) {
+        goto end;
+    }
 
     return v1_namespace_status_local_var;
 end:
@@ -150,6 +161,10 @@ end:
         }
         list_freeList(conditionsList);
         conditionsList = NULL;
+    }
+    if (phase_local_str) {
+        free(phase_local_str);
+        phase_local_str = NULL;
     }
     return NULL;
 

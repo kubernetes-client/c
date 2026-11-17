@@ -24,17 +24,13 @@ v1alpha3_device_taint_selector_t* instantiate_v1alpha3_device_taint_selector(int
     v1alpha3_device_taint_selector = v1alpha3_device_taint_selector_create(
       "0",
       "0",
-      "0",
-      "0",
-      list_createList()
+      "0"
     );
   } else {
     v1alpha3_device_taint_selector = v1alpha3_device_taint_selector_create(
       "0",
       "0",
-      "0",
-      "0",
-      list_createList()
+      "0"
     );
   }
 

@@ -15,12 +15,12 @@ static v1_param_ref_t *v1_param_ref_create_internal(
     if (!v1_param_ref_local_var) {
         return NULL;
     }
+    memset(v1_param_ref_local_var, 0, sizeof(v1_param_ref_t));
+    v1_param_ref_local_var->_library_owned = 1;
     v1_param_ref_local_var->name = name;
     v1_param_ref_local_var->_namespace = _namespace;
     v1_param_ref_local_var->parameter_not_found_action = parameter_not_found_action;
     v1_param_ref_local_var->selector = selector;
-
-    v1_param_ref_local_var->_library_owned = 1;
     return v1_param_ref_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1_param_ref_t *v1_param_ref_create(
     char *parameter_not_found_action,
     v1_label_selector_t *selector
     ) {
-    return v1_param_ref_create_internal (
+    v1_param_ref_t *result = v1_param_ref_create_internal (
         name,
         _namespace,
         parameter_not_found_action,
         selector
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_param_ref_free(v1_param_ref_t *v1_param_ref) {
@@ -117,6 +120,12 @@ v1_param_ref_t *v1_param_ref_parseFromJSON(cJSON *v1_param_refJSON){
 
     v1_param_ref_t *v1_param_ref_local_var = NULL;
 
+    char *name_local_str = NULL;
+
+    char *_namespace_local_str = NULL;
+
+    char *parameter_not_found_action_local_str = NULL;
+
     // define the local variable for v1_param_ref->selector
     v1_label_selector_t *selector_local_nonprim = NULL;
 
@@ -166,15 +175,35 @@ v1_param_ref_t *v1_param_ref_parseFromJSON(cJSON *v1_param_refJSON){
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (_namespace && !cJSON_IsNull(_namespace)) _namespace_local_str = strdup(_namespace->valuestring);
+    if (parameter_not_found_action && !cJSON_IsNull(parameter_not_found_action)) parameter_not_found_action_local_str = strdup(parameter_not_found_action->valuestring);
+
     v1_param_ref_local_var = v1_param_ref_create_internal (
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
-        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
-        parameter_not_found_action && !cJSON_IsNull(parameter_not_found_action) ? strdup(parameter_not_found_action->valuestring) : NULL,
+        name_local_str,
+        _namespace_local_str,
+        parameter_not_found_action_local_str,
         selector ? selector_local_nonprim : NULL
         );
 
+    if (!v1_param_ref_local_var) {
+        goto end;
+    }
+
     return v1_param_ref_local_var;
 end:
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (_namespace_local_str) {
+        free(_namespace_local_str);
+        _namespace_local_str = NULL;
+    }
+    if (parameter_not_found_action_local_str) {
+        free(parameter_not_found_action_local_str);
+        parameter_not_found_action_local_str = NULL;
+    }
     if (selector_local_nonprim) {
         v1_label_selector_free(selector_local_nonprim);
         selector_local_nonprim = NULL;

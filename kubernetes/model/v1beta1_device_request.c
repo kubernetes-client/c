@@ -6,10 +6,11 @@
 
 
 static v1beta1_device_request_t *v1beta1_device_request_create_internal(
-    int admin_access,
+    int *admin_access,
     char *allocation_mode,
     v1beta1_capacity_requirements_t *capacity,
-    long count,
+    long *count,
+    list_t *derived_attributes,
     char *device_class_name,
     list_t *first_available,
     char *name,
@@ -20,42 +21,60 @@ static v1beta1_device_request_t *v1beta1_device_request_create_internal(
     if (!v1beta1_device_request_local_var) {
         return NULL;
     }
+    memset(v1beta1_device_request_local_var, 0, sizeof(v1beta1_device_request_t));
+    v1beta1_device_request_local_var->_library_owned = 1;
     v1beta1_device_request_local_var->admin_access = admin_access;
     v1beta1_device_request_local_var->allocation_mode = allocation_mode;
     v1beta1_device_request_local_var->capacity = capacity;
     v1beta1_device_request_local_var->count = count;
+    v1beta1_device_request_local_var->derived_attributes = derived_attributes;
     v1beta1_device_request_local_var->device_class_name = device_class_name;
     v1beta1_device_request_local_var->first_available = first_available;
     v1beta1_device_request_local_var->name = name;
     v1beta1_device_request_local_var->selectors = selectors;
     v1beta1_device_request_local_var->tolerations = tolerations;
-
-    v1beta1_device_request_local_var->_library_owned = 1;
     return v1beta1_device_request_local_var;
 }
 
 __attribute__((deprecated)) v1beta1_device_request_t *v1beta1_device_request_create(
-    int admin_access,
+    int *admin_access,
     char *allocation_mode,
     v1beta1_capacity_requirements_t *capacity,
-    long count,
+    long *count,
+    list_t *derived_attributes,
     char *device_class_name,
     list_t *first_available,
     char *name,
     list_t *selectors,
     list_t *tolerations
     ) {
-    return v1beta1_device_request_create_internal (
-        admin_access,
+    int *admin_access_copy = NULL;
+    if (admin_access) {
+        admin_access_copy = malloc(sizeof(int));
+        if (admin_access_copy) *admin_access_copy = *admin_access;
+    }
+    long *count_copy = NULL;
+    if (count) {
+        count_copy = malloc(sizeof(long));
+        if (count_copy) *count_copy = *count;
+    }
+    v1beta1_device_request_t *result = v1beta1_device_request_create_internal (
+        admin_access_copy,
         allocation_mode,
         capacity,
-        count,
+        count_copy,
+        derived_attributes,
         device_class_name,
         first_available,
         name,
         selectors,
         tolerations
         );
+    if (!result) {
+        free(admin_access_copy);
+        free(count_copy);
+    }
+    return result;
 }
 
 void v1beta1_device_request_free(v1beta1_device_request_t *v1beta1_device_request) {
@@ -67,6 +86,10 @@ void v1beta1_device_request_free(v1beta1_device_request_t *v1beta1_device_reques
         return ;
     }
     listEntry_t *listEntry;
+    if (v1beta1_device_request->admin_access) {
+        free(v1beta1_device_request->admin_access);
+        v1beta1_device_request->admin_access = NULL;
+    }
     if (v1beta1_device_request->allocation_mode) {
         free(v1beta1_device_request->allocation_mode);
         v1beta1_device_request->allocation_mode = NULL;
@@ -74,6 +97,17 @@ void v1beta1_device_request_free(v1beta1_device_request_t *v1beta1_device_reques
     if (v1beta1_device_request->capacity) {
         v1beta1_capacity_requirements_free(v1beta1_device_request->capacity);
         v1beta1_device_request->capacity = NULL;
+    }
+    if (v1beta1_device_request->count) {
+        free(v1beta1_device_request->count);
+        v1beta1_device_request->count = NULL;
+    }
+    if (v1beta1_device_request->derived_attributes) {
+        list_ForEach(listEntry, v1beta1_device_request->derived_attributes) {
+            v1beta1_device_derived_attribute_free(listEntry->data);
+        }
+        list_freeList(v1beta1_device_request->derived_attributes);
+        v1beta1_device_request->derived_attributes = NULL;
     }
     if (v1beta1_device_request->device_class_name) {
         free(v1beta1_device_request->device_class_name);
@@ -112,7 +146,7 @@ cJSON *v1beta1_device_request_convertToJSON(v1beta1_device_request_t *v1beta1_de
 
     // v1beta1_device_request->admin_access
     if(v1beta1_device_request->admin_access) {
-    if(cJSON_AddBoolToObject(item, "adminAccess", v1beta1_device_request->admin_access) == NULL) {
+    if(cJSON_AddBoolToObject(item, "adminAccess", *v1beta1_device_request->admin_access) == NULL) {
     goto fail; //Bool
     }
     }
@@ -141,8 +175,28 @@ cJSON *v1beta1_device_request_convertToJSON(v1beta1_device_request_t *v1beta1_de
 
     // v1beta1_device_request->count
     if(v1beta1_device_request->count) {
-    if(cJSON_AddNumberToObject(item, "count", v1beta1_device_request->count) == NULL) {
+    if(cJSON_AddNumberToObject(item, "count", *v1beta1_device_request->count) == NULL) {
     goto fail; //Numeric
+    }
+    }
+
+
+    // v1beta1_device_request->derived_attributes
+    if(v1beta1_device_request->derived_attributes) {
+    cJSON *derived_attributes = cJSON_AddArrayToObject(item, "derivedAttributes");
+    if(derived_attributes == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *derived_attributesListEntry;
+    if (v1beta1_device_request->derived_attributes) {
+    list_ForEach(derived_attributesListEntry, v1beta1_device_request->derived_attributes) {
+    cJSON *itemLocal = v1beta1_device_derived_attribute_convertToJSON(derived_attributesListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(derived_attributes, itemLocal);
+    }
     }
     }
 
@@ -235,11 +289,26 @@ v1beta1_device_request_t *v1beta1_device_request_parseFromJSON(cJSON *v1beta1_de
 
     v1beta1_device_request_t *v1beta1_device_request_local_var = NULL;
 
+    // define the local variable for v1beta1_device_request->admin_access
+    int *admin_access_local_var = NULL;
+
+    char *allocation_mode_local_str = NULL;
+
     // define the local variable for v1beta1_device_request->capacity
     v1beta1_capacity_requirements_t *capacity_local_nonprim = NULL;
 
+    // define the local variable for v1beta1_device_request->count
+    long *count_local_var = NULL;
+
+    // define the local list for v1beta1_device_request->derived_attributes
+    list_t *derived_attributesList = NULL;
+
+    char *device_class_name_local_str = NULL;
+
     // define the local list for v1beta1_device_request->first_available
     list_t *first_availableList = NULL;
+
+    char *name_local_str = NULL;
 
     // define the local list for v1beta1_device_request->selectors
     list_t *selectorsList = NULL;
@@ -257,6 +326,12 @@ v1beta1_device_request_t *v1beta1_device_request_parseFromJSON(cJSON *v1beta1_de
     {
     goto end; //Bool
     }
+    admin_access_local_var = malloc(sizeof(int));
+    if(!admin_access_local_var)
+    {
+        goto end;
+    }
+    *admin_access_local_var = admin_access->valueint;
     }
 
     // v1beta1_device_request->allocation_mode
@@ -289,6 +364,36 @@ v1beta1_device_request_t *v1beta1_device_request_parseFromJSON(cJSON *v1beta1_de
     if(!cJSON_IsNumber(count))
     {
     goto end; //Numeric
+    }
+    count_local_var = malloc(sizeof(long));
+    if(!count_local_var)
+    {
+        goto end;
+    }
+    *count_local_var = count->valuedouble;
+    }
+
+    // v1beta1_device_request->derived_attributes
+    cJSON *derived_attributes = cJSON_GetObjectItemCaseSensitive(v1beta1_device_requestJSON, "derivedAttributes");
+    if (cJSON_IsNull(derived_attributes)) {
+        derived_attributes = NULL;
+    }
+    if (derived_attributes) { 
+    cJSON *derived_attributes_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(derived_attributes)){
+        goto end; //nonprimitive container
+    }
+
+    derived_attributesList = list_createList();
+
+    cJSON_ArrayForEach(derived_attributes_local_nonprimitive,derived_attributes )
+    {
+        if(!cJSON_IsObject(derived_attributes_local_nonprimitive)){
+            goto end;
+        }
+        v1beta1_device_derived_attribute_t *derived_attributesItem = v1beta1_device_derived_attribute_parseFromJSON(derived_attributes_local_nonprimitive);
+
+        list_addElement(derived_attributesList, derived_attributesItem);
     }
     }
 
@@ -392,23 +497,57 @@ v1beta1_device_request_t *v1beta1_device_request_parseFromJSON(cJSON *v1beta1_de
     }
 
 
+    if (allocation_mode && !cJSON_IsNull(allocation_mode)) allocation_mode_local_str = strdup(allocation_mode->valuestring);
+    if (device_class_name && !cJSON_IsNull(device_class_name)) device_class_name_local_str = strdup(device_class_name->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v1beta1_device_request_local_var = v1beta1_device_request_create_internal (
-        admin_access ? admin_access->valueint : 0,
-        allocation_mode && !cJSON_IsNull(allocation_mode) ? strdup(allocation_mode->valuestring) : NULL,
+        admin_access_local_var,
+        allocation_mode_local_str,
         capacity ? capacity_local_nonprim : NULL,
-        count ? count->valuedouble : 0,
-        device_class_name && !cJSON_IsNull(device_class_name) ? strdup(device_class_name->valuestring) : NULL,
+        count_local_var,
+        derived_attributes ? derived_attributesList : NULL,
+        device_class_name_local_str,
         first_available ? first_availableList : NULL,
-        strdup(name->valuestring),
+        name_local_str,
         selectors ? selectorsList : NULL,
         tolerations ? tolerationsList : NULL
         );
 
+    if (!v1beta1_device_request_local_var) {
+        goto end;
+    }
+
     return v1beta1_device_request_local_var;
 end:
+    if (admin_access_local_var) {
+        free(admin_access_local_var);
+        admin_access_local_var = NULL;
+    }
+    if (allocation_mode_local_str) {
+        free(allocation_mode_local_str);
+        allocation_mode_local_str = NULL;
+    }
     if (capacity_local_nonprim) {
         v1beta1_capacity_requirements_free(capacity_local_nonprim);
         capacity_local_nonprim = NULL;
+    }
+    if (count_local_var) {
+        free(count_local_var);
+        count_local_var = NULL;
+    }
+    if (derived_attributesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, derived_attributesList) {
+            v1beta1_device_derived_attribute_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(derived_attributesList);
+        derived_attributesList = NULL;
+    }
+    if (device_class_name_local_str) {
+        free(device_class_name_local_str);
+        device_class_name_local_str = NULL;
     }
     if (first_availableList) {
         listEntry_t *listEntry = NULL;
@@ -418,6 +557,10 @@ end:
         }
         list_freeList(first_availableList);
         first_availableList = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
     }
     if (selectorsList) {
         listEntry_t *listEntry = NULL;

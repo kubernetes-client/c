@@ -13,10 +13,10 @@ static v1alpha3_device_taint_rule_spec_t *v1alpha3_device_taint_rule_spec_create
     if (!v1alpha3_device_taint_rule_spec_local_var) {
         return NULL;
     }
+    memset(v1alpha3_device_taint_rule_spec_local_var, 0, sizeof(v1alpha3_device_taint_rule_spec_t));
+    v1alpha3_device_taint_rule_spec_local_var->_library_owned = 1;
     v1alpha3_device_taint_rule_spec_local_var->device_selector = device_selector;
     v1alpha3_device_taint_rule_spec_local_var->taint = taint;
-
-    v1alpha3_device_taint_rule_spec_local_var->_library_owned = 1;
     return v1alpha3_device_taint_rule_spec_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1alpha3_device_taint_rule_spec_t *v1alpha3_device_t
     v1alpha3_device_taint_selector_t *device_selector,
     v1alpha3_device_taint_t *taint
     ) {
-    return v1alpha3_device_taint_rule_spec_create_internal (
+    v1alpha3_device_taint_rule_spec_t *result = v1alpha3_device_taint_rule_spec_create_internal (
         device_selector,
         taint
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1alpha3_device_taint_rule_spec_free(v1alpha3_device_taint_rule_spec_t *v1alpha3_device_taint_rule_spec) {
@@ -119,10 +122,15 @@ v1alpha3_device_taint_rule_spec_t *v1alpha3_device_taint_rule_spec_parseFromJSON
     taint_local_nonprim = v1alpha3_device_taint_parseFromJSON(taint); //nonprimitive
 
 
+
     v1alpha3_device_taint_rule_spec_local_var = v1alpha3_device_taint_rule_spec_create_internal (
         device_selector ? device_selector_local_nonprim : NULL,
         taint_local_nonprim
         );
+
+    if (!v1alpha3_device_taint_rule_spec_local_var) {
+        goto end;
+    }
 
     return v1alpha3_device_taint_rule_spec_local_var;
 end:

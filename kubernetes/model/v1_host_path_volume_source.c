@@ -13,10 +13,10 @@ static v1_host_path_volume_source_t *v1_host_path_volume_source_create_internal(
     if (!v1_host_path_volume_source_local_var) {
         return NULL;
     }
+    memset(v1_host_path_volume_source_local_var, 0, sizeof(v1_host_path_volume_source_t));
+    v1_host_path_volume_source_local_var->_library_owned = 1;
     v1_host_path_volume_source_local_var->path = path;
     v1_host_path_volume_source_local_var->type = type;
-
-    v1_host_path_volume_source_local_var->_library_owned = 1;
     return v1_host_path_volume_source_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_host_path_volume_source_t *v1_host_path_volume_so
     char *path,
     char *type
     ) {
-    return v1_host_path_volume_source_create_internal (
+    v1_host_path_volume_source_t *result = v1_host_path_volume_source_create_internal (
         path,
         type
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_host_path_volume_source_free(v1_host_path_volume_source_t *v1_host_path_volume_source) {
@@ -81,6 +84,10 @@ v1_host_path_volume_source_t *v1_host_path_volume_source_parseFromJSON(cJSON *v1
 
     v1_host_path_volume_source_t *v1_host_path_volume_source_local_var = NULL;
 
+    char *path_local_str = NULL;
+
+    char *type_local_str = NULL;
+
     // v1_host_path_volume_source->path
     cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_host_path_volume_sourceJSON, "path");
     if (cJSON_IsNull(path)) {
@@ -109,13 +116,28 @@ v1_host_path_volume_source_t *v1_host_path_volume_source_parseFromJSON(cJSON *v1
     }
 
 
+    if (path && !cJSON_IsNull(path)) path_local_str = strdup(path->valuestring);
+    if (type && !cJSON_IsNull(type)) type_local_str = strdup(type->valuestring);
+
     v1_host_path_volume_source_local_var = v1_host_path_volume_source_create_internal (
-        strdup(path->valuestring),
-        type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
+        path_local_str,
+        type_local_str
         );
+
+    if (!v1_host_path_volume_source_local_var) {
+        goto end;
+    }
 
     return v1_host_path_volume_source_local_var;
 end:
+    if (path_local_str) {
+        free(path_local_str);
+        path_local_str = NULL;
+    }
+    if (type_local_str) {
+        free(type_local_str);
+        type_local_str = NULL;
+    }
     return NULL;
 
 }

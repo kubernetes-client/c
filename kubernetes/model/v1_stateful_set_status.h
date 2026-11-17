@@ -20,31 +20,31 @@ typedef struct v1_stateful_set_status_t v1_stateful_set_status_t;
 
 
 typedef struct v1_stateful_set_status_t {
-    int available_replicas; //numeric
-    int collision_count; //numeric
+    int *available_replicas; //numeric
+    int *collision_count; //numeric
     list_t *conditions; //nonprimitive container
-    int current_replicas; //numeric
+    int *current_replicas; //numeric
     char *current_revision; // string
-    long observed_generation; //numeric
-    int ready_replicas; //numeric
-    int replicas; //numeric
+    long *observed_generation; //numeric
+    int *ready_replicas; //numeric
+    int *replicas; //numeric
     char *update_revision; // string
-    int updated_replicas; //numeric
+    int *updated_replicas; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_stateful_set_status_t;
 
 __attribute__((deprecated)) v1_stateful_set_status_t *v1_stateful_set_status_create(
-    int available_replicas,
-    int collision_count,
+    int *available_replicas,
+    int *collision_count,
     list_t *conditions,
-    int current_replicas,
+    int *current_replicas,
     char *current_revision,
-    long observed_generation,
-    int ready_replicas,
-    int replicas,
+    long *observed_generation,
+    int *ready_replicas,
+    int *replicas,
     char *update_revision,
-    int updated_replicas
+    int *updated_replicas
 );
 
 void v1_stateful_set_status_free(v1_stateful_set_status_t *v1_stateful_set_status);

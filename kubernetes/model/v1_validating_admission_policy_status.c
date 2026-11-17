@@ -7,31 +7,40 @@
 
 static v1_validating_admission_policy_status_t *v1_validating_admission_policy_status_create_internal(
     list_t *conditions,
-    long observed_generation,
+    long *observed_generation,
     v1_type_checking_t *type_checking
     ) {
     v1_validating_admission_policy_status_t *v1_validating_admission_policy_status_local_var = malloc(sizeof(v1_validating_admission_policy_status_t));
     if (!v1_validating_admission_policy_status_local_var) {
         return NULL;
     }
+    memset(v1_validating_admission_policy_status_local_var, 0, sizeof(v1_validating_admission_policy_status_t));
+    v1_validating_admission_policy_status_local_var->_library_owned = 1;
     v1_validating_admission_policy_status_local_var->conditions = conditions;
     v1_validating_admission_policy_status_local_var->observed_generation = observed_generation;
     v1_validating_admission_policy_status_local_var->type_checking = type_checking;
-
-    v1_validating_admission_policy_status_local_var->_library_owned = 1;
     return v1_validating_admission_policy_status_local_var;
 }
 
 __attribute__((deprecated)) v1_validating_admission_policy_status_t *v1_validating_admission_policy_status_create(
     list_t *conditions,
-    long observed_generation,
+    long *observed_generation,
     v1_type_checking_t *type_checking
     ) {
-    return v1_validating_admission_policy_status_create_internal (
+    long *observed_generation_copy = NULL;
+    if (observed_generation) {
+        observed_generation_copy = malloc(sizeof(long));
+        if (observed_generation_copy) *observed_generation_copy = *observed_generation;
+    }
+    v1_validating_admission_policy_status_t *result = v1_validating_admission_policy_status_create_internal (
         conditions,
-        observed_generation,
+        observed_generation_copy,
         type_checking
         );
+    if (!result) {
+        free(observed_generation_copy);
+    }
+    return result;
 }
 
 void v1_validating_admission_policy_status_free(v1_validating_admission_policy_status_t *v1_validating_admission_policy_status) {
@@ -49,6 +58,10 @@ void v1_validating_admission_policy_status_free(v1_validating_admission_policy_s
         }
         list_freeList(v1_validating_admission_policy_status->conditions);
         v1_validating_admission_policy_status->conditions = NULL;
+    }
+    if (v1_validating_admission_policy_status->observed_generation) {
+        free(v1_validating_admission_policy_status->observed_generation);
+        v1_validating_admission_policy_status->observed_generation = NULL;
     }
     if (v1_validating_admission_policy_status->type_checking) {
         v1_type_checking_free(v1_validating_admission_policy_status->type_checking);
@@ -82,7 +95,7 @@ cJSON *v1_validating_admission_policy_status_convertToJSON(v1_validating_admissi
 
     // v1_validating_admission_policy_status->observed_generation
     if(v1_validating_admission_policy_status->observed_generation) {
-    if(cJSON_AddNumberToObject(item, "observedGeneration", v1_validating_admission_policy_status->observed_generation) == NULL) {
+    if(cJSON_AddNumberToObject(item, "observedGeneration", *v1_validating_admission_policy_status->observed_generation) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -114,6 +127,9 @@ v1_validating_admission_policy_status_t *v1_validating_admission_policy_status_p
 
     // define the local list for v1_validating_admission_policy_status->conditions
     list_t *conditionsList = NULL;
+
+    // define the local variable for v1_validating_admission_policy_status->observed_generation
+    long *observed_generation_local_var = NULL;
 
     // define the local variable for v1_validating_admission_policy_status->type_checking
     v1_type_checking_t *type_checking_local_nonprim = NULL;
@@ -152,6 +168,12 @@ v1_validating_admission_policy_status_t *v1_validating_admission_policy_status_p
     {
     goto end; //Numeric
     }
+    observed_generation_local_var = malloc(sizeof(long));
+    if(!observed_generation_local_var)
+    {
+        goto end;
+    }
+    *observed_generation_local_var = observed_generation->valuedouble;
     }
 
     // v1_validating_admission_policy_status->type_checking
@@ -164,11 +186,16 @@ v1_validating_admission_policy_status_t *v1_validating_admission_policy_status_p
     }
 
 
+
     v1_validating_admission_policy_status_local_var = v1_validating_admission_policy_status_create_internal (
         conditions ? conditionsList : NULL,
-        observed_generation ? observed_generation->valuedouble : 0,
+        observed_generation_local_var,
         type_checking ? type_checking_local_nonprim : NULL
         );
+
+    if (!v1_validating_admission_policy_status_local_var) {
+        goto end;
+    }
 
     return v1_validating_admission_policy_status_local_var;
 end:
@@ -180,6 +207,10 @@ end:
         }
         list_freeList(conditionsList);
         conditionsList = NULL;
+    }
+    if (observed_generation_local_var) {
+        free(observed_generation_local_var);
+        observed_generation_local_var = NULL;
     }
     if (type_checking_local_nonprim) {
         v1_type_checking_free(type_checking_local_nonprim);

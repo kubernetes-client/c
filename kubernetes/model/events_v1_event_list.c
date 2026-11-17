@@ -15,12 +15,12 @@ static events_v1_event_list_t *events_v1_event_list_create_internal(
     if (!events_v1_event_list_local_var) {
         return NULL;
     }
+    memset(events_v1_event_list_local_var, 0, sizeof(events_v1_event_list_t));
+    events_v1_event_list_local_var->_library_owned = 1;
     events_v1_event_list_local_var->api_version = api_version;
     events_v1_event_list_local_var->items = items;
     events_v1_event_list_local_var->kind = kind;
     events_v1_event_list_local_var->metadata = metadata;
-
-    events_v1_event_list_local_var->_library_owned = 1;
     return events_v1_event_list_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) events_v1_event_list_t *events_v1_event_list_create(
     char *kind,
     v1_list_meta_t *metadata
     ) {
-    return events_v1_event_list_create_internal (
+    events_v1_event_list_t *result = events_v1_event_list_create_internal (
         api_version,
         items,
         kind,
         metadata
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void events_v1_event_list_free(events_v1_event_list_t *events_v1_event_list) {
@@ -133,8 +136,12 @@ events_v1_event_list_t *events_v1_event_list_parseFromJSON(cJSON *events_v1_even
 
     events_v1_event_list_t *events_v1_event_list_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
     // define the local list for events_v1_event_list->items
     list_t *itemsList = NULL;
+
+    char *kind_local_str = NULL;
 
     // define the local variable for events_v1_event_list->metadata
     v1_list_meta_t *metadata_local_nonprim = NULL;
@@ -200,15 +207,26 @@ events_v1_event_list_t *events_v1_event_list_parseFromJSON(cJSON *events_v1_even
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+
     events_v1_event_list_local_var = events_v1_event_list_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        api_version_local_str,
         itemsList,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        kind_local_str,
         metadata ? metadata_local_nonprim : NULL
         );
 
+    if (!events_v1_event_list_local_var) {
+        goto end;
+    }
+
     return events_v1_event_list_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
     if (itemsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, itemsList) {
@@ -217,6 +235,10 @@ end:
         }
         list_freeList(itemsList);
         itemsList = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
     }
     if (metadata_local_nonprim) {
         v1_list_meta_free(metadata_local_nonprim);

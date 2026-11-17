@@ -14,11 +14,11 @@ static v1_http_ingress_path_t *v1_http_ingress_path_create_internal(
     if (!v1_http_ingress_path_local_var) {
         return NULL;
     }
+    memset(v1_http_ingress_path_local_var, 0, sizeof(v1_http_ingress_path_t));
+    v1_http_ingress_path_local_var->_library_owned = 1;
     v1_http_ingress_path_local_var->backend = backend;
     v1_http_ingress_path_local_var->path = path;
     v1_http_ingress_path_local_var->path_type = path_type;
-
-    v1_http_ingress_path_local_var->_library_owned = 1;
     return v1_http_ingress_path_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_http_ingress_path_t *v1_http_ingress_path_create(
     char *path,
     char *path_type
     ) {
-    return v1_http_ingress_path_create_internal (
+    v1_http_ingress_path_t *result = v1_http_ingress_path_create_internal (
         backend,
         path,
         path_type
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_http_ingress_path_free(v1_http_ingress_path_t *v1_http_ingress_path) {
@@ -106,6 +109,10 @@ v1_http_ingress_path_t *v1_http_ingress_path_parseFromJSON(cJSON *v1_http_ingres
     // define the local variable for v1_http_ingress_path->backend
     v1_ingress_backend_t *backend_local_nonprim = NULL;
 
+    char *path_local_str = NULL;
+
+    char *path_type_local_str = NULL;
+
     // v1_http_ingress_path->backend
     cJSON *backend = cJSON_GetObjectItemCaseSensitive(v1_http_ingress_pathJSON, "backend");
     if (cJSON_IsNull(backend)) {
@@ -146,17 +153,32 @@ v1_http_ingress_path_t *v1_http_ingress_path_parseFromJSON(cJSON *v1_http_ingres
     }
 
 
+    if (path && !cJSON_IsNull(path)) path_local_str = strdup(path->valuestring);
+    if (path_type && !cJSON_IsNull(path_type)) path_type_local_str = strdup(path_type->valuestring);
+
     v1_http_ingress_path_local_var = v1_http_ingress_path_create_internal (
         backend_local_nonprim,
-        path && !cJSON_IsNull(path) ? strdup(path->valuestring) : NULL,
-        strdup(path_type->valuestring)
+        path_local_str,
+        path_type_local_str
         );
+
+    if (!v1_http_ingress_path_local_var) {
+        goto end;
+    }
 
     return v1_http_ingress_path_local_var;
 end:
     if (backend_local_nonprim) {
         v1_ingress_backend_free(backend_local_nonprim);
         backend_local_nonprim = NULL;
+    }
+    if (path_local_str) {
+        free(path_local_str);
+        path_local_str = NULL;
+    }
+    if (path_type_local_str) {
+        free(path_type_local_str);
+        path_type_local_str = NULL;
     }
     return NULL;
 

@@ -29,14 +29,16 @@ v1_downward_api_volume_file_t* instantiate_v1_downward_api_volume_file(int inclu
       56,
       "0",
        // false, not to have infinite recursion
-      instantiate_v1_resource_field_selector(0)
+      instantiate_v1_resource_field_selector(0),
+      56
     );
   } else {
     v1_downward_api_volume_file = v1_downward_api_volume_file_create(
       NULL,
       56,
       "0",
-      NULL
+      NULL,
+      56
     );
   }
 

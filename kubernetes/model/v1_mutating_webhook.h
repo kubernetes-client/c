@@ -34,7 +34,7 @@ typedef struct v1_mutating_webhook_t {
     char *reinvocation_policy; // string
     list_t *rules; //nonprimitive container
     char *side_effects; // string
-    int timeout_seconds; //numeric
+    int *timeout_seconds; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_mutating_webhook_t;
@@ -51,7 +51,7 @@ __attribute__((deprecated)) v1_mutating_webhook_t *v1_mutating_webhook_create(
     char *reinvocation_policy,
     list_t *rules,
     char *side_effects,
-    int timeout_seconds
+    int *timeout_seconds
 );
 
 void v1_mutating_webhook_free(v1_mutating_webhook_t *v1_mutating_webhook);

@@ -14,11 +14,11 @@ static v1_env_var_t *v1_env_var_create_internal(
     if (!v1_env_var_local_var) {
         return NULL;
     }
+    memset(v1_env_var_local_var, 0, sizeof(v1_env_var_t));
+    v1_env_var_local_var->_library_owned = 1;
     v1_env_var_local_var->name = name;
     v1_env_var_local_var->value = value;
     v1_env_var_local_var->value_from = value_from;
-
-    v1_env_var_local_var->_library_owned = 1;
     return v1_env_var_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_env_var_t *v1_env_var_create(
     char *value,
     v1_env_var_source_t *value_from
     ) {
-    return v1_env_var_create_internal (
+    v1_env_var_t *result = v1_env_var_create_internal (
         name,
         value,
         value_from
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_env_var_free(v1_env_var_t *v1_env_var) {
@@ -102,6 +105,10 @@ v1_env_var_t *v1_env_var_parseFromJSON(cJSON *v1_env_varJSON){
 
     v1_env_var_t *v1_env_var_local_var = NULL;
 
+    char *name_local_str = NULL;
+
+    char *value_local_str = NULL;
+
     // define the local variable for v1_env_var->value_from
     v1_env_var_source_t *value_from_local_nonprim = NULL;
 
@@ -142,14 +149,29 @@ v1_env_var_t *v1_env_var_parseFromJSON(cJSON *v1_env_varJSON){
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (value && !cJSON_IsNull(value)) value_local_str = strdup(value->valuestring);
+
     v1_env_var_local_var = v1_env_var_create_internal (
-        strdup(name->valuestring),
-        value && !cJSON_IsNull(value) ? strdup(value->valuestring) : NULL,
+        name_local_str,
+        value_local_str,
         value_from ? value_from_local_nonprim : NULL
         );
 
+    if (!v1_env_var_local_var) {
+        goto end;
+    }
+
     return v1_env_var_local_var;
 end:
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (value_local_str) {
+        free(value_local_str);
+        value_local_str = NULL;
+    }
     if (value_from_local_nonprim) {
         v1_env_var_source_free(value_from_local_nonprim);
         value_from_local_nonprim = NULL;

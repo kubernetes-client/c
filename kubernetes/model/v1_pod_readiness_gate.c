@@ -12,18 +12,21 @@ static v1_pod_readiness_gate_t *v1_pod_readiness_gate_create_internal(
     if (!v1_pod_readiness_gate_local_var) {
         return NULL;
     }
-    v1_pod_readiness_gate_local_var->condition_type = condition_type;
-
+    memset(v1_pod_readiness_gate_local_var, 0, sizeof(v1_pod_readiness_gate_t));
     v1_pod_readiness_gate_local_var->_library_owned = 1;
+    v1_pod_readiness_gate_local_var->condition_type = condition_type;
     return v1_pod_readiness_gate_local_var;
 }
 
 __attribute__((deprecated)) v1_pod_readiness_gate_t *v1_pod_readiness_gate_create(
     char *condition_type
     ) {
-    return v1_pod_readiness_gate_create_internal (
+    v1_pod_readiness_gate_t *result = v1_pod_readiness_gate_create_internal (
         condition_type
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_pod_readiness_gate_free(v1_pod_readiness_gate_t *v1_pod_readiness_gate) {
@@ -65,6 +68,8 @@ v1_pod_readiness_gate_t *v1_pod_readiness_gate_parseFromJSON(cJSON *v1_pod_readi
 
     v1_pod_readiness_gate_t *v1_pod_readiness_gate_local_var = NULL;
 
+    char *condition_type_local_str = NULL;
+
     // v1_pod_readiness_gate->condition_type
     cJSON *condition_type = cJSON_GetObjectItemCaseSensitive(v1_pod_readiness_gateJSON, "conditionType");
     if (cJSON_IsNull(condition_type)) {
@@ -81,12 +86,22 @@ v1_pod_readiness_gate_t *v1_pod_readiness_gate_parseFromJSON(cJSON *v1_pod_readi
     }
 
 
+    if (condition_type && !cJSON_IsNull(condition_type)) condition_type_local_str = strdup(condition_type->valuestring);
+
     v1_pod_readiness_gate_local_var = v1_pod_readiness_gate_create_internal (
-        strdup(condition_type->valuestring)
+        condition_type_local_str
         );
+
+    if (!v1_pod_readiness_gate_local_var) {
+        goto end;
+    }
 
     return v1_pod_readiness_gate_local_var;
 end:
+    if (condition_type_local_str) {
+        free(condition_type_local_str);
+        condition_type_local_str = NULL;
+    }
     return NULL;
 
 }

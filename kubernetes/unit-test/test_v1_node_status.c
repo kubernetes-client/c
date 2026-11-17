@@ -34,6 +34,7 @@ v1_node_status_t* instantiate_v1_node_status(int include_optional) {
       instantiate_v1_node_config_status(0),
        // false, not to have infinite recursion
       instantiate_v1_node_daemon_endpoints(0),
+      list_createList(),
        // false, not to have infinite recursion
       instantiate_v1_node_features(0),
       list_createList(),
@@ -52,6 +53,7 @@ v1_node_status_t* instantiate_v1_node_status(int include_optional) {
       list_createList(),
       NULL,
       NULL,
+      list_createList(),
       NULL,
       list_createList(),
       NULL,

@@ -13,10 +13,10 @@ static v1_counter_set_t *v1_counter_set_create_internal(
     if (!v1_counter_set_local_var) {
         return NULL;
     }
+    memset(v1_counter_set_local_var, 0, sizeof(v1_counter_set_t));
+    v1_counter_set_local_var->_library_owned = 1;
     v1_counter_set_local_var->counters = counters;
     v1_counter_set_local_var->name = name;
-
-    v1_counter_set_local_var->_library_owned = 1;
     return v1_counter_set_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_counter_set_t *v1_counter_set_create(
     list_t* counters,
     char *name
     ) {
-    return v1_counter_set_create_internal (
+    v1_counter_set_t *result = v1_counter_set_create_internal (
         counters,
         name
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_counter_set_free(v1_counter_set_t *v1_counter_set) {
@@ -99,6 +102,8 @@ v1_counter_set_t *v1_counter_set_parseFromJSON(cJSON *v1_counter_setJSON){
     // define the local map for v1_counter_set->counters
     list_t *countersList = NULL;
 
+    char *name_local_str = NULL;
+
     // v1_counter_set->counters
     cJSON *counters = cJSON_GetObjectItemCaseSensitive(v1_counter_setJSON, "counters");
     if (cJSON_IsNull(counters)) {
@@ -129,16 +134,26 @@ v1_counter_set_t *v1_counter_set_parseFromJSON(cJSON *v1_counter_setJSON){
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v1_counter_set_local_var = v1_counter_set_create_internal (
         countersList,
-        strdup(name->valuestring)
+        name_local_str
         );
+
+    if (!v1_counter_set_local_var) {
+        goto end;
+    }
 
     return v1_counter_set_local_var;
 end:
 
     // The data type of the elements in v1_counter_set->counters is currently not supported.
 
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
     return NULL;
 
 }

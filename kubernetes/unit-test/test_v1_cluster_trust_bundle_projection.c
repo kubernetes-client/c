@@ -28,7 +28,8 @@ v1_cluster_trust_bundle_projection_t* instantiate_v1_cluster_trust_bundle_projec
       "0",
       1,
       "0",
-      "0"
+      "0",
+      56
     );
   } else {
     v1_cluster_trust_bundle_projection = v1_cluster_trust_bundle_projection_create(
@@ -36,7 +37,8 @@ v1_cluster_trust_bundle_projection_t* instantiate_v1_cluster_trust_bundle_projec
       "0",
       1,
       "0",
-      "0"
+      "0",
+      56
     );
   }
 

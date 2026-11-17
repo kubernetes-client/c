@@ -28,6 +28,7 @@ v1beta2_exact_device_request_t* instantiate_v1beta2_exact_device_request(int inc
        // false, not to have infinite recursion
       instantiate_v1beta2_capacity_requirements(0),
       56,
+      list_createList(),
       "0",
       list_createList(),
       list_createList()
@@ -38,6 +39,7 @@ v1beta2_exact_device_request_t* instantiate_v1beta2_exact_device_request(int inc
       "0",
       NULL,
       56,
+      list_createList(),
       "0",
       list_createList(),
       list_createList()

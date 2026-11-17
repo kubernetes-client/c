@@ -22,7 +22,7 @@ typedef struct v1_pod_condition_t {
     char *last_probe_time; //date time
     char *last_transition_time; //date time
     char *message; // string
-    long observed_generation; //numeric
+    long *observed_generation; //numeric
     char *reason; // string
     char *status; // string
     char *type; // string
@@ -34,7 +34,7 @@ __attribute__((deprecated)) v1_pod_condition_t *v1_pod_condition_create(
     char *last_probe_time,
     char *last_transition_time,
     char *message,
-    long observed_generation,
+    long *observed_generation,
     char *reason,
     char *status,
     char *type

@@ -14,11 +14,11 @@ static v1_cron_job_status_t *v1_cron_job_status_create_internal(
     if (!v1_cron_job_status_local_var) {
         return NULL;
     }
+    memset(v1_cron_job_status_local_var, 0, sizeof(v1_cron_job_status_t));
+    v1_cron_job_status_local_var->_library_owned = 1;
     v1_cron_job_status_local_var->active = active;
     v1_cron_job_status_local_var->last_schedule_time = last_schedule_time;
     v1_cron_job_status_local_var->last_successful_time = last_successful_time;
-
-    v1_cron_job_status_local_var->_library_owned = 1;
     return v1_cron_job_status_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_cron_job_status_t *v1_cron_job_status_create(
     char *last_schedule_time,
     char *last_successful_time
     ) {
-    return v1_cron_job_status_create_internal (
+    v1_cron_job_status_t *result = v1_cron_job_status_create_internal (
         active,
         last_schedule_time,
         last_successful_time
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_cron_job_status_free(v1_cron_job_status_t *v1_cron_job_status) {
@@ -114,6 +117,10 @@ v1_cron_job_status_t *v1_cron_job_status_parseFromJSON(cJSON *v1_cron_job_status
     // define the local list for v1_cron_job_status->active
     list_t *activeList = NULL;
 
+    char *last_schedule_time_local_str = NULL;
+
+    char *last_successful_time_local_str = NULL;
+
     // v1_cron_job_status->active
     cJSON *active = cJSON_GetObjectItemCaseSensitive(v1_cron_job_statusJSON, "active");
     if (cJSON_IsNull(active)) {
@@ -163,11 +170,18 @@ v1_cron_job_status_t *v1_cron_job_status_parseFromJSON(cJSON *v1_cron_job_status
     }
 
 
+    if (last_schedule_time && !cJSON_IsNull(last_schedule_time)) last_schedule_time_local_str = strdup(last_schedule_time->valuestring);
+    if (last_successful_time && !cJSON_IsNull(last_successful_time)) last_successful_time_local_str = strdup(last_successful_time->valuestring);
+
     v1_cron_job_status_local_var = v1_cron_job_status_create_internal (
         active ? activeList : NULL,
-        last_schedule_time && !cJSON_IsNull(last_schedule_time) ? strdup(last_schedule_time->valuestring) : NULL,
-        last_successful_time && !cJSON_IsNull(last_successful_time) ? strdup(last_successful_time->valuestring) : NULL
+        last_schedule_time_local_str,
+        last_successful_time_local_str
         );
+
+    if (!v1_cron_job_status_local_var) {
+        goto end;
+    }
 
     return v1_cron_job_status_local_var;
 end:
@@ -179,6 +193,14 @@ end:
         }
         list_freeList(activeList);
         activeList = NULL;
+    }
+    if (last_schedule_time_local_str) {
+        free(last_schedule_time_local_str);
+        last_schedule_time_local_str = NULL;
+    }
+    if (last_successful_time_local_str) {
+        free(last_successful_time_local_str);
+        last_successful_time_local_str = NULL;
     }
     return NULL;
 

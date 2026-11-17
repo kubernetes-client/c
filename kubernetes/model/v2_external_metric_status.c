@@ -13,10 +13,10 @@ static v2_external_metric_status_t *v2_external_metric_status_create_internal(
     if (!v2_external_metric_status_local_var) {
         return NULL;
     }
+    memset(v2_external_metric_status_local_var, 0, sizeof(v2_external_metric_status_t));
+    v2_external_metric_status_local_var->_library_owned = 1;
     v2_external_metric_status_local_var->current = current;
     v2_external_metric_status_local_var->metric = metric;
-
-    v2_external_metric_status_local_var->_library_owned = 1;
     return v2_external_metric_status_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v2_external_metric_status_t *v2_external_metric_stat
     v2_metric_value_status_t *current,
     v2_metric_identifier_t *metric
     ) {
-    return v2_external_metric_status_create_internal (
+    v2_external_metric_status_t *result = v2_external_metric_status_create_internal (
         current,
         metric
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v2_external_metric_status_free(v2_external_metric_status_t *v2_external_metric_status) {
@@ -123,10 +126,15 @@ v2_external_metric_status_t *v2_external_metric_status_parseFromJSON(cJSON *v2_e
     metric_local_nonprim = v2_metric_identifier_parseFromJSON(metric); //nonprimitive
 
 
+
     v2_external_metric_status_local_var = v2_external_metric_status_create_internal (
         current_local_nonprim,
         metric_local_nonprim
         );
+
+    if (!v2_external_metric_status_local_var) {
+        goto end;
+    }
 
     return v2_external_metric_status_local_var;
 end:

@@ -12,18 +12,21 @@ static v1_load_balancer_status_t *v1_load_balancer_status_create_internal(
     if (!v1_load_balancer_status_local_var) {
         return NULL;
     }
-    v1_load_balancer_status_local_var->ingress = ingress;
-
+    memset(v1_load_balancer_status_local_var, 0, sizeof(v1_load_balancer_status_t));
     v1_load_balancer_status_local_var->_library_owned = 1;
+    v1_load_balancer_status_local_var->ingress = ingress;
     return v1_load_balancer_status_local_var;
 }
 
 __attribute__((deprecated)) v1_load_balancer_status_t *v1_load_balancer_status_create(
     list_t *ingress
     ) {
-    return v1_load_balancer_status_create_internal (
+    v1_load_balancer_status_t *result = v1_load_balancer_status_create_internal (
         ingress
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_load_balancer_status_free(v1_load_balancer_status_t *v1_load_balancer_status) {
@@ -107,9 +110,14 @@ v1_load_balancer_status_t *v1_load_balancer_status_parseFromJSON(cJSON *v1_load_
     }
 
 
+
     v1_load_balancer_status_local_var = v1_load_balancer_status_create_internal (
         ingress ? ingressList : NULL
         );
+
+    if (!v1_load_balancer_status_local_var) {
+        goto end;
+    }
 
     return v1_load_balancer_status_local_var;
 end:

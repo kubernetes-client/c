@@ -16,6 +16,7 @@
 typedef struct v1_node_spec_t v1_node_spec_t;
 
 #include "v1_node_config_source.h"
+#include "v1_node_pod_preemption_policy.h"
 #include "v1_taint.h"
 
 
@@ -25,9 +26,10 @@ typedef struct v1_node_spec_t {
     char *external_id; // string
     char *pod_cidr; // string
     list_t *pod_cidrs; //primitive container
+    struct v1_node_pod_preemption_policy_t *pod_preemption_policy; //model
     char *provider_id; // string
     list_t *taints; //nonprimitive container
-    int unschedulable; //boolean
+    int *unschedulable; //boolean
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_node_spec_t;
@@ -37,9 +39,10 @@ __attribute__((deprecated)) v1_node_spec_t *v1_node_spec_create(
     char *external_id,
     char *pod_cidr,
     list_t *pod_cidrs,
+    v1_node_pod_preemption_policy_t *pod_preemption_policy,
     char *provider_id,
     list_t *taints,
-    int unschedulable
+    int *unschedulable
 );
 
 void v1_node_spec_free(v1_node_spec_t *v1_node_spec);

@@ -13,10 +13,10 @@ static v1_expression_warning_t *v1_expression_warning_create_internal(
     if (!v1_expression_warning_local_var) {
         return NULL;
     }
+    memset(v1_expression_warning_local_var, 0, sizeof(v1_expression_warning_t));
+    v1_expression_warning_local_var->_library_owned = 1;
     v1_expression_warning_local_var->field_ref = field_ref;
     v1_expression_warning_local_var->warning = warning;
-
-    v1_expression_warning_local_var->_library_owned = 1;
     return v1_expression_warning_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_expression_warning_t *v1_expression_warning_creat
     char *field_ref,
     char *warning
     ) {
-    return v1_expression_warning_create_internal (
+    v1_expression_warning_t *result = v1_expression_warning_create_internal (
         field_ref,
         warning
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_expression_warning_free(v1_expression_warning_t *v1_expression_warning) {
@@ -82,6 +85,10 @@ v1_expression_warning_t *v1_expression_warning_parseFromJSON(cJSON *v1_expressio
 
     v1_expression_warning_t *v1_expression_warning_local_var = NULL;
 
+    char *field_ref_local_str = NULL;
+
+    char *warning_local_str = NULL;
+
     // v1_expression_warning->field_ref
     cJSON *field_ref = cJSON_GetObjectItemCaseSensitive(v1_expression_warningJSON, "fieldRef");
     if (cJSON_IsNull(field_ref)) {
@@ -113,13 +120,28 @@ v1_expression_warning_t *v1_expression_warning_parseFromJSON(cJSON *v1_expressio
     }
 
 
+    if (field_ref && !cJSON_IsNull(field_ref)) field_ref_local_str = strdup(field_ref->valuestring);
+    if (warning && !cJSON_IsNull(warning)) warning_local_str = strdup(warning->valuestring);
+
     v1_expression_warning_local_var = v1_expression_warning_create_internal (
-        strdup(field_ref->valuestring),
-        strdup(warning->valuestring)
+        field_ref_local_str,
+        warning_local_str
         );
+
+    if (!v1_expression_warning_local_var) {
+        goto end;
+    }
 
     return v1_expression_warning_local_var;
 end:
+    if (field_ref_local_str) {
+        free(field_ref_local_str);
+        field_ref_local_str = NULL;
+    }
+    if (warning_local_str) {
+        free(warning_local_str);
+        warning_local_str = NULL;
+    }
     return NULL;
 
 }

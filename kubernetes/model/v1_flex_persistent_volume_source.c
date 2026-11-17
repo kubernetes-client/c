@@ -9,20 +9,20 @@ static v1_flex_persistent_volume_source_t *v1_flex_persistent_volume_source_crea
     char *driver,
     char *fs_type,
     list_t* options,
-    int read_only,
+    int *read_only,
     v1_secret_reference_t *secret_ref
     ) {
     v1_flex_persistent_volume_source_t *v1_flex_persistent_volume_source_local_var = malloc(sizeof(v1_flex_persistent_volume_source_t));
     if (!v1_flex_persistent_volume_source_local_var) {
         return NULL;
     }
+    memset(v1_flex_persistent_volume_source_local_var, 0, sizeof(v1_flex_persistent_volume_source_t));
+    v1_flex_persistent_volume_source_local_var->_library_owned = 1;
     v1_flex_persistent_volume_source_local_var->driver = driver;
     v1_flex_persistent_volume_source_local_var->fs_type = fs_type;
     v1_flex_persistent_volume_source_local_var->options = options;
     v1_flex_persistent_volume_source_local_var->read_only = read_only;
     v1_flex_persistent_volume_source_local_var->secret_ref = secret_ref;
-
-    v1_flex_persistent_volume_source_local_var->_library_owned = 1;
     return v1_flex_persistent_volume_source_local_var;
 }
 
@@ -30,16 +30,25 @@ __attribute__((deprecated)) v1_flex_persistent_volume_source_t *v1_flex_persiste
     char *driver,
     char *fs_type,
     list_t* options,
-    int read_only,
+    int *read_only,
     v1_secret_reference_t *secret_ref
     ) {
-    return v1_flex_persistent_volume_source_create_internal (
+    int *read_only_copy = NULL;
+    if (read_only) {
+        read_only_copy = malloc(sizeof(int));
+        if (read_only_copy) *read_only_copy = *read_only;
+    }
+    v1_flex_persistent_volume_source_t *result = v1_flex_persistent_volume_source_create_internal (
         driver,
         fs_type,
         options,
-        read_only,
+        read_only_copy,
         secret_ref
         );
+    if (!result) {
+        free(read_only_copy);
+    }
+    return result;
 }
 
 void v1_flex_persistent_volume_source_free(v1_flex_persistent_volume_source_t *v1_flex_persistent_volume_source) {
@@ -68,6 +77,10 @@ void v1_flex_persistent_volume_source_free(v1_flex_persistent_volume_source_t *v
         }
         list_freeList(v1_flex_persistent_volume_source->options);
         v1_flex_persistent_volume_source->options = NULL;
+    }
+    if (v1_flex_persistent_volume_source->read_only) {
+        free(v1_flex_persistent_volume_source->read_only);
+        v1_flex_persistent_volume_source->read_only = NULL;
     }
     if (v1_flex_persistent_volume_source->secret_ref) {
         v1_secret_reference_free(v1_flex_persistent_volume_source->secret_ref);
@@ -118,7 +131,7 @@ cJSON *v1_flex_persistent_volume_source_convertToJSON(v1_flex_persistent_volume_
 
     // v1_flex_persistent_volume_source->read_only
     if(v1_flex_persistent_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_flex_persistent_volume_source->read_only) == NULL) {
+    if(cJSON_AddBoolToObject(item, "readOnly", *v1_flex_persistent_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -148,8 +161,15 @@ v1_flex_persistent_volume_source_t *v1_flex_persistent_volume_source_parseFromJS
 
     v1_flex_persistent_volume_source_t *v1_flex_persistent_volume_source_local_var = NULL;
 
+    char *driver_local_str = NULL;
+
+    char *fs_type_local_str = NULL;
+
     // define the local map for v1_flex_persistent_volume_source->options
     list_t *optionsList = NULL;
+
+    // define the local variable for v1_flex_persistent_volume_source->read_only
+    int *read_only_local_var = NULL;
 
     // define the local variable for v1_flex_persistent_volume_source->secret_ref
     v1_secret_reference_t *secret_ref_local_nonprim = NULL;
@@ -219,6 +239,12 @@ v1_flex_persistent_volume_source_t *v1_flex_persistent_volume_source_parseFromJS
     {
     goto end; //Bool
     }
+    read_only_local_var = malloc(sizeof(int));
+    if(!read_only_local_var)
+    {
+        goto end;
+    }
+    *read_only_local_var = read_only->valueint;
     }
 
     // v1_flex_persistent_volume_source->secret_ref
@@ -231,16 +257,31 @@ v1_flex_persistent_volume_source_t *v1_flex_persistent_volume_source_parseFromJS
     }
 
 
+    if (driver && !cJSON_IsNull(driver)) driver_local_str = strdup(driver->valuestring);
+    if (fs_type && !cJSON_IsNull(fs_type)) fs_type_local_str = strdup(fs_type->valuestring);
+
     v1_flex_persistent_volume_source_local_var = v1_flex_persistent_volume_source_create_internal (
-        strdup(driver->valuestring),
-        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
+        driver_local_str,
+        fs_type_local_str,
         options ? optionsList : NULL,
-        read_only ? read_only->valueint : 0,
+        read_only_local_var,
         secret_ref ? secret_ref_local_nonprim : NULL
         );
 
+    if (!v1_flex_persistent_volume_source_local_var) {
+        goto end;
+    }
+
     return v1_flex_persistent_volume_source_local_var;
 end:
+    if (driver_local_str) {
+        free(driver_local_str);
+        driver_local_str = NULL;
+    }
+    if (fs_type_local_str) {
+        free(fs_type_local_str);
+        fs_type_local_str = NULL;
+    }
     if (optionsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, optionsList) {
@@ -254,6 +295,10 @@ end:
         }
         list_freeList(optionsList);
         optionsList = NULL;
+    }
+    if (read_only_local_var) {
+        free(read_only_local_var);
+        read_only_local_var = NULL;
     }
     if (secret_ref_local_nonprim) {
         v1_secret_reference_free(secret_ref_local_nonprim);

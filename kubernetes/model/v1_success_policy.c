@@ -12,18 +12,21 @@ static v1_success_policy_t *v1_success_policy_create_internal(
     if (!v1_success_policy_local_var) {
         return NULL;
     }
-    v1_success_policy_local_var->rules = rules;
-
+    memset(v1_success_policy_local_var, 0, sizeof(v1_success_policy_t));
     v1_success_policy_local_var->_library_owned = 1;
+    v1_success_policy_local_var->rules = rules;
     return v1_success_policy_local_var;
 }
 
 __attribute__((deprecated)) v1_success_policy_t *v1_success_policy_create(
     list_t *rules
     ) {
-    return v1_success_policy_create_internal (
+    v1_success_policy_t *result = v1_success_policy_create_internal (
         rules
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_success_policy_free(v1_success_policy_t *v1_success_policy) {
@@ -111,9 +114,14 @@ v1_success_policy_t *v1_success_policy_parseFromJSON(cJSON *v1_success_policyJSO
     }
 
 
+
     v1_success_policy_local_var = v1_success_policy_create_internal (
         rulesList
         );
+
+    if (!v1_success_policy_local_var) {
+        goto end;
+    }
 
     return v1_success_policy_local_var;
 end:

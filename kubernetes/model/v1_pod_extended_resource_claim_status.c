@@ -13,10 +13,10 @@ static v1_pod_extended_resource_claim_status_t *v1_pod_extended_resource_claim_s
     if (!v1_pod_extended_resource_claim_status_local_var) {
         return NULL;
     }
+    memset(v1_pod_extended_resource_claim_status_local_var, 0, sizeof(v1_pod_extended_resource_claim_status_t));
+    v1_pod_extended_resource_claim_status_local_var->_library_owned = 1;
     v1_pod_extended_resource_claim_status_local_var->request_mappings = request_mappings;
     v1_pod_extended_resource_claim_status_local_var->resource_claim_name = resource_claim_name;
-
-    v1_pod_extended_resource_claim_status_local_var->_library_owned = 1;
     return v1_pod_extended_resource_claim_status_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_pod_extended_resource_claim_status_t *v1_pod_exte
     list_t *request_mappings,
     char *resource_claim_name
     ) {
-    return v1_pod_extended_resource_claim_status_create_internal (
+    v1_pod_extended_resource_claim_status_t *result = v1_pod_extended_resource_claim_status_create_internal (
         request_mappings,
         resource_claim_name
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_pod_extended_resource_claim_status_free(v1_pod_extended_resource_claim_status_t *v1_pod_extended_resource_claim_status) {
@@ -100,6 +103,8 @@ v1_pod_extended_resource_claim_status_t *v1_pod_extended_resource_claim_status_p
     // define the local list for v1_pod_extended_resource_claim_status->request_mappings
     list_t *request_mappingsList = NULL;
 
+    char *resource_claim_name_local_str = NULL;
+
     // v1_pod_extended_resource_claim_status->request_mappings
     cJSON *request_mappings = cJSON_GetObjectItemCaseSensitive(v1_pod_extended_resource_claim_statusJSON, "requestMappings");
     if (cJSON_IsNull(request_mappings)) {
@@ -143,10 +148,16 @@ v1_pod_extended_resource_claim_status_t *v1_pod_extended_resource_claim_status_p
     }
 
 
+    if (resource_claim_name && !cJSON_IsNull(resource_claim_name)) resource_claim_name_local_str = strdup(resource_claim_name->valuestring);
+
     v1_pod_extended_resource_claim_status_local_var = v1_pod_extended_resource_claim_status_create_internal (
         request_mappingsList,
-        strdup(resource_claim_name->valuestring)
+        resource_claim_name_local_str
         );
+
+    if (!v1_pod_extended_resource_claim_status_local_var) {
+        goto end;
+    }
 
     return v1_pod_extended_resource_claim_status_local_var;
 end:
@@ -158,6 +169,10 @@ end:
         }
         list_freeList(request_mappingsList);
         request_mappingsList = NULL;
+    }
+    if (resource_claim_name_local_str) {
+        free(resource_claim_name_local_str);
+        resource_claim_name_local_str = NULL;
     }
     return NULL;
 

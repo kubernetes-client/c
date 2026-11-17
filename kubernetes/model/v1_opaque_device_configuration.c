@@ -13,10 +13,10 @@ static v1_opaque_device_configuration_t *v1_opaque_device_configuration_create_i
     if (!v1_opaque_device_configuration_local_var) {
         return NULL;
     }
+    memset(v1_opaque_device_configuration_local_var, 0, sizeof(v1_opaque_device_configuration_t));
+    v1_opaque_device_configuration_local_var->_library_owned = 1;
     v1_opaque_device_configuration_local_var->driver = driver;
     v1_opaque_device_configuration_local_var->parameters = parameters;
-
-    v1_opaque_device_configuration_local_var->_library_owned = 1;
     return v1_opaque_device_configuration_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_opaque_device_configuration_t *v1_opaque_device_c
     char *driver,
     object_t *parameters
     ) {
-    return v1_opaque_device_configuration_create_internal (
+    v1_opaque_device_configuration_t *result = v1_opaque_device_configuration_create_internal (
         driver,
         parameters
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_opaque_device_configuration_free(v1_opaque_device_configuration_t *v1_opaque_device_configuration) {
@@ -87,6 +90,8 @@ v1_opaque_device_configuration_t *v1_opaque_device_configuration_parseFromJSON(c
 
     v1_opaque_device_configuration_t *v1_opaque_device_configuration_local_var = NULL;
 
+    char *driver_local_str = NULL;
+
     // v1_opaque_device_configuration->driver
     cJSON *driver = cJSON_GetObjectItemCaseSensitive(v1_opaque_device_configurationJSON, "driver");
     if (cJSON_IsNull(driver)) {
@@ -116,13 +121,23 @@ v1_opaque_device_configuration_t *v1_opaque_device_configuration_parseFromJSON(c
     parameters_local_object = object_parseFromJSON(parameters); //object
 
 
+    if (driver && !cJSON_IsNull(driver)) driver_local_str = strdup(driver->valuestring);
+
     v1_opaque_device_configuration_local_var = v1_opaque_device_configuration_create_internal (
-        strdup(driver->valuestring),
+        driver_local_str,
         parameters_local_object
         );
 
+    if (!v1_opaque_device_configuration_local_var) {
+        goto end;
+    }
+
     return v1_opaque_device_configuration_local_var;
 end:
+    if (driver_local_str) {
+        free(driver_local_str);
+        driver_local_str = NULL;
+    }
     return NULL;
 
 }

@@ -10,21 +10,21 @@ static v1_status_details_t *v1_status_details_create_internal(
     char *group,
     char *kind,
     char *name,
-    int retry_after_seconds,
+    int *retry_after_seconds,
     char *uid
     ) {
     v1_status_details_t *v1_status_details_local_var = malloc(sizeof(v1_status_details_t));
     if (!v1_status_details_local_var) {
         return NULL;
     }
+    memset(v1_status_details_local_var, 0, sizeof(v1_status_details_t));
+    v1_status_details_local_var->_library_owned = 1;
     v1_status_details_local_var->causes = causes;
     v1_status_details_local_var->group = group;
     v1_status_details_local_var->kind = kind;
     v1_status_details_local_var->name = name;
     v1_status_details_local_var->retry_after_seconds = retry_after_seconds;
     v1_status_details_local_var->uid = uid;
-
-    v1_status_details_local_var->_library_owned = 1;
     return v1_status_details_local_var;
 }
 
@@ -33,17 +33,26 @@ __attribute__((deprecated)) v1_status_details_t *v1_status_details_create(
     char *group,
     char *kind,
     char *name,
-    int retry_after_seconds,
+    int *retry_after_seconds,
     char *uid
     ) {
-    return v1_status_details_create_internal (
+    int *retry_after_seconds_copy = NULL;
+    if (retry_after_seconds) {
+        retry_after_seconds_copy = malloc(sizeof(int));
+        if (retry_after_seconds_copy) *retry_after_seconds_copy = *retry_after_seconds;
+    }
+    v1_status_details_t *result = v1_status_details_create_internal (
         causes,
         group,
         kind,
         name,
-        retry_after_seconds,
+        retry_after_seconds_copy,
         uid
         );
+    if (!result) {
+        free(retry_after_seconds_copy);
+    }
+    return result;
 }
 
 void v1_status_details_free(v1_status_details_t *v1_status_details) {
@@ -73,6 +82,10 @@ void v1_status_details_free(v1_status_details_t *v1_status_details) {
     if (v1_status_details->name) {
         free(v1_status_details->name);
         v1_status_details->name = NULL;
+    }
+    if (v1_status_details->retry_after_seconds) {
+        free(v1_status_details->retry_after_seconds);
+        v1_status_details->retry_after_seconds = NULL;
     }
     if (v1_status_details->uid) {
         free(v1_status_details->uid);
@@ -130,7 +143,7 @@ cJSON *v1_status_details_convertToJSON(v1_status_details_t *v1_status_details) {
 
     // v1_status_details->retry_after_seconds
     if(v1_status_details->retry_after_seconds) {
-    if(cJSON_AddNumberToObject(item, "retryAfterSeconds", v1_status_details->retry_after_seconds) == NULL) {
+    if(cJSON_AddNumberToObject(item, "retryAfterSeconds", *v1_status_details->retry_after_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -157,6 +170,17 @@ v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSO
 
     // define the local list for v1_status_details->causes
     list_t *causesList = NULL;
+
+    char *group_local_str = NULL;
+
+    char *kind_local_str = NULL;
+
+    char *name_local_str = NULL;
+
+    // define the local variable for v1_status_details->retry_after_seconds
+    int *retry_after_seconds_local_var = NULL;
+
+    char *uid_local_str = NULL;
 
     // v1_status_details->causes
     cJSON *causes = cJSON_GetObjectItemCaseSensitive(v1_status_detailsJSON, "causes");
@@ -228,6 +252,12 @@ v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSO
     {
     goto end; //Numeric
     }
+    retry_after_seconds_local_var = malloc(sizeof(int));
+    if(!retry_after_seconds_local_var)
+    {
+        goto end;
+    }
+    *retry_after_seconds_local_var = retry_after_seconds->valuedouble;
     }
 
     // v1_status_details->uid
@@ -243,14 +273,23 @@ v1_status_details_t *v1_status_details_parseFromJSON(cJSON *v1_status_detailsJSO
     }
 
 
+    if (group && !cJSON_IsNull(group)) group_local_str = strdup(group->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (uid && !cJSON_IsNull(uid)) uid_local_str = strdup(uid->valuestring);
+
     v1_status_details_local_var = v1_status_details_create_internal (
         causes ? causesList : NULL,
-        group && !cJSON_IsNull(group) ? strdup(group->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
-        retry_after_seconds ? retry_after_seconds->valuedouble : 0,
-        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL
+        group_local_str,
+        kind_local_str,
+        name_local_str,
+        retry_after_seconds_local_var,
+        uid_local_str
         );
+
+    if (!v1_status_details_local_var) {
+        goto end;
+    }
 
     return v1_status_details_local_var;
 end:
@@ -262,6 +301,26 @@ end:
         }
         list_freeList(causesList);
         causesList = NULL;
+    }
+    if (group_local_str) {
+        free(group_local_str);
+        group_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (retry_after_seconds_local_var) {
+        free(retry_after_seconds_local_var);
+        retry_after_seconds_local_var = NULL;
+    }
+    if (uid_local_str) {
+        free(uid_local_str);
+        uid_local_str = NULL;
     }
     return NULL;
 

@@ -17,14 +17,14 @@ static v1_runtime_class_t *v1_runtime_class_create_internal(
     if (!v1_runtime_class_local_var) {
         return NULL;
     }
+    memset(v1_runtime_class_local_var, 0, sizeof(v1_runtime_class_t));
+    v1_runtime_class_local_var->_library_owned = 1;
     v1_runtime_class_local_var->api_version = api_version;
     v1_runtime_class_local_var->handler = handler;
     v1_runtime_class_local_var->kind = kind;
     v1_runtime_class_local_var->metadata = metadata;
     v1_runtime_class_local_var->overhead = overhead;
     v1_runtime_class_local_var->scheduling = scheduling;
-
-    v1_runtime_class_local_var->_library_owned = 1;
     return v1_runtime_class_local_var;
 }
 
@@ -36,7 +36,7 @@ __attribute__((deprecated)) v1_runtime_class_t *v1_runtime_class_create(
     v1_overhead_t *overhead,
     v1_scheduling_t *scheduling
     ) {
-    return v1_runtime_class_create_internal (
+    v1_runtime_class_t *result = v1_runtime_class_create_internal (
         api_version,
         handler,
         kind,
@@ -44,6 +44,9 @@ __attribute__((deprecated)) v1_runtime_class_t *v1_runtime_class_create(
         overhead,
         scheduling
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_runtime_class_free(v1_runtime_class_t *v1_runtime_class) {
@@ -160,6 +163,12 @@ v1_runtime_class_t *v1_runtime_class_parseFromJSON(cJSON *v1_runtime_classJSON){
 
     v1_runtime_class_t *v1_runtime_class_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
+    char *handler_local_str = NULL;
+
+    char *kind_local_str = NULL;
+
     // define the local variable for v1_runtime_class->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
 
@@ -236,17 +245,37 @@ v1_runtime_class_t *v1_runtime_class_parseFromJSON(cJSON *v1_runtime_classJSON){
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (handler && !cJSON_IsNull(handler)) handler_local_str = strdup(handler->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+
     v1_runtime_class_local_var = v1_runtime_class_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        strdup(handler->valuestring),
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version_local_str,
+        handler_local_str,
+        kind_local_str,
         metadata ? metadata_local_nonprim : NULL,
         overhead ? overhead_local_nonprim : NULL,
         scheduling ? scheduling_local_nonprim : NULL
         );
 
+    if (!v1_runtime_class_local_var) {
+        goto end;
+    }
+
     return v1_runtime_class_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (handler_local_str) {
+        free(handler_local_str);
+        handler_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;

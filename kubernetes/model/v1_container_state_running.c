@@ -12,18 +12,21 @@ static v1_container_state_running_t *v1_container_state_running_create_internal(
     if (!v1_container_state_running_local_var) {
         return NULL;
     }
-    v1_container_state_running_local_var->started_at = started_at;
-
+    memset(v1_container_state_running_local_var, 0, sizeof(v1_container_state_running_t));
     v1_container_state_running_local_var->_library_owned = 1;
+    v1_container_state_running_local_var->started_at = started_at;
     return v1_container_state_running_local_var;
 }
 
 __attribute__((deprecated)) v1_container_state_running_t *v1_container_state_running_create(
     char *started_at
     ) {
-    return v1_container_state_running_create_internal (
+    v1_container_state_running_t *result = v1_container_state_running_create_internal (
         started_at
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_container_state_running_free(v1_container_state_running_t *v1_container_state_running) {
@@ -64,6 +67,8 @@ v1_container_state_running_t *v1_container_state_running_parseFromJSON(cJSON *v1
 
     v1_container_state_running_t *v1_container_state_running_local_var = NULL;
 
+    char *started_at_local_str = NULL;
+
     // v1_container_state_running->started_at
     cJSON *started_at = cJSON_GetObjectItemCaseSensitive(v1_container_state_runningJSON, "startedAt");
     if (cJSON_IsNull(started_at)) {
@@ -77,12 +82,22 @@ v1_container_state_running_t *v1_container_state_running_parseFromJSON(cJSON *v1
     }
 
 
+    if (started_at && !cJSON_IsNull(started_at)) started_at_local_str = strdup(started_at->valuestring);
+
     v1_container_state_running_local_var = v1_container_state_running_create_internal (
-        started_at && !cJSON_IsNull(started_at) ? strdup(started_at->valuestring) : NULL
+        started_at_local_str
         );
+
+    if (!v1_container_state_running_local_var) {
+        goto end;
+    }
 
     return v1_container_state_running_local_var;
 end:
+    if (started_at_local_str) {
+        free(started_at_local_str);
+        started_at_local_str = NULL;
+    }
     return NULL;
 
 }

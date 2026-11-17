@@ -16,6 +16,7 @@
 #include "../model/v1_volume_mount_status.h"
 v1_volume_mount_status_t* instantiate_v1_volume_mount_status(int include_optional);
 
+#include "test_v1_volume_status.c"
 
 
 v1_volume_mount_status_t* instantiate_v1_volume_mount_status(int include_optional) {
@@ -25,14 +26,17 @@ v1_volume_mount_status_t* instantiate_v1_volume_mount_status(int include_optiona
       "0",
       "0",
       1,
-      "0"
+      "0",
+       // false, not to have infinite recursion
+      instantiate_v1_volume_status(0)
     );
   } else {
     v1_volume_mount_status = v1_volume_mount_status_create(
       "0",
       "0",
       1,
-      "0"
+      "0",
+      NULL
     );
   }
 

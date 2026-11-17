@@ -25,7 +25,7 @@ typedef struct events_v1_event_t events_v1_event_t;
 typedef struct events_v1_event_t {
     char *action; // string
     char *api_version; // string
-    int deprecated_count; //numeric
+    int *deprecated_count; //numeric
     char *deprecated_first_timestamp; //date time
     char *deprecated_last_timestamp; //date time
     struct v1_event_source_t *deprecated_source; //model
@@ -47,7 +47,7 @@ typedef struct events_v1_event_t {
 __attribute__((deprecated)) events_v1_event_t *events_v1_event_create(
     char *action,
     char *api_version,
-    int deprecated_count,
+    int *deprecated_count,
     char *deprecated_first_timestamp,
     char *deprecated_last_timestamp,
     v1_event_source_t *deprecated_source,

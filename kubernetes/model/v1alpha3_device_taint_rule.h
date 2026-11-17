@@ -17,6 +17,7 @@ typedef struct v1alpha3_device_taint_rule_t v1alpha3_device_taint_rule_t;
 
 #include "v1_object_meta.h"
 #include "v1alpha3_device_taint_rule_spec.h"
+#include "v1alpha3_device_taint_rule_status.h"
 
 
 
@@ -25,6 +26,7 @@ typedef struct v1alpha3_device_taint_rule_t {
     char *kind; // string
     struct v1_object_meta_t *metadata; //model
     struct v1alpha3_device_taint_rule_spec_t *spec; //model
+    struct v1alpha3_device_taint_rule_status_t *status; //model
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1alpha3_device_taint_rule_t;
@@ -33,7 +35,8 @@ __attribute__((deprecated)) v1alpha3_device_taint_rule_t *v1alpha3_device_taint_
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,
-    v1alpha3_device_taint_rule_spec_t *spec
+    v1alpha3_device_taint_rule_spec_t *spec,
+    v1alpha3_device_taint_rule_status_t *status
 );
 
 void v1alpha3_device_taint_rule_free(v1alpha3_device_taint_rule_t *v1alpha3_device_taint_rule);

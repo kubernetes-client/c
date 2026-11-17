@@ -15,12 +15,12 @@ static v1_validating_admission_policy_binding_list_t *v1_validating_admission_po
     if (!v1_validating_admission_policy_binding_list_local_var) {
         return NULL;
     }
+    memset(v1_validating_admission_policy_binding_list_local_var, 0, sizeof(v1_validating_admission_policy_binding_list_t));
+    v1_validating_admission_policy_binding_list_local_var->_library_owned = 1;
     v1_validating_admission_policy_binding_list_local_var->api_version = api_version;
     v1_validating_admission_policy_binding_list_local_var->items = items;
     v1_validating_admission_policy_binding_list_local_var->kind = kind;
     v1_validating_admission_policy_binding_list_local_var->metadata = metadata;
-
-    v1_validating_admission_policy_binding_list_local_var->_library_owned = 1;
     return v1_validating_admission_policy_binding_list_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1_validating_admission_policy_binding_list_t *v1_va
     char *kind,
     v1_list_meta_t *metadata
     ) {
-    return v1_validating_admission_policy_binding_list_create_internal (
+    v1_validating_admission_policy_binding_list_t *result = v1_validating_admission_policy_binding_list_create_internal (
         api_version,
         items,
         kind,
         metadata
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_validating_admission_policy_binding_list_free(v1_validating_admission_policy_binding_list_t *v1_validating_admission_policy_binding_list) {
@@ -133,8 +136,12 @@ v1_validating_admission_policy_binding_list_t *v1_validating_admission_policy_bi
 
     v1_validating_admission_policy_binding_list_t *v1_validating_admission_policy_binding_list_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
     // define the local list for v1_validating_admission_policy_binding_list->items
     list_t *itemsList = NULL;
+
+    char *kind_local_str = NULL;
 
     // define the local variable for v1_validating_admission_policy_binding_list->metadata
     v1_list_meta_t *metadata_local_nonprim = NULL;
@@ -200,15 +207,26 @@ v1_validating_admission_policy_binding_list_t *v1_validating_admission_policy_bi
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+
     v1_validating_admission_policy_binding_list_local_var = v1_validating_admission_policy_binding_list_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        api_version_local_str,
         itemsList,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        kind_local_str,
         metadata ? metadata_local_nonprim : NULL
         );
 
+    if (!v1_validating_admission_policy_binding_list_local_var) {
+        goto end;
+    }
+
     return v1_validating_admission_policy_binding_list_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
     if (itemsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, itemsList) {
@@ -217,6 +235,10 @@ end:
         }
         list_freeList(itemsList);
         itemsList = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
     }
     if (metadata_local_nonprim) {
         v1_list_meta_free(metadata_local_nonprim);

@@ -22,7 +22,7 @@ typedef struct v1_status_t v1_status_t;
 
 typedef struct v1_status_t {
     char *api_version; // string
-    int code; //numeric
+    int *code; //numeric
     struct v1_status_details_t *details; //model
     char *kind; // string
     char *message; // string
@@ -35,7 +35,7 @@ typedef struct v1_status_t {
 
 __attribute__((deprecated)) v1_status_t *v1_status_create(
     char *api_version,
-    int code,
+    int *code,
     v1_status_details_t *details,
     char *kind,
     char *message,

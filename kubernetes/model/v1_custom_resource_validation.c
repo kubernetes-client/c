@@ -12,18 +12,21 @@ static v1_custom_resource_validation_t *v1_custom_resource_validation_create_int
     if (!v1_custom_resource_validation_local_var) {
         return NULL;
     }
-    v1_custom_resource_validation_local_var->open_apiv3_schema = open_apiv3_schema;
-
+    memset(v1_custom_resource_validation_local_var, 0, sizeof(v1_custom_resource_validation_t));
     v1_custom_resource_validation_local_var->_library_owned = 1;
+    v1_custom_resource_validation_local_var->open_apiv3_schema = open_apiv3_schema;
     return v1_custom_resource_validation_local_var;
 }
 
 __attribute__((deprecated)) v1_custom_resource_validation_t *v1_custom_resource_validation_create(
     v1_json_schema_props_t *open_apiv3_schema
     ) {
-    return v1_custom_resource_validation_create_internal (
+    v1_custom_resource_validation_t *result = v1_custom_resource_validation_create_internal (
         open_apiv3_schema
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_custom_resource_validation_free(v1_custom_resource_validation_t *v1_custom_resource_validation) {
@@ -82,9 +85,14 @@ v1_custom_resource_validation_t *v1_custom_resource_validation_parseFromJSON(cJS
     }
 
 
+
     v1_custom_resource_validation_local_var = v1_custom_resource_validation_create_internal (
         open_apiv3_schema ? open_apiv3_schema_local_nonprim : NULL
         );
+
+    if (!v1_custom_resource_validation_local_var) {
+        goto end;
+    }
 
     return v1_custom_resource_validation_local_var;
 end:

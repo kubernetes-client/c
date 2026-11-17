@@ -20,14 +20,14 @@ typedef struct v1_secret_env_source_t v1_secret_env_source_t;
 
 typedef struct v1_secret_env_source_t {
     char *name; // string
-    int optional; //boolean
+    int *optional; //boolean
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_secret_env_source_t;
 
 __attribute__((deprecated)) v1_secret_env_source_t *v1_secret_env_source_create(
     char *name,
-    int optional
+    int *optional
 );
 
 void v1_secret_env_source_free(v1_secret_env_source_t *v1_secret_env_source);

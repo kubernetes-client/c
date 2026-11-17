@@ -13,10 +13,10 @@ static v2_resource_metric_status_t *v2_resource_metric_status_create_internal(
     if (!v2_resource_metric_status_local_var) {
         return NULL;
     }
+    memset(v2_resource_metric_status_local_var, 0, sizeof(v2_resource_metric_status_t));
+    v2_resource_metric_status_local_var->_library_owned = 1;
     v2_resource_metric_status_local_var->current = current;
     v2_resource_metric_status_local_var->name = name;
-
-    v2_resource_metric_status_local_var->_library_owned = 1;
     return v2_resource_metric_status_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v2_resource_metric_status_t *v2_resource_metric_stat
     v2_metric_value_status_t *current,
     char *name
     ) {
-    return v2_resource_metric_status_create_internal (
+    v2_resource_metric_status_t *result = v2_resource_metric_status_create_internal (
         current,
         name
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v2_resource_metric_status_free(v2_resource_metric_status_t *v2_resource_metric_status) {
@@ -90,6 +93,8 @@ v2_resource_metric_status_t *v2_resource_metric_status_parseFromJSON(cJSON *v2_r
     // define the local variable for v2_resource_metric_status->current
     v2_metric_value_status_t *current_local_nonprim = NULL;
 
+    char *name_local_str = NULL;
+
     // v2_resource_metric_status->current
     cJSON *current = cJSON_GetObjectItemCaseSensitive(v2_resource_metric_statusJSON, "current");
     if (cJSON_IsNull(current)) {
@@ -118,16 +123,26 @@ v2_resource_metric_status_t *v2_resource_metric_status_parseFromJSON(cJSON *v2_r
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v2_resource_metric_status_local_var = v2_resource_metric_status_create_internal (
         current_local_nonprim,
-        strdup(name->valuestring)
+        name_local_str
         );
+
+    if (!v2_resource_metric_status_local_var) {
+        goto end;
+    }
 
     return v2_resource_metric_status_local_var;
 end:
     if (current_local_nonprim) {
         v2_metric_value_status_free(current_local_nonprim);
         current_local_nonprim = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
     }
     return NULL;
 

@@ -7,7 +7,7 @@
 
 static v1_subject_rules_review_status_t *v1_subject_rules_review_status_create_internal(
     char *evaluation_error,
-    int incomplete,
+    int *incomplete,
     list_t *non_resource_rules,
     list_t *resource_rules
     ) {
@@ -15,27 +15,36 @@ static v1_subject_rules_review_status_t *v1_subject_rules_review_status_create_i
     if (!v1_subject_rules_review_status_local_var) {
         return NULL;
     }
+    memset(v1_subject_rules_review_status_local_var, 0, sizeof(v1_subject_rules_review_status_t));
+    v1_subject_rules_review_status_local_var->_library_owned = 1;
     v1_subject_rules_review_status_local_var->evaluation_error = evaluation_error;
     v1_subject_rules_review_status_local_var->incomplete = incomplete;
     v1_subject_rules_review_status_local_var->non_resource_rules = non_resource_rules;
     v1_subject_rules_review_status_local_var->resource_rules = resource_rules;
-
-    v1_subject_rules_review_status_local_var->_library_owned = 1;
     return v1_subject_rules_review_status_local_var;
 }
 
 __attribute__((deprecated)) v1_subject_rules_review_status_t *v1_subject_rules_review_status_create(
     char *evaluation_error,
-    int incomplete,
+    int *incomplete,
     list_t *non_resource_rules,
     list_t *resource_rules
     ) {
-    return v1_subject_rules_review_status_create_internal (
+    int *incomplete_copy = NULL;
+    if (incomplete) {
+        incomplete_copy = malloc(sizeof(int));
+        if (incomplete_copy) *incomplete_copy = *incomplete;
+    }
+    v1_subject_rules_review_status_t *result = v1_subject_rules_review_status_create_internal (
         evaluation_error,
-        incomplete,
+        incomplete_copy,
         non_resource_rules,
         resource_rules
         );
+    if (!result) {
+        free(incomplete_copy);
+    }
+    return result;
 }
 
 void v1_subject_rules_review_status_free(v1_subject_rules_review_status_t *v1_subject_rules_review_status) {
@@ -50,6 +59,10 @@ void v1_subject_rules_review_status_free(v1_subject_rules_review_status_t *v1_su
     if (v1_subject_rules_review_status->evaluation_error) {
         free(v1_subject_rules_review_status->evaluation_error);
         v1_subject_rules_review_status->evaluation_error = NULL;
+    }
+    if (v1_subject_rules_review_status->incomplete) {
+        free(v1_subject_rules_review_status->incomplete);
+        v1_subject_rules_review_status->incomplete = NULL;
     }
     if (v1_subject_rules_review_status->non_resource_rules) {
         list_ForEach(listEntry, v1_subject_rules_review_status->non_resource_rules) {
@@ -83,7 +96,7 @@ cJSON *v1_subject_rules_review_status_convertToJSON(v1_subject_rules_review_stat
     if (!v1_subject_rules_review_status->incomplete) {
         goto fail;
     }
-    if(cJSON_AddBoolToObject(item, "incomplete", v1_subject_rules_review_status->incomplete) == NULL) {
+    if(cJSON_AddBoolToObject(item, "incomplete", *v1_subject_rules_review_status->incomplete) == NULL) {
     goto fail; //Bool
     }
 
@@ -141,6 +154,11 @@ v1_subject_rules_review_status_t *v1_subject_rules_review_status_parseFromJSON(c
 
     v1_subject_rules_review_status_t *v1_subject_rules_review_status_local_var = NULL;
 
+    char *evaluation_error_local_str = NULL;
+
+    // define the local variable for v1_subject_rules_review_status->incomplete
+    int *incomplete_local_var = NULL;
+
     // define the local list for v1_subject_rules_review_status->non_resource_rules
     list_t *non_resource_rulesList = NULL;
 
@@ -173,6 +191,12 @@ v1_subject_rules_review_status_t *v1_subject_rules_review_status_parseFromJSON(c
     {
     goto end; //Bool
     }
+    incomplete_local_var = malloc(sizeof(int));
+    if(!incomplete_local_var)
+    {
+        goto end;
+    }
+    *incomplete_local_var = incomplete->valueint;
 
     // v1_subject_rules_review_status->non_resource_rules
     cJSON *non_resource_rules = cJSON_GetObjectItemCaseSensitive(v1_subject_rules_review_statusJSON, "nonResourceRules");
@@ -229,15 +253,29 @@ v1_subject_rules_review_status_t *v1_subject_rules_review_status_parseFromJSON(c
     }
 
 
+    if (evaluation_error && !cJSON_IsNull(evaluation_error)) evaluation_error_local_str = strdup(evaluation_error->valuestring);
+
     v1_subject_rules_review_status_local_var = v1_subject_rules_review_status_create_internal (
-        evaluation_error && !cJSON_IsNull(evaluation_error) ? strdup(evaluation_error->valuestring) : NULL,
-        incomplete->valueint,
+        evaluation_error_local_str,
+        incomplete_local_var,
         non_resource_rulesList,
         resource_rulesList
         );
 
+    if (!v1_subject_rules_review_status_local_var) {
+        goto end;
+    }
+
     return v1_subject_rules_review_status_local_var;
 end:
+    if (evaluation_error_local_str) {
+        free(evaluation_error_local_str);
+        evaluation_error_local_str = NULL;
+    }
+    if (incomplete_local_var) {
+        free(incomplete_local_var);
+        incomplete_local_var = NULL;
+    }
     if (non_resource_rulesList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, non_resource_rulesList) {

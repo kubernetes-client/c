@@ -7,39 +7,34 @@
 
 static v1alpha3_device_taint_selector_t *v1alpha3_device_taint_selector_create_internal(
     char *device,
-    char *device_class_name,
     char *driver,
-    char *pool,
-    list_t *selectors
+    char *pool
     ) {
     v1alpha3_device_taint_selector_t *v1alpha3_device_taint_selector_local_var = malloc(sizeof(v1alpha3_device_taint_selector_t));
     if (!v1alpha3_device_taint_selector_local_var) {
         return NULL;
     }
+    memset(v1alpha3_device_taint_selector_local_var, 0, sizeof(v1alpha3_device_taint_selector_t));
+    v1alpha3_device_taint_selector_local_var->_library_owned = 1;
     v1alpha3_device_taint_selector_local_var->device = device;
-    v1alpha3_device_taint_selector_local_var->device_class_name = device_class_name;
     v1alpha3_device_taint_selector_local_var->driver = driver;
     v1alpha3_device_taint_selector_local_var->pool = pool;
-    v1alpha3_device_taint_selector_local_var->selectors = selectors;
-
-    v1alpha3_device_taint_selector_local_var->_library_owned = 1;
     return v1alpha3_device_taint_selector_local_var;
 }
 
 __attribute__((deprecated)) v1alpha3_device_taint_selector_t *v1alpha3_device_taint_selector_create(
     char *device,
-    char *device_class_name,
     char *driver,
-    char *pool,
-    list_t *selectors
+    char *pool
     ) {
-    return v1alpha3_device_taint_selector_create_internal (
+    v1alpha3_device_taint_selector_t *result = v1alpha3_device_taint_selector_create_internal (
         device,
-        device_class_name,
         driver,
-        pool,
-        selectors
+        pool
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1alpha3_device_taint_selector_free(v1alpha3_device_taint_selector_t *v1alpha3_device_taint_selector) {
@@ -55,10 +50,6 @@ void v1alpha3_device_taint_selector_free(v1alpha3_device_taint_selector_t *v1alp
         free(v1alpha3_device_taint_selector->device);
         v1alpha3_device_taint_selector->device = NULL;
     }
-    if (v1alpha3_device_taint_selector->device_class_name) {
-        free(v1alpha3_device_taint_selector->device_class_name);
-        v1alpha3_device_taint_selector->device_class_name = NULL;
-    }
     if (v1alpha3_device_taint_selector->driver) {
         free(v1alpha3_device_taint_selector->driver);
         v1alpha3_device_taint_selector->driver = NULL;
@@ -66,13 +57,6 @@ void v1alpha3_device_taint_selector_free(v1alpha3_device_taint_selector_t *v1alp
     if (v1alpha3_device_taint_selector->pool) {
         free(v1alpha3_device_taint_selector->pool);
         v1alpha3_device_taint_selector->pool = NULL;
-    }
-    if (v1alpha3_device_taint_selector->selectors) {
-        list_ForEach(listEntry, v1alpha3_device_taint_selector->selectors) {
-            v1alpha3_device_selector_free(listEntry->data);
-        }
-        list_freeList(v1alpha3_device_taint_selector->selectors);
-        v1alpha3_device_taint_selector->selectors = NULL;
     }
     free(v1alpha3_device_taint_selector);
 }
@@ -83,14 +67,6 @@ cJSON *v1alpha3_device_taint_selector_convertToJSON(v1alpha3_device_taint_select
     // v1alpha3_device_taint_selector->device
     if(v1alpha3_device_taint_selector->device) {
     if(cJSON_AddStringToObject(item, "device", v1alpha3_device_taint_selector->device) == NULL) {
-    goto fail; //String
-    }
-    }
-
-
-    // v1alpha3_device_taint_selector->device_class_name
-    if(v1alpha3_device_taint_selector->device_class_name) {
-    if(cJSON_AddStringToObject(item, "deviceClassName", v1alpha3_device_taint_selector->device_class_name) == NULL) {
     goto fail; //String
     }
     }
@@ -111,26 +87,6 @@ cJSON *v1alpha3_device_taint_selector_convertToJSON(v1alpha3_device_taint_select
     }
     }
 
-
-    // v1alpha3_device_taint_selector->selectors
-    if(v1alpha3_device_taint_selector->selectors) {
-    cJSON *selectors = cJSON_AddArrayToObject(item, "selectors");
-    if(selectors == NULL) {
-    goto fail; //nonprimitive container
-    }
-
-    listEntry_t *selectorsListEntry;
-    if (v1alpha3_device_taint_selector->selectors) {
-    list_ForEach(selectorsListEntry, v1alpha3_device_taint_selector->selectors) {
-    cJSON *itemLocal = v1alpha3_device_selector_convertToJSON(selectorsListEntry->data);
-    if(itemLocal == NULL) {
-    goto fail;
-    }
-    cJSON_AddItemToArray(selectors, itemLocal);
-    }
-    }
-    }
-
     return item;
 fail:
     if (item) {
@@ -143,8 +99,11 @@ v1alpha3_device_taint_selector_t *v1alpha3_device_taint_selector_parseFromJSON(c
 
     v1alpha3_device_taint_selector_t *v1alpha3_device_taint_selector_local_var = NULL;
 
-    // define the local list for v1alpha3_device_taint_selector->selectors
-    list_t *selectorsList = NULL;
+    char *device_local_str = NULL;
+
+    char *driver_local_str = NULL;
+
+    char *pool_local_str = NULL;
 
     // v1alpha3_device_taint_selector->device
     cJSON *device = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_taint_selectorJSON, "device");
@@ -153,18 +112,6 @@ v1alpha3_device_taint_selector_t *v1alpha3_device_taint_selector_parseFromJSON(c
     }
     if (device) { 
     if(!cJSON_IsString(device) && !cJSON_IsNull(device))
-    {
-    goto end; //String
-    }
-    }
-
-    // v1alpha3_device_taint_selector->device_class_name
-    cJSON *device_class_name = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_taint_selectorJSON, "deviceClassName");
-    if (cJSON_IsNull(device_class_name)) {
-        device_class_name = NULL;
-    }
-    if (device_class_name) { 
-    if(!cJSON_IsString(device_class_name) && !cJSON_IsNull(device_class_name))
     {
     goto end; //String
     }
@@ -194,49 +141,34 @@ v1alpha3_device_taint_selector_t *v1alpha3_device_taint_selector_parseFromJSON(c
     }
     }
 
-    // v1alpha3_device_taint_selector->selectors
-    cJSON *selectors = cJSON_GetObjectItemCaseSensitive(v1alpha3_device_taint_selectorJSON, "selectors");
-    if (cJSON_IsNull(selectors)) {
-        selectors = NULL;
-    }
-    if (selectors) { 
-    cJSON *selectors_local_nonprimitive = NULL;
-    if(!cJSON_IsArray(selectors)){
-        goto end; //nonprimitive container
-    }
 
-    selectorsList = list_createList();
-
-    cJSON_ArrayForEach(selectors_local_nonprimitive,selectors )
-    {
-        if(!cJSON_IsObject(selectors_local_nonprimitive)){
-            goto end;
-        }
-        v1alpha3_device_selector_t *selectorsItem = v1alpha3_device_selector_parseFromJSON(selectors_local_nonprimitive);
-
-        list_addElement(selectorsList, selectorsItem);
-    }
-    }
-
+    if (device && !cJSON_IsNull(device)) device_local_str = strdup(device->valuestring);
+    if (driver && !cJSON_IsNull(driver)) driver_local_str = strdup(driver->valuestring);
+    if (pool && !cJSON_IsNull(pool)) pool_local_str = strdup(pool->valuestring);
 
     v1alpha3_device_taint_selector_local_var = v1alpha3_device_taint_selector_create_internal (
-        device && !cJSON_IsNull(device) ? strdup(device->valuestring) : NULL,
-        device_class_name && !cJSON_IsNull(device_class_name) ? strdup(device_class_name->valuestring) : NULL,
-        driver && !cJSON_IsNull(driver) ? strdup(driver->valuestring) : NULL,
-        pool && !cJSON_IsNull(pool) ? strdup(pool->valuestring) : NULL,
-        selectors ? selectorsList : NULL
+        device_local_str,
+        driver_local_str,
+        pool_local_str
         );
+
+    if (!v1alpha3_device_taint_selector_local_var) {
+        goto end;
+    }
 
     return v1alpha3_device_taint_selector_local_var;
 end:
-    if (selectorsList) {
-        listEntry_t *listEntry = NULL;
-        list_ForEach(listEntry, selectorsList) {
-            v1alpha3_device_selector_free(listEntry->data);
-            listEntry->data = NULL;
-        }
-        list_freeList(selectorsList);
-        selectorsList = NULL;
+    if (device_local_str) {
+        free(device_local_str);
+        device_local_str = NULL;
+    }
+    if (driver_local_str) {
+        free(driver_local_str);
+        driver_local_str = NULL;
+    }
+    if (pool_local_str) {
+        free(pool_local_str);
+        pool_local_str = NULL;
     }
     return NULL;
 

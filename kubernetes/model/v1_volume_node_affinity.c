@@ -12,18 +12,21 @@ static v1_volume_node_affinity_t *v1_volume_node_affinity_create_internal(
     if (!v1_volume_node_affinity_local_var) {
         return NULL;
     }
-    v1_volume_node_affinity_local_var->required = required;
-
+    memset(v1_volume_node_affinity_local_var, 0, sizeof(v1_volume_node_affinity_t));
     v1_volume_node_affinity_local_var->_library_owned = 1;
+    v1_volume_node_affinity_local_var->required = required;
     return v1_volume_node_affinity_local_var;
 }
 
 __attribute__((deprecated)) v1_volume_node_affinity_t *v1_volume_node_affinity_create(
     v1_node_selector_t *required
     ) {
-    return v1_volume_node_affinity_create_internal (
+    v1_volume_node_affinity_t *result = v1_volume_node_affinity_create_internal (
         required
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_volume_node_affinity_free(v1_volume_node_affinity_t *v1_volume_node_affinity) {
@@ -82,9 +85,14 @@ v1_volume_node_affinity_t *v1_volume_node_affinity_parseFromJSON(cJSON *v1_volum
     }
 
 
+
     v1_volume_node_affinity_local_var = v1_volume_node_affinity_create_internal (
         required ? required_local_nonprim : NULL
         );
+
+    if (!v1_volume_node_affinity_local_var) {
+        goto end;
+    }
 
     return v1_volume_node_affinity_local_var;
 end:

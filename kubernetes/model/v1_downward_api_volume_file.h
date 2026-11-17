@@ -22,18 +22,20 @@ typedef struct v1_downward_api_volume_file_t v1_downward_api_volume_file_t;
 
 typedef struct v1_downward_api_volume_file_t {
     struct v1_object_field_selector_t *field_ref; //model
-    int mode; //numeric
+    int *mode; //numeric
     char *path; // string
     struct v1_resource_field_selector_t *resource_field_ref; //model
+    long *user; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_downward_api_volume_file_t;
 
 __attribute__((deprecated)) v1_downward_api_volume_file_t *v1_downward_api_volume_file_create(
     v1_object_field_selector_t *field_ref,
-    int mode,
+    int *mode,
     char *path,
-    v1_resource_field_selector_t *resource_field_ref
+    v1_resource_field_selector_t *resource_field_ref,
+    long *user
 );
 
 void v1_downward_api_volume_file_free(v1_downward_api_volume_file_t *v1_downward_api_volume_file);

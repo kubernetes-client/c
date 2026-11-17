@@ -13,10 +13,10 @@ static v1_webhook_conversion_t *v1_webhook_conversion_create_internal(
     if (!v1_webhook_conversion_local_var) {
         return NULL;
     }
+    memset(v1_webhook_conversion_local_var, 0, sizeof(v1_webhook_conversion_t));
+    v1_webhook_conversion_local_var->_library_owned = 1;
     v1_webhook_conversion_local_var->client_config = client_config;
     v1_webhook_conversion_local_var->conversion_review_versions = conversion_review_versions;
-
-    v1_webhook_conversion_local_var->_library_owned = 1;
     return v1_webhook_conversion_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_webhook_conversion_t *v1_webhook_conversion_creat
     apiextensions_v1_webhook_client_config_t *client_config,
     list_t *conversion_review_versions
     ) {
-    return v1_webhook_conversion_create_internal (
+    v1_webhook_conversion_t *result = v1_webhook_conversion_create_internal (
         client_config,
         conversion_review_versions
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_webhook_conversion_free(v1_webhook_conversion_t *v1_webhook_conversion) {
@@ -139,10 +142,15 @@ v1_webhook_conversion_t *v1_webhook_conversion_parseFromJSON(cJSON *v1_webhook_c
     }
 
 
+
     v1_webhook_conversion_local_var = v1_webhook_conversion_create_internal (
         client_config ? client_config_local_nonprim : NULL,
         conversion_review_versionsList
         );
+
+    if (!v1_webhook_conversion_local_var) {
+        goto end;
+    }
 
     return v1_webhook_conversion_local_var;
 end:

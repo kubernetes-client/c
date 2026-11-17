@@ -20,6 +20,7 @@ typedef struct v1_empty_dir_volume_source_t v1_empty_dir_volume_source_t;
 
 typedef struct v1_empty_dir_volume_source_t {
     char *medium; // string
+    int *mode; //numeric
     char *size_limit; // string
 
     int _library_owned; // Is the library responsible for freeing this object?
@@ -27,6 +28,7 @@ typedef struct v1_empty_dir_volume_source_t {
 
 __attribute__((deprecated)) v1_empty_dir_volume_source_t *v1_empty_dir_volume_source_create(
     char *medium,
+    int *mode,
     char *size_limit
 );
 

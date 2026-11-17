@@ -14,11 +14,11 @@ static v1beta2_capacity_request_policy_t *v1beta2_capacity_request_policy_create
     if (!v1beta2_capacity_request_policy_local_var) {
         return NULL;
     }
+    memset(v1beta2_capacity_request_policy_local_var, 0, sizeof(v1beta2_capacity_request_policy_t));
+    v1beta2_capacity_request_policy_local_var->_library_owned = 1;
     v1beta2_capacity_request_policy_local_var->_default = _default;
     v1beta2_capacity_request_policy_local_var->valid_range = valid_range;
     v1beta2_capacity_request_policy_local_var->valid_values = valid_values;
-
-    v1beta2_capacity_request_policy_local_var->_library_owned = 1;
     return v1beta2_capacity_request_policy_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1beta2_capacity_request_policy_t *v1beta2_capacity_
     v1beta2_capacity_request_policy_range_t *valid_range,
     list_t *valid_values
     ) {
-    return v1beta2_capacity_request_policy_create_internal (
+    v1beta2_capacity_request_policy_t *result = v1beta2_capacity_request_policy_create_internal (
         _default,
         valid_range,
         valid_values
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1beta2_capacity_request_policy_free(v1beta2_capacity_request_policy_t *v1beta2_capacity_request_policy) {
@@ -113,6 +116,8 @@ v1beta2_capacity_request_policy_t *v1beta2_capacity_request_policy_parseFromJSON
 
     v1beta2_capacity_request_policy_t *v1beta2_capacity_request_policy_local_var = NULL;
 
+    char *_default_local_str = NULL;
+
     // define the local variable for v1beta2_capacity_request_policy->valid_range
     v1beta2_capacity_request_policy_range_t *valid_range_local_nonprim = NULL;
 
@@ -163,14 +168,24 @@ v1beta2_capacity_request_policy_t *v1beta2_capacity_request_policy_parseFromJSON
     }
 
 
+    if (_default && !cJSON_IsNull(_default)) _default_local_str = strdup(_default->valuestring);
+
     v1beta2_capacity_request_policy_local_var = v1beta2_capacity_request_policy_create_internal (
-        _default && !cJSON_IsNull(_default) ? strdup(_default->valuestring) : NULL,
+        _default_local_str,
         valid_range ? valid_range_local_nonprim : NULL,
         valid_values ? valid_valuesList : NULL
         );
 
+    if (!v1beta2_capacity_request_policy_local_var) {
+        goto end;
+    }
+
     return v1beta2_capacity_request_policy_local_var;
 end:
+    if (_default_local_str) {
+        free(_default_local_str);
+        _default_local_str = NULL;
+    }
     if (valid_range_local_nonprim) {
         v1beta2_capacity_request_policy_range_free(valid_range_local_nonprim);
         valid_range_local_nonprim = NULL;

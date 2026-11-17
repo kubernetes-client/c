@@ -7,8 +7,8 @@
 
 static v1_owner_reference_t *v1_owner_reference_create_internal(
     char *api_version,
-    int block_owner_deletion,
-    int controller,
+    int *block_owner_deletion,
+    int *controller,
     char *kind,
     char *name,
     char *uid
@@ -17,33 +17,48 @@ static v1_owner_reference_t *v1_owner_reference_create_internal(
     if (!v1_owner_reference_local_var) {
         return NULL;
     }
+    memset(v1_owner_reference_local_var, 0, sizeof(v1_owner_reference_t));
+    v1_owner_reference_local_var->_library_owned = 1;
     v1_owner_reference_local_var->api_version = api_version;
     v1_owner_reference_local_var->block_owner_deletion = block_owner_deletion;
     v1_owner_reference_local_var->controller = controller;
     v1_owner_reference_local_var->kind = kind;
     v1_owner_reference_local_var->name = name;
     v1_owner_reference_local_var->uid = uid;
-
-    v1_owner_reference_local_var->_library_owned = 1;
     return v1_owner_reference_local_var;
 }
 
 __attribute__((deprecated)) v1_owner_reference_t *v1_owner_reference_create(
     char *api_version,
-    int block_owner_deletion,
-    int controller,
+    int *block_owner_deletion,
+    int *controller,
     char *kind,
     char *name,
     char *uid
     ) {
-    return v1_owner_reference_create_internal (
+    int *block_owner_deletion_copy = NULL;
+    if (block_owner_deletion) {
+        block_owner_deletion_copy = malloc(sizeof(int));
+        if (block_owner_deletion_copy) *block_owner_deletion_copy = *block_owner_deletion;
+    }
+    int *controller_copy = NULL;
+    if (controller) {
+        controller_copy = malloc(sizeof(int));
+        if (controller_copy) *controller_copy = *controller;
+    }
+    v1_owner_reference_t *result = v1_owner_reference_create_internal (
         api_version,
-        block_owner_deletion,
-        controller,
+        block_owner_deletion_copy,
+        controller_copy,
         kind,
         name,
         uid
         );
+    if (!result) {
+        free(block_owner_deletion_copy);
+        free(controller_copy);
+    }
+    return result;
 }
 
 void v1_owner_reference_free(v1_owner_reference_t *v1_owner_reference) {
@@ -58,6 +73,14 @@ void v1_owner_reference_free(v1_owner_reference_t *v1_owner_reference) {
     if (v1_owner_reference->api_version) {
         free(v1_owner_reference->api_version);
         v1_owner_reference->api_version = NULL;
+    }
+    if (v1_owner_reference->block_owner_deletion) {
+        free(v1_owner_reference->block_owner_deletion);
+        v1_owner_reference->block_owner_deletion = NULL;
+    }
+    if (v1_owner_reference->controller) {
+        free(v1_owner_reference->controller);
+        v1_owner_reference->controller = NULL;
     }
     if (v1_owner_reference->kind) {
         free(v1_owner_reference->kind);
@@ -88,7 +111,7 @@ cJSON *v1_owner_reference_convertToJSON(v1_owner_reference_t *v1_owner_reference
 
     // v1_owner_reference->block_owner_deletion
     if(v1_owner_reference->block_owner_deletion) {
-    if(cJSON_AddBoolToObject(item, "blockOwnerDeletion", v1_owner_reference->block_owner_deletion) == NULL) {
+    if(cJSON_AddBoolToObject(item, "blockOwnerDeletion", *v1_owner_reference->block_owner_deletion) == NULL) {
     goto fail; //Bool
     }
     }
@@ -96,7 +119,7 @@ cJSON *v1_owner_reference_convertToJSON(v1_owner_reference_t *v1_owner_reference
 
     // v1_owner_reference->controller
     if(v1_owner_reference->controller) {
-    if(cJSON_AddBoolToObject(item, "controller", v1_owner_reference->controller) == NULL) {
+    if(cJSON_AddBoolToObject(item, "controller", *v1_owner_reference->controller) == NULL) {
     goto fail; //Bool
     }
     }
@@ -140,6 +163,20 @@ v1_owner_reference_t *v1_owner_reference_parseFromJSON(cJSON *v1_owner_reference
 
     v1_owner_reference_t *v1_owner_reference_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
+    // define the local variable for v1_owner_reference->block_owner_deletion
+    int *block_owner_deletion_local_var = NULL;
+
+    // define the local variable for v1_owner_reference->controller
+    int *controller_local_var = NULL;
+
+    char *kind_local_str = NULL;
+
+    char *name_local_str = NULL;
+
+    char *uid_local_str = NULL;
+
     // v1_owner_reference->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_owner_referenceJSON, "apiVersion");
     if (cJSON_IsNull(api_version)) {
@@ -165,6 +202,12 @@ v1_owner_reference_t *v1_owner_reference_parseFromJSON(cJSON *v1_owner_reference
     {
     goto end; //Bool
     }
+    block_owner_deletion_local_var = malloc(sizeof(int));
+    if(!block_owner_deletion_local_var)
+    {
+        goto end;
+    }
+    *block_owner_deletion_local_var = block_owner_deletion->valueint;
     }
 
     // v1_owner_reference->controller
@@ -177,6 +220,12 @@ v1_owner_reference_t *v1_owner_reference_parseFromJSON(cJSON *v1_owner_reference
     {
     goto end; //Bool
     }
+    controller_local_var = malloc(sizeof(int));
+    if(!controller_local_var)
+    {
+        goto end;
+    }
+    *controller_local_var = controller->valueint;
     }
 
     // v1_owner_reference->kind
@@ -225,17 +274,50 @@ v1_owner_reference_t *v1_owner_reference_parseFromJSON(cJSON *v1_owner_reference
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (uid && !cJSON_IsNull(uid)) uid_local_str = strdup(uid->valuestring);
+
     v1_owner_reference_local_var = v1_owner_reference_create_internal (
-        strdup(api_version->valuestring),
-        block_owner_deletion ? block_owner_deletion->valueint : 0,
-        controller ? controller->valueint : 0,
-        strdup(kind->valuestring),
-        strdup(name->valuestring),
-        strdup(uid->valuestring)
+        api_version_local_str,
+        block_owner_deletion_local_var,
+        controller_local_var,
+        kind_local_str,
+        name_local_str,
+        uid_local_str
         );
+
+    if (!v1_owner_reference_local_var) {
+        goto end;
+    }
 
     return v1_owner_reference_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (block_owner_deletion_local_var) {
+        free(block_owner_deletion_local_var);
+        block_owner_deletion_local_var = NULL;
+    }
+    if (controller_local_var) {
+        free(controller_local_var);
+        controller_local_var = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (uid_local_str) {
+        free(uid_local_str);
+        uid_local_str = NULL;
+    }
     return NULL;
 
 }

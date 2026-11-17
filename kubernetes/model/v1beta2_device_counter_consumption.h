@@ -20,6 +20,7 @@ typedef struct v1beta2_device_counter_consumption_t v1beta2_device_counter_consu
 
 
 typedef struct v1beta2_device_counter_consumption_t {
+    list_t *compatibility_groups; //primitive container
     char *counter_set; // string
     list_t* counters; //map
 
@@ -27,6 +28,7 @@ typedef struct v1beta2_device_counter_consumption_t {
 } v1beta2_device_counter_consumption_t;
 
 __attribute__((deprecated)) v1beta2_device_counter_consumption_t *v1beta2_device_counter_consumption_create(
+    list_t *compatibility_groups,
     char *counter_set,
     list_t* counters
 );

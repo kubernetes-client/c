@@ -6,8 +6,8 @@
 
 
 static v1_replica_set_spec_t *v1_replica_set_spec_create_internal(
-    int min_ready_seconds,
-    int replicas,
+    int *min_ready_seconds,
+    int *replicas,
     v1_label_selector_t *selector,
     v1_pod_template_spec_t *_template
     ) {
@@ -15,27 +15,42 @@ static v1_replica_set_spec_t *v1_replica_set_spec_create_internal(
     if (!v1_replica_set_spec_local_var) {
         return NULL;
     }
+    memset(v1_replica_set_spec_local_var, 0, sizeof(v1_replica_set_spec_t));
+    v1_replica_set_spec_local_var->_library_owned = 1;
     v1_replica_set_spec_local_var->min_ready_seconds = min_ready_seconds;
     v1_replica_set_spec_local_var->replicas = replicas;
     v1_replica_set_spec_local_var->selector = selector;
     v1_replica_set_spec_local_var->_template = _template;
-
-    v1_replica_set_spec_local_var->_library_owned = 1;
     return v1_replica_set_spec_local_var;
 }
 
 __attribute__((deprecated)) v1_replica_set_spec_t *v1_replica_set_spec_create(
-    int min_ready_seconds,
-    int replicas,
+    int *min_ready_seconds,
+    int *replicas,
     v1_label_selector_t *selector,
     v1_pod_template_spec_t *_template
     ) {
-    return v1_replica_set_spec_create_internal (
-        min_ready_seconds,
-        replicas,
+    int *min_ready_seconds_copy = NULL;
+    if (min_ready_seconds) {
+        min_ready_seconds_copy = malloc(sizeof(int));
+        if (min_ready_seconds_copy) *min_ready_seconds_copy = *min_ready_seconds;
+    }
+    int *replicas_copy = NULL;
+    if (replicas) {
+        replicas_copy = malloc(sizeof(int));
+        if (replicas_copy) *replicas_copy = *replicas;
+    }
+    v1_replica_set_spec_t *result = v1_replica_set_spec_create_internal (
+        min_ready_seconds_copy,
+        replicas_copy,
         selector,
         _template
         );
+    if (!result) {
+        free(min_ready_seconds_copy);
+        free(replicas_copy);
+    }
+    return result;
 }
 
 void v1_replica_set_spec_free(v1_replica_set_spec_t *v1_replica_set_spec) {
@@ -47,6 +62,14 @@ void v1_replica_set_spec_free(v1_replica_set_spec_t *v1_replica_set_spec) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_replica_set_spec->min_ready_seconds) {
+        free(v1_replica_set_spec->min_ready_seconds);
+        v1_replica_set_spec->min_ready_seconds = NULL;
+    }
+    if (v1_replica_set_spec->replicas) {
+        free(v1_replica_set_spec->replicas);
+        v1_replica_set_spec->replicas = NULL;
+    }
     if (v1_replica_set_spec->selector) {
         v1_label_selector_free(v1_replica_set_spec->selector);
         v1_replica_set_spec->selector = NULL;
@@ -63,7 +86,7 @@ cJSON *v1_replica_set_spec_convertToJSON(v1_replica_set_spec_t *v1_replica_set_s
 
     // v1_replica_set_spec->min_ready_seconds
     if(v1_replica_set_spec->min_ready_seconds) {
-    if(cJSON_AddNumberToObject(item, "minReadySeconds", v1_replica_set_spec->min_ready_seconds) == NULL) {
+    if(cJSON_AddNumberToObject(item, "minReadySeconds", *v1_replica_set_spec->min_ready_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -71,7 +94,7 @@ cJSON *v1_replica_set_spec_convertToJSON(v1_replica_set_spec_t *v1_replica_set_s
 
     // v1_replica_set_spec->replicas
     if(v1_replica_set_spec->replicas) {
-    if(cJSON_AddNumberToObject(item, "replicas", v1_replica_set_spec->replicas) == NULL) {
+    if(cJSON_AddNumberToObject(item, "replicas", *v1_replica_set_spec->replicas) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -115,6 +138,12 @@ v1_replica_set_spec_t *v1_replica_set_spec_parseFromJSON(cJSON *v1_replica_set_s
 
     v1_replica_set_spec_t *v1_replica_set_spec_local_var = NULL;
 
+    // define the local variable for v1_replica_set_spec->min_ready_seconds
+    int *min_ready_seconds_local_var = NULL;
+
+    // define the local variable for v1_replica_set_spec->replicas
+    int *replicas_local_var = NULL;
+
     // define the local variable for v1_replica_set_spec->selector
     v1_label_selector_t *selector_local_nonprim = NULL;
 
@@ -131,6 +160,12 @@ v1_replica_set_spec_t *v1_replica_set_spec_parseFromJSON(cJSON *v1_replica_set_s
     {
     goto end; //Numeric
     }
+    min_ready_seconds_local_var = malloc(sizeof(int));
+    if(!min_ready_seconds_local_var)
+    {
+        goto end;
+    }
+    *min_ready_seconds_local_var = min_ready_seconds->valuedouble;
     }
 
     // v1_replica_set_spec->replicas
@@ -143,6 +178,12 @@ v1_replica_set_spec_t *v1_replica_set_spec_parseFromJSON(cJSON *v1_replica_set_s
     {
     goto end; //Numeric
     }
+    replicas_local_var = malloc(sizeof(int));
+    if(!replicas_local_var)
+    {
+        goto end;
+    }
+    *replicas_local_var = replicas->valuedouble;
     }
 
     // v1_replica_set_spec->selector
@@ -167,15 +208,28 @@ v1_replica_set_spec_t *v1_replica_set_spec_parseFromJSON(cJSON *v1_replica_set_s
     }
 
 
+
     v1_replica_set_spec_local_var = v1_replica_set_spec_create_internal (
-        min_ready_seconds ? min_ready_seconds->valuedouble : 0,
-        replicas ? replicas->valuedouble : 0,
+        min_ready_seconds_local_var,
+        replicas_local_var,
         selector_local_nonprim,
         _template ? _template_local_nonprim : NULL
         );
 
+    if (!v1_replica_set_spec_local_var) {
+        goto end;
+    }
+
     return v1_replica_set_spec_local_var;
 end:
+    if (min_ready_seconds_local_var) {
+        free(min_ready_seconds_local_var);
+        min_ready_seconds_local_var = NULL;
+    }
+    if (replicas_local_var) {
+        free(replicas_local_var);
+        replicas_local_var = NULL;
+    }
     if (selector_local_nonprim) {
         v1_label_selector_free(selector_local_nonprim);
         selector_local_nonprim = NULL;

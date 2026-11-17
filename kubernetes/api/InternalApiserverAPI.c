@@ -34,6 +34,7 @@ InternalApiserverAPI_getAPIGroup(apiClient_t *apiClient)
     list_addElement(localVarHeaderType,"application/json"); //produces
     list_addElement(localVarHeaderType,"application/yaml"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
+    list_addElement(localVarHeaderType,"application/cbor"); //produces
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,

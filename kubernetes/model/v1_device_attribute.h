@@ -19,19 +19,27 @@ typedef struct v1_device_attribute_t v1_device_attribute_t;
 
 
 typedef struct v1_device_attribute_t {
-    int _bool; //boolean
-    long _int; //numeric
+    int *_bool; //boolean
+    list_t *bools; //primitive container
+    long *_int; //numeric
+    list_t *ints; //primitive container
     char *string; // string
+    list_t *strings; //primitive container
     char *version; // string
+    list_t *versions; //primitive container
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_device_attribute_t;
 
 __attribute__((deprecated)) v1_device_attribute_t *v1_device_attribute_create(
-    int _bool,
-    long _int,
+    int *_bool,
+    list_t *bools,
+    long *_int,
+    list_t *ints,
     char *string,
-    char *version
+    list_t *strings,
+    char *version,
+    list_t *versions
 );
 
 void v1_device_attribute_free(v1_device_attribute_t *v1_device_attribute);

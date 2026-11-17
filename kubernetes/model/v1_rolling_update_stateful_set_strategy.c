@@ -7,27 +7,36 @@
 
 static v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strategy_create_internal(
     int_or_string_t *max_unavailable,
-    int partition
+    int *partition
     ) {
     v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strategy_local_var = malloc(sizeof(v1_rolling_update_stateful_set_strategy_t));
     if (!v1_rolling_update_stateful_set_strategy_local_var) {
         return NULL;
     }
+    memset(v1_rolling_update_stateful_set_strategy_local_var, 0, sizeof(v1_rolling_update_stateful_set_strategy_t));
+    v1_rolling_update_stateful_set_strategy_local_var->_library_owned = 1;
     v1_rolling_update_stateful_set_strategy_local_var->max_unavailable = max_unavailable;
     v1_rolling_update_stateful_set_strategy_local_var->partition = partition;
-
-    v1_rolling_update_stateful_set_strategy_local_var->_library_owned = 1;
     return v1_rolling_update_stateful_set_strategy_local_var;
 }
 
 __attribute__((deprecated)) v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strategy_create(
     int_or_string_t *max_unavailable,
-    int partition
+    int *partition
     ) {
-    return v1_rolling_update_stateful_set_strategy_create_internal (
+    int *partition_copy = NULL;
+    if (partition) {
+        partition_copy = malloc(sizeof(int));
+        if (partition_copy) *partition_copy = *partition;
+    }
+    v1_rolling_update_stateful_set_strategy_t *result = v1_rolling_update_stateful_set_strategy_create_internal (
         max_unavailable,
-        partition
+        partition_copy
         );
+    if (!result) {
+        free(partition_copy);
+    }
+    return result;
 }
 
 void v1_rolling_update_stateful_set_strategy_free(v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strategy) {
@@ -42,6 +51,10 @@ void v1_rolling_update_stateful_set_strategy_free(v1_rolling_update_stateful_set
     if (v1_rolling_update_stateful_set_strategy->max_unavailable) {
         int_or_string_free(v1_rolling_update_stateful_set_strategy->max_unavailable);
         v1_rolling_update_stateful_set_strategy->max_unavailable = NULL;
+    }
+    if (v1_rolling_update_stateful_set_strategy->partition) {
+        free(v1_rolling_update_stateful_set_strategy->partition);
+        v1_rolling_update_stateful_set_strategy->partition = NULL;
     }
     free(v1_rolling_update_stateful_set_strategy);
 }
@@ -64,7 +77,7 @@ cJSON *v1_rolling_update_stateful_set_strategy_convertToJSON(v1_rolling_update_s
 
     // v1_rolling_update_stateful_set_strategy->partition
     if(v1_rolling_update_stateful_set_strategy->partition) {
-    if(cJSON_AddNumberToObject(item, "partition", v1_rolling_update_stateful_set_strategy->partition) == NULL) {
+    if(cJSON_AddNumberToObject(item, "partition", *v1_rolling_update_stateful_set_strategy->partition) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -83,6 +96,9 @@ v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strate
 
     // define the local variable for v1_rolling_update_stateful_set_strategy->max_unavailable
     int_or_string_t *max_unavailable_local_nonprim = NULL;
+
+    // define the local variable for v1_rolling_update_stateful_set_strategy->partition
+    int *partition_local_var = NULL;
 
     // v1_rolling_update_stateful_set_strategy->max_unavailable
     cJSON *max_unavailable = cJSON_GetObjectItemCaseSensitive(v1_rolling_update_stateful_set_strategyJSON, "maxUnavailable");
@@ -103,19 +119,34 @@ v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strate
     {
     goto end; //Numeric
     }
+    partition_local_var = malloc(sizeof(int));
+    if(!partition_local_var)
+    {
+        goto end;
     }
+    *partition_local_var = partition->valuedouble;
+    }
+
 
 
     v1_rolling_update_stateful_set_strategy_local_var = v1_rolling_update_stateful_set_strategy_create_internal (
         max_unavailable ? max_unavailable_local_nonprim : NULL,
-        partition ? partition->valuedouble : 0
+        partition_local_var
         );
+
+    if (!v1_rolling_update_stateful_set_strategy_local_var) {
+        goto end;
+    }
 
     return v1_rolling_update_stateful_set_strategy_local_var;
 end:
     if (max_unavailable_local_nonprim) {
         int_or_string_free(max_unavailable_local_nonprim);
         max_unavailable_local_nonprim = NULL;
+    }
+    if (partition_local_var) {
+        free(partition_local_var);
+        partition_local_var = NULL;
     }
     return NULL;
 

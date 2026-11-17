@@ -19,13 +19,13 @@ typedef struct v1_stateful_set_ordinals_t v1_stateful_set_ordinals_t;
 
 
 typedef struct v1_stateful_set_ordinals_t {
-    int start; //numeric
+    int *start; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_stateful_set_ordinals_t;
 
 __attribute__((deprecated)) v1_stateful_set_ordinals_t *v1_stateful_set_ordinals_create(
-    int start
+    int *start
 );
 
 void v1_stateful_set_ordinals_free(v1_stateful_set_ordinals_t *v1_stateful_set_ordinals);

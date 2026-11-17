@@ -22,7 +22,7 @@ typedef struct v1_validating_admission_policy_status_t v1_validating_admission_p
 
 typedef struct v1_validating_admission_policy_status_t {
     list_t *conditions; //nonprimitive container
-    long observed_generation; //numeric
+    long *observed_generation; //numeric
     struct v1_type_checking_t *type_checking; //model
 
     int _library_owned; // Is the library responsible for freeing this object?
@@ -30,7 +30,7 @@ typedef struct v1_validating_admission_policy_status_t {
 
 __attribute__((deprecated)) v1_validating_admission_policy_status_t *v1_validating_admission_policy_status_create(
     list_t *conditions,
-    long observed_generation,
+    long *observed_generation,
     v1_type_checking_t *type_checking
 );
 

@@ -17,14 +17,14 @@ static v1beta1_named_rule_with_operations_t *v1beta1_named_rule_with_operations_
     if (!v1beta1_named_rule_with_operations_local_var) {
         return NULL;
     }
+    memset(v1beta1_named_rule_with_operations_local_var, 0, sizeof(v1beta1_named_rule_with_operations_t));
+    v1beta1_named_rule_with_operations_local_var->_library_owned = 1;
     v1beta1_named_rule_with_operations_local_var->api_groups = api_groups;
     v1beta1_named_rule_with_operations_local_var->api_versions = api_versions;
     v1beta1_named_rule_with_operations_local_var->operations = operations;
     v1beta1_named_rule_with_operations_local_var->resource_names = resource_names;
     v1beta1_named_rule_with_operations_local_var->resources = resources;
     v1beta1_named_rule_with_operations_local_var->scope = scope;
-
-    v1beta1_named_rule_with_operations_local_var->_library_owned = 1;
     return v1beta1_named_rule_with_operations_local_var;
 }
 
@@ -36,7 +36,7 @@ __attribute__((deprecated)) v1beta1_named_rule_with_operations_t *v1beta1_named_
     list_t *resources,
     char *scope
     ) {
-    return v1beta1_named_rule_with_operations_create_internal (
+    v1beta1_named_rule_with_operations_t *result = v1beta1_named_rule_with_operations_create_internal (
         api_groups,
         api_versions,
         operations,
@@ -44,6 +44,9 @@ __attribute__((deprecated)) v1beta1_named_rule_with_operations_t *v1beta1_named_
         resources,
         scope
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1beta1_named_rule_with_operations_free(v1beta1_named_rule_with_operations_t *v1beta1_named_rule_with_operations) {
@@ -219,6 +222,8 @@ v1beta1_named_rule_with_operations_t *v1beta1_named_rule_with_operations_parseFr
     // define the local list for v1beta1_named_rule_with_operations->resources
     list_t *resourcesList = NULL;
 
+    char *scope_local_str = NULL;
+
     // v1beta1_named_rule_with_operations->api_groups
     cJSON *api_groups = cJSON_GetObjectItemCaseSensitive(v1beta1_named_rule_with_operationsJSON, "apiGroups");
     if (cJSON_IsNull(api_groups)) {
@@ -342,14 +347,20 @@ v1beta1_named_rule_with_operations_t *v1beta1_named_rule_with_operations_parseFr
     }
 
 
+    if (scope && !cJSON_IsNull(scope)) scope_local_str = strdup(scope->valuestring);
+
     v1beta1_named_rule_with_operations_local_var = v1beta1_named_rule_with_operations_create_internal (
         api_groups ? api_groupsList : NULL,
         api_versions ? api_versionsList : NULL,
         operations ? operationsList : NULL,
         resource_names ? resource_namesList : NULL,
         resources ? resourcesList : NULL,
-        scope && !cJSON_IsNull(scope) ? strdup(scope->valuestring) : NULL
+        scope_local_str
         );
+
+    if (!v1beta1_named_rule_with_operations_local_var) {
+        goto end;
+    }
 
     return v1beta1_named_rule_with_operations_local_var;
 end:
@@ -397,6 +408,10 @@ end:
         }
         list_freeList(resourcesList);
         resourcesList = NULL;
+    }
+    if (scope_local_str) {
+        free(scope_local_str);
+        scope_local_str = NULL;
     }
     return NULL;
 

@@ -22,7 +22,7 @@ typedef struct v1_subject_rules_review_status_t v1_subject_rules_review_status_t
 
 typedef struct v1_subject_rules_review_status_t {
     char *evaluation_error; // string
-    int incomplete; //boolean
+    int *incomplete; //boolean
     list_t *non_resource_rules; //nonprimitive container
     list_t *resource_rules; //nonprimitive container
 
@@ -31,7 +31,7 @@ typedef struct v1_subject_rules_review_status_t {
 
 __attribute__((deprecated)) v1_subject_rules_review_status_t *v1_subject_rules_review_status_create(
     char *evaluation_error,
-    int incomplete,
+    int *incomplete,
     list_t *non_resource_rules,
     list_t *resource_rules
 );

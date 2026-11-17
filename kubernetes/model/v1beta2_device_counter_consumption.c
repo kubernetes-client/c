@@ -6,6 +6,7 @@
 
 
 static v1beta2_device_counter_consumption_t *v1beta2_device_counter_consumption_create_internal(
+    list_t *compatibility_groups,
     char *counter_set,
     list_t* counters
     ) {
@@ -13,21 +14,27 @@ static v1beta2_device_counter_consumption_t *v1beta2_device_counter_consumption_
     if (!v1beta2_device_counter_consumption_local_var) {
         return NULL;
     }
+    memset(v1beta2_device_counter_consumption_local_var, 0, sizeof(v1beta2_device_counter_consumption_t));
+    v1beta2_device_counter_consumption_local_var->_library_owned = 1;
+    v1beta2_device_counter_consumption_local_var->compatibility_groups = compatibility_groups;
     v1beta2_device_counter_consumption_local_var->counter_set = counter_set;
     v1beta2_device_counter_consumption_local_var->counters = counters;
-
-    v1beta2_device_counter_consumption_local_var->_library_owned = 1;
     return v1beta2_device_counter_consumption_local_var;
 }
 
 __attribute__((deprecated)) v1beta2_device_counter_consumption_t *v1beta2_device_counter_consumption_create(
+    list_t *compatibility_groups,
     char *counter_set,
     list_t* counters
     ) {
-    return v1beta2_device_counter_consumption_create_internal (
+    v1beta2_device_counter_consumption_t *result = v1beta2_device_counter_consumption_create_internal (
+        compatibility_groups,
         counter_set,
         counters
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1beta2_device_counter_consumption_free(v1beta2_device_counter_consumption_t *v1beta2_device_counter_consumption) {
@@ -39,6 +46,13 @@ void v1beta2_device_counter_consumption_free(v1beta2_device_counter_consumption_
         return ;
     }
     listEntry_t *listEntry;
+    if (v1beta2_device_counter_consumption->compatibility_groups) {
+        list_ForEach(listEntry, v1beta2_device_counter_consumption->compatibility_groups) {
+            free(listEntry->data);
+        }
+        list_freeList(v1beta2_device_counter_consumption->compatibility_groups);
+        v1beta2_device_counter_consumption->compatibility_groups = NULL;
+    }
     if (v1beta2_device_counter_consumption->counter_set) {
         free(v1beta2_device_counter_consumption->counter_set);
         v1beta2_device_counter_consumption->counter_set = NULL;
@@ -58,6 +72,23 @@ void v1beta2_device_counter_consumption_free(v1beta2_device_counter_consumption_
 
 cJSON *v1beta2_device_counter_consumption_convertToJSON(v1beta2_device_counter_consumption_t *v1beta2_device_counter_consumption) {
     cJSON *item = cJSON_CreateObject();
+
+    // v1beta2_device_counter_consumption->compatibility_groups
+    if(v1beta2_device_counter_consumption->compatibility_groups) {
+    cJSON *compatibility_groups = cJSON_AddArrayToObject(item, "compatibilityGroups");
+    if(compatibility_groups == NULL) {
+        goto fail; //primitive container
+    }
+
+    listEntry_t *compatibility_groupsListEntry;
+    list_ForEach(compatibility_groupsListEntry, v1beta2_device_counter_consumption->compatibility_groups) {
+    if(cJSON_AddStringToObject(compatibility_groups, "", compatibility_groupsListEntry->data) == NULL)
+    {
+        goto fail;
+    }
+    }
+    }
+
 
     // v1beta2_device_counter_consumption->counter_set
     if (!v1beta2_device_counter_consumption->counter_set) {
@@ -96,8 +127,35 @@ v1beta2_device_counter_consumption_t *v1beta2_device_counter_consumption_parseFr
 
     v1beta2_device_counter_consumption_t *v1beta2_device_counter_consumption_local_var = NULL;
 
+    // define the local list for v1beta2_device_counter_consumption->compatibility_groups
+    list_t *compatibility_groupsList = NULL;
+
+    char *counter_set_local_str = NULL;
+
     // define the local map for v1beta2_device_counter_consumption->counters
     list_t *countersList = NULL;
+
+    // v1beta2_device_counter_consumption->compatibility_groups
+    cJSON *compatibility_groups = cJSON_GetObjectItemCaseSensitive(v1beta2_device_counter_consumptionJSON, "compatibilityGroups");
+    if (cJSON_IsNull(compatibility_groups)) {
+        compatibility_groups = NULL;
+    }
+    if (compatibility_groups) { 
+    cJSON *compatibility_groups_local = NULL;
+    if(!cJSON_IsArray(compatibility_groups)) {
+        goto end;//primitive container
+    }
+    compatibility_groupsList = list_createList();
+
+    cJSON_ArrayForEach(compatibility_groups_local, compatibility_groups)
+    {
+        if(!cJSON_IsString(compatibility_groups_local))
+        {
+            goto end;
+        }
+        list_addElement(compatibility_groupsList , strdup(compatibility_groups_local->valuestring));
+    }
+    }
 
     // v1beta2_device_counter_consumption->counter_set
     cJSON *counter_set = cJSON_GetObjectItemCaseSensitive(v1beta2_device_counter_consumptionJSON, "counterSet");
@@ -129,13 +187,33 @@ v1beta2_device_counter_consumption_t *v1beta2_device_counter_consumption_parseFr
 
 
 
+    if (counter_set && !cJSON_IsNull(counter_set)) counter_set_local_str = strdup(counter_set->valuestring);
+
     v1beta2_device_counter_consumption_local_var = v1beta2_device_counter_consumption_create_internal (
-        strdup(counter_set->valuestring),
+        compatibility_groups ? compatibility_groupsList : NULL,
+        counter_set_local_str,
         countersList
         );
 
+    if (!v1beta2_device_counter_consumption_local_var) {
+        goto end;
+    }
+
     return v1beta2_device_counter_consumption_local_var;
 end:
+    if (compatibility_groupsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, compatibility_groupsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(compatibility_groupsList);
+        compatibility_groupsList = NULL;
+    }
+    if (counter_set_local_str) {
+        free(counter_set_local_str);
+        counter_set_local_str = NULL;
+    }
 
     // The data type of the elements in v1beta2_device_counter_consumption->counters is currently not supported.
 

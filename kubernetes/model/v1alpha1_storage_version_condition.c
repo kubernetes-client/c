@@ -8,7 +8,7 @@
 static v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_create_internal(
     char *last_transition_time,
     char *message,
-    long observed_generation,
+    long *observed_generation,
     char *reason,
     char *status,
     char *type
@@ -17,33 +17,42 @@ static v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_
     if (!v1alpha1_storage_version_condition_local_var) {
         return NULL;
     }
+    memset(v1alpha1_storage_version_condition_local_var, 0, sizeof(v1alpha1_storage_version_condition_t));
+    v1alpha1_storage_version_condition_local_var->_library_owned = 1;
     v1alpha1_storage_version_condition_local_var->last_transition_time = last_transition_time;
     v1alpha1_storage_version_condition_local_var->message = message;
     v1alpha1_storage_version_condition_local_var->observed_generation = observed_generation;
     v1alpha1_storage_version_condition_local_var->reason = reason;
     v1alpha1_storage_version_condition_local_var->status = status;
     v1alpha1_storage_version_condition_local_var->type = type;
-
-    v1alpha1_storage_version_condition_local_var->_library_owned = 1;
     return v1alpha1_storage_version_condition_local_var;
 }
 
 __attribute__((deprecated)) v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_create(
     char *last_transition_time,
     char *message,
-    long observed_generation,
+    long *observed_generation,
     char *reason,
     char *status,
     char *type
     ) {
-    return v1alpha1_storage_version_condition_create_internal (
+    long *observed_generation_copy = NULL;
+    if (observed_generation) {
+        observed_generation_copy = malloc(sizeof(long));
+        if (observed_generation_copy) *observed_generation_copy = *observed_generation;
+    }
+    v1alpha1_storage_version_condition_t *result = v1alpha1_storage_version_condition_create_internal (
         last_transition_time,
         message,
-        observed_generation,
+        observed_generation_copy,
         reason,
         status,
         type
         );
+    if (!result) {
+        free(observed_generation_copy);
+    }
+    return result;
 }
 
 void v1alpha1_storage_version_condition_free(v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition) {
@@ -62,6 +71,10 @@ void v1alpha1_storage_version_condition_free(v1alpha1_storage_version_condition_
     if (v1alpha1_storage_version_condition->message) {
         free(v1alpha1_storage_version_condition->message);
         v1alpha1_storage_version_condition->message = NULL;
+    }
+    if (v1alpha1_storage_version_condition->observed_generation) {
+        free(v1alpha1_storage_version_condition->observed_generation);
+        v1alpha1_storage_version_condition->observed_generation = NULL;
     }
     if (v1alpha1_storage_version_condition->reason) {
         free(v1alpha1_storage_version_condition->reason);
@@ -100,7 +113,7 @@ cJSON *v1alpha1_storage_version_condition_convertToJSON(v1alpha1_storage_version
 
     // v1alpha1_storage_version_condition->observed_generation
     if(v1alpha1_storage_version_condition->observed_generation) {
-    if(cJSON_AddNumberToObject(item, "observedGeneration", v1alpha1_storage_version_condition->observed_generation) == NULL) {
+    if(cJSON_AddNumberToObject(item, "observedGeneration", *v1alpha1_storage_version_condition->observed_generation) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -144,6 +157,19 @@ v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_parseFr
 
     v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_local_var = NULL;
 
+    char *last_transition_time_local_str = NULL;
+
+    char *message_local_str = NULL;
+
+    // define the local variable for v1alpha1_storage_version_condition->observed_generation
+    long *observed_generation_local_var = NULL;
+
+    char *reason_local_str = NULL;
+
+    char *status_local_str = NULL;
+
+    char *type_local_str = NULL;
+
     // v1alpha1_storage_version_condition->last_transition_time
     cJSON *last_transition_time = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_version_conditionJSON, "lastTransitionTime");
     if (cJSON_IsNull(last_transition_time)) {
@@ -181,6 +207,12 @@ v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_parseFr
     {
     goto end; //Numeric
     }
+    observed_generation_local_var = malloc(sizeof(long));
+    if(!observed_generation_local_var)
+    {
+        goto end;
+    }
+    *observed_generation_local_var = observed_generation->valuedouble;
     }
 
     // v1alpha1_storage_version_condition->reason
@@ -229,17 +261,51 @@ v1alpha1_storage_version_condition_t *v1alpha1_storage_version_condition_parseFr
     }
 
 
+    if (last_transition_time && !cJSON_IsNull(last_transition_time)) last_transition_time_local_str = strdup(last_transition_time->valuestring);
+    if (message && !cJSON_IsNull(message)) message_local_str = strdup(message->valuestring);
+    if (reason && !cJSON_IsNull(reason)) reason_local_str = strdup(reason->valuestring);
+    if (status && !cJSON_IsNull(status)) status_local_str = strdup(status->valuestring);
+    if (type && !cJSON_IsNull(type)) type_local_str = strdup(type->valuestring);
+
     v1alpha1_storage_version_condition_local_var = v1alpha1_storage_version_condition_create_internal (
-        last_transition_time && !cJSON_IsNull(last_transition_time) ? strdup(last_transition_time->valuestring) : NULL,
-        strdup(message->valuestring),
-        observed_generation ? observed_generation->valuedouble : 0,
-        strdup(reason->valuestring),
-        strdup(status->valuestring),
-        strdup(type->valuestring)
+        last_transition_time_local_str,
+        message_local_str,
+        observed_generation_local_var,
+        reason_local_str,
+        status_local_str,
+        type_local_str
         );
+
+    if (!v1alpha1_storage_version_condition_local_var) {
+        goto end;
+    }
 
     return v1alpha1_storage_version_condition_local_var;
 end:
+    if (last_transition_time_local_str) {
+        free(last_transition_time_local_str);
+        last_transition_time_local_str = NULL;
+    }
+    if (message_local_str) {
+        free(message_local_str);
+        message_local_str = NULL;
+    }
+    if (observed_generation_local_var) {
+        free(observed_generation_local_var);
+        observed_generation_local_var = NULL;
+    }
+    if (reason_local_str) {
+        free(reason_local_str);
+        reason_local_str = NULL;
+    }
+    if (status_local_str) {
+        free(status_local_str);
+        status_local_str = NULL;
+    }
+    if (type_local_str) {
+        free(type_local_str);
+        type_local_str = NULL;
+    }
     return NULL;
 
 }

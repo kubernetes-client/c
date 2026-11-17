@@ -13,10 +13,10 @@ static v1_device_claim_configuration_t *v1_device_claim_configuration_create_int
     if (!v1_device_claim_configuration_local_var) {
         return NULL;
     }
+    memset(v1_device_claim_configuration_local_var, 0, sizeof(v1_device_claim_configuration_t));
+    v1_device_claim_configuration_local_var->_library_owned = 1;
     v1_device_claim_configuration_local_var->opaque = opaque;
     v1_device_claim_configuration_local_var->requests = requests;
-
-    v1_device_claim_configuration_local_var->_library_owned = 1;
     return v1_device_claim_configuration_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_device_claim_configuration_t *v1_device_claim_con
     v1_opaque_device_configuration_t *opaque,
     list_t *requests
     ) {
-    return v1_device_claim_configuration_create_internal (
+    v1_device_claim_configuration_t *result = v1_device_claim_configuration_create_internal (
         opaque,
         requests
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_device_claim_configuration_free(v1_device_claim_configuration_t *v1_device_claim_configuration) {
@@ -135,10 +138,15 @@ v1_device_claim_configuration_t *v1_device_claim_configuration_parseFromJSON(cJS
     }
 
 
+
     v1_device_claim_configuration_local_var = v1_device_claim_configuration_create_internal (
         opaque ? opaque_local_nonprim : NULL,
         requests ? requestsList : NULL
         );
+
+    if (!v1_device_claim_configuration_local_var) {
+        goto end;
+    }
 
     return v1_device_claim_configuration_local_var;
 end:

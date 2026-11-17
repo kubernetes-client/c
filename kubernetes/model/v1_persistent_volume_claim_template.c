@@ -13,10 +13,10 @@ static v1_persistent_volume_claim_template_t *v1_persistent_volume_claim_templat
     if (!v1_persistent_volume_claim_template_local_var) {
         return NULL;
     }
+    memset(v1_persistent_volume_claim_template_local_var, 0, sizeof(v1_persistent_volume_claim_template_t));
+    v1_persistent_volume_claim_template_local_var->_library_owned = 1;
     v1_persistent_volume_claim_template_local_var->metadata = metadata;
     v1_persistent_volume_claim_template_local_var->spec = spec;
-
-    v1_persistent_volume_claim_template_local_var->_library_owned = 1;
     return v1_persistent_volume_claim_template_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_persistent_volume_claim_template_t *v1_persistent
     v1_object_meta_t *metadata,
     v1_persistent_volume_claim_spec_t *spec
     ) {
-    return v1_persistent_volume_claim_template_create_internal (
+    v1_persistent_volume_claim_template_t *result = v1_persistent_volume_claim_template_create_internal (
         metadata,
         spec
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_persistent_volume_claim_template_free(v1_persistent_volume_claim_template_t *v1_persistent_volume_claim_template) {
@@ -119,10 +122,15 @@ v1_persistent_volume_claim_template_t *v1_persistent_volume_claim_template_parse
     spec_local_nonprim = v1_persistent_volume_claim_spec_parseFromJSON(spec); //nonprimitive
 
 
+
     v1_persistent_volume_claim_template_local_var = v1_persistent_volume_claim_template_create_internal (
         metadata ? metadata_local_nonprim : NULL,
         spec_local_nonprim
         );
+
+    if (!v1_persistent_volume_claim_template_local_var) {
+        goto end;
+    }
 
     return v1_persistent_volume_claim_template_local_var;
 end:

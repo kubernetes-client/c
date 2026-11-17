@@ -21,7 +21,7 @@ typedef struct v1_storage_class_t v1_storage_class_t;
 
 
 typedef struct v1_storage_class_t {
-    int allow_volume_expansion; //boolean
+    int *allow_volume_expansion; //boolean
     list_t *allowed_topologies; //nonprimitive container
     char *api_version; // string
     char *kind; // string
@@ -36,7 +36,7 @@ typedef struct v1_storage_class_t {
 } v1_storage_class_t;
 
 __attribute__((deprecated)) v1_storage_class_t *v1_storage_class_create(
-    int allow_volume_expansion,
+    int *allow_volume_expansion,
     list_t *allowed_topologies,
     char *api_version,
     char *kind,

@@ -8,30 +8,39 @@
 static v1_secret_projection_t *v1_secret_projection_create_internal(
     list_t *items,
     char *name,
-    int optional
+    int *optional
     ) {
     v1_secret_projection_t *v1_secret_projection_local_var = malloc(sizeof(v1_secret_projection_t));
     if (!v1_secret_projection_local_var) {
         return NULL;
     }
+    memset(v1_secret_projection_local_var, 0, sizeof(v1_secret_projection_t));
+    v1_secret_projection_local_var->_library_owned = 1;
     v1_secret_projection_local_var->items = items;
     v1_secret_projection_local_var->name = name;
     v1_secret_projection_local_var->optional = optional;
-
-    v1_secret_projection_local_var->_library_owned = 1;
     return v1_secret_projection_local_var;
 }
 
 __attribute__((deprecated)) v1_secret_projection_t *v1_secret_projection_create(
     list_t *items,
     char *name,
-    int optional
+    int *optional
     ) {
-    return v1_secret_projection_create_internal (
+    int *optional_copy = NULL;
+    if (optional) {
+        optional_copy = malloc(sizeof(int));
+        if (optional_copy) *optional_copy = *optional;
+    }
+    v1_secret_projection_t *result = v1_secret_projection_create_internal (
         items,
         name,
-        optional
+        optional_copy
         );
+    if (!result) {
+        free(optional_copy);
+    }
+    return result;
 }
 
 void v1_secret_projection_free(v1_secret_projection_t *v1_secret_projection) {
@@ -53,6 +62,10 @@ void v1_secret_projection_free(v1_secret_projection_t *v1_secret_projection) {
     if (v1_secret_projection->name) {
         free(v1_secret_projection->name);
         v1_secret_projection->name = NULL;
+    }
+    if (v1_secret_projection->optional) {
+        free(v1_secret_projection->optional);
+        v1_secret_projection->optional = NULL;
     }
     free(v1_secret_projection);
 }
@@ -90,7 +103,7 @@ cJSON *v1_secret_projection_convertToJSON(v1_secret_projection_t *v1_secret_proj
 
     // v1_secret_projection->optional
     if(v1_secret_projection->optional) {
-    if(cJSON_AddBoolToObject(item, "optional", v1_secret_projection->optional) == NULL) {
+    if(cJSON_AddBoolToObject(item, "optional", *v1_secret_projection->optional) == NULL) {
     goto fail; //Bool
     }
     }
@@ -109,6 +122,11 @@ v1_secret_projection_t *v1_secret_projection_parseFromJSON(cJSON *v1_secret_proj
 
     // define the local list for v1_secret_projection->items
     list_t *itemsList = NULL;
+
+    char *name_local_str = NULL;
+
+    // define the local variable for v1_secret_projection->optional
+    int *optional_local_var = NULL;
 
     // v1_secret_projection->items
     cJSON *items = cJSON_GetObjectItemCaseSensitive(v1_secret_projectionJSON, "items");
@@ -156,14 +174,26 @@ v1_secret_projection_t *v1_secret_projection_parseFromJSON(cJSON *v1_secret_proj
     {
     goto end; //Bool
     }
+    optional_local_var = malloc(sizeof(int));
+    if(!optional_local_var)
+    {
+        goto end;
+    }
+    *optional_local_var = optional->valueint;
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v1_secret_projection_local_var = v1_secret_projection_create_internal (
         items ? itemsList : NULL,
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL,
-        optional ? optional->valueint : 0
+        name_local_str,
+        optional_local_var
         );
+
+    if (!v1_secret_projection_local_var) {
+        goto end;
+    }
 
     return v1_secret_projection_local_var;
 end:
@@ -175,6 +205,14 @@ end:
         }
         list_freeList(itemsList);
         itemsList = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (optional_local_var) {
+        free(optional_local_var);
+        optional_local_var = NULL;
     }
     return NULL;
 

@@ -13,10 +13,10 @@ static v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_create_inter
     if (!v1_uncounted_terminated_pods_local_var) {
         return NULL;
     }
+    memset(v1_uncounted_terminated_pods_local_var, 0, sizeof(v1_uncounted_terminated_pods_t));
+    v1_uncounted_terminated_pods_local_var->_library_owned = 1;
     v1_uncounted_terminated_pods_local_var->failed = failed;
     v1_uncounted_terminated_pods_local_var->succeeded = succeeded;
-
-    v1_uncounted_terminated_pods_local_var->_library_owned = 1;
     return v1_uncounted_terminated_pods_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_uncounted_terminated_pods_t *v1_uncounted_termina
     list_t *failed,
     list_t *succeeded
     ) {
-    return v1_uncounted_terminated_pods_create_internal (
+    v1_uncounted_terminated_pods_t *result = v1_uncounted_terminated_pods_create_internal (
         failed,
         succeeded
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_uncounted_terminated_pods_free(v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods) {
@@ -155,10 +158,15 @@ v1_uncounted_terminated_pods_t *v1_uncounted_terminated_pods_parseFromJSON(cJSON
     }
 
 
+
     v1_uncounted_terminated_pods_local_var = v1_uncounted_terminated_pods_create_internal (
         failed ? failedList : NULL,
         succeeded ? succeededList : NULL
         );
+
+    if (!v1_uncounted_terminated_pods_local_var) {
+        goto end;
+    }
 
     return v1_uncounted_terminated_pods_local_var;
 end:

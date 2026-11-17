@@ -13,10 +13,10 @@ static v1_server_address_by_client_cidr_t *v1_server_address_by_client_cidr_crea
     if (!v1_server_address_by_client_cidr_local_var) {
         return NULL;
     }
+    memset(v1_server_address_by_client_cidr_local_var, 0, sizeof(v1_server_address_by_client_cidr_t));
+    v1_server_address_by_client_cidr_local_var->_library_owned = 1;
     v1_server_address_by_client_cidr_local_var->client_cidr = client_cidr;
     v1_server_address_by_client_cidr_local_var->server_address = server_address;
-
-    v1_server_address_by_client_cidr_local_var->_library_owned = 1;
     return v1_server_address_by_client_cidr_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_server_address_by_client_cidr_t *v1_server_addres
     char *client_cidr,
     char *server_address
     ) {
-    return v1_server_address_by_client_cidr_create_internal (
+    v1_server_address_by_client_cidr_t *result = v1_server_address_by_client_cidr_create_internal (
         client_cidr,
         server_address
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_server_address_by_client_cidr_free(v1_server_address_by_client_cidr_t *v1_server_address_by_client_cidr) {
@@ -82,6 +85,10 @@ v1_server_address_by_client_cidr_t *v1_server_address_by_client_cidr_parseFromJS
 
     v1_server_address_by_client_cidr_t *v1_server_address_by_client_cidr_local_var = NULL;
 
+    char *client_cidr_local_str = NULL;
+
+    char *server_address_local_str = NULL;
+
     // v1_server_address_by_client_cidr->client_cidr
     cJSON *client_cidr = cJSON_GetObjectItemCaseSensitive(v1_server_address_by_client_cidrJSON, "clientCIDR");
     if (cJSON_IsNull(client_cidr)) {
@@ -113,13 +120,28 @@ v1_server_address_by_client_cidr_t *v1_server_address_by_client_cidr_parseFromJS
     }
 
 
+    if (client_cidr && !cJSON_IsNull(client_cidr)) client_cidr_local_str = strdup(client_cidr->valuestring);
+    if (server_address && !cJSON_IsNull(server_address)) server_address_local_str = strdup(server_address->valuestring);
+
     v1_server_address_by_client_cidr_local_var = v1_server_address_by_client_cidr_create_internal (
-        strdup(client_cidr->valuestring),
-        strdup(server_address->valuestring)
+        client_cidr_local_str,
+        server_address_local_str
         );
+
+    if (!v1_server_address_by_client_cidr_local_var) {
+        goto end;
+    }
 
     return v1_server_address_by_client_cidr_local_var;
 end:
+    if (client_cidr_local_str) {
+        free(client_cidr_local_str);
+        client_cidr_local_str = NULL;
+    }
+    if (server_address_local_str) {
+        free(server_address_local_str);
+        server_address_local_str = NULL;
+    }
     return NULL;
 
 }

@@ -18,6 +18,7 @@ v1_csi_node_t* instantiate_v1_csi_node(int include_optional);
 
 #include "test_v1_object_meta.c"
 #include "test_v1_csi_node_spec.c"
+#include "test_v1_csi_node_status.c"
 
 
 v1_csi_node_t* instantiate_v1_csi_node(int include_optional) {
@@ -29,12 +30,15 @@ v1_csi_node_t* instantiate_v1_csi_node(int include_optional) {
        // false, not to have infinite recursion
       instantiate_v1_object_meta(0),
        // false, not to have infinite recursion
-      instantiate_v1_csi_node_spec(0)
+      instantiate_v1_csi_node_spec(0),
+       // false, not to have infinite recursion
+      instantiate_v1_csi_node_status(0)
     );
   } else {
     v1_csi_node = v1_csi_node_create(
       "0",
       "0",
+      NULL,
       NULL,
       NULL
     );

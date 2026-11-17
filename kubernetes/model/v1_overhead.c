@@ -12,18 +12,21 @@ static v1_overhead_t *v1_overhead_create_internal(
     if (!v1_overhead_local_var) {
         return NULL;
     }
-    v1_overhead_local_var->pod_fixed = pod_fixed;
-
+    memset(v1_overhead_local_var, 0, sizeof(v1_overhead_t));
     v1_overhead_local_var->_library_owned = 1;
+    v1_overhead_local_var->pod_fixed = pod_fixed;
     return v1_overhead_local_var;
 }
 
 __attribute__((deprecated)) v1_overhead_t *v1_overhead_create(
     list_t* pod_fixed
     ) {
-    return v1_overhead_create_internal (
+    v1_overhead_t *result = v1_overhead_create_internal (
         pod_fixed
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_overhead_free(v1_overhead_t *v1_overhead) {
@@ -114,9 +117,14 @@ v1_overhead_t *v1_overhead_parseFromJSON(cJSON *v1_overheadJSON){
     }
 
 
+
     v1_overhead_local_var = v1_overhead_create_internal (
         pod_fixed ? pod_fixedList : NULL
         );
+
+    if (!v1_overhead_local_var) {
+        goto end;
+    }
 
     return v1_overhead_local_var;
 end:

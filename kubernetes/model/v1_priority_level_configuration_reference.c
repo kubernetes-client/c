@@ -12,18 +12,21 @@ static v1_priority_level_configuration_reference_t *v1_priority_level_configurat
     if (!v1_priority_level_configuration_reference_local_var) {
         return NULL;
     }
-    v1_priority_level_configuration_reference_local_var->name = name;
-
+    memset(v1_priority_level_configuration_reference_local_var, 0, sizeof(v1_priority_level_configuration_reference_t));
     v1_priority_level_configuration_reference_local_var->_library_owned = 1;
+    v1_priority_level_configuration_reference_local_var->name = name;
     return v1_priority_level_configuration_reference_local_var;
 }
 
 __attribute__((deprecated)) v1_priority_level_configuration_reference_t *v1_priority_level_configuration_reference_create(
     char *name
     ) {
-    return v1_priority_level_configuration_reference_create_internal (
+    v1_priority_level_configuration_reference_t *result = v1_priority_level_configuration_reference_create_internal (
         name
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_priority_level_configuration_reference_free(v1_priority_level_configuration_reference_t *v1_priority_level_configuration_reference) {
@@ -65,6 +68,8 @@ v1_priority_level_configuration_reference_t *v1_priority_level_configuration_ref
 
     v1_priority_level_configuration_reference_t *v1_priority_level_configuration_reference_local_var = NULL;
 
+    char *name_local_str = NULL;
+
     // v1_priority_level_configuration_reference->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_priority_level_configuration_referenceJSON, "name");
     if (cJSON_IsNull(name)) {
@@ -81,12 +86,22 @@ v1_priority_level_configuration_reference_t *v1_priority_level_configuration_ref
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v1_priority_level_configuration_reference_local_var = v1_priority_level_configuration_reference_create_internal (
-        strdup(name->valuestring)
+        name_local_str
         );
+
+    if (!v1_priority_level_configuration_reference_local_var) {
+        goto end;
+    }
 
     return v1_priority_level_configuration_reference_local_var;
 end:
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
     return NULL;
 
 }

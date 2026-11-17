@@ -18,6 +18,8 @@ static v1_csi_storage_capacity_t *v1_csi_storage_capacity_create_internal(
     if (!v1_csi_storage_capacity_local_var) {
         return NULL;
     }
+    memset(v1_csi_storage_capacity_local_var, 0, sizeof(v1_csi_storage_capacity_t));
+    v1_csi_storage_capacity_local_var->_library_owned = 1;
     v1_csi_storage_capacity_local_var->api_version = api_version;
     v1_csi_storage_capacity_local_var->capacity = capacity;
     v1_csi_storage_capacity_local_var->kind = kind;
@@ -25,8 +27,6 @@ static v1_csi_storage_capacity_t *v1_csi_storage_capacity_create_internal(
     v1_csi_storage_capacity_local_var->metadata = metadata;
     v1_csi_storage_capacity_local_var->node_topology = node_topology;
     v1_csi_storage_capacity_local_var->storage_class_name = storage_class_name;
-
-    v1_csi_storage_capacity_local_var->_library_owned = 1;
     return v1_csi_storage_capacity_local_var;
 }
 
@@ -39,7 +39,7 @@ __attribute__((deprecated)) v1_csi_storage_capacity_t *v1_csi_storage_capacity_c
     v1_label_selector_t *node_topology,
     char *storage_class_name
     ) {
-    return v1_csi_storage_capacity_create_internal (
+    v1_csi_storage_capacity_t *result = v1_csi_storage_capacity_create_internal (
         api_version,
         capacity,
         kind,
@@ -48,6 +48,9 @@ __attribute__((deprecated)) v1_csi_storage_capacity_t *v1_csi_storage_capacity_c
         node_topology,
         storage_class_name
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_csi_storage_capacity_free(v1_csi_storage_capacity_t *v1_csi_storage_capacity) {
@@ -171,11 +174,21 @@ v1_csi_storage_capacity_t *v1_csi_storage_capacity_parseFromJSON(cJSON *v1_csi_s
 
     v1_csi_storage_capacity_t *v1_csi_storage_capacity_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
+    char *capacity_local_str = NULL;
+
+    char *kind_local_str = NULL;
+
+    char *maximum_volume_size_local_str = NULL;
+
     // define the local variable for v1_csi_storage_capacity->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
 
     // define the local variable for v1_csi_storage_capacity->node_topology
     v1_label_selector_t *node_topology_local_nonprim = NULL;
+
+    char *storage_class_name_local_str = NULL;
 
     // v1_csi_storage_capacity->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_csi_storage_capacityJSON, "apiVersion");
@@ -259,18 +272,44 @@ v1_csi_storage_capacity_t *v1_csi_storage_capacity_parseFromJSON(cJSON *v1_csi_s
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (capacity && !cJSON_IsNull(capacity)) capacity_local_str = strdup(capacity->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+    if (maximum_volume_size && !cJSON_IsNull(maximum_volume_size)) maximum_volume_size_local_str = strdup(maximum_volume_size->valuestring);
+    if (storage_class_name && !cJSON_IsNull(storage_class_name)) storage_class_name_local_str = strdup(storage_class_name->valuestring);
+
     v1_csi_storage_capacity_local_var = v1_csi_storage_capacity_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        capacity && !cJSON_IsNull(capacity) ? strdup(capacity->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
-        maximum_volume_size && !cJSON_IsNull(maximum_volume_size) ? strdup(maximum_volume_size->valuestring) : NULL,
+        api_version_local_str,
+        capacity_local_str,
+        kind_local_str,
+        maximum_volume_size_local_str,
         metadata ? metadata_local_nonprim : NULL,
         node_topology ? node_topology_local_nonprim : NULL,
-        strdup(storage_class_name->valuestring)
+        storage_class_name_local_str
         );
+
+    if (!v1_csi_storage_capacity_local_var) {
+        goto end;
+    }
 
     return v1_csi_storage_capacity_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (capacity_local_str) {
+        free(capacity_local_str);
+        capacity_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
+    if (maximum_volume_size_local_str) {
+        free(maximum_volume_size_local_str);
+        maximum_volume_size_local_str = NULL;
+    }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;
@@ -278,6 +317,10 @@ end:
     if (node_topology_local_nonprim) {
         v1_label_selector_free(node_topology_local_nonprim);
         node_topology_local_nonprim = NULL;
+    }
+    if (storage_class_name_local_str) {
+        free(storage_class_name_local_str);
+        storage_class_name_local_str = NULL;
     }
     return NULL;
 

@@ -24,13 +24,15 @@ v1_service_account_token_projection_t* instantiate_v1_service_account_token_proj
     v1_service_account_token_projection = v1_service_account_token_projection_create(
       "0",
       56,
-      "0"
+      "0",
+      56
     );
   } else {
     v1_service_account_token_projection = v1_service_account_token_projection_create(
       "0",
       56,
-      "0"
+      "0",
+      56
     );
   }
 

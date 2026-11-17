@@ -20,11 +20,11 @@ typedef struct v1_container_state_terminated_t v1_container_state_terminated_t;
 
 typedef struct v1_container_state_terminated_t {
     char *container_id; // string
-    int exit_code; //numeric
+    int *exit_code; //numeric
     char *finished_at; //date time
     char *message; // string
     char *reason; // string
-    int signal; //numeric
+    int *signal; //numeric
     char *started_at; //date time
 
     int _library_owned; // Is the library responsible for freeing this object?
@@ -32,11 +32,11 @@ typedef struct v1_container_state_terminated_t {
 
 __attribute__((deprecated)) v1_container_state_terminated_t *v1_container_state_terminated_create(
     char *container_id,
-    int exit_code,
+    int *exit_code,
     char *finished_at,
     char *message,
     char *reason,
-    int signal,
+    int *signal,
     char *started_at
 );
 

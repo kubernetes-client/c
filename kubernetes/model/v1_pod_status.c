@@ -6,6 +6,7 @@
 
 
 static v1_pod_status_t *v1_pod_status_create_internal(
+    list_t* allocated_resources,
     list_t *conditions,
     list_t *container_statuses,
     list_t *ephemeral_container_statuses,
@@ -14,8 +15,9 @@ static v1_pod_status_t *v1_pod_status_create_internal(
     list_t *host_ips,
     list_t *init_container_statuses,
     char *message,
+    list_t *node_allocatable_resource_claim_statuses,
     char *nominated_node_name,
-    long observed_generation,
+    long *observed_generation,
     char *phase,
     char *pod_ip,
     list_t *pod_ips,
@@ -23,12 +25,17 @@ static v1_pod_status_t *v1_pod_status_create_internal(
     char *reason,
     char *resize,
     list_t *resource_claim_statuses,
-    char *start_time
+    v1_resource_requirements_t *resources,
+    char *start_time,
+    list_t *volume_health
     ) {
     v1_pod_status_t *v1_pod_status_local_var = malloc(sizeof(v1_pod_status_t));
     if (!v1_pod_status_local_var) {
         return NULL;
     }
+    memset(v1_pod_status_local_var, 0, sizeof(v1_pod_status_t));
+    v1_pod_status_local_var->_library_owned = 1;
+    v1_pod_status_local_var->allocated_resources = allocated_resources;
     v1_pod_status_local_var->conditions = conditions;
     v1_pod_status_local_var->container_statuses = container_statuses;
     v1_pod_status_local_var->ephemeral_container_statuses = ephemeral_container_statuses;
@@ -37,6 +44,7 @@ static v1_pod_status_t *v1_pod_status_create_internal(
     v1_pod_status_local_var->host_ips = host_ips;
     v1_pod_status_local_var->init_container_statuses = init_container_statuses;
     v1_pod_status_local_var->message = message;
+    v1_pod_status_local_var->node_allocatable_resource_claim_statuses = node_allocatable_resource_claim_statuses;
     v1_pod_status_local_var->nominated_node_name = nominated_node_name;
     v1_pod_status_local_var->observed_generation = observed_generation;
     v1_pod_status_local_var->phase = phase;
@@ -46,13 +54,14 @@ static v1_pod_status_t *v1_pod_status_create_internal(
     v1_pod_status_local_var->reason = reason;
     v1_pod_status_local_var->resize = resize;
     v1_pod_status_local_var->resource_claim_statuses = resource_claim_statuses;
+    v1_pod_status_local_var->resources = resources;
     v1_pod_status_local_var->start_time = start_time;
-
-    v1_pod_status_local_var->_library_owned = 1;
+    v1_pod_status_local_var->volume_health = volume_health;
     return v1_pod_status_local_var;
 }
 
 __attribute__((deprecated)) v1_pod_status_t *v1_pod_status_create(
+    list_t* allocated_resources,
     list_t *conditions,
     list_t *container_statuses,
     list_t *ephemeral_container_statuses,
@@ -61,8 +70,9 @@ __attribute__((deprecated)) v1_pod_status_t *v1_pod_status_create(
     list_t *host_ips,
     list_t *init_container_statuses,
     char *message,
+    list_t *node_allocatable_resource_claim_statuses,
     char *nominated_node_name,
-    long observed_generation,
+    long *observed_generation,
     char *phase,
     char *pod_ip,
     list_t *pod_ips,
@@ -70,9 +80,17 @@ __attribute__((deprecated)) v1_pod_status_t *v1_pod_status_create(
     char *reason,
     char *resize,
     list_t *resource_claim_statuses,
-    char *start_time
+    v1_resource_requirements_t *resources,
+    char *start_time,
+    list_t *volume_health
     ) {
-    return v1_pod_status_create_internal (
+    long *observed_generation_copy = NULL;
+    if (observed_generation) {
+        observed_generation_copy = malloc(sizeof(long));
+        if (observed_generation_copy) *observed_generation_copy = *observed_generation;
+    }
+    v1_pod_status_t *result = v1_pod_status_create_internal (
+        allocated_resources,
         conditions,
         container_statuses,
         ephemeral_container_statuses,
@@ -81,8 +99,9 @@ __attribute__((deprecated)) v1_pod_status_t *v1_pod_status_create(
         host_ips,
         init_container_statuses,
         message,
+        node_allocatable_resource_claim_statuses,
         nominated_node_name,
-        observed_generation,
+        observed_generation_copy,
         phase,
         pod_ip,
         pod_ips,
@@ -90,8 +109,14 @@ __attribute__((deprecated)) v1_pod_status_t *v1_pod_status_create(
         reason,
         resize,
         resource_claim_statuses,
-        start_time
+        resources,
+        start_time,
+        volume_health
         );
+    if (!result) {
+        free(observed_generation_copy);
+    }
+    return result;
 }
 
 void v1_pod_status_free(v1_pod_status_t *v1_pod_status) {
@@ -103,6 +128,16 @@ void v1_pod_status_free(v1_pod_status_t *v1_pod_status) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_pod_status->allocated_resources) {
+        list_ForEach(listEntry, v1_pod_status->allocated_resources) {
+            keyValuePair_t *localKeyValue = listEntry->data;
+            free (localKeyValue->key);
+            free (localKeyValue->value);
+            keyValuePair_free(localKeyValue);
+        }
+        list_freeList(v1_pod_status->allocated_resources);
+        v1_pod_status->allocated_resources = NULL;
+    }
     if (v1_pod_status->conditions) {
         list_ForEach(listEntry, v1_pod_status->conditions) {
             v1_pod_condition_free(listEntry->data);
@@ -150,9 +185,20 @@ void v1_pod_status_free(v1_pod_status_t *v1_pod_status) {
         free(v1_pod_status->message);
         v1_pod_status->message = NULL;
     }
+    if (v1_pod_status->node_allocatable_resource_claim_statuses) {
+        list_ForEach(listEntry, v1_pod_status->node_allocatable_resource_claim_statuses) {
+            v1_node_allocatable_resource_claim_status_free(listEntry->data);
+        }
+        list_freeList(v1_pod_status->node_allocatable_resource_claim_statuses);
+        v1_pod_status->node_allocatable_resource_claim_statuses = NULL;
+    }
     if (v1_pod_status->nominated_node_name) {
         free(v1_pod_status->nominated_node_name);
         v1_pod_status->nominated_node_name = NULL;
+    }
+    if (v1_pod_status->observed_generation) {
+        free(v1_pod_status->observed_generation);
+        v1_pod_status->observed_generation = NULL;
     }
     if (v1_pod_status->phase) {
         free(v1_pod_status->phase);
@@ -188,15 +234,46 @@ void v1_pod_status_free(v1_pod_status_t *v1_pod_status) {
         list_freeList(v1_pod_status->resource_claim_statuses);
         v1_pod_status->resource_claim_statuses = NULL;
     }
+    if (v1_pod_status->resources) {
+        v1_resource_requirements_free(v1_pod_status->resources);
+        v1_pod_status->resources = NULL;
+    }
     if (v1_pod_status->start_time) {
         free(v1_pod_status->start_time);
         v1_pod_status->start_time = NULL;
+    }
+    if (v1_pod_status->volume_health) {
+        list_ForEach(listEntry, v1_pod_status->volume_health) {
+            v1_pod_volume_health_free(listEntry->data);
+        }
+        list_freeList(v1_pod_status->volume_health);
+        v1_pod_status->volume_health = NULL;
     }
     free(v1_pod_status);
 }
 
 cJSON *v1_pod_status_convertToJSON(v1_pod_status_t *v1_pod_status) {
     cJSON *item = cJSON_CreateObject();
+
+    // v1_pod_status->allocated_resources
+    if(v1_pod_status->allocated_resources) {
+    cJSON *allocated_resources = cJSON_AddObjectToObject(item, "allocatedResources");
+    if(allocated_resources == NULL) {
+        goto fail; //primitive map container
+    }
+    cJSON *localMapObject = allocated_resources;
+    listEntry_t *allocated_resourcesListEntry;
+    if (v1_pod_status->allocated_resources) {
+    list_ForEach(allocated_resourcesListEntry, v1_pod_status->allocated_resources) {
+        keyValuePair_t *localKeyValue = allocated_resourcesListEntry->data;
+        if(cJSON_AddStringToObject(localMapObject, localKeyValue->key, localKeyValue->value) == NULL)
+        {
+            goto fail;
+        }
+    }
+    }
+    }
+
 
     // v1_pod_status->conditions
     if(v1_pod_status->conditions) {
@@ -327,6 +404,26 @@ cJSON *v1_pod_status_convertToJSON(v1_pod_status_t *v1_pod_status) {
     }
 
 
+    // v1_pod_status->node_allocatable_resource_claim_statuses
+    if(v1_pod_status->node_allocatable_resource_claim_statuses) {
+    cJSON *node_allocatable_resource_claim_statuses = cJSON_AddArrayToObject(item, "nodeAllocatableResourceClaimStatuses");
+    if(node_allocatable_resource_claim_statuses == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *node_allocatable_resource_claim_statusesListEntry;
+    if (v1_pod_status->node_allocatable_resource_claim_statuses) {
+    list_ForEach(node_allocatable_resource_claim_statusesListEntry, v1_pod_status->node_allocatable_resource_claim_statuses) {
+    cJSON *itemLocal = v1_node_allocatable_resource_claim_status_convertToJSON(node_allocatable_resource_claim_statusesListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(node_allocatable_resource_claim_statuses, itemLocal);
+    }
+    }
+    }
+
+
     // v1_pod_status->nominated_node_name
     if(v1_pod_status->nominated_node_name) {
     if(cJSON_AddStringToObject(item, "nominatedNodeName", v1_pod_status->nominated_node_name) == NULL) {
@@ -337,7 +434,7 @@ cJSON *v1_pod_status_convertToJSON(v1_pod_status_t *v1_pod_status) {
 
     // v1_pod_status->observed_generation
     if(v1_pod_status->observed_generation) {
-    if(cJSON_AddNumberToObject(item, "observedGeneration", v1_pod_status->observed_generation) == NULL) {
+    if(cJSON_AddNumberToObject(item, "observedGeneration", *v1_pod_status->observed_generation) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -423,10 +520,43 @@ cJSON *v1_pod_status_convertToJSON(v1_pod_status_t *v1_pod_status) {
     }
 
 
+    // v1_pod_status->resources
+    if(v1_pod_status->resources) {
+    cJSON *resources_local_JSON = v1_resource_requirements_convertToJSON(v1_pod_status->resources);
+    if(resources_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "resources", resources_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+    }
+
+
     // v1_pod_status->start_time
     if(v1_pod_status->start_time) {
     if(cJSON_AddStringToObject(item, "startTime", v1_pod_status->start_time) == NULL) {
     goto fail; //Date-Time
+    }
+    }
+
+
+    // v1_pod_status->volume_health
+    if(v1_pod_status->volume_health) {
+    cJSON *volume_health = cJSON_AddArrayToObject(item, "volumeHealth");
+    if(volume_health == NULL) {
+    goto fail; //nonprimitive container
+    }
+
+    listEntry_t *volume_healthListEntry;
+    if (v1_pod_status->volume_health) {
+    list_ForEach(volume_healthListEntry, v1_pod_status->volume_health) {
+    cJSON *itemLocal = v1_pod_volume_health_convertToJSON(volume_healthListEntry->data);
+    if(itemLocal == NULL) {
+    goto fail;
+    }
+    cJSON_AddItemToArray(volume_health, itemLocal);
+    }
     }
     }
 
@@ -442,6 +572,9 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
 
     v1_pod_status_t *v1_pod_status_local_var = NULL;
 
+    // define the local map for v1_pod_status->allocated_resources
+    list_t *allocated_resourcesList = NULL;
+
     // define the local list for v1_pod_status->conditions
     list_t *conditionsList = NULL;
 
@@ -454,17 +587,75 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
     // define the local variable for v1_pod_status->extended_resource_claim_status
     v1_pod_extended_resource_claim_status_t *extended_resource_claim_status_local_nonprim = NULL;
 
+    char *host_ip_local_str = NULL;
+
     // define the local list for v1_pod_status->host_ips
     list_t *host_ipsList = NULL;
 
     // define the local list for v1_pod_status->init_container_statuses
     list_t *init_container_statusesList = NULL;
 
+    char *message_local_str = NULL;
+
+    // define the local list for v1_pod_status->node_allocatable_resource_claim_statuses
+    list_t *node_allocatable_resource_claim_statusesList = NULL;
+
+    char *nominated_node_name_local_str = NULL;
+
+    // define the local variable for v1_pod_status->observed_generation
+    long *observed_generation_local_var = NULL;
+
+    char *phase_local_str = NULL;
+
+    char *pod_ip_local_str = NULL;
+
     // define the local list for v1_pod_status->pod_ips
     list_t *pod_ipsList = NULL;
 
+    char *qos_class_local_str = NULL;
+
+    char *reason_local_str = NULL;
+
+    char *resize_local_str = NULL;
+
     // define the local list for v1_pod_status->resource_claim_statuses
     list_t *resource_claim_statusesList = NULL;
+
+    // define the local variable for v1_pod_status->resources
+    v1_resource_requirements_t *resources_local_nonprim = NULL;
+
+    char *start_time_local_str = NULL;
+
+    // define the local list for v1_pod_status->volume_health
+    list_t *volume_healthList = NULL;
+
+    // v1_pod_status->allocated_resources
+    cJSON *allocated_resources = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "allocatedResources");
+    if (cJSON_IsNull(allocated_resources)) {
+        allocated_resources = NULL;
+    }
+    if (allocated_resources) { 
+    cJSON *allocated_resources_local_map = NULL;
+    if(!cJSON_IsObject(allocated_resources) && !cJSON_IsNull(allocated_resources))
+    {
+        goto end;//primitive map container
+    }
+    if(cJSON_IsObject(allocated_resources))
+    {
+        allocated_resourcesList = list_createList();
+        keyValuePair_t *localMapKeyPair;
+        cJSON_ArrayForEach(allocated_resources_local_map, allocated_resources)
+        {
+            cJSON *localMapObject = allocated_resources_local_map;
+            if(!cJSON_IsString(localMapObject))
+            {
+                goto end;
+            }
+            localMapKeyPair = keyValuePair_create(strdup(localMapObject->string),strdup(localMapObject->valuestring));
+            list_addElement(allocated_resourcesList , localMapKeyPair);
+        }
+    }
+    }
 
     // v1_pod_status->conditions
     cJSON *conditions = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "conditions");
@@ -619,6 +810,30 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
     }
     }
 
+    // v1_pod_status->node_allocatable_resource_claim_statuses
+    cJSON *node_allocatable_resource_claim_statuses = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "nodeAllocatableResourceClaimStatuses");
+    if (cJSON_IsNull(node_allocatable_resource_claim_statuses)) {
+        node_allocatable_resource_claim_statuses = NULL;
+    }
+    if (node_allocatable_resource_claim_statuses) { 
+    cJSON *node_allocatable_resource_claim_statuses_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(node_allocatable_resource_claim_statuses)){
+        goto end; //nonprimitive container
+    }
+
+    node_allocatable_resource_claim_statusesList = list_createList();
+
+    cJSON_ArrayForEach(node_allocatable_resource_claim_statuses_local_nonprimitive,node_allocatable_resource_claim_statuses )
+    {
+        if(!cJSON_IsObject(node_allocatable_resource_claim_statuses_local_nonprimitive)){
+            goto end;
+        }
+        v1_node_allocatable_resource_claim_status_t *node_allocatable_resource_claim_statusesItem = v1_node_allocatable_resource_claim_status_parseFromJSON(node_allocatable_resource_claim_statuses_local_nonprimitive);
+
+        list_addElement(node_allocatable_resource_claim_statusesList, node_allocatable_resource_claim_statusesItem);
+    }
+    }
+
     // v1_pod_status->nominated_node_name
     cJSON *nominated_node_name = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "nominatedNodeName");
     if (cJSON_IsNull(nominated_node_name)) {
@@ -641,6 +856,12 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
     {
     goto end; //Numeric
     }
+    observed_generation_local_var = malloc(sizeof(long));
+    if(!observed_generation_local_var)
+    {
+        goto end;
+    }
+    *observed_generation_local_var = observed_generation->valuedouble;
     }
 
     // v1_pod_status->phase
@@ -751,6 +972,15 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
     }
     }
 
+    // v1_pod_status->resources
+    cJSON *resources = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "resources");
+    if (cJSON_IsNull(resources)) {
+        resources = NULL;
+    }
+    if (resources) { 
+    resources_local_nonprim = v1_resource_requirements_parseFromJSON(resources); //nonprimitive
+    }
+
     // v1_pod_status->start_time
     cJSON *start_time = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "startTime");
     if (cJSON_IsNull(start_time)) {
@@ -763,30 +993,86 @@ v1_pod_status_t *v1_pod_status_parseFromJSON(cJSON *v1_pod_statusJSON){
     }
     }
 
+    // v1_pod_status->volume_health
+    cJSON *volume_health = cJSON_GetObjectItemCaseSensitive(v1_pod_statusJSON, "volumeHealth");
+    if (cJSON_IsNull(volume_health)) {
+        volume_health = NULL;
+    }
+    if (volume_health) { 
+    cJSON *volume_health_local_nonprimitive = NULL;
+    if(!cJSON_IsArray(volume_health)){
+        goto end; //nonprimitive container
+    }
+
+    volume_healthList = list_createList();
+
+    cJSON_ArrayForEach(volume_health_local_nonprimitive,volume_health )
+    {
+        if(!cJSON_IsObject(volume_health_local_nonprimitive)){
+            goto end;
+        }
+        v1_pod_volume_health_t *volume_healthItem = v1_pod_volume_health_parseFromJSON(volume_health_local_nonprimitive);
+
+        list_addElement(volume_healthList, volume_healthItem);
+    }
+    }
+
+
+    if (host_ip && !cJSON_IsNull(host_ip)) host_ip_local_str = strdup(host_ip->valuestring);
+    if (message && !cJSON_IsNull(message)) message_local_str = strdup(message->valuestring);
+    if (nominated_node_name && !cJSON_IsNull(nominated_node_name)) nominated_node_name_local_str = strdup(nominated_node_name->valuestring);
+    if (phase && !cJSON_IsNull(phase)) phase_local_str = strdup(phase->valuestring);
+    if (pod_ip && !cJSON_IsNull(pod_ip)) pod_ip_local_str = strdup(pod_ip->valuestring);
+    if (qos_class && !cJSON_IsNull(qos_class)) qos_class_local_str = strdup(qos_class->valuestring);
+    if (reason && !cJSON_IsNull(reason)) reason_local_str = strdup(reason->valuestring);
+    if (resize && !cJSON_IsNull(resize)) resize_local_str = strdup(resize->valuestring);
+    if (start_time && !cJSON_IsNull(start_time)) start_time_local_str = strdup(start_time->valuestring);
 
     v1_pod_status_local_var = v1_pod_status_create_internal (
+        allocated_resources ? allocated_resourcesList : NULL,
         conditions ? conditionsList : NULL,
         container_statuses ? container_statusesList : NULL,
         ephemeral_container_statuses ? ephemeral_container_statusesList : NULL,
         extended_resource_claim_status ? extended_resource_claim_status_local_nonprim : NULL,
-        host_ip && !cJSON_IsNull(host_ip) ? strdup(host_ip->valuestring) : NULL,
+        host_ip_local_str,
         host_ips ? host_ipsList : NULL,
         init_container_statuses ? init_container_statusesList : NULL,
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
-        nominated_node_name && !cJSON_IsNull(nominated_node_name) ? strdup(nominated_node_name->valuestring) : NULL,
-        observed_generation ? observed_generation->valuedouble : 0,
-        phase && !cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL,
-        pod_ip && !cJSON_IsNull(pod_ip) ? strdup(pod_ip->valuestring) : NULL,
+        message_local_str,
+        node_allocatable_resource_claim_statuses ? node_allocatable_resource_claim_statusesList : NULL,
+        nominated_node_name_local_str,
+        observed_generation_local_var,
+        phase_local_str,
+        pod_ip_local_str,
         pod_ips ? pod_ipsList : NULL,
-        qos_class && !cJSON_IsNull(qos_class) ? strdup(qos_class->valuestring) : NULL,
-        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
-        resize && !cJSON_IsNull(resize) ? strdup(resize->valuestring) : NULL,
+        qos_class_local_str,
+        reason_local_str,
+        resize_local_str,
         resource_claim_statuses ? resource_claim_statusesList : NULL,
-        start_time && !cJSON_IsNull(start_time) ? strdup(start_time->valuestring) : NULL
+        resources ? resources_local_nonprim : NULL,
+        start_time_local_str,
+        volume_health ? volume_healthList : NULL
         );
+
+    if (!v1_pod_status_local_var) {
+        goto end;
+    }
 
     return v1_pod_status_local_var;
 end:
+    if (allocated_resourcesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, allocated_resourcesList) {
+            keyValuePair_t *localKeyValue = listEntry->data;
+            free(localKeyValue->key);
+            localKeyValue->key = NULL;
+            free(localKeyValue->value);
+            localKeyValue->value = NULL;
+            keyValuePair_free(localKeyValue);
+            localKeyValue = NULL;
+        }
+        list_freeList(allocated_resourcesList);
+        allocated_resourcesList = NULL;
+    }
     if (conditionsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, conditionsList) {
@@ -818,6 +1104,10 @@ end:
         v1_pod_extended_resource_claim_status_free(extended_resource_claim_status_local_nonprim);
         extended_resource_claim_status_local_nonprim = NULL;
     }
+    if (host_ip_local_str) {
+        free(host_ip_local_str);
+        host_ip_local_str = NULL;
+    }
     if (host_ipsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, host_ipsList) {
@@ -836,6 +1126,35 @@ end:
         list_freeList(init_container_statusesList);
         init_container_statusesList = NULL;
     }
+    if (message_local_str) {
+        free(message_local_str);
+        message_local_str = NULL;
+    }
+    if (node_allocatable_resource_claim_statusesList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, node_allocatable_resource_claim_statusesList) {
+            v1_node_allocatable_resource_claim_status_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(node_allocatable_resource_claim_statusesList);
+        node_allocatable_resource_claim_statusesList = NULL;
+    }
+    if (nominated_node_name_local_str) {
+        free(nominated_node_name_local_str);
+        nominated_node_name_local_str = NULL;
+    }
+    if (observed_generation_local_var) {
+        free(observed_generation_local_var);
+        observed_generation_local_var = NULL;
+    }
+    if (phase_local_str) {
+        free(phase_local_str);
+        phase_local_str = NULL;
+    }
+    if (pod_ip_local_str) {
+        free(pod_ip_local_str);
+        pod_ip_local_str = NULL;
+    }
     if (pod_ipsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, pod_ipsList) {
@@ -845,6 +1164,18 @@ end:
         list_freeList(pod_ipsList);
         pod_ipsList = NULL;
     }
+    if (qos_class_local_str) {
+        free(qos_class_local_str);
+        qos_class_local_str = NULL;
+    }
+    if (reason_local_str) {
+        free(reason_local_str);
+        reason_local_str = NULL;
+    }
+    if (resize_local_str) {
+        free(resize_local_str);
+        resize_local_str = NULL;
+    }
     if (resource_claim_statusesList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, resource_claim_statusesList) {
@@ -853,6 +1184,23 @@ end:
         }
         list_freeList(resource_claim_statusesList);
         resource_claim_statusesList = NULL;
+    }
+    if (resources_local_nonprim) {
+        v1_resource_requirements_free(resources_local_nonprim);
+        resources_local_nonprim = NULL;
+    }
+    if (start_time_local_str) {
+        free(start_time_local_str);
+        start_time_local_str = NULL;
+    }
+    if (volume_healthList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, volume_healthList) {
+            v1_pod_volume_health_free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(volume_healthList);
+        volume_healthList = NULL;
     }
     return NULL;
 

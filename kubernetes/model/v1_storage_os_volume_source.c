@@ -7,7 +7,7 @@
 
 static v1_storage_os_volume_source_t *v1_storage_os_volume_source_create_internal(
     char *fs_type,
-    int read_only,
+    int *read_only,
     v1_local_object_reference_t *secret_ref,
     char *volume_name,
     char *volume_namespace
@@ -16,30 +16,39 @@ static v1_storage_os_volume_source_t *v1_storage_os_volume_source_create_interna
     if (!v1_storage_os_volume_source_local_var) {
         return NULL;
     }
+    memset(v1_storage_os_volume_source_local_var, 0, sizeof(v1_storage_os_volume_source_t));
+    v1_storage_os_volume_source_local_var->_library_owned = 1;
     v1_storage_os_volume_source_local_var->fs_type = fs_type;
     v1_storage_os_volume_source_local_var->read_only = read_only;
     v1_storage_os_volume_source_local_var->secret_ref = secret_ref;
     v1_storage_os_volume_source_local_var->volume_name = volume_name;
     v1_storage_os_volume_source_local_var->volume_namespace = volume_namespace;
-
-    v1_storage_os_volume_source_local_var->_library_owned = 1;
     return v1_storage_os_volume_source_local_var;
 }
 
 __attribute__((deprecated)) v1_storage_os_volume_source_t *v1_storage_os_volume_source_create(
     char *fs_type,
-    int read_only,
+    int *read_only,
     v1_local_object_reference_t *secret_ref,
     char *volume_name,
     char *volume_namespace
     ) {
-    return v1_storage_os_volume_source_create_internal (
+    int *read_only_copy = NULL;
+    if (read_only) {
+        read_only_copy = malloc(sizeof(int));
+        if (read_only_copy) *read_only_copy = *read_only;
+    }
+    v1_storage_os_volume_source_t *result = v1_storage_os_volume_source_create_internal (
         fs_type,
-        read_only,
+        read_only_copy,
         secret_ref,
         volume_name,
         volume_namespace
         );
+    if (!result) {
+        free(read_only_copy);
+    }
+    return result;
 }
 
 void v1_storage_os_volume_source_free(v1_storage_os_volume_source_t *v1_storage_os_volume_source) {
@@ -54,6 +63,10 @@ void v1_storage_os_volume_source_free(v1_storage_os_volume_source_t *v1_storage_
     if (v1_storage_os_volume_source->fs_type) {
         free(v1_storage_os_volume_source->fs_type);
         v1_storage_os_volume_source->fs_type = NULL;
+    }
+    if (v1_storage_os_volume_source->read_only) {
+        free(v1_storage_os_volume_source->read_only);
+        v1_storage_os_volume_source->read_only = NULL;
     }
     if (v1_storage_os_volume_source->secret_ref) {
         v1_local_object_reference_free(v1_storage_os_volume_source->secret_ref);
@@ -83,7 +96,7 @@ cJSON *v1_storage_os_volume_source_convertToJSON(v1_storage_os_volume_source_t *
 
     // v1_storage_os_volume_source->read_only
     if(v1_storage_os_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_storage_os_volume_source->read_only) == NULL) {
+    if(cJSON_AddBoolToObject(item, "readOnly", *v1_storage_os_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -129,8 +142,17 @@ v1_storage_os_volume_source_t *v1_storage_os_volume_source_parseFromJSON(cJSON *
 
     v1_storage_os_volume_source_t *v1_storage_os_volume_source_local_var = NULL;
 
+    char *fs_type_local_str = NULL;
+
+    // define the local variable for v1_storage_os_volume_source->read_only
+    int *read_only_local_var = NULL;
+
     // define the local variable for v1_storage_os_volume_source->secret_ref
     v1_local_object_reference_t *secret_ref_local_nonprim = NULL;
+
+    char *volume_name_local_str = NULL;
+
+    char *volume_namespace_local_str = NULL;
 
     // v1_storage_os_volume_source->fs_type
     cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_storage_os_volume_sourceJSON, "fsType");
@@ -154,6 +176,12 @@ v1_storage_os_volume_source_t *v1_storage_os_volume_source_parseFromJSON(cJSON *
     {
     goto end; //Bool
     }
+    read_only_local_var = malloc(sizeof(int));
+    if(!read_only_local_var)
+    {
+        goto end;
+    }
+    *read_only_local_var = read_only->valueint;
     }
 
     // v1_storage_os_volume_source->secret_ref
@@ -190,19 +218,43 @@ v1_storage_os_volume_source_t *v1_storage_os_volume_source_parseFromJSON(cJSON *
     }
 
 
+    if (fs_type && !cJSON_IsNull(fs_type)) fs_type_local_str = strdup(fs_type->valuestring);
+    if (volume_name && !cJSON_IsNull(volume_name)) volume_name_local_str = strdup(volume_name->valuestring);
+    if (volume_namespace && !cJSON_IsNull(volume_namespace)) volume_namespace_local_str = strdup(volume_namespace->valuestring);
+
     v1_storage_os_volume_source_local_var = v1_storage_os_volume_source_create_internal (
-        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
-        read_only ? read_only->valueint : 0,
+        fs_type_local_str,
+        read_only_local_var,
         secret_ref ? secret_ref_local_nonprim : NULL,
-        volume_name && !cJSON_IsNull(volume_name) ? strdup(volume_name->valuestring) : NULL,
-        volume_namespace && !cJSON_IsNull(volume_namespace) ? strdup(volume_namespace->valuestring) : NULL
+        volume_name_local_str,
+        volume_namespace_local_str
         );
+
+    if (!v1_storage_os_volume_source_local_var) {
+        goto end;
+    }
 
     return v1_storage_os_volume_source_local_var;
 end:
+    if (fs_type_local_str) {
+        free(fs_type_local_str);
+        fs_type_local_str = NULL;
+    }
+    if (read_only_local_var) {
+        free(read_only_local_var);
+        read_only_local_var = NULL;
+    }
     if (secret_ref_local_nonprim) {
         v1_local_object_reference_free(secret_ref_local_nonprim);
         secret_ref_local_nonprim = NULL;
+    }
+    if (volume_name_local_str) {
+        free(volume_name_local_str);
+        volume_name_local_str = NULL;
+    }
+    if (volume_namespace_local_str) {
+        free(volume_namespace_local_str);
+        volume_namespace_local_str = NULL;
     }
     return NULL;
 

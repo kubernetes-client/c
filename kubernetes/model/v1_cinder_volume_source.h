@@ -21,7 +21,7 @@ typedef struct v1_cinder_volume_source_t v1_cinder_volume_source_t;
 
 typedef struct v1_cinder_volume_source_t {
     char *fs_type; // string
-    int read_only; //boolean
+    int *read_only; //boolean
     struct v1_local_object_reference_t *secret_ref; //model
     char *volume_id; // string
 
@@ -30,7 +30,7 @@ typedef struct v1_cinder_volume_source_t {
 
 __attribute__((deprecated)) v1_cinder_volume_source_t *v1_cinder_volume_source_create(
     char *fs_type,
-    int read_only,
+    int *read_only,
     v1_local_object_reference_t *secret_ref,
     char *volume_id
 );

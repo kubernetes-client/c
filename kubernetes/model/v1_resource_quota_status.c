@@ -13,10 +13,10 @@ static v1_resource_quota_status_t *v1_resource_quota_status_create_internal(
     if (!v1_resource_quota_status_local_var) {
         return NULL;
     }
+    memset(v1_resource_quota_status_local_var, 0, sizeof(v1_resource_quota_status_t));
+    v1_resource_quota_status_local_var->_library_owned = 1;
     v1_resource_quota_status_local_var->hard = hard;
     v1_resource_quota_status_local_var->used = used;
-
-    v1_resource_quota_status_local_var->_library_owned = 1;
     return v1_resource_quota_status_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_resource_quota_status_t *v1_resource_quota_status
     list_t* hard,
     list_t* used
     ) {
-    return v1_resource_quota_status_create_internal (
+    v1_resource_quota_status_t *result = v1_resource_quota_status_create_internal (
         hard,
         used
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_resource_quota_status_free(v1_resource_quota_status_t *v1_resource_quota_status) {
@@ -179,10 +182,15 @@ v1_resource_quota_status_t *v1_resource_quota_status_parseFromJSON(cJSON *v1_res
     }
 
 
+
     v1_resource_quota_status_local_var = v1_resource_quota_status_create_internal (
         hard ? hardList : NULL,
         used ? usedList : NULL
         );
+
+    if (!v1_resource_quota_status_local_var) {
+        goto end;
+    }
 
     return v1_resource_quota_status_local_var;
 end:

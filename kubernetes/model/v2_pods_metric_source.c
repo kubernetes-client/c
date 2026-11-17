@@ -13,10 +13,10 @@ static v2_pods_metric_source_t *v2_pods_metric_source_create_internal(
     if (!v2_pods_metric_source_local_var) {
         return NULL;
     }
+    memset(v2_pods_metric_source_local_var, 0, sizeof(v2_pods_metric_source_t));
+    v2_pods_metric_source_local_var->_library_owned = 1;
     v2_pods_metric_source_local_var->metric = metric;
     v2_pods_metric_source_local_var->target = target;
-
-    v2_pods_metric_source_local_var->_library_owned = 1;
     return v2_pods_metric_source_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v2_pods_metric_source_t *v2_pods_metric_source_creat
     v2_metric_identifier_t *metric,
     v2_metric_target_t *target
     ) {
-    return v2_pods_metric_source_create_internal (
+    v2_pods_metric_source_t *result = v2_pods_metric_source_create_internal (
         metric,
         target
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v2_pods_metric_source_free(v2_pods_metric_source_t *v2_pods_metric_source) {
@@ -123,10 +126,15 @@ v2_pods_metric_source_t *v2_pods_metric_source_parseFromJSON(cJSON *v2_pods_metr
     target_local_nonprim = v2_metric_target_parseFromJSON(target); //nonprimitive
 
 
+
     v2_pods_metric_source_local_var = v2_pods_metric_source_create_internal (
         metric_local_nonprim,
         target_local_nonprim
         );
+
+    if (!v2_pods_metric_source_local_var) {
+        goto end;
+    }
 
     return v2_pods_metric_source_local_var;
 end:

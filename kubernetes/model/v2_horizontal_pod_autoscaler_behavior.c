@@ -13,10 +13,10 @@ static v2_horizontal_pod_autoscaler_behavior_t *v2_horizontal_pod_autoscaler_beh
     if (!v2_horizontal_pod_autoscaler_behavior_local_var) {
         return NULL;
     }
+    memset(v2_horizontal_pod_autoscaler_behavior_local_var, 0, sizeof(v2_horizontal_pod_autoscaler_behavior_t));
+    v2_horizontal_pod_autoscaler_behavior_local_var->_library_owned = 1;
     v2_horizontal_pod_autoscaler_behavior_local_var->scale_down = scale_down;
     v2_horizontal_pod_autoscaler_behavior_local_var->scale_up = scale_up;
-
-    v2_horizontal_pod_autoscaler_behavior_local_var->_library_owned = 1;
     return v2_horizontal_pod_autoscaler_behavior_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v2_horizontal_pod_autoscaler_behavior_t *v2_horizont
     v2_hpa_scaling_rules_t *scale_down,
     v2_hpa_scaling_rules_t *scale_up
     ) {
-    return v2_horizontal_pod_autoscaler_behavior_create_internal (
+    v2_horizontal_pod_autoscaler_behavior_t *result = v2_horizontal_pod_autoscaler_behavior_create_internal (
         scale_down,
         scale_up
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v2_horizontal_pod_autoscaler_behavior_free(v2_horizontal_pod_autoscaler_behavior_t *v2_horizontal_pod_autoscaler_behavior) {
@@ -115,10 +118,15 @@ v2_horizontal_pod_autoscaler_behavior_t *v2_horizontal_pod_autoscaler_behavior_p
     }
 
 
+
     v2_horizontal_pod_autoscaler_behavior_local_var = v2_horizontal_pod_autoscaler_behavior_create_internal (
         scale_down ? scale_down_local_nonprim : NULL,
         scale_up ? scale_up_local_nonprim : NULL
         );
+
+    if (!v2_horizontal_pod_autoscaler_behavior_local_var) {
+        goto end;
+    }
 
     return v2_horizontal_pod_autoscaler_behavior_local_var;
 end:

@@ -12,18 +12,21 @@ static v1_container_user_t *v1_container_user_create_internal(
     if (!v1_container_user_local_var) {
         return NULL;
     }
-    v1_container_user_local_var->_linux = _linux;
-
+    memset(v1_container_user_local_var, 0, sizeof(v1_container_user_t));
     v1_container_user_local_var->_library_owned = 1;
+    v1_container_user_local_var->_linux = _linux;
     return v1_container_user_local_var;
 }
 
 __attribute__((deprecated)) v1_container_user_t *v1_container_user_create(
     v1_linux_container_user_t *_linux
     ) {
-    return v1_container_user_create_internal (
+    v1_container_user_t *result = v1_container_user_create_internal (
         _linux
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_container_user_free(v1_container_user_t *v1_container_user) {
@@ -82,9 +85,14 @@ v1_container_user_t *v1_container_user_parseFromJSON(cJSON *v1_container_userJSO
     }
 
 
+
     v1_container_user_local_var = v1_container_user_create_internal (
         _linux ? _linux_local_nonprim : NULL
         );
+
+    if (!v1_container_user_local_var) {
+        goto end;
+    }
 
     return v1_container_user_local_var;
 end:

@@ -21,14 +21,14 @@ typedef struct v1_rolling_update_stateful_set_strategy_t v1_rolling_update_state
 
 typedef struct v1_rolling_update_stateful_set_strategy_t {
     int_or_string_t *max_unavailable; // custom
-    int partition; //numeric
+    int *partition; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_rolling_update_stateful_set_strategy_t;
 
 __attribute__((deprecated)) v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strategy_create(
     int_or_string_t *max_unavailable,
-    int partition
+    int *partition
 );
 
 void v1_rolling_update_stateful_set_strategy_free(v1_rolling_update_stateful_set_strategy_t *v1_rolling_update_stateful_set_strategy);

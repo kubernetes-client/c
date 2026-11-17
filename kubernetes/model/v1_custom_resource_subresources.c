@@ -13,10 +13,10 @@ static v1_custom_resource_subresources_t *v1_custom_resource_subresources_create
     if (!v1_custom_resource_subresources_local_var) {
         return NULL;
     }
+    memset(v1_custom_resource_subresources_local_var, 0, sizeof(v1_custom_resource_subresources_t));
+    v1_custom_resource_subresources_local_var->_library_owned = 1;
     v1_custom_resource_subresources_local_var->scale = scale;
     v1_custom_resource_subresources_local_var->status = status;
-
-    v1_custom_resource_subresources_local_var->_library_owned = 1;
     return v1_custom_resource_subresources_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_custom_resource_subresources_t *v1_custom_resourc
     v1_custom_resource_subresource_scale_t *scale,
     object_t *status
     ) {
-    return v1_custom_resource_subresources_create_internal (
+    v1_custom_resource_subresources_t *result = v1_custom_resource_subresources_create_internal (
         scale,
         status
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_custom_resource_subresources_free(v1_custom_resource_subresources_t *v1_custom_resource_subresources) {
@@ -113,10 +116,15 @@ v1_custom_resource_subresources_t *v1_custom_resource_subresources_parseFromJSON
     }
 
 
+
     v1_custom_resource_subresources_local_var = v1_custom_resource_subresources_create_internal (
         scale ? scale_local_nonprim : NULL,
         status ? status_local_object : NULL
         );
+
+    if (!v1_custom_resource_subresources_local_var) {
+        goto end;
+    }
 
     return v1_custom_resource_subresources_local_var;
 end:

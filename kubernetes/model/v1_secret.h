@@ -22,7 +22,7 @@ typedef struct v1_secret_t v1_secret_t;
 typedef struct v1_secret_t {
     char *api_version; // string
     list_t* data; //map
-    int immutable; //boolean
+    int *immutable; //boolean
     char *kind; // string
     struct v1_object_meta_t *metadata; //model
     list_t* string_data; //map
@@ -34,7 +34,7 @@ typedef struct v1_secret_t {
 __attribute__((deprecated)) v1_secret_t *v1_secret_create(
     char *api_version,
     list_t* data,
-    int immutable,
+    int *immutable,
     char *kind,
     v1_object_meta_t *metadata,
     list_t* string_data,

@@ -22,7 +22,7 @@ typedef struct v1_config_map_projection_t v1_config_map_projection_t;
 typedef struct v1_config_map_projection_t {
     list_t *items; //nonprimitive container
     char *name; // string
-    int optional; //boolean
+    int *optional; //boolean
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_config_map_projection_t;
@@ -30,7 +30,7 @@ typedef struct v1_config_map_projection_t {
 __attribute__((deprecated)) v1_config_map_projection_t *v1_config_map_projection_create(
     list_t *items,
     char *name,
-    int optional
+    int *optional
 );
 
 void v1_config_map_projection_free(v1_config_map_projection_t *v1_config_map_projection);

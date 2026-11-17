@@ -17,14 +17,14 @@ static v1_endpoint_slice_t *v1_endpoint_slice_create_internal(
     if (!v1_endpoint_slice_local_var) {
         return NULL;
     }
+    memset(v1_endpoint_slice_local_var, 0, sizeof(v1_endpoint_slice_t));
+    v1_endpoint_slice_local_var->_library_owned = 1;
     v1_endpoint_slice_local_var->address_type = address_type;
     v1_endpoint_slice_local_var->api_version = api_version;
     v1_endpoint_slice_local_var->endpoints = endpoints;
     v1_endpoint_slice_local_var->kind = kind;
     v1_endpoint_slice_local_var->metadata = metadata;
     v1_endpoint_slice_local_var->ports = ports;
-
-    v1_endpoint_slice_local_var->_library_owned = 1;
     return v1_endpoint_slice_local_var;
 }
 
@@ -36,7 +36,7 @@ __attribute__((deprecated)) v1_endpoint_slice_t *v1_endpoint_slice_create(
     v1_object_meta_t *metadata,
     list_t *ports
     ) {
-    return v1_endpoint_slice_create_internal (
+    v1_endpoint_slice_t *result = v1_endpoint_slice_create_internal (
         address_type,
         api_version,
         endpoints,
@@ -44,6 +44,9 @@ __attribute__((deprecated)) v1_endpoint_slice_t *v1_endpoint_slice_create(
         metadata,
         ports
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_endpoint_slice_free(v1_endpoint_slice_t *v1_endpoint_slice) {
@@ -109,9 +112,7 @@ cJSON *v1_endpoint_slice_convertToJSON(v1_endpoint_slice_t *v1_endpoint_slice) {
 
 
     // v1_endpoint_slice->endpoints
-    if (!v1_endpoint_slice->endpoints) {
-        goto fail;
-    }
+    if(v1_endpoint_slice->endpoints) {
     cJSON *endpoints = cJSON_AddArrayToObject(item, "endpoints");
     if(endpoints == NULL) {
     goto fail; //nonprimitive container
@@ -125,6 +126,7 @@ cJSON *v1_endpoint_slice_convertToJSON(v1_endpoint_slice_t *v1_endpoint_slice) {
     goto fail;
     }
     cJSON_AddItemToArray(endpoints, itemLocal);
+    }
     }
     }
 
@@ -181,8 +183,14 @@ v1_endpoint_slice_t *v1_endpoint_slice_parseFromJSON(cJSON *v1_endpoint_sliceJSO
 
     v1_endpoint_slice_t *v1_endpoint_slice_local_var = NULL;
 
+    char *address_type_local_str = NULL;
+
+    char *api_version_local_str = NULL;
+
     // define the local list for v1_endpoint_slice->endpoints
     list_t *endpointsList = NULL;
+
+    char *kind_local_str = NULL;
 
     // define the local variable for v1_endpoint_slice->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
@@ -222,11 +230,7 @@ v1_endpoint_slice_t *v1_endpoint_slice_parseFromJSON(cJSON *v1_endpoint_sliceJSO
     if (cJSON_IsNull(endpoints)) {
         endpoints = NULL;
     }
-    if (!endpoints) {
-        goto end;
-    }
-
-    
+    if (endpoints) { 
     cJSON *endpoints_local_nonprimitive = NULL;
     if(!cJSON_IsArray(endpoints)){
         goto end; //nonprimitive container
@@ -242,6 +246,7 @@ v1_endpoint_slice_t *v1_endpoint_slice_parseFromJSON(cJSON *v1_endpoint_sliceJSO
         v1_endpoint_t *endpointsItem = v1_endpoint_parseFromJSON(endpoints_local_nonprimitive);
 
         list_addElement(endpointsList, endpointsItem);
+    }
     }
 
     // v1_endpoint_slice->kind
@@ -290,17 +295,33 @@ v1_endpoint_slice_t *v1_endpoint_slice_parseFromJSON(cJSON *v1_endpoint_sliceJSO
     }
 
 
+    if (address_type && !cJSON_IsNull(address_type)) address_type_local_str = strdup(address_type->valuestring);
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+
     v1_endpoint_slice_local_var = v1_endpoint_slice_create_internal (
-        strdup(address_type->valuestring),
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        endpointsList,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        address_type_local_str,
+        api_version_local_str,
+        endpoints ? endpointsList : NULL,
+        kind_local_str,
         metadata ? metadata_local_nonprim : NULL,
         ports ? portsList : NULL
         );
 
+    if (!v1_endpoint_slice_local_var) {
+        goto end;
+    }
+
     return v1_endpoint_slice_local_var;
 end:
+    if (address_type_local_str) {
+        free(address_type_local_str);
+        address_type_local_str = NULL;
+    }
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
     if (endpointsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, endpointsList) {
@@ -309,6 +330,10 @@ end:
         }
         list_freeList(endpointsList);
         endpointsList = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
     }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);

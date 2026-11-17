@@ -20,7 +20,7 @@ typedef struct v1_file_key_selector_t v1_file_key_selector_t;
 
 typedef struct v1_file_key_selector_t {
     char *key; // string
-    int optional; //boolean
+    int *optional; //boolean
     char *path; // string
     char *volume_name; // string
 
@@ -29,7 +29,7 @@ typedef struct v1_file_key_selector_t {
 
 __attribute__((deprecated)) v1_file_key_selector_t *v1_file_key_selector_create(
     char *key,
-    int optional,
+    int *optional,
     char *path,
     char *volume_name
 );

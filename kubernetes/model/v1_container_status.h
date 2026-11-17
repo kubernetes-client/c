@@ -31,10 +31,10 @@ typedef struct v1_container_status_t {
     char *image_id; // string
     struct v1_container_state_t *last_state; //model
     char *name; // string
-    int ready; //boolean
+    int *ready; //boolean
     struct v1_resource_requirements_t *resources; //model
-    int restart_count; //numeric
-    int started; //boolean
+    int *restart_count; //numeric
+    int *started; //boolean
     struct v1_container_state_t *state; //model
     char *stop_signal; // string
     struct v1_container_user_t *user; //model
@@ -51,10 +51,10 @@ __attribute__((deprecated)) v1_container_status_t *v1_container_status_create(
     char *image_id,
     v1_container_state_t *last_state,
     char *name,
-    int ready,
+    int *ready,
     v1_resource_requirements_t *resources,
-    int restart_count,
-    int started,
+    int *restart_count,
+    int *started,
     v1_container_state_t *state,
     char *stop_signal,
     v1_container_user_t *user,

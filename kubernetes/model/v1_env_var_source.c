@@ -16,13 +16,13 @@ static v1_env_var_source_t *v1_env_var_source_create_internal(
     if (!v1_env_var_source_local_var) {
         return NULL;
     }
+    memset(v1_env_var_source_local_var, 0, sizeof(v1_env_var_source_t));
+    v1_env_var_source_local_var->_library_owned = 1;
     v1_env_var_source_local_var->config_map_key_ref = config_map_key_ref;
     v1_env_var_source_local_var->field_ref = field_ref;
     v1_env_var_source_local_var->file_key_ref = file_key_ref;
     v1_env_var_source_local_var->resource_field_ref = resource_field_ref;
     v1_env_var_source_local_var->secret_key_ref = secret_key_ref;
-
-    v1_env_var_source_local_var->_library_owned = 1;
     return v1_env_var_source_local_var;
 }
 
@@ -33,13 +33,16 @@ __attribute__((deprecated)) v1_env_var_source_t *v1_env_var_source_create(
     v1_resource_field_selector_t *resource_field_ref,
     v1_secret_key_selector_t *secret_key_ref
     ) {
-    return v1_env_var_source_create_internal (
+    v1_env_var_source_t *result = v1_env_var_source_create_internal (
         config_map_key_ref,
         field_ref,
         file_key_ref,
         resource_field_ref,
         secret_key_ref
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_env_var_source_free(v1_env_var_source_t *v1_env_var_source) {
@@ -214,6 +217,7 @@ v1_env_var_source_t *v1_env_var_source_parseFromJSON(cJSON *v1_env_var_sourceJSO
     }
 
 
+
     v1_env_var_source_local_var = v1_env_var_source_create_internal (
         config_map_key_ref ? config_map_key_ref_local_nonprim : NULL,
         field_ref ? field_ref_local_nonprim : NULL,
@@ -221,6 +225,10 @@ v1_env_var_source_t *v1_env_var_source_parseFromJSON(cJSON *v1_env_var_sourceJSO
         resource_field_ref ? resource_field_ref_local_nonprim : NULL,
         secret_key_ref ? secret_key_ref_local_nonprim : NULL
         );
+
+    if (!v1_env_var_source_local_var) {
+        goto end;
+    }
 
     return v1_env_var_source_local_var;
 end:

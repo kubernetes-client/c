@@ -33,7 +33,7 @@ typedef struct v1_validating_webhook_t {
     struct v1_label_selector_t *object_selector; //model
     list_t *rules; //nonprimitive container
     char *side_effects; // string
-    int timeout_seconds; //numeric
+    int *timeout_seconds; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_validating_webhook_t;
@@ -49,7 +49,7 @@ __attribute__((deprecated)) v1_validating_webhook_t *v1_validating_webhook_creat
     v1_label_selector_t *object_selector,
     list_t *rules,
     char *side_effects,
-    int timeout_seconds
+    int *timeout_seconds
 );
 
 void v1_validating_webhook_free(v1_validating_webhook_t *v1_validating_webhook);

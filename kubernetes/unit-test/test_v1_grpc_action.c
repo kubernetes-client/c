@@ -22,11 +22,13 @@ v1_grpc_action_t* instantiate_v1_grpc_action(int include_optional) {
   v1_grpc_action_t* v1_grpc_action = NULL;
   if (include_optional) {
     v1_grpc_action = v1_grpc_action_create(
+      "0",
       56,
       "0"
     );
   } else {
     v1_grpc_action = v1_grpc_action_create(
+      "0",
       56,
       "0"
     );

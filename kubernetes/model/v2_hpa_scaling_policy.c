@@ -6,32 +6,47 @@
 
 
 static v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_create_internal(
-    int period_seconds,
+    int *period_seconds,
     char *type,
-    int value
+    int *value
     ) {
     v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_local_var = malloc(sizeof(v2_hpa_scaling_policy_t));
     if (!v2_hpa_scaling_policy_local_var) {
         return NULL;
     }
+    memset(v2_hpa_scaling_policy_local_var, 0, sizeof(v2_hpa_scaling_policy_t));
+    v2_hpa_scaling_policy_local_var->_library_owned = 1;
     v2_hpa_scaling_policy_local_var->period_seconds = period_seconds;
     v2_hpa_scaling_policy_local_var->type = type;
     v2_hpa_scaling_policy_local_var->value = value;
-
-    v2_hpa_scaling_policy_local_var->_library_owned = 1;
     return v2_hpa_scaling_policy_local_var;
 }
 
 __attribute__((deprecated)) v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_create(
-    int period_seconds,
+    int *period_seconds,
     char *type,
-    int value
+    int *value
     ) {
-    return v2_hpa_scaling_policy_create_internal (
-        period_seconds,
+    int *period_seconds_copy = NULL;
+    if (period_seconds) {
+        period_seconds_copy = malloc(sizeof(int));
+        if (period_seconds_copy) *period_seconds_copy = *period_seconds;
+    }
+    int *value_copy = NULL;
+    if (value) {
+        value_copy = malloc(sizeof(int));
+        if (value_copy) *value_copy = *value;
+    }
+    v2_hpa_scaling_policy_t *result = v2_hpa_scaling_policy_create_internal (
+        period_seconds_copy,
         type,
-        value
+        value_copy
         );
+    if (!result) {
+        free(period_seconds_copy);
+        free(value_copy);
+    }
+    return result;
 }
 
 void v2_hpa_scaling_policy_free(v2_hpa_scaling_policy_t *v2_hpa_scaling_policy) {
@@ -43,9 +58,17 @@ void v2_hpa_scaling_policy_free(v2_hpa_scaling_policy_t *v2_hpa_scaling_policy) 
         return ;
     }
     listEntry_t *listEntry;
+    if (v2_hpa_scaling_policy->period_seconds) {
+        free(v2_hpa_scaling_policy->period_seconds);
+        v2_hpa_scaling_policy->period_seconds = NULL;
+    }
     if (v2_hpa_scaling_policy->type) {
         free(v2_hpa_scaling_policy->type);
         v2_hpa_scaling_policy->type = NULL;
+    }
+    if (v2_hpa_scaling_policy->value) {
+        free(v2_hpa_scaling_policy->value);
+        v2_hpa_scaling_policy->value = NULL;
     }
     free(v2_hpa_scaling_policy);
 }
@@ -57,7 +80,7 @@ cJSON *v2_hpa_scaling_policy_convertToJSON(v2_hpa_scaling_policy_t *v2_hpa_scali
     if (!v2_hpa_scaling_policy->period_seconds) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "periodSeconds", v2_hpa_scaling_policy->period_seconds) == NULL) {
+    if(cJSON_AddNumberToObject(item, "periodSeconds", *v2_hpa_scaling_policy->period_seconds) == NULL) {
     goto fail; //Numeric
     }
 
@@ -75,7 +98,7 @@ cJSON *v2_hpa_scaling_policy_convertToJSON(v2_hpa_scaling_policy_t *v2_hpa_scali
     if (!v2_hpa_scaling_policy->value) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "value", v2_hpa_scaling_policy->value) == NULL) {
+    if(cJSON_AddNumberToObject(item, "value", *v2_hpa_scaling_policy->value) == NULL) {
     goto fail; //Numeric
     }
 
@@ -91,6 +114,14 @@ v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_parseFromJSON(cJSON *v2_hpa_scali
 
     v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_local_var = NULL;
 
+    // define the local variable for v2_hpa_scaling_policy->period_seconds
+    int *period_seconds_local_var = NULL;
+
+    char *type_local_str = NULL;
+
+    // define the local variable for v2_hpa_scaling_policy->value
+    int *value_local_var = NULL;
+
     // v2_hpa_scaling_policy->period_seconds
     cJSON *period_seconds = cJSON_GetObjectItemCaseSensitive(v2_hpa_scaling_policyJSON, "periodSeconds");
     if (cJSON_IsNull(period_seconds)) {
@@ -105,6 +136,12 @@ v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_parseFromJSON(cJSON *v2_hpa_scali
     {
     goto end; //Numeric
     }
+    period_seconds_local_var = malloc(sizeof(int));
+    if(!period_seconds_local_var)
+    {
+        goto end;
+    }
+    *period_seconds_local_var = period_seconds->valuedouble;
 
     // v2_hpa_scaling_policy->type
     cJSON *type = cJSON_GetObjectItemCaseSensitive(v2_hpa_scaling_policyJSON, "type");
@@ -135,16 +172,40 @@ v2_hpa_scaling_policy_t *v2_hpa_scaling_policy_parseFromJSON(cJSON *v2_hpa_scali
     {
     goto end; //Numeric
     }
+    value_local_var = malloc(sizeof(int));
+    if(!value_local_var)
+    {
+        goto end;
+    }
+    *value_local_var = value->valuedouble;
 
+
+    if (type && !cJSON_IsNull(type)) type_local_str = strdup(type->valuestring);
 
     v2_hpa_scaling_policy_local_var = v2_hpa_scaling_policy_create_internal (
-        period_seconds->valuedouble,
-        strdup(type->valuestring),
-        value->valuedouble
+        period_seconds_local_var,
+        type_local_str,
+        value_local_var
         );
+
+    if (!v2_hpa_scaling_policy_local_var) {
+        goto end;
+    }
 
     return v2_hpa_scaling_policy_local_var;
 end:
+    if (period_seconds_local_var) {
+        free(period_seconds_local_var);
+        period_seconds_local_var = NULL;
+    }
+    if (type_local_str) {
+        free(type_local_str);
+        type_local_str = NULL;
+    }
+    if (value_local_var) {
+        free(value_local_var);
+        value_local_var = NULL;
+    }
     return NULL;
 
 }

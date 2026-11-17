@@ -19,13 +19,13 @@ typedef struct v1_node_swap_status_t v1_node_swap_status_t;
 
 
 typedef struct v1_node_swap_status_t {
-    long capacity; //numeric
+    long *capacity; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_node_swap_status_t;
 
 __attribute__((deprecated)) v1_node_swap_status_t *v1_node_swap_status_create(
-    long capacity
+    long *capacity
 );
 
 void v1_node_swap_status_free(v1_node_swap_status_t *v1_node_swap_status);

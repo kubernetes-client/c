@@ -6,21 +6,23 @@
 
 
 static v1_daemon_set_status_t *v1_daemon_set_status_create_internal(
-    int collision_count,
+    int *collision_count,
     list_t *conditions,
-    int current_number_scheduled,
-    int desired_number_scheduled,
-    int number_available,
-    int number_misscheduled,
-    int number_ready,
-    int number_unavailable,
-    long observed_generation,
-    int updated_number_scheduled
+    int *current_number_scheduled,
+    int *desired_number_scheduled,
+    int *number_available,
+    int *number_misscheduled,
+    int *number_ready,
+    int *number_unavailable,
+    long *observed_generation,
+    int *updated_number_scheduled
     ) {
     v1_daemon_set_status_t *v1_daemon_set_status_local_var = malloc(sizeof(v1_daemon_set_status_t));
     if (!v1_daemon_set_status_local_var) {
         return NULL;
     }
+    memset(v1_daemon_set_status_local_var, 0, sizeof(v1_daemon_set_status_t));
+    v1_daemon_set_status_local_var->_library_owned = 1;
     v1_daemon_set_status_local_var->collision_count = collision_count;
     v1_daemon_set_status_local_var->conditions = conditions;
     v1_daemon_set_status_local_var->current_number_scheduled = current_number_scheduled;
@@ -31,35 +33,90 @@ static v1_daemon_set_status_t *v1_daemon_set_status_create_internal(
     v1_daemon_set_status_local_var->number_unavailable = number_unavailable;
     v1_daemon_set_status_local_var->observed_generation = observed_generation;
     v1_daemon_set_status_local_var->updated_number_scheduled = updated_number_scheduled;
-
-    v1_daemon_set_status_local_var->_library_owned = 1;
     return v1_daemon_set_status_local_var;
 }
 
 __attribute__((deprecated)) v1_daemon_set_status_t *v1_daemon_set_status_create(
-    int collision_count,
+    int *collision_count,
     list_t *conditions,
-    int current_number_scheduled,
-    int desired_number_scheduled,
-    int number_available,
-    int number_misscheduled,
-    int number_ready,
-    int number_unavailable,
-    long observed_generation,
-    int updated_number_scheduled
+    int *current_number_scheduled,
+    int *desired_number_scheduled,
+    int *number_available,
+    int *number_misscheduled,
+    int *number_ready,
+    int *number_unavailable,
+    long *observed_generation,
+    int *updated_number_scheduled
     ) {
-    return v1_daemon_set_status_create_internal (
-        collision_count,
+    int *collision_count_copy = NULL;
+    if (collision_count) {
+        collision_count_copy = malloc(sizeof(int));
+        if (collision_count_copy) *collision_count_copy = *collision_count;
+    }
+    int *current_number_scheduled_copy = NULL;
+    if (current_number_scheduled) {
+        current_number_scheduled_copy = malloc(sizeof(int));
+        if (current_number_scheduled_copy) *current_number_scheduled_copy = *current_number_scheduled;
+    }
+    int *desired_number_scheduled_copy = NULL;
+    if (desired_number_scheduled) {
+        desired_number_scheduled_copy = malloc(sizeof(int));
+        if (desired_number_scheduled_copy) *desired_number_scheduled_copy = *desired_number_scheduled;
+    }
+    int *number_available_copy = NULL;
+    if (number_available) {
+        number_available_copy = malloc(sizeof(int));
+        if (number_available_copy) *number_available_copy = *number_available;
+    }
+    int *number_misscheduled_copy = NULL;
+    if (number_misscheduled) {
+        number_misscheduled_copy = malloc(sizeof(int));
+        if (number_misscheduled_copy) *number_misscheduled_copy = *number_misscheduled;
+    }
+    int *number_ready_copy = NULL;
+    if (number_ready) {
+        number_ready_copy = malloc(sizeof(int));
+        if (number_ready_copy) *number_ready_copy = *number_ready;
+    }
+    int *number_unavailable_copy = NULL;
+    if (number_unavailable) {
+        number_unavailable_copy = malloc(sizeof(int));
+        if (number_unavailable_copy) *number_unavailable_copy = *number_unavailable;
+    }
+    long *observed_generation_copy = NULL;
+    if (observed_generation) {
+        observed_generation_copy = malloc(sizeof(long));
+        if (observed_generation_copy) *observed_generation_copy = *observed_generation;
+    }
+    int *updated_number_scheduled_copy = NULL;
+    if (updated_number_scheduled) {
+        updated_number_scheduled_copy = malloc(sizeof(int));
+        if (updated_number_scheduled_copy) *updated_number_scheduled_copy = *updated_number_scheduled;
+    }
+    v1_daemon_set_status_t *result = v1_daemon_set_status_create_internal (
+        collision_count_copy,
         conditions,
-        current_number_scheduled,
-        desired_number_scheduled,
-        number_available,
-        number_misscheduled,
-        number_ready,
-        number_unavailable,
-        observed_generation,
-        updated_number_scheduled
+        current_number_scheduled_copy,
+        desired_number_scheduled_copy,
+        number_available_copy,
+        number_misscheduled_copy,
+        number_ready_copy,
+        number_unavailable_copy,
+        observed_generation_copy,
+        updated_number_scheduled_copy
         );
+    if (!result) {
+        free(collision_count_copy);
+        free(current_number_scheduled_copy);
+        free(desired_number_scheduled_copy);
+        free(number_available_copy);
+        free(number_misscheduled_copy);
+        free(number_ready_copy);
+        free(number_unavailable_copy);
+        free(observed_generation_copy);
+        free(updated_number_scheduled_copy);
+    }
+    return result;
 }
 
 void v1_daemon_set_status_free(v1_daemon_set_status_t *v1_daemon_set_status) {
@@ -71,12 +128,48 @@ void v1_daemon_set_status_free(v1_daemon_set_status_t *v1_daemon_set_status) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_daemon_set_status->collision_count) {
+        free(v1_daemon_set_status->collision_count);
+        v1_daemon_set_status->collision_count = NULL;
+    }
     if (v1_daemon_set_status->conditions) {
         list_ForEach(listEntry, v1_daemon_set_status->conditions) {
             v1_daemon_set_condition_free(listEntry->data);
         }
         list_freeList(v1_daemon_set_status->conditions);
         v1_daemon_set_status->conditions = NULL;
+    }
+    if (v1_daemon_set_status->current_number_scheduled) {
+        free(v1_daemon_set_status->current_number_scheduled);
+        v1_daemon_set_status->current_number_scheduled = NULL;
+    }
+    if (v1_daemon_set_status->desired_number_scheduled) {
+        free(v1_daemon_set_status->desired_number_scheduled);
+        v1_daemon_set_status->desired_number_scheduled = NULL;
+    }
+    if (v1_daemon_set_status->number_available) {
+        free(v1_daemon_set_status->number_available);
+        v1_daemon_set_status->number_available = NULL;
+    }
+    if (v1_daemon_set_status->number_misscheduled) {
+        free(v1_daemon_set_status->number_misscheduled);
+        v1_daemon_set_status->number_misscheduled = NULL;
+    }
+    if (v1_daemon_set_status->number_ready) {
+        free(v1_daemon_set_status->number_ready);
+        v1_daemon_set_status->number_ready = NULL;
+    }
+    if (v1_daemon_set_status->number_unavailable) {
+        free(v1_daemon_set_status->number_unavailable);
+        v1_daemon_set_status->number_unavailable = NULL;
+    }
+    if (v1_daemon_set_status->observed_generation) {
+        free(v1_daemon_set_status->observed_generation);
+        v1_daemon_set_status->observed_generation = NULL;
+    }
+    if (v1_daemon_set_status->updated_number_scheduled) {
+        free(v1_daemon_set_status->updated_number_scheduled);
+        v1_daemon_set_status->updated_number_scheduled = NULL;
     }
     free(v1_daemon_set_status);
 }
@@ -86,7 +179,7 @@ cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_
 
     // v1_daemon_set_status->collision_count
     if(v1_daemon_set_status->collision_count) {
-    if(cJSON_AddNumberToObject(item, "collisionCount", v1_daemon_set_status->collision_count) == NULL) {
+    if(cJSON_AddNumberToObject(item, "collisionCount", *v1_daemon_set_status->collision_count) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -116,7 +209,7 @@ cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_
     if (!v1_daemon_set_status->current_number_scheduled) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "currentNumberScheduled", v1_daemon_set_status->current_number_scheduled) == NULL) {
+    if(cJSON_AddNumberToObject(item, "currentNumberScheduled", *v1_daemon_set_status->current_number_scheduled) == NULL) {
     goto fail; //Numeric
     }
 
@@ -125,14 +218,14 @@ cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_
     if (!v1_daemon_set_status->desired_number_scheduled) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "desiredNumberScheduled", v1_daemon_set_status->desired_number_scheduled) == NULL) {
+    if(cJSON_AddNumberToObject(item, "desiredNumberScheduled", *v1_daemon_set_status->desired_number_scheduled) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_daemon_set_status->number_available
     if(v1_daemon_set_status->number_available) {
-    if(cJSON_AddNumberToObject(item, "numberAvailable", v1_daemon_set_status->number_available) == NULL) {
+    if(cJSON_AddNumberToObject(item, "numberAvailable", *v1_daemon_set_status->number_available) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -142,7 +235,7 @@ cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_
     if (!v1_daemon_set_status->number_misscheduled) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "numberMisscheduled", v1_daemon_set_status->number_misscheduled) == NULL) {
+    if(cJSON_AddNumberToObject(item, "numberMisscheduled", *v1_daemon_set_status->number_misscheduled) == NULL) {
     goto fail; //Numeric
     }
 
@@ -151,14 +244,14 @@ cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_
     if (!v1_daemon_set_status->number_ready) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "numberReady", v1_daemon_set_status->number_ready) == NULL) {
+    if(cJSON_AddNumberToObject(item, "numberReady", *v1_daemon_set_status->number_ready) == NULL) {
     goto fail; //Numeric
     }
 
 
     // v1_daemon_set_status->number_unavailable
     if(v1_daemon_set_status->number_unavailable) {
-    if(cJSON_AddNumberToObject(item, "numberUnavailable", v1_daemon_set_status->number_unavailable) == NULL) {
+    if(cJSON_AddNumberToObject(item, "numberUnavailable", *v1_daemon_set_status->number_unavailable) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -166,7 +259,7 @@ cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_
 
     // v1_daemon_set_status->observed_generation
     if(v1_daemon_set_status->observed_generation) {
-    if(cJSON_AddNumberToObject(item, "observedGeneration", v1_daemon_set_status->observed_generation) == NULL) {
+    if(cJSON_AddNumberToObject(item, "observedGeneration", *v1_daemon_set_status->observed_generation) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -174,7 +267,7 @@ cJSON *v1_daemon_set_status_convertToJSON(v1_daemon_set_status_t *v1_daemon_set_
 
     // v1_daemon_set_status->updated_number_scheduled
     if(v1_daemon_set_status->updated_number_scheduled) {
-    if(cJSON_AddNumberToObject(item, "updatedNumberScheduled", v1_daemon_set_status->updated_number_scheduled) == NULL) {
+    if(cJSON_AddNumberToObject(item, "updatedNumberScheduled", *v1_daemon_set_status->updated_number_scheduled) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -191,8 +284,35 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
 
     v1_daemon_set_status_t *v1_daemon_set_status_local_var = NULL;
 
+    // define the local variable for v1_daemon_set_status->collision_count
+    int *collision_count_local_var = NULL;
+
     // define the local list for v1_daemon_set_status->conditions
     list_t *conditionsList = NULL;
+
+    // define the local variable for v1_daemon_set_status->current_number_scheduled
+    int *current_number_scheduled_local_var = NULL;
+
+    // define the local variable for v1_daemon_set_status->desired_number_scheduled
+    int *desired_number_scheduled_local_var = NULL;
+
+    // define the local variable for v1_daemon_set_status->number_available
+    int *number_available_local_var = NULL;
+
+    // define the local variable for v1_daemon_set_status->number_misscheduled
+    int *number_misscheduled_local_var = NULL;
+
+    // define the local variable for v1_daemon_set_status->number_ready
+    int *number_ready_local_var = NULL;
+
+    // define the local variable for v1_daemon_set_status->number_unavailable
+    int *number_unavailable_local_var = NULL;
+
+    // define the local variable for v1_daemon_set_status->observed_generation
+    long *observed_generation_local_var = NULL;
+
+    // define the local variable for v1_daemon_set_status->updated_number_scheduled
+    int *updated_number_scheduled_local_var = NULL;
 
     // v1_daemon_set_status->collision_count
     cJSON *collision_count = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "collisionCount");
@@ -204,6 +324,12 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
     {
     goto end; //Numeric
     }
+    collision_count_local_var = malloc(sizeof(int));
+    if(!collision_count_local_var)
+    {
+        goto end;
+    }
+    *collision_count_local_var = collision_count->valuedouble;
     }
 
     // v1_daemon_set_status->conditions
@@ -244,6 +370,12 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
     {
     goto end; //Numeric
     }
+    current_number_scheduled_local_var = malloc(sizeof(int));
+    if(!current_number_scheduled_local_var)
+    {
+        goto end;
+    }
+    *current_number_scheduled_local_var = current_number_scheduled->valuedouble;
 
     // v1_daemon_set_status->desired_number_scheduled
     cJSON *desired_number_scheduled = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "desiredNumberScheduled");
@@ -259,6 +391,12 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
     {
     goto end; //Numeric
     }
+    desired_number_scheduled_local_var = malloc(sizeof(int));
+    if(!desired_number_scheduled_local_var)
+    {
+        goto end;
+    }
+    *desired_number_scheduled_local_var = desired_number_scheduled->valuedouble;
 
     // v1_daemon_set_status->number_available
     cJSON *number_available = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "numberAvailable");
@@ -270,6 +408,12 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
     {
     goto end; //Numeric
     }
+    number_available_local_var = malloc(sizeof(int));
+    if(!number_available_local_var)
+    {
+        goto end;
+    }
+    *number_available_local_var = number_available->valuedouble;
     }
 
     // v1_daemon_set_status->number_misscheduled
@@ -286,6 +430,12 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
     {
     goto end; //Numeric
     }
+    number_misscheduled_local_var = malloc(sizeof(int));
+    if(!number_misscheduled_local_var)
+    {
+        goto end;
+    }
+    *number_misscheduled_local_var = number_misscheduled->valuedouble;
 
     // v1_daemon_set_status->number_ready
     cJSON *number_ready = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "numberReady");
@@ -301,6 +451,12 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
     {
     goto end; //Numeric
     }
+    number_ready_local_var = malloc(sizeof(int));
+    if(!number_ready_local_var)
+    {
+        goto end;
+    }
+    *number_ready_local_var = number_ready->valuedouble;
 
     // v1_daemon_set_status->number_unavailable
     cJSON *number_unavailable = cJSON_GetObjectItemCaseSensitive(v1_daemon_set_statusJSON, "numberUnavailable");
@@ -312,6 +468,12 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
     {
     goto end; //Numeric
     }
+    number_unavailable_local_var = malloc(sizeof(int));
+    if(!number_unavailable_local_var)
+    {
+        goto end;
+    }
+    *number_unavailable_local_var = number_unavailable->valuedouble;
     }
 
     // v1_daemon_set_status->observed_generation
@@ -324,6 +486,12 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
     {
     goto end; //Numeric
     }
+    observed_generation_local_var = malloc(sizeof(long));
+    if(!observed_generation_local_var)
+    {
+        goto end;
+    }
+    *observed_generation_local_var = observed_generation->valuedouble;
     }
 
     // v1_daemon_set_status->updated_number_scheduled
@@ -336,24 +504,39 @@ v1_daemon_set_status_t *v1_daemon_set_status_parseFromJSON(cJSON *v1_daemon_set_
     {
     goto end; //Numeric
     }
+    updated_number_scheduled_local_var = malloc(sizeof(int));
+    if(!updated_number_scheduled_local_var)
+    {
+        goto end;
+    }
+    *updated_number_scheduled_local_var = updated_number_scheduled->valuedouble;
     }
 
 
+
     v1_daemon_set_status_local_var = v1_daemon_set_status_create_internal (
-        collision_count ? collision_count->valuedouble : 0,
+        collision_count_local_var,
         conditions ? conditionsList : NULL,
-        current_number_scheduled->valuedouble,
-        desired_number_scheduled->valuedouble,
-        number_available ? number_available->valuedouble : 0,
-        number_misscheduled->valuedouble,
-        number_ready->valuedouble,
-        number_unavailable ? number_unavailable->valuedouble : 0,
-        observed_generation ? observed_generation->valuedouble : 0,
-        updated_number_scheduled ? updated_number_scheduled->valuedouble : 0
+        current_number_scheduled_local_var,
+        desired_number_scheduled_local_var,
+        number_available_local_var,
+        number_misscheduled_local_var,
+        number_ready_local_var,
+        number_unavailable_local_var,
+        observed_generation_local_var,
+        updated_number_scheduled_local_var
         );
+
+    if (!v1_daemon_set_status_local_var) {
+        goto end;
+    }
 
     return v1_daemon_set_status_local_var;
 end:
+    if (collision_count_local_var) {
+        free(collision_count_local_var);
+        collision_count_local_var = NULL;
+    }
     if (conditionsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, conditionsList) {
@@ -362,6 +545,38 @@ end:
         }
         list_freeList(conditionsList);
         conditionsList = NULL;
+    }
+    if (current_number_scheduled_local_var) {
+        free(current_number_scheduled_local_var);
+        current_number_scheduled_local_var = NULL;
+    }
+    if (desired_number_scheduled_local_var) {
+        free(desired_number_scheduled_local_var);
+        desired_number_scheduled_local_var = NULL;
+    }
+    if (number_available_local_var) {
+        free(number_available_local_var);
+        number_available_local_var = NULL;
+    }
+    if (number_misscheduled_local_var) {
+        free(number_misscheduled_local_var);
+        number_misscheduled_local_var = NULL;
+    }
+    if (number_ready_local_var) {
+        free(number_ready_local_var);
+        number_ready_local_var = NULL;
+    }
+    if (number_unavailable_local_var) {
+        free(number_unavailable_local_var);
+        number_unavailable_local_var = NULL;
+    }
+    if (observed_generation_local_var) {
+        free(observed_generation_local_var);
+        observed_generation_local_var = NULL;
+    }
+    if (updated_number_scheduled_local_var) {
+        free(updated_number_scheduled_local_var);
+        updated_number_scheduled_local_var = NULL;
     }
     return NULL;
 

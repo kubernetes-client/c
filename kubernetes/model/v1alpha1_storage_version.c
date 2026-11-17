@@ -16,13 +16,13 @@ static v1alpha1_storage_version_t *v1alpha1_storage_version_create_internal(
     if (!v1alpha1_storage_version_local_var) {
         return NULL;
     }
+    memset(v1alpha1_storage_version_local_var, 0, sizeof(v1alpha1_storage_version_t));
+    v1alpha1_storage_version_local_var->_library_owned = 1;
     v1alpha1_storage_version_local_var->api_version = api_version;
     v1alpha1_storage_version_local_var->kind = kind;
     v1alpha1_storage_version_local_var->metadata = metadata;
     v1alpha1_storage_version_local_var->spec = spec;
     v1alpha1_storage_version_local_var->status = status;
-
-    v1alpha1_storage_version_local_var->_library_owned = 1;
     return v1alpha1_storage_version_local_var;
 }
 
@@ -33,13 +33,16 @@ __attribute__((deprecated)) v1alpha1_storage_version_t *v1alpha1_storage_version
     object_t *spec,
     v1alpha1_storage_version_status_t *status
     ) {
-    return v1alpha1_storage_version_create_internal (
+    v1alpha1_storage_version_t *result = v1alpha1_storage_version_create_internal (
         api_version,
         kind,
         metadata,
         spec,
         status
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1alpha1_storage_version_free(v1alpha1_storage_version_t *v1alpha1_storage_version) {
@@ -94,7 +97,9 @@ cJSON *v1alpha1_storage_version_convertToJSON(v1alpha1_storage_version_t *v1alph
 
 
     // v1alpha1_storage_version->metadata
-    if(v1alpha1_storage_version->metadata) {
+    if (!v1alpha1_storage_version->metadata) {
+        goto fail;
+    }
     cJSON *metadata_local_JSON = v1_object_meta_convertToJSON(v1alpha1_storage_version->metadata);
     if(metadata_local_JSON == NULL) {
     goto fail; //model
@@ -103,13 +108,10 @@ cJSON *v1alpha1_storage_version_convertToJSON(v1alpha1_storage_version_t *v1alph
     if(item->child == NULL) {
     goto fail;
     }
-    }
 
 
     // v1alpha1_storage_version->spec
-    if (!v1alpha1_storage_version->spec) {
-        goto fail;
-    }
+    if(v1alpha1_storage_version->spec) {
     cJSON *spec_object = object_convertToJSON(v1alpha1_storage_version->spec);
     if(spec_object == NULL) {
     goto fail; //model
@@ -118,12 +120,11 @@ cJSON *v1alpha1_storage_version_convertToJSON(v1alpha1_storage_version_t *v1alph
     if(item->child == NULL) {
     goto fail;
     }
+    }
 
 
     // v1alpha1_storage_version->status
-    if (!v1alpha1_storage_version->status) {
-        goto fail;
-    }
+    if(v1alpha1_storage_version->status) {
     cJSON *status_local_JSON = v1alpha1_storage_version_status_convertToJSON(v1alpha1_storage_version->status);
     if(status_local_JSON == NULL) {
     goto fail; //model
@@ -131,6 +132,7 @@ cJSON *v1alpha1_storage_version_convertToJSON(v1alpha1_storage_version_t *v1alph
     cJSON_AddItemToObject(item, "status", status_local_JSON);
     if(item->child == NULL) {
     goto fail;
+    }
     }
 
     return item;
@@ -144,6 +146,10 @@ fail:
 v1alpha1_storage_version_t *v1alpha1_storage_version_parseFromJSON(cJSON *v1alpha1_storage_versionJSON){
 
     v1alpha1_storage_version_t *v1alpha1_storage_version_local_var = NULL;
+
+    char *api_version_local_str = NULL;
+
+    char *kind_local_str = NULL;
 
     // define the local variable for v1alpha1_storage_version->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
@@ -180,46 +186,58 @@ v1alpha1_storage_version_t *v1alpha1_storage_version_parseFromJSON(cJSON *v1alph
     if (cJSON_IsNull(metadata)) {
         metadata = NULL;
     }
-    if (metadata) { 
-    metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
+    if (!metadata) {
+        goto end;
     }
+
+    
+    metadata_local_nonprim = v1_object_meta_parseFromJSON(metadata); //nonprimitive
 
     // v1alpha1_storage_version->spec
     cJSON *spec = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_versionJSON, "spec");
     if (cJSON_IsNull(spec)) {
         spec = NULL;
     }
-    if (!spec) {
-        goto end;
-    }
-
     object_t *spec_local_object = NULL;
-    
+    if (spec) { 
     spec_local_object = object_parseFromJSON(spec); //object
+    }
 
     // v1alpha1_storage_version->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1alpha1_storage_versionJSON, "status");
     if (cJSON_IsNull(status)) {
         status = NULL;
     }
-    if (!status) {
+    if (status) { 
+    status_local_nonprim = v1alpha1_storage_version_status_parseFromJSON(status); //nonprimitive
+    }
+
+
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+
+    v1alpha1_storage_version_local_var = v1alpha1_storage_version_create_internal (
+        api_version_local_str,
+        kind_local_str,
+        metadata_local_nonprim,
+        spec ? spec_local_object : NULL,
+        status ? status_local_nonprim : NULL
+        );
+
+    if (!v1alpha1_storage_version_local_var) {
         goto end;
     }
 
-    
-    status_local_nonprim = v1alpha1_storage_version_status_parseFromJSON(status); //nonprimitive
-
-
-    v1alpha1_storage_version_local_var = v1alpha1_storage_version_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
-        metadata ? metadata_local_nonprim : NULL,
-        spec_local_object,
-        status_local_nonprim
-        );
-
     return v1alpha1_storage_version_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;

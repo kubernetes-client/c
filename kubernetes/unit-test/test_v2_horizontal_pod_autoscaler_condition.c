@@ -24,6 +24,7 @@ v2_horizontal_pod_autoscaler_condition_t* instantiate_v2_horizontal_pod_autoscal
     v2_horizontal_pod_autoscaler_condition = v2_horizontal_pod_autoscaler_condition_create(
       "2013-10-20T19:20:30+01:00",
       "0",
+      56,
       "0",
       "0",
       "0"
@@ -32,6 +33,7 @@ v2_horizontal_pod_autoscaler_condition_t* instantiate_v2_horizontal_pod_autoscal
     v2_horizontal_pod_autoscaler_condition = v2_horizontal_pod_autoscaler_condition_create(
       "2013-10-20T19:20:30+01:00",
       "0",
+      56,
       "0",
       "0",
       "0"

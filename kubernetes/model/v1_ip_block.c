@@ -13,10 +13,10 @@ static v1_ip_block_t *v1_ip_block_create_internal(
     if (!v1_ip_block_local_var) {
         return NULL;
     }
+    memset(v1_ip_block_local_var, 0, sizeof(v1_ip_block_t));
+    v1_ip_block_local_var->_library_owned = 1;
     v1_ip_block_local_var->cidr = cidr;
     v1_ip_block_local_var->except = except;
-
-    v1_ip_block_local_var->_library_owned = 1;
     return v1_ip_block_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_ip_block_t *v1_ip_block_create(
     char *cidr,
     list_t *except
     ) {
-    return v1_ip_block_create_internal (
+    v1_ip_block_t *result = v1_ip_block_create_internal (
         cidr,
         except
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_ip_block_free(v1_ip_block_t *v1_ip_block) {
@@ -93,6 +96,8 @@ v1_ip_block_t *v1_ip_block_parseFromJSON(cJSON *v1_ip_blockJSON){
 
     v1_ip_block_t *v1_ip_block_local_var = NULL;
 
+    char *cidr_local_str = NULL;
+
     // define the local list for v1_ip_block->except
     list_t *exceptList = NULL;
 
@@ -134,13 +139,23 @@ v1_ip_block_t *v1_ip_block_parseFromJSON(cJSON *v1_ip_blockJSON){
     }
 
 
+    if (cidr && !cJSON_IsNull(cidr)) cidr_local_str = strdup(cidr->valuestring);
+
     v1_ip_block_local_var = v1_ip_block_create_internal (
-        strdup(cidr->valuestring),
+        cidr_local_str,
         except ? exceptList : NULL
         );
 
+    if (!v1_ip_block_local_var) {
+        goto end;
+    }
+
     return v1_ip_block_local_var;
 end:
+    if (cidr_local_str) {
+        free(cidr_local_str);
+        cidr_local_str = NULL;
+    }
     if (exceptList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, exceptList) {

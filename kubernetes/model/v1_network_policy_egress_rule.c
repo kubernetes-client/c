@@ -13,10 +13,10 @@ static v1_network_policy_egress_rule_t *v1_network_policy_egress_rule_create_int
     if (!v1_network_policy_egress_rule_local_var) {
         return NULL;
     }
+    memset(v1_network_policy_egress_rule_local_var, 0, sizeof(v1_network_policy_egress_rule_t));
+    v1_network_policy_egress_rule_local_var->_library_owned = 1;
     v1_network_policy_egress_rule_local_var->ports = ports;
     v1_network_policy_egress_rule_local_var->to = to;
-
-    v1_network_policy_egress_rule_local_var->_library_owned = 1;
     return v1_network_policy_egress_rule_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_network_policy_egress_rule_t *v1_network_policy_e
     list_t *ports,
     list_t *to
     ) {
-    return v1_network_policy_egress_rule_create_internal (
+    v1_network_policy_egress_rule_t *result = v1_network_policy_egress_rule_create_internal (
         ports,
         to
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_network_policy_egress_rule_free(v1_network_policy_egress_rule_t *v1_network_policy_egress_rule) {
@@ -165,10 +168,15 @@ v1_network_policy_egress_rule_t *v1_network_policy_egress_rule_parseFromJSON(cJS
     }
 
 
+
     v1_network_policy_egress_rule_local_var = v1_network_policy_egress_rule_create_internal (
         ports ? portsList : NULL,
         to ? toList : NULL
         );
+
+    if (!v1_network_policy_egress_rule_local_var) {
+        goto end;
+    }
 
     return v1_network_policy_egress_rule_local_var;
 end:

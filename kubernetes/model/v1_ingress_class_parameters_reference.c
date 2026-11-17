@@ -16,13 +16,13 @@ static v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_refe
     if (!v1_ingress_class_parameters_reference_local_var) {
         return NULL;
     }
+    memset(v1_ingress_class_parameters_reference_local_var, 0, sizeof(v1_ingress_class_parameters_reference_t));
+    v1_ingress_class_parameters_reference_local_var->_library_owned = 1;
     v1_ingress_class_parameters_reference_local_var->api_group = api_group;
     v1_ingress_class_parameters_reference_local_var->kind = kind;
     v1_ingress_class_parameters_reference_local_var->name = name;
     v1_ingress_class_parameters_reference_local_var->_namespace = _namespace;
     v1_ingress_class_parameters_reference_local_var->scope = scope;
-
-    v1_ingress_class_parameters_reference_local_var->_library_owned = 1;
     return v1_ingress_class_parameters_reference_local_var;
 }
 
@@ -33,13 +33,16 @@ __attribute__((deprecated)) v1_ingress_class_parameters_reference_t *v1_ingress_
     char *_namespace,
     char *scope
     ) {
-    return v1_ingress_class_parameters_reference_create_internal (
+    v1_ingress_class_parameters_reference_t *result = v1_ingress_class_parameters_reference_create_internal (
         api_group,
         kind,
         name,
         _namespace,
         scope
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_ingress_class_parameters_reference_free(v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference) {
@@ -130,6 +133,16 @@ v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_p
 
     v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_local_var = NULL;
 
+    char *api_group_local_str = NULL;
+
+    char *kind_local_str = NULL;
+
+    char *name_local_str = NULL;
+
+    char *_namespace_local_str = NULL;
+
+    char *scope_local_str = NULL;
+
     // v1_ingress_class_parameters_reference->api_group
     cJSON *api_group = cJSON_GetObjectItemCaseSensitive(v1_ingress_class_parameters_referenceJSON, "apiGroup");
     if (cJSON_IsNull(api_group)) {
@@ -197,16 +210,46 @@ v1_ingress_class_parameters_reference_t *v1_ingress_class_parameters_reference_p
     }
 
 
+    if (api_group && !cJSON_IsNull(api_group)) api_group_local_str = strdup(api_group->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (_namespace && !cJSON_IsNull(_namespace)) _namespace_local_str = strdup(_namespace->valuestring);
+    if (scope && !cJSON_IsNull(scope)) scope_local_str = strdup(scope->valuestring);
+
     v1_ingress_class_parameters_reference_local_var = v1_ingress_class_parameters_reference_create_internal (
-        api_group && !cJSON_IsNull(api_group) ? strdup(api_group->valuestring) : NULL,
-        strdup(kind->valuestring),
-        strdup(name->valuestring),
-        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL,
-        scope && !cJSON_IsNull(scope) ? strdup(scope->valuestring) : NULL
+        api_group_local_str,
+        kind_local_str,
+        name_local_str,
+        _namespace_local_str,
+        scope_local_str
         );
+
+    if (!v1_ingress_class_parameters_reference_local_var) {
+        goto end;
+    }
 
     return v1_ingress_class_parameters_reference_local_var;
 end:
+    if (api_group_local_str) {
+        free(api_group_local_str);
+        api_group_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (_namespace_local_str) {
+        free(_namespace_local_str);
+        _namespace_local_str = NULL;
+    }
+    if (scope_local_str) {
+        free(scope_local_str);
+        scope_local_str = NULL;
+    }
     return NULL;
 
 }

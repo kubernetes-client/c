@@ -14,11 +14,11 @@ static v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_re
     if (!v1_scoped_resource_selector_requirement_local_var) {
         return NULL;
     }
+    memset(v1_scoped_resource_selector_requirement_local_var, 0, sizeof(v1_scoped_resource_selector_requirement_t));
+    v1_scoped_resource_selector_requirement_local_var->_library_owned = 1;
     v1_scoped_resource_selector_requirement_local_var->_operator = _operator;
     v1_scoped_resource_selector_requirement_local_var->scope_name = scope_name;
     v1_scoped_resource_selector_requirement_local_var->values = values;
-
-    v1_scoped_resource_selector_requirement_local_var->_library_owned = 1;
     return v1_scoped_resource_selector_requirement_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_scoped_resource_selector_requirement_t *v1_scoped
     char *scope_name,
     list_t *values
     ) {
-    return v1_scoped_resource_selector_requirement_create_internal (
+    v1_scoped_resource_selector_requirement_t *result = v1_scoped_resource_selector_requirement_create_internal (
         _operator,
         scope_name,
         values
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_scoped_resource_selector_requirement_free(v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requirement) {
@@ -110,6 +113,10 @@ v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requireme
 
     v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requirement_local_var = NULL;
 
+    char *_operator_local_str = NULL;
+
+    char *scope_name_local_str = NULL;
+
     // define the local list for v1_scoped_resource_selector_requirement->values
     list_t *valuesList = NULL;
 
@@ -166,14 +173,29 @@ v1_scoped_resource_selector_requirement_t *v1_scoped_resource_selector_requireme
     }
 
 
+    if (_operator && !cJSON_IsNull(_operator)) _operator_local_str = strdup(_operator->valuestring);
+    if (scope_name && !cJSON_IsNull(scope_name)) scope_name_local_str = strdup(scope_name->valuestring);
+
     v1_scoped_resource_selector_requirement_local_var = v1_scoped_resource_selector_requirement_create_internal (
-        strdup(_operator->valuestring),
-        strdup(scope_name->valuestring),
+        _operator_local_str,
+        scope_name_local_str,
         values ? valuesList : NULL
         );
 
+    if (!v1_scoped_resource_selector_requirement_local_var) {
+        goto end;
+    }
+
     return v1_scoped_resource_selector_requirement_local_var;
 end:
+    if (_operator_local_str) {
+        free(_operator_local_str);
+        _operator_local_str = NULL;
+    }
+    if (scope_name_local_str) {
+        free(scope_name_local_str);
+        scope_name_local_str = NULL;
+    }
     if (valuesList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, valuesList) {

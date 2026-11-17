@@ -13,10 +13,10 @@ static v1_capabilities_t *v1_capabilities_create_internal(
     if (!v1_capabilities_local_var) {
         return NULL;
     }
+    memset(v1_capabilities_local_var, 0, sizeof(v1_capabilities_t));
+    v1_capabilities_local_var->_library_owned = 1;
     v1_capabilities_local_var->add = add;
     v1_capabilities_local_var->drop = drop;
-
-    v1_capabilities_local_var->_library_owned = 1;
     return v1_capabilities_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_capabilities_t *v1_capabilities_create(
     list_t *add,
     list_t *drop
     ) {
-    return v1_capabilities_create_internal (
+    v1_capabilities_t *result = v1_capabilities_create_internal (
         add,
         drop
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_capabilities_free(v1_capabilities_t *v1_capabilities) {
@@ -155,10 +158,15 @@ v1_capabilities_t *v1_capabilities_parseFromJSON(cJSON *v1_capabilitiesJSON){
     }
 
 
+
     v1_capabilities_local_var = v1_capabilities_create_internal (
         add ? addList : NULL,
         drop ? dropList : NULL
         );
+
+    if (!v1_capabilities_local_var) {
+        goto end;
+    }
 
     return v1_capabilities_local_var;
 end:

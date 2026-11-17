@@ -12,18 +12,21 @@ static v1_downward_api_projection_t *v1_downward_api_projection_create_internal(
     if (!v1_downward_api_projection_local_var) {
         return NULL;
     }
-    v1_downward_api_projection_local_var->items = items;
-
+    memset(v1_downward_api_projection_local_var, 0, sizeof(v1_downward_api_projection_t));
     v1_downward_api_projection_local_var->_library_owned = 1;
+    v1_downward_api_projection_local_var->items = items;
     return v1_downward_api_projection_local_var;
 }
 
 __attribute__((deprecated)) v1_downward_api_projection_t *v1_downward_api_projection_create(
     list_t *items
     ) {
-    return v1_downward_api_projection_create_internal (
+    v1_downward_api_projection_t *result = v1_downward_api_projection_create_internal (
         items
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_downward_api_projection_free(v1_downward_api_projection_t *v1_downward_api_projection) {
@@ -107,9 +110,14 @@ v1_downward_api_projection_t *v1_downward_api_projection_parseFromJSON(cJSON *v1
     }
 
 
+
     v1_downward_api_projection_local_var = v1_downward_api_projection_create_internal (
         items ? itemsList : NULL
         );
+
+    if (!v1_downward_api_projection_local_var) {
+        goto end;
+    }
 
     return v1_downward_api_projection_local_var;
 end:

@@ -20,7 +20,7 @@ typedef struct v1_resource_policy_rule_t v1_resource_policy_rule_t;
 
 typedef struct v1_resource_policy_rule_t {
     list_t *api_groups; //primitive container
-    int cluster_scope; //boolean
+    int *cluster_scope; //boolean
     list_t *namespaces; //primitive container
     list_t *resources; //primitive container
     list_t *verbs; //primitive container
@@ -30,7 +30,7 @@ typedef struct v1_resource_policy_rule_t {
 
 __attribute__((deprecated)) v1_resource_policy_rule_t *v1_resource_policy_rule_create(
     list_t *api_groups,
-    int cluster_scope,
+    int *cluster_scope,
     list_t *namespaces,
     list_t *resources,
     list_t *verbs

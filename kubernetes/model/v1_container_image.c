@@ -7,27 +7,36 @@
 
 static v1_container_image_t *v1_container_image_create_internal(
     list_t *names,
-    long size_bytes
+    long *size_bytes
     ) {
     v1_container_image_t *v1_container_image_local_var = malloc(sizeof(v1_container_image_t));
     if (!v1_container_image_local_var) {
         return NULL;
     }
+    memset(v1_container_image_local_var, 0, sizeof(v1_container_image_t));
+    v1_container_image_local_var->_library_owned = 1;
     v1_container_image_local_var->names = names;
     v1_container_image_local_var->size_bytes = size_bytes;
-
-    v1_container_image_local_var->_library_owned = 1;
     return v1_container_image_local_var;
 }
 
 __attribute__((deprecated)) v1_container_image_t *v1_container_image_create(
     list_t *names,
-    long size_bytes
+    long *size_bytes
     ) {
-    return v1_container_image_create_internal (
+    long *size_bytes_copy = NULL;
+    if (size_bytes) {
+        size_bytes_copy = malloc(sizeof(long));
+        if (size_bytes_copy) *size_bytes_copy = *size_bytes;
+    }
+    v1_container_image_t *result = v1_container_image_create_internal (
         names,
-        size_bytes
+        size_bytes_copy
         );
+    if (!result) {
+        free(size_bytes_copy);
+    }
+    return result;
 }
 
 void v1_container_image_free(v1_container_image_t *v1_container_image) {
@@ -45,6 +54,10 @@ void v1_container_image_free(v1_container_image_t *v1_container_image) {
         }
         list_freeList(v1_container_image->names);
         v1_container_image->names = NULL;
+    }
+    if (v1_container_image->size_bytes) {
+        free(v1_container_image->size_bytes);
+        v1_container_image->size_bytes = NULL;
     }
     free(v1_container_image);
 }
@@ -71,7 +84,7 @@ cJSON *v1_container_image_convertToJSON(v1_container_image_t *v1_container_image
 
     // v1_container_image->size_bytes
     if(v1_container_image->size_bytes) {
-    if(cJSON_AddNumberToObject(item, "sizeBytes", v1_container_image->size_bytes) == NULL) {
+    if(cJSON_AddNumberToObject(item, "sizeBytes", *v1_container_image->size_bytes) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -90,6 +103,9 @@ v1_container_image_t *v1_container_image_parseFromJSON(cJSON *v1_container_image
 
     // define the local list for v1_container_image->names
     list_t *namesList = NULL;
+
+    // define the local variable for v1_container_image->size_bytes
+    long *size_bytes_local_var = NULL;
 
     // v1_container_image->names
     cJSON *names = cJSON_GetObjectItemCaseSensitive(v1_container_imageJSON, "names");
@@ -123,13 +139,24 @@ v1_container_image_t *v1_container_image_parseFromJSON(cJSON *v1_container_image
     {
     goto end; //Numeric
     }
+    size_bytes_local_var = malloc(sizeof(long));
+    if(!size_bytes_local_var)
+    {
+        goto end;
     }
+    *size_bytes_local_var = size_bytes->valuedouble;
+    }
+
 
 
     v1_container_image_local_var = v1_container_image_create_internal (
         names ? namesList : NULL,
-        size_bytes ? size_bytes->valuedouble : 0
+        size_bytes_local_var
         );
+
+    if (!v1_container_image_local_var) {
+        goto end;
+    }
 
     return v1_container_image_local_var;
 end:
@@ -141,6 +168,10 @@ end:
         }
         list_freeList(namesList);
         namesList = NULL;
+    }
+    if (size_bytes_local_var) {
+        free(size_bytes_local_var);
+        size_bytes_local_var = NULL;
     }
     return NULL;
 

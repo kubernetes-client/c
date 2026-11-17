@@ -14,11 +14,11 @@ static v1_env_from_source_t *v1_env_from_source_create_internal(
     if (!v1_env_from_source_local_var) {
         return NULL;
     }
+    memset(v1_env_from_source_local_var, 0, sizeof(v1_env_from_source_t));
+    v1_env_from_source_local_var->_library_owned = 1;
     v1_env_from_source_local_var->config_map_ref = config_map_ref;
     v1_env_from_source_local_var->prefix = prefix;
     v1_env_from_source_local_var->secret_ref = secret_ref;
-
-    v1_env_from_source_local_var->_library_owned = 1;
     return v1_env_from_source_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_env_from_source_t *v1_env_from_source_create(
     char *prefix,
     v1_secret_env_source_t *secret_ref
     ) {
-    return v1_env_from_source_create_internal (
+    v1_env_from_source_t *result = v1_env_from_source_create_internal (
         config_map_ref,
         prefix,
         secret_ref
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_env_from_source_free(v1_env_from_source_t *v1_env_from_source) {
@@ -109,6 +112,8 @@ v1_env_from_source_t *v1_env_from_source_parseFromJSON(cJSON *v1_env_from_source
     // define the local variable for v1_env_from_source->config_map_ref
     v1_config_map_env_source_t *config_map_ref_local_nonprim = NULL;
 
+    char *prefix_local_str = NULL;
+
     // define the local variable for v1_env_from_source->secret_ref
     v1_secret_env_source_t *secret_ref_local_nonprim = NULL;
 
@@ -143,17 +148,27 @@ v1_env_from_source_t *v1_env_from_source_parseFromJSON(cJSON *v1_env_from_source
     }
 
 
+    if (prefix && !cJSON_IsNull(prefix)) prefix_local_str = strdup(prefix->valuestring);
+
     v1_env_from_source_local_var = v1_env_from_source_create_internal (
         config_map_ref ? config_map_ref_local_nonprim : NULL,
-        prefix && !cJSON_IsNull(prefix) ? strdup(prefix->valuestring) : NULL,
+        prefix_local_str,
         secret_ref ? secret_ref_local_nonprim : NULL
         );
+
+    if (!v1_env_from_source_local_var) {
+        goto end;
+    }
 
     return v1_env_from_source_local_var;
 end:
     if (config_map_ref_local_nonprim) {
         v1_config_map_env_source_free(config_map_ref_local_nonprim);
         config_map_ref_local_nonprim = NULL;
+    }
+    if (prefix_local_str) {
+        free(prefix_local_str);
+        prefix_local_str = NULL;
     }
     if (secret_ref_local_nonprim) {
         v1_secret_env_source_free(secret_ref_local_nonprim);

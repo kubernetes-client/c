@@ -6,44 +6,77 @@
 
 
 static v1_replication_controller_status_t *v1_replication_controller_status_create_internal(
-    int available_replicas,
+    int *available_replicas,
     list_t *conditions,
-    int fully_labeled_replicas,
-    long observed_generation,
-    int ready_replicas,
-    int replicas
+    int *fully_labeled_replicas,
+    long *observed_generation,
+    int *ready_replicas,
+    int *replicas
     ) {
     v1_replication_controller_status_t *v1_replication_controller_status_local_var = malloc(sizeof(v1_replication_controller_status_t));
     if (!v1_replication_controller_status_local_var) {
         return NULL;
     }
+    memset(v1_replication_controller_status_local_var, 0, sizeof(v1_replication_controller_status_t));
+    v1_replication_controller_status_local_var->_library_owned = 1;
     v1_replication_controller_status_local_var->available_replicas = available_replicas;
     v1_replication_controller_status_local_var->conditions = conditions;
     v1_replication_controller_status_local_var->fully_labeled_replicas = fully_labeled_replicas;
     v1_replication_controller_status_local_var->observed_generation = observed_generation;
     v1_replication_controller_status_local_var->ready_replicas = ready_replicas;
     v1_replication_controller_status_local_var->replicas = replicas;
-
-    v1_replication_controller_status_local_var->_library_owned = 1;
     return v1_replication_controller_status_local_var;
 }
 
 __attribute__((deprecated)) v1_replication_controller_status_t *v1_replication_controller_status_create(
-    int available_replicas,
+    int *available_replicas,
     list_t *conditions,
-    int fully_labeled_replicas,
-    long observed_generation,
-    int ready_replicas,
-    int replicas
+    int *fully_labeled_replicas,
+    long *observed_generation,
+    int *ready_replicas,
+    int *replicas
     ) {
-    return v1_replication_controller_status_create_internal (
-        available_replicas,
+    int *available_replicas_copy = NULL;
+    if (available_replicas) {
+        available_replicas_copy = malloc(sizeof(int));
+        if (available_replicas_copy) *available_replicas_copy = *available_replicas;
+    }
+    int *fully_labeled_replicas_copy = NULL;
+    if (fully_labeled_replicas) {
+        fully_labeled_replicas_copy = malloc(sizeof(int));
+        if (fully_labeled_replicas_copy) *fully_labeled_replicas_copy = *fully_labeled_replicas;
+    }
+    long *observed_generation_copy = NULL;
+    if (observed_generation) {
+        observed_generation_copy = malloc(sizeof(long));
+        if (observed_generation_copy) *observed_generation_copy = *observed_generation;
+    }
+    int *ready_replicas_copy = NULL;
+    if (ready_replicas) {
+        ready_replicas_copy = malloc(sizeof(int));
+        if (ready_replicas_copy) *ready_replicas_copy = *ready_replicas;
+    }
+    int *replicas_copy = NULL;
+    if (replicas) {
+        replicas_copy = malloc(sizeof(int));
+        if (replicas_copy) *replicas_copy = *replicas;
+    }
+    v1_replication_controller_status_t *result = v1_replication_controller_status_create_internal (
+        available_replicas_copy,
         conditions,
-        fully_labeled_replicas,
-        observed_generation,
-        ready_replicas,
-        replicas
+        fully_labeled_replicas_copy,
+        observed_generation_copy,
+        ready_replicas_copy,
+        replicas_copy
         );
+    if (!result) {
+        free(available_replicas_copy);
+        free(fully_labeled_replicas_copy);
+        free(observed_generation_copy);
+        free(ready_replicas_copy);
+        free(replicas_copy);
+    }
+    return result;
 }
 
 void v1_replication_controller_status_free(v1_replication_controller_status_t *v1_replication_controller_status) {
@@ -55,12 +88,32 @@ void v1_replication_controller_status_free(v1_replication_controller_status_t *v
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_replication_controller_status->available_replicas) {
+        free(v1_replication_controller_status->available_replicas);
+        v1_replication_controller_status->available_replicas = NULL;
+    }
     if (v1_replication_controller_status->conditions) {
         list_ForEach(listEntry, v1_replication_controller_status->conditions) {
             v1_replication_controller_condition_free(listEntry->data);
         }
         list_freeList(v1_replication_controller_status->conditions);
         v1_replication_controller_status->conditions = NULL;
+    }
+    if (v1_replication_controller_status->fully_labeled_replicas) {
+        free(v1_replication_controller_status->fully_labeled_replicas);
+        v1_replication_controller_status->fully_labeled_replicas = NULL;
+    }
+    if (v1_replication_controller_status->observed_generation) {
+        free(v1_replication_controller_status->observed_generation);
+        v1_replication_controller_status->observed_generation = NULL;
+    }
+    if (v1_replication_controller_status->ready_replicas) {
+        free(v1_replication_controller_status->ready_replicas);
+        v1_replication_controller_status->ready_replicas = NULL;
+    }
+    if (v1_replication_controller_status->replicas) {
+        free(v1_replication_controller_status->replicas);
+        v1_replication_controller_status->replicas = NULL;
     }
     free(v1_replication_controller_status);
 }
@@ -70,7 +123,7 @@ cJSON *v1_replication_controller_status_convertToJSON(v1_replication_controller_
 
     // v1_replication_controller_status->available_replicas
     if(v1_replication_controller_status->available_replicas) {
-    if(cJSON_AddNumberToObject(item, "availableReplicas", v1_replication_controller_status->available_replicas) == NULL) {
+    if(cJSON_AddNumberToObject(item, "availableReplicas", *v1_replication_controller_status->available_replicas) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -98,7 +151,7 @@ cJSON *v1_replication_controller_status_convertToJSON(v1_replication_controller_
 
     // v1_replication_controller_status->fully_labeled_replicas
     if(v1_replication_controller_status->fully_labeled_replicas) {
-    if(cJSON_AddNumberToObject(item, "fullyLabeledReplicas", v1_replication_controller_status->fully_labeled_replicas) == NULL) {
+    if(cJSON_AddNumberToObject(item, "fullyLabeledReplicas", *v1_replication_controller_status->fully_labeled_replicas) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -106,7 +159,7 @@ cJSON *v1_replication_controller_status_convertToJSON(v1_replication_controller_
 
     // v1_replication_controller_status->observed_generation
     if(v1_replication_controller_status->observed_generation) {
-    if(cJSON_AddNumberToObject(item, "observedGeneration", v1_replication_controller_status->observed_generation) == NULL) {
+    if(cJSON_AddNumberToObject(item, "observedGeneration", *v1_replication_controller_status->observed_generation) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -114,7 +167,7 @@ cJSON *v1_replication_controller_status_convertToJSON(v1_replication_controller_
 
     // v1_replication_controller_status->ready_replicas
     if(v1_replication_controller_status->ready_replicas) {
-    if(cJSON_AddNumberToObject(item, "readyReplicas", v1_replication_controller_status->ready_replicas) == NULL) {
+    if(cJSON_AddNumberToObject(item, "readyReplicas", *v1_replication_controller_status->ready_replicas) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -124,7 +177,7 @@ cJSON *v1_replication_controller_status_convertToJSON(v1_replication_controller_
     if (!v1_replication_controller_status->replicas) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "replicas", v1_replication_controller_status->replicas) == NULL) {
+    if(cJSON_AddNumberToObject(item, "replicas", *v1_replication_controller_status->replicas) == NULL) {
     goto fail; //Numeric
     }
 
@@ -140,8 +193,23 @@ v1_replication_controller_status_t *v1_replication_controller_status_parseFromJS
 
     v1_replication_controller_status_t *v1_replication_controller_status_local_var = NULL;
 
+    // define the local variable for v1_replication_controller_status->available_replicas
+    int *available_replicas_local_var = NULL;
+
     // define the local list for v1_replication_controller_status->conditions
     list_t *conditionsList = NULL;
+
+    // define the local variable for v1_replication_controller_status->fully_labeled_replicas
+    int *fully_labeled_replicas_local_var = NULL;
+
+    // define the local variable for v1_replication_controller_status->observed_generation
+    long *observed_generation_local_var = NULL;
+
+    // define the local variable for v1_replication_controller_status->ready_replicas
+    int *ready_replicas_local_var = NULL;
+
+    // define the local variable for v1_replication_controller_status->replicas
+    int *replicas_local_var = NULL;
 
     // v1_replication_controller_status->available_replicas
     cJSON *available_replicas = cJSON_GetObjectItemCaseSensitive(v1_replication_controller_statusJSON, "availableReplicas");
@@ -153,6 +221,12 @@ v1_replication_controller_status_t *v1_replication_controller_status_parseFromJS
     {
     goto end; //Numeric
     }
+    available_replicas_local_var = malloc(sizeof(int));
+    if(!available_replicas_local_var)
+    {
+        goto end;
+    }
+    *available_replicas_local_var = available_replicas->valuedouble;
     }
 
     // v1_replication_controller_status->conditions
@@ -189,6 +263,12 @@ v1_replication_controller_status_t *v1_replication_controller_status_parseFromJS
     {
     goto end; //Numeric
     }
+    fully_labeled_replicas_local_var = malloc(sizeof(int));
+    if(!fully_labeled_replicas_local_var)
+    {
+        goto end;
+    }
+    *fully_labeled_replicas_local_var = fully_labeled_replicas->valuedouble;
     }
 
     // v1_replication_controller_status->observed_generation
@@ -201,6 +281,12 @@ v1_replication_controller_status_t *v1_replication_controller_status_parseFromJS
     {
     goto end; //Numeric
     }
+    observed_generation_local_var = malloc(sizeof(long));
+    if(!observed_generation_local_var)
+    {
+        goto end;
+    }
+    *observed_generation_local_var = observed_generation->valuedouble;
     }
 
     // v1_replication_controller_status->ready_replicas
@@ -213,6 +299,12 @@ v1_replication_controller_status_t *v1_replication_controller_status_parseFromJS
     {
     goto end; //Numeric
     }
+    ready_replicas_local_var = malloc(sizeof(int));
+    if(!ready_replicas_local_var)
+    {
+        goto end;
+    }
+    *ready_replicas_local_var = ready_replicas->valuedouble;
     }
 
     // v1_replication_controller_status->replicas
@@ -229,19 +321,34 @@ v1_replication_controller_status_t *v1_replication_controller_status_parseFromJS
     {
     goto end; //Numeric
     }
+    replicas_local_var = malloc(sizeof(int));
+    if(!replicas_local_var)
+    {
+        goto end;
+    }
+    *replicas_local_var = replicas->valuedouble;
+
 
 
     v1_replication_controller_status_local_var = v1_replication_controller_status_create_internal (
-        available_replicas ? available_replicas->valuedouble : 0,
+        available_replicas_local_var,
         conditions ? conditionsList : NULL,
-        fully_labeled_replicas ? fully_labeled_replicas->valuedouble : 0,
-        observed_generation ? observed_generation->valuedouble : 0,
-        ready_replicas ? ready_replicas->valuedouble : 0,
-        replicas->valuedouble
+        fully_labeled_replicas_local_var,
+        observed_generation_local_var,
+        ready_replicas_local_var,
+        replicas_local_var
         );
+
+    if (!v1_replication_controller_status_local_var) {
+        goto end;
+    }
 
     return v1_replication_controller_status_local_var;
 end:
+    if (available_replicas_local_var) {
+        free(available_replicas_local_var);
+        available_replicas_local_var = NULL;
+    }
     if (conditionsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, conditionsList) {
@@ -250,6 +357,22 @@ end:
         }
         list_freeList(conditionsList);
         conditionsList = NULL;
+    }
+    if (fully_labeled_replicas_local_var) {
+        free(fully_labeled_replicas_local_var);
+        fully_labeled_replicas_local_var = NULL;
+    }
+    if (observed_generation_local_var) {
+        free(observed_generation_local_var);
+        observed_generation_local_var = NULL;
+    }
+    if (ready_replicas_local_var) {
+        free(ready_replicas_local_var);
+        ready_replicas_local_var = NULL;
+    }
+    if (replicas_local_var) {
+        free(replicas_local_var);
+        replicas_local_var = NULL;
     }
     return NULL;
 

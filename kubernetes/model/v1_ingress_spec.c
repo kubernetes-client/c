@@ -15,12 +15,12 @@ static v1_ingress_spec_t *v1_ingress_spec_create_internal(
     if (!v1_ingress_spec_local_var) {
         return NULL;
     }
+    memset(v1_ingress_spec_local_var, 0, sizeof(v1_ingress_spec_t));
+    v1_ingress_spec_local_var->_library_owned = 1;
     v1_ingress_spec_local_var->default_backend = default_backend;
     v1_ingress_spec_local_var->ingress_class_name = ingress_class_name;
     v1_ingress_spec_local_var->rules = rules;
     v1_ingress_spec_local_var->tls = tls;
-
-    v1_ingress_spec_local_var->_library_owned = 1;
     return v1_ingress_spec_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1_ingress_spec_t *v1_ingress_spec_create(
     list_t *rules,
     list_t *tls
     ) {
-    return v1_ingress_spec_create_internal (
+    v1_ingress_spec_t *result = v1_ingress_spec_create_internal (
         default_backend,
         ingress_class_name,
         rules,
         tls
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_ingress_spec_free(v1_ingress_spec_t *v1_ingress_spec) {
@@ -150,6 +153,8 @@ v1_ingress_spec_t *v1_ingress_spec_parseFromJSON(cJSON *v1_ingress_specJSON){
     // define the local variable for v1_ingress_spec->default_backend
     v1_ingress_backend_t *default_backend_local_nonprim = NULL;
 
+    char *ingress_class_name_local_str = NULL;
+
     // define the local list for v1_ingress_spec->rules
     list_t *rulesList = NULL;
 
@@ -226,18 +231,28 @@ v1_ingress_spec_t *v1_ingress_spec_parseFromJSON(cJSON *v1_ingress_specJSON){
     }
 
 
+    if (ingress_class_name && !cJSON_IsNull(ingress_class_name)) ingress_class_name_local_str = strdup(ingress_class_name->valuestring);
+
     v1_ingress_spec_local_var = v1_ingress_spec_create_internal (
         default_backend ? default_backend_local_nonprim : NULL,
-        ingress_class_name && !cJSON_IsNull(ingress_class_name) ? strdup(ingress_class_name->valuestring) : NULL,
+        ingress_class_name_local_str,
         rules ? rulesList : NULL,
         tls ? tlsList : NULL
         );
+
+    if (!v1_ingress_spec_local_var) {
+        goto end;
+    }
 
     return v1_ingress_spec_local_var;
 end:
     if (default_backend_local_nonprim) {
         v1_ingress_backend_free(default_backend_local_nonprim);
         default_backend_local_nonprim = NULL;
+    }
+    if (ingress_class_name_local_str) {
+        free(ingress_class_name_local_str);
+        ingress_class_name_local_str = NULL;
     }
     if (rulesList) {
         listEntry_t *listEntry = NULL;

@@ -13,10 +13,10 @@ static v1_volume_resource_requirements_t *v1_volume_resource_requirements_create
     if (!v1_volume_resource_requirements_local_var) {
         return NULL;
     }
+    memset(v1_volume_resource_requirements_local_var, 0, sizeof(v1_volume_resource_requirements_t));
+    v1_volume_resource_requirements_local_var->_library_owned = 1;
     v1_volume_resource_requirements_local_var->limits = limits;
     v1_volume_resource_requirements_local_var->requests = requests;
-
-    v1_volume_resource_requirements_local_var->_library_owned = 1;
     return v1_volume_resource_requirements_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_volume_resource_requirements_t *v1_volume_resourc
     list_t* limits,
     list_t* requests
     ) {
-    return v1_volume_resource_requirements_create_internal (
+    v1_volume_resource_requirements_t *result = v1_volume_resource_requirements_create_internal (
         limits,
         requests
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_volume_resource_requirements_free(v1_volume_resource_requirements_t *v1_volume_resource_requirements) {
@@ -179,10 +182,15 @@ v1_volume_resource_requirements_t *v1_volume_resource_requirements_parseFromJSON
     }
 
 
+
     v1_volume_resource_requirements_local_var = v1_volume_resource_requirements_create_internal (
         limits ? limitsList : NULL,
         requests ? requestsList : NULL
         );
+
+    if (!v1_volume_resource_requirements_local_var) {
+        goto end;
+    }
 
     return v1_volume_resource_requirements_local_var;
 end:

@@ -13,10 +13,10 @@ static v1_device_capacity_t *v1_device_capacity_create_internal(
     if (!v1_device_capacity_local_var) {
         return NULL;
     }
+    memset(v1_device_capacity_local_var, 0, sizeof(v1_device_capacity_t));
+    v1_device_capacity_local_var->_library_owned = 1;
     v1_device_capacity_local_var->request_policy = request_policy;
     v1_device_capacity_local_var->value = value;
-
-    v1_device_capacity_local_var->_library_owned = 1;
     return v1_device_capacity_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_device_capacity_t *v1_device_capacity_create(
     v1_capacity_request_policy_t *request_policy,
     char *value
     ) {
-    return v1_device_capacity_create_internal (
+    v1_device_capacity_t *result = v1_device_capacity_create_internal (
         request_policy,
         value
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_device_capacity_free(v1_device_capacity_t *v1_device_capacity) {
@@ -89,6 +92,8 @@ v1_device_capacity_t *v1_device_capacity_parseFromJSON(cJSON *v1_device_capacity
     // define the local variable for v1_device_capacity->request_policy
     v1_capacity_request_policy_t *request_policy_local_nonprim = NULL;
 
+    char *value_local_str = NULL;
+
     // v1_device_capacity->request_policy
     cJSON *request_policy = cJSON_GetObjectItemCaseSensitive(v1_device_capacityJSON, "requestPolicy");
     if (cJSON_IsNull(request_policy)) {
@@ -114,16 +119,26 @@ v1_device_capacity_t *v1_device_capacity_parseFromJSON(cJSON *v1_device_capacity
     }
 
 
+    if (value && !cJSON_IsNull(value)) value_local_str = strdup(value->valuestring);
+
     v1_device_capacity_local_var = v1_device_capacity_create_internal (
         request_policy ? request_policy_local_nonprim : NULL,
-        strdup(value->valuestring)
+        value_local_str
         );
+
+    if (!v1_device_capacity_local_var) {
+        goto end;
+    }
 
     return v1_device_capacity_local_var;
 end:
     if (request_policy_local_nonprim) {
         v1_capacity_request_policy_free(request_policy_local_nonprim);
         request_policy_local_nonprim = NULL;
+    }
+    if (value_local_str) {
+        free(value_local_str);
+        value_local_str = NULL;
     }
     return NULL;
 

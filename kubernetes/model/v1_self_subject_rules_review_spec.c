@@ -12,18 +12,21 @@ static v1_self_subject_rules_review_spec_t *v1_self_subject_rules_review_spec_cr
     if (!v1_self_subject_rules_review_spec_local_var) {
         return NULL;
     }
-    v1_self_subject_rules_review_spec_local_var->_namespace = _namespace;
-
+    memset(v1_self_subject_rules_review_spec_local_var, 0, sizeof(v1_self_subject_rules_review_spec_t));
     v1_self_subject_rules_review_spec_local_var->_library_owned = 1;
+    v1_self_subject_rules_review_spec_local_var->_namespace = _namespace;
     return v1_self_subject_rules_review_spec_local_var;
 }
 
 __attribute__((deprecated)) v1_self_subject_rules_review_spec_t *v1_self_subject_rules_review_spec_create(
     char *_namespace
     ) {
-    return v1_self_subject_rules_review_spec_create_internal (
+    v1_self_subject_rules_review_spec_t *result = v1_self_subject_rules_review_spec_create_internal (
         _namespace
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_self_subject_rules_review_spec_free(v1_self_subject_rules_review_spec_t *v1_self_subject_rules_review_spec) {
@@ -64,6 +67,8 @@ v1_self_subject_rules_review_spec_t *v1_self_subject_rules_review_spec_parseFrom
 
     v1_self_subject_rules_review_spec_t *v1_self_subject_rules_review_spec_local_var = NULL;
 
+    char *_namespace_local_str = NULL;
+
     // v1_self_subject_rules_review_spec->_namespace
     cJSON *_namespace = cJSON_GetObjectItemCaseSensitive(v1_self_subject_rules_review_specJSON, "namespace");
     if (cJSON_IsNull(_namespace)) {
@@ -77,12 +82,22 @@ v1_self_subject_rules_review_spec_t *v1_self_subject_rules_review_spec_parseFrom
     }
 
 
+    if (_namespace && !cJSON_IsNull(_namespace)) _namespace_local_str = strdup(_namespace->valuestring);
+
     v1_self_subject_rules_review_spec_local_var = v1_self_subject_rules_review_spec_create_internal (
-        _namespace && !cJSON_IsNull(_namespace) ? strdup(_namespace->valuestring) : NULL
+        _namespace_local_str
         );
+
+    if (!v1_self_subject_rules_review_spec_local_var) {
+        goto end;
+    }
 
     return v1_self_subject_rules_review_spec_local_var;
 end:
+    if (_namespace_local_str) {
+        free(_namespace_local_str);
+        _namespace_local_str = NULL;
+    }
     return NULL;
 
 }

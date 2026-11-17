@@ -19,7 +19,7 @@ typedef struct v1_certificate_signing_request_spec_t v1_certificate_signing_requ
 
 
 typedef struct v1_certificate_signing_request_spec_t {
-    int expiration_seconds; //numeric
+    int *expiration_seconds; //numeric
     list_t* extra; //map
     list_t *groups; //primitive container
     char *request; //ByteArray
@@ -32,7 +32,7 @@ typedef struct v1_certificate_signing_request_spec_t {
 } v1_certificate_signing_request_spec_t;
 
 __attribute__((deprecated)) v1_certificate_signing_request_spec_t *v1_certificate_signing_request_spec_create(
-    int expiration_seconds,
+    int *expiration_seconds,
     list_t* extra,
     list_t *groups,
     char *request,

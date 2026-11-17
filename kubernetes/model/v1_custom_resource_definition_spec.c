@@ -9,7 +9,7 @@ static v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_
     v1_custom_resource_conversion_t *conversion,
     char *group,
     v1_custom_resource_definition_names_t *names,
-    int preserve_unknown_fields,
+    int *preserve_unknown_fields,
     char *scope,
     list_t *versions
     ) {
@@ -17,14 +17,14 @@ static v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_
     if (!v1_custom_resource_definition_spec_local_var) {
         return NULL;
     }
+    memset(v1_custom_resource_definition_spec_local_var, 0, sizeof(v1_custom_resource_definition_spec_t));
+    v1_custom_resource_definition_spec_local_var->_library_owned = 1;
     v1_custom_resource_definition_spec_local_var->conversion = conversion;
     v1_custom_resource_definition_spec_local_var->group = group;
     v1_custom_resource_definition_spec_local_var->names = names;
     v1_custom_resource_definition_spec_local_var->preserve_unknown_fields = preserve_unknown_fields;
     v1_custom_resource_definition_spec_local_var->scope = scope;
     v1_custom_resource_definition_spec_local_var->versions = versions;
-
-    v1_custom_resource_definition_spec_local_var->_library_owned = 1;
     return v1_custom_resource_definition_spec_local_var;
 }
 
@@ -32,18 +32,27 @@ __attribute__((deprecated)) v1_custom_resource_definition_spec_t *v1_custom_reso
     v1_custom_resource_conversion_t *conversion,
     char *group,
     v1_custom_resource_definition_names_t *names,
-    int preserve_unknown_fields,
+    int *preserve_unknown_fields,
     char *scope,
     list_t *versions
     ) {
-    return v1_custom_resource_definition_spec_create_internal (
+    int *preserve_unknown_fields_copy = NULL;
+    if (preserve_unknown_fields) {
+        preserve_unknown_fields_copy = malloc(sizeof(int));
+        if (preserve_unknown_fields_copy) *preserve_unknown_fields_copy = *preserve_unknown_fields;
+    }
+    v1_custom_resource_definition_spec_t *result = v1_custom_resource_definition_spec_create_internal (
         conversion,
         group,
         names,
-        preserve_unknown_fields,
+        preserve_unknown_fields_copy,
         scope,
         versions
         );
+    if (!result) {
+        free(preserve_unknown_fields_copy);
+    }
+    return result;
 }
 
 void v1_custom_resource_definition_spec_free(v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec) {
@@ -66,6 +75,10 @@ void v1_custom_resource_definition_spec_free(v1_custom_resource_definition_spec_
     if (v1_custom_resource_definition_spec->names) {
         v1_custom_resource_definition_names_free(v1_custom_resource_definition_spec->names);
         v1_custom_resource_definition_spec->names = NULL;
+    }
+    if (v1_custom_resource_definition_spec->preserve_unknown_fields) {
+        free(v1_custom_resource_definition_spec->preserve_unknown_fields);
+        v1_custom_resource_definition_spec->preserve_unknown_fields = NULL;
     }
     if (v1_custom_resource_definition_spec->scope) {
         free(v1_custom_resource_definition_spec->scope);
@@ -122,7 +135,7 @@ cJSON *v1_custom_resource_definition_spec_convertToJSON(v1_custom_resource_defin
 
     // v1_custom_resource_definition_spec->preserve_unknown_fields
     if(v1_custom_resource_definition_spec->preserve_unknown_fields) {
-    if(cJSON_AddBoolToObject(item, "preserveUnknownFields", v1_custom_resource_definition_spec->preserve_unknown_fields) == NULL) {
+    if(cJSON_AddBoolToObject(item, "preserveUnknownFields", *v1_custom_resource_definition_spec->preserve_unknown_fields) == NULL) {
     goto fail; //Bool
     }
     }
@@ -172,8 +185,15 @@ v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_parseFr
     // define the local variable for v1_custom_resource_definition_spec->conversion
     v1_custom_resource_conversion_t *conversion_local_nonprim = NULL;
 
+    char *group_local_str = NULL;
+
     // define the local variable for v1_custom_resource_definition_spec->names
     v1_custom_resource_definition_names_t *names_local_nonprim = NULL;
+
+    // define the local variable for v1_custom_resource_definition_spec->preserve_unknown_fields
+    int *preserve_unknown_fields_local_var = NULL;
+
+    char *scope_local_str = NULL;
 
     // define the local list for v1_custom_resource_definition_spec->versions
     list_t *versionsList = NULL;
@@ -224,6 +244,12 @@ v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_parseFr
     {
     goto end; //Bool
     }
+    preserve_unknown_fields_local_var = malloc(sizeof(int));
+    if(!preserve_unknown_fields_local_var)
+    {
+        goto end;
+    }
+    *preserve_unknown_fields_local_var = preserve_unknown_fields->valueint;
     }
 
     // v1_custom_resource_definition_spec->scope
@@ -269,14 +295,21 @@ v1_custom_resource_definition_spec_t *v1_custom_resource_definition_spec_parseFr
     }
 
 
+    if (group && !cJSON_IsNull(group)) group_local_str = strdup(group->valuestring);
+    if (scope && !cJSON_IsNull(scope)) scope_local_str = strdup(scope->valuestring);
+
     v1_custom_resource_definition_spec_local_var = v1_custom_resource_definition_spec_create_internal (
         conversion ? conversion_local_nonprim : NULL,
-        strdup(group->valuestring),
+        group_local_str,
         names_local_nonprim,
-        preserve_unknown_fields ? preserve_unknown_fields->valueint : 0,
-        strdup(scope->valuestring),
+        preserve_unknown_fields_local_var,
+        scope_local_str,
         versionsList
         );
+
+    if (!v1_custom_resource_definition_spec_local_var) {
+        goto end;
+    }
 
     return v1_custom_resource_definition_spec_local_var;
 end:
@@ -284,9 +317,21 @@ end:
         v1_custom_resource_conversion_free(conversion_local_nonprim);
         conversion_local_nonprim = NULL;
     }
+    if (group_local_str) {
+        free(group_local_str);
+        group_local_str = NULL;
+    }
     if (names_local_nonprim) {
         v1_custom_resource_definition_names_free(names_local_nonprim);
         names_local_nonprim = NULL;
+    }
+    if (preserve_unknown_fields_local_var) {
+        free(preserve_unknown_fields_local_var);
+        preserve_unknown_fields_local_var = NULL;
+    }
+    if (scope_local_str) {
+        free(scope_local_str);
+        scope_local_str = NULL;
     }
     if (versionsList) {
         listEntry_t *listEntry = NULL;

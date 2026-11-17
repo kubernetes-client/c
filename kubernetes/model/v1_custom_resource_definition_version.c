@@ -7,19 +7,21 @@
 
 static v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_create_internal(
     list_t *additional_printer_columns,
-    int deprecated,
+    int *deprecated,
     char *deprecation_warning,
     char *name,
     v1_custom_resource_validation_t *schema,
     list_t *selectable_fields,
-    int served,
-    int storage,
+    int *served,
+    int *storage,
     v1_custom_resource_subresources_t *subresources
     ) {
     v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_local_var = malloc(sizeof(v1_custom_resource_definition_version_t));
     if (!v1_custom_resource_definition_version_local_var) {
         return NULL;
     }
+    memset(v1_custom_resource_definition_version_local_var, 0, sizeof(v1_custom_resource_definition_version_t));
+    v1_custom_resource_definition_version_local_var->_library_owned = 1;
     v1_custom_resource_definition_version_local_var->additional_printer_columns = additional_printer_columns;
     v1_custom_resource_definition_version_local_var->deprecated = deprecated;
     v1_custom_resource_definition_version_local_var->deprecation_warning = deprecation_warning;
@@ -29,33 +31,52 @@ static v1_custom_resource_definition_version_t *v1_custom_resource_definition_ve
     v1_custom_resource_definition_version_local_var->served = served;
     v1_custom_resource_definition_version_local_var->storage = storage;
     v1_custom_resource_definition_version_local_var->subresources = subresources;
-
-    v1_custom_resource_definition_version_local_var->_library_owned = 1;
     return v1_custom_resource_definition_version_local_var;
 }
 
 __attribute__((deprecated)) v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_create(
     list_t *additional_printer_columns,
-    int deprecated,
+    int *deprecated,
     char *deprecation_warning,
     char *name,
     v1_custom_resource_validation_t *schema,
     list_t *selectable_fields,
-    int served,
-    int storage,
+    int *served,
+    int *storage,
     v1_custom_resource_subresources_t *subresources
     ) {
-    return v1_custom_resource_definition_version_create_internal (
+    int *deprecated_copy = NULL;
+    if (deprecated) {
+        deprecated_copy = malloc(sizeof(int));
+        if (deprecated_copy) *deprecated_copy = *deprecated;
+    }
+    int *served_copy = NULL;
+    if (served) {
+        served_copy = malloc(sizeof(int));
+        if (served_copy) *served_copy = *served;
+    }
+    int *storage_copy = NULL;
+    if (storage) {
+        storage_copy = malloc(sizeof(int));
+        if (storage_copy) *storage_copy = *storage;
+    }
+    v1_custom_resource_definition_version_t *result = v1_custom_resource_definition_version_create_internal (
         additional_printer_columns,
-        deprecated,
+        deprecated_copy,
         deprecation_warning,
         name,
         schema,
         selectable_fields,
-        served,
-        storage,
+        served_copy,
+        storage_copy,
         subresources
         );
+    if (!result) {
+        free(deprecated_copy);
+        free(served_copy);
+        free(storage_copy);
+    }
+    return result;
 }
 
 void v1_custom_resource_definition_version_free(v1_custom_resource_definition_version_t *v1_custom_resource_definition_version) {
@@ -73,6 +94,10 @@ void v1_custom_resource_definition_version_free(v1_custom_resource_definition_ve
         }
         list_freeList(v1_custom_resource_definition_version->additional_printer_columns);
         v1_custom_resource_definition_version->additional_printer_columns = NULL;
+    }
+    if (v1_custom_resource_definition_version->deprecated) {
+        free(v1_custom_resource_definition_version->deprecated);
+        v1_custom_resource_definition_version->deprecated = NULL;
     }
     if (v1_custom_resource_definition_version->deprecation_warning) {
         free(v1_custom_resource_definition_version->deprecation_warning);
@@ -92,6 +117,14 @@ void v1_custom_resource_definition_version_free(v1_custom_resource_definition_ve
         }
         list_freeList(v1_custom_resource_definition_version->selectable_fields);
         v1_custom_resource_definition_version->selectable_fields = NULL;
+    }
+    if (v1_custom_resource_definition_version->served) {
+        free(v1_custom_resource_definition_version->served);
+        v1_custom_resource_definition_version->served = NULL;
+    }
+    if (v1_custom_resource_definition_version->storage) {
+        free(v1_custom_resource_definition_version->storage);
+        v1_custom_resource_definition_version->storage = NULL;
     }
     if (v1_custom_resource_definition_version->subresources) {
         v1_custom_resource_subresources_free(v1_custom_resource_definition_version->subresources);
@@ -125,7 +158,7 @@ cJSON *v1_custom_resource_definition_version_convertToJSON(v1_custom_resource_de
 
     // v1_custom_resource_definition_version->deprecated
     if(v1_custom_resource_definition_version->deprecated) {
-    if(cJSON_AddBoolToObject(item, "deprecated", v1_custom_resource_definition_version->deprecated) == NULL) {
+    if(cJSON_AddBoolToObject(item, "deprecated", *v1_custom_resource_definition_version->deprecated) == NULL) {
     goto fail; //Bool
     }
     }
@@ -185,7 +218,7 @@ cJSON *v1_custom_resource_definition_version_convertToJSON(v1_custom_resource_de
     if (!v1_custom_resource_definition_version->served) {
         goto fail;
     }
-    if(cJSON_AddBoolToObject(item, "served", v1_custom_resource_definition_version->served) == NULL) {
+    if(cJSON_AddBoolToObject(item, "served", *v1_custom_resource_definition_version->served) == NULL) {
     goto fail; //Bool
     }
 
@@ -194,7 +227,7 @@ cJSON *v1_custom_resource_definition_version_convertToJSON(v1_custom_resource_de
     if (!v1_custom_resource_definition_version->storage) {
         goto fail;
     }
-    if(cJSON_AddBoolToObject(item, "storage", v1_custom_resource_definition_version->storage) == NULL) {
+    if(cJSON_AddBoolToObject(item, "storage", *v1_custom_resource_definition_version->storage) == NULL) {
     goto fail; //Bool
     }
 
@@ -226,11 +259,24 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
     // define the local list for v1_custom_resource_definition_version->additional_printer_columns
     list_t *additional_printer_columnsList = NULL;
 
+    // define the local variable for v1_custom_resource_definition_version->deprecated
+    int *deprecated_local_var = NULL;
+
+    char *deprecation_warning_local_str = NULL;
+
+    char *name_local_str = NULL;
+
     // define the local variable for v1_custom_resource_definition_version->schema
     v1_custom_resource_validation_t *schema_local_nonprim = NULL;
 
     // define the local list for v1_custom_resource_definition_version->selectable_fields
     list_t *selectable_fieldsList = NULL;
+
+    // define the local variable for v1_custom_resource_definition_version->served
+    int *served_local_var = NULL;
+
+    // define the local variable for v1_custom_resource_definition_version->storage
+    int *storage_local_var = NULL;
 
     // define the local variable for v1_custom_resource_definition_version->subresources
     v1_custom_resource_subresources_t *subresources_local_nonprim = NULL;
@@ -269,6 +315,12 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
     {
     goto end; //Bool
     }
+    deprecated_local_var = malloc(sizeof(int));
+    if(!deprecated_local_var)
+    {
+        goto end;
+    }
+    *deprecated_local_var = deprecated->valueint;
     }
 
     // v1_custom_resource_definition_version->deprecation_warning
@@ -345,6 +397,12 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
     {
     goto end; //Bool
     }
+    served_local_var = malloc(sizeof(int));
+    if(!served_local_var)
+    {
+        goto end;
+    }
+    *served_local_var = served->valueint;
 
     // v1_custom_resource_definition_version->storage
     cJSON *storage = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "storage");
@@ -360,6 +418,12 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
     {
     goto end; //Bool
     }
+    storage_local_var = malloc(sizeof(int));
+    if(!storage_local_var)
+    {
+        goto end;
+    }
+    *storage_local_var = storage->valueint;
 
     // v1_custom_resource_definition_version->subresources
     cJSON *subresources = cJSON_GetObjectItemCaseSensitive(v1_custom_resource_definition_versionJSON, "subresources");
@@ -371,17 +435,24 @@ v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_p
     }
 
 
+    if (deprecation_warning && !cJSON_IsNull(deprecation_warning)) deprecation_warning_local_str = strdup(deprecation_warning->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v1_custom_resource_definition_version_local_var = v1_custom_resource_definition_version_create_internal (
         additional_printer_columns ? additional_printer_columnsList : NULL,
-        deprecated ? deprecated->valueint : 0,
-        deprecation_warning && !cJSON_IsNull(deprecation_warning) ? strdup(deprecation_warning->valuestring) : NULL,
-        strdup(name->valuestring),
+        deprecated_local_var,
+        deprecation_warning_local_str,
+        name_local_str,
         schema ? schema_local_nonprim : NULL,
         selectable_fields ? selectable_fieldsList : NULL,
-        served->valueint,
-        storage->valueint,
+        served_local_var,
+        storage_local_var,
         subresources ? subresources_local_nonprim : NULL
         );
+
+    if (!v1_custom_resource_definition_version_local_var) {
+        goto end;
+    }
 
     return v1_custom_resource_definition_version_local_var;
 end:
@@ -393,6 +464,18 @@ end:
         }
         list_freeList(additional_printer_columnsList);
         additional_printer_columnsList = NULL;
+    }
+    if (deprecated_local_var) {
+        free(deprecated_local_var);
+        deprecated_local_var = NULL;
+    }
+    if (deprecation_warning_local_str) {
+        free(deprecation_warning_local_str);
+        deprecation_warning_local_str = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
     }
     if (schema_local_nonprim) {
         v1_custom_resource_validation_free(schema_local_nonprim);
@@ -406,6 +489,14 @@ end:
         }
         list_freeList(selectable_fieldsList);
         selectable_fieldsList = NULL;
+    }
+    if (served_local_var) {
+        free(served_local_var);
+        served_local_var = NULL;
+    }
+    if (storage_local_var) {
+        free(storage_local_var);
+        storage_local_var = NULL;
     }
     if (subresources_local_nonprim) {
         v1_custom_resource_subresources_free(subresources_local_nonprim);

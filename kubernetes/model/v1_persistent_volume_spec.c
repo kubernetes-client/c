@@ -42,6 +42,8 @@ static v1_persistent_volume_spec_t *v1_persistent_volume_spec_create_internal(
     if (!v1_persistent_volume_spec_local_var) {
         return NULL;
     }
+    memset(v1_persistent_volume_spec_local_var, 0, sizeof(v1_persistent_volume_spec_t));
+    v1_persistent_volume_spec_local_var->_library_owned = 1;
     v1_persistent_volume_spec_local_var->access_modes = access_modes;
     v1_persistent_volume_spec_local_var->aws_elastic_block_store = aws_elastic_block_store;
     v1_persistent_volume_spec_local_var->azure_disk = azure_disk;
@@ -73,8 +75,6 @@ static v1_persistent_volume_spec_t *v1_persistent_volume_spec_create_internal(
     v1_persistent_volume_spec_local_var->volume_attributes_class_name = volume_attributes_class_name;
     v1_persistent_volume_spec_local_var->volume_mode = volume_mode;
     v1_persistent_volume_spec_local_var->vsphere_volume = vsphere_volume;
-
-    v1_persistent_volume_spec_local_var->_library_owned = 1;
     return v1_persistent_volume_spec_local_var;
 }
 
@@ -111,7 +111,7 @@ __attribute__((deprecated)) v1_persistent_volume_spec_t *v1_persistent_volume_sp
     char *volume_mode,
     v1_vsphere_virtual_disk_volume_source_t *vsphere_volume
     ) {
-    return v1_persistent_volume_spec_create_internal (
+    v1_persistent_volume_spec_t *result = v1_persistent_volume_spec_create_internal (
         access_modes,
         aws_elastic_block_store,
         azure_disk,
@@ -144,6 +144,9 @@ __attribute__((deprecated)) v1_persistent_volume_spec_t *v1_persistent_volume_sp
         volume_mode,
         vsphere_volume
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_persistent_volume_spec_free(v1_persistent_volume_spec_t *v1_persistent_volume_spec) {
@@ -766,6 +769,8 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
     // define the local variable for v1_persistent_volume_spec->node_affinity
     v1_volume_node_affinity_t *node_affinity_local_nonprim = NULL;
 
+    char *persistent_volume_reclaim_policy_local_str = NULL;
+
     // define the local variable for v1_persistent_volume_spec->photon_persistent_disk
     v1_photon_persistent_disk_volume_source_t *photon_persistent_disk_local_nonprim = NULL;
 
@@ -781,8 +786,14 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
     // define the local variable for v1_persistent_volume_spec->scale_io
     v1_scale_io_persistent_volume_source_t *scale_io_local_nonprim = NULL;
 
+    char *storage_class_name_local_str = NULL;
+
     // define the local variable for v1_persistent_volume_spec->storageos
     v1_storage_os_persistent_volume_source_t *storageos_local_nonprim = NULL;
+
+    char *volume_attributes_class_name_local_str = NULL;
+
+    char *volume_mode_local_str = NULL;
 
     // define the local variable for v1_persistent_volume_spec->vsphere_volume
     v1_vsphere_virtual_disk_volume_source_t *vsphere_volume_local_nonprim = NULL;
@@ -1124,6 +1135,11 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
     }
 
 
+    if (persistent_volume_reclaim_policy && !cJSON_IsNull(persistent_volume_reclaim_policy)) persistent_volume_reclaim_policy_local_str = strdup(persistent_volume_reclaim_policy->valuestring);
+    if (storage_class_name && !cJSON_IsNull(storage_class_name)) storage_class_name_local_str = strdup(storage_class_name->valuestring);
+    if (volume_attributes_class_name && !cJSON_IsNull(volume_attributes_class_name)) volume_attributes_class_name_local_str = strdup(volume_attributes_class_name->valuestring);
+    if (volume_mode && !cJSON_IsNull(volume_mode)) volume_mode_local_str = strdup(volume_mode->valuestring);
+
     v1_persistent_volume_spec_local_var = v1_persistent_volume_spec_create_internal (
         access_modes ? access_modesList : NULL,
         aws_elastic_block_store ? aws_elastic_block_store_local_nonprim : NULL,
@@ -1145,18 +1161,22 @@ v1_persistent_volume_spec_t *v1_persistent_volume_spec_parseFromJSON(cJSON *v1_p
         mount_options ? mount_optionsList : NULL,
         nfs ? nfs_local_nonprim : NULL,
         node_affinity ? node_affinity_local_nonprim : NULL,
-        persistent_volume_reclaim_policy && !cJSON_IsNull(persistent_volume_reclaim_policy) ? strdup(persistent_volume_reclaim_policy->valuestring) : NULL,
+        persistent_volume_reclaim_policy_local_str,
         photon_persistent_disk ? photon_persistent_disk_local_nonprim : NULL,
         portworx_volume ? portworx_volume_local_nonprim : NULL,
         quobyte ? quobyte_local_nonprim : NULL,
         rbd ? rbd_local_nonprim : NULL,
         scale_io ? scale_io_local_nonprim : NULL,
-        storage_class_name && !cJSON_IsNull(storage_class_name) ? strdup(storage_class_name->valuestring) : NULL,
+        storage_class_name_local_str,
         storageos ? storageos_local_nonprim : NULL,
-        volume_attributes_class_name && !cJSON_IsNull(volume_attributes_class_name) ? strdup(volume_attributes_class_name->valuestring) : NULL,
-        volume_mode && !cJSON_IsNull(volume_mode) ? strdup(volume_mode->valuestring) : NULL,
+        volume_attributes_class_name_local_str,
+        volume_mode_local_str,
         vsphere_volume ? vsphere_volume_local_nonprim : NULL
         );
+
+    if (!v1_persistent_volume_spec_local_var) {
+        goto end;
+    }
 
     return v1_persistent_volume_spec_local_var;
 end:
@@ -1260,6 +1280,10 @@ end:
         v1_volume_node_affinity_free(node_affinity_local_nonprim);
         node_affinity_local_nonprim = NULL;
     }
+    if (persistent_volume_reclaim_policy_local_str) {
+        free(persistent_volume_reclaim_policy_local_str);
+        persistent_volume_reclaim_policy_local_str = NULL;
+    }
     if (photon_persistent_disk_local_nonprim) {
         v1_photon_persistent_disk_volume_source_free(photon_persistent_disk_local_nonprim);
         photon_persistent_disk_local_nonprim = NULL;
@@ -1280,9 +1304,21 @@ end:
         v1_scale_io_persistent_volume_source_free(scale_io_local_nonprim);
         scale_io_local_nonprim = NULL;
     }
+    if (storage_class_name_local_str) {
+        free(storage_class_name_local_str);
+        storage_class_name_local_str = NULL;
+    }
     if (storageos_local_nonprim) {
         v1_storage_os_persistent_volume_source_free(storageos_local_nonprim);
         storageos_local_nonprim = NULL;
+    }
+    if (volume_attributes_class_name_local_str) {
+        free(volume_attributes_class_name_local_str);
+        volume_attributes_class_name_local_str = NULL;
+    }
+    if (volume_mode_local_str) {
+        free(volume_mode_local_str);
+        volume_mode_local_str = NULL;
     }
     if (vsphere_volume_local_nonprim) {
         v1_vsphere_virtual_disk_volume_source_free(vsphere_volume_local_nonprim);

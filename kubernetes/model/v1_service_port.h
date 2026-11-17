@@ -22,8 +22,8 @@ typedef struct v1_service_port_t v1_service_port_t;
 typedef struct v1_service_port_t {
     char *app_protocol; // string
     char *name; // string
-    int node_port; //numeric
-    int port; //numeric
+    int *node_port; //numeric
+    int *port; //numeric
     char *protocol; // string
     int_or_string_t *target_port; // custom
 
@@ -33,8 +33,8 @@ typedef struct v1_service_port_t {
 __attribute__((deprecated)) v1_service_port_t *v1_service_port_create(
     char *app_protocol,
     char *name,
-    int node_port,
-    int port,
+    int *node_port,
+    int *port,
     char *protocol,
     int_or_string_t *target_port
 );

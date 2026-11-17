@@ -13,10 +13,10 @@ static v1_service_status_t *v1_service_status_create_internal(
     if (!v1_service_status_local_var) {
         return NULL;
     }
+    memset(v1_service_status_local_var, 0, sizeof(v1_service_status_t));
+    v1_service_status_local_var->_library_owned = 1;
     v1_service_status_local_var->conditions = conditions;
     v1_service_status_local_var->load_balancer = load_balancer;
-
-    v1_service_status_local_var->_library_owned = 1;
     return v1_service_status_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_service_status_t *v1_service_status_create(
     list_t *conditions,
     v1_load_balancer_status_t *load_balancer
     ) {
-    return v1_service_status_create_internal (
+    v1_service_status_t *result = v1_service_status_create_internal (
         conditions,
         load_balancer
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_service_status_free(v1_service_status_t *v1_service_status) {
@@ -140,10 +143,15 @@ v1_service_status_t *v1_service_status_parseFromJSON(cJSON *v1_service_statusJSO
     }
 
 
+
     v1_service_status_local_var = v1_service_status_create_internal (
         conditions ? conditionsList : NULL,
         load_balancer ? load_balancer_local_nonprim : NULL
         );
+
+    if (!v1_service_status_local_var) {
+        goto end;
+    }
 
     return v1_service_status_local_var;
 end:

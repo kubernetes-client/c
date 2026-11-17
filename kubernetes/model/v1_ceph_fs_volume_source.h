@@ -22,7 +22,7 @@ typedef struct v1_ceph_fs_volume_source_t v1_ceph_fs_volume_source_t;
 typedef struct v1_ceph_fs_volume_source_t {
     list_t *monitors; //primitive container
     char *path; // string
-    int read_only; //boolean
+    int *read_only; //boolean
     char *secret_file; // string
     struct v1_local_object_reference_t *secret_ref; //model
     char *user; // string
@@ -33,7 +33,7 @@ typedef struct v1_ceph_fs_volume_source_t {
 __attribute__((deprecated)) v1_ceph_fs_volume_source_t *v1_ceph_fs_volume_source_create(
     list_t *monitors,
     char *path,
-    int read_only,
+    int *read_only,
     char *secret_file,
     v1_local_object_reference_t *secret_ref,
     char *user

@@ -13,10 +13,10 @@ static v1_container_state_waiting_t *v1_container_state_waiting_create_internal(
     if (!v1_container_state_waiting_local_var) {
         return NULL;
     }
+    memset(v1_container_state_waiting_local_var, 0, sizeof(v1_container_state_waiting_t));
+    v1_container_state_waiting_local_var->_library_owned = 1;
     v1_container_state_waiting_local_var->message = message;
     v1_container_state_waiting_local_var->reason = reason;
-
-    v1_container_state_waiting_local_var->_library_owned = 1;
     return v1_container_state_waiting_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_container_state_waiting_t *v1_container_state_wai
     char *message,
     char *reason
     ) {
-    return v1_container_state_waiting_create_internal (
+    v1_container_state_waiting_t *result = v1_container_state_waiting_create_internal (
         message,
         reason
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_container_state_waiting_free(v1_container_state_waiting_t *v1_container_state_waiting) {
@@ -80,6 +83,10 @@ v1_container_state_waiting_t *v1_container_state_waiting_parseFromJSON(cJSON *v1
 
     v1_container_state_waiting_t *v1_container_state_waiting_local_var = NULL;
 
+    char *message_local_str = NULL;
+
+    char *reason_local_str = NULL;
+
     // v1_container_state_waiting->message
     cJSON *message = cJSON_GetObjectItemCaseSensitive(v1_container_state_waitingJSON, "message");
     if (cJSON_IsNull(message)) {
@@ -105,13 +112,28 @@ v1_container_state_waiting_t *v1_container_state_waiting_parseFromJSON(cJSON *v1
     }
 
 
+    if (message && !cJSON_IsNull(message)) message_local_str = strdup(message->valuestring);
+    if (reason && !cJSON_IsNull(reason)) reason_local_str = strdup(reason->valuestring);
+
     v1_container_state_waiting_local_var = v1_container_state_waiting_create_internal (
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
-        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL
+        message_local_str,
+        reason_local_str
         );
+
+    if (!v1_container_state_waiting_local_var) {
+        goto end;
+    }
 
     return v1_container_state_waiting_local_var;
 end:
+    if (message_local_str) {
+        free(message_local_str);
+        message_local_str = NULL;
+    }
+    if (reason_local_str) {
+        free(reason_local_str);
+        reason_local_str = NULL;
+    }
     return NULL;
 
 }

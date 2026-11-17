@@ -12,18 +12,21 @@ static v1_pod_failure_policy_t *v1_pod_failure_policy_create_internal(
     if (!v1_pod_failure_policy_local_var) {
         return NULL;
     }
-    v1_pod_failure_policy_local_var->rules = rules;
-
+    memset(v1_pod_failure_policy_local_var, 0, sizeof(v1_pod_failure_policy_t));
     v1_pod_failure_policy_local_var->_library_owned = 1;
+    v1_pod_failure_policy_local_var->rules = rules;
     return v1_pod_failure_policy_local_var;
 }
 
 __attribute__((deprecated)) v1_pod_failure_policy_t *v1_pod_failure_policy_create(
     list_t *rules
     ) {
-    return v1_pod_failure_policy_create_internal (
+    v1_pod_failure_policy_t *result = v1_pod_failure_policy_create_internal (
         rules
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_pod_failure_policy_free(v1_pod_failure_policy_t *v1_pod_failure_policy) {
@@ -111,9 +114,14 @@ v1_pod_failure_policy_t *v1_pod_failure_policy_parseFromJSON(cJSON *v1_pod_failu
     }
 
 
+
     v1_pod_failure_policy_local_var = v1_pod_failure_policy_create_internal (
         rulesList
         );
+
+    if (!v1_pod_failure_policy_local_var) {
+        goto end;
+    }
 
     return v1_pod_failure_policy_local_var;
 end:

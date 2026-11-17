@@ -23,11 +23,13 @@ v1_empty_dir_volume_source_t* instantiate_v1_empty_dir_volume_source(int include
   if (include_optional) {
     v1_empty_dir_volume_source = v1_empty_dir_volume_source_create(
       "0",
+      56,
       "0"
     );
   } else {
     v1_empty_dir_volume_source = v1_empty_dir_volume_source_create(
       "0",
+      56,
       "0"
     );
   }

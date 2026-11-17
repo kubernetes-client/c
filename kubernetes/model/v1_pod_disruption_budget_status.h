@@ -21,24 +21,24 @@ typedef struct v1_pod_disruption_budget_status_t v1_pod_disruption_budget_status
 
 typedef struct v1_pod_disruption_budget_status_t {
     list_t *conditions; //nonprimitive container
-    int current_healthy; //numeric
-    int desired_healthy; //numeric
+    int *current_healthy; //numeric
+    int *desired_healthy; //numeric
     list_t* disrupted_pods; //map
-    int disruptions_allowed; //numeric
-    int expected_pods; //numeric
-    long observed_generation; //numeric
+    int *disruptions_allowed; //numeric
+    int *expected_pods; //numeric
+    long *observed_generation; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_pod_disruption_budget_status_t;
 
 __attribute__((deprecated)) v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status_create(
     list_t *conditions,
-    int current_healthy,
-    int desired_healthy,
+    int *current_healthy,
+    int *desired_healthy,
     list_t* disrupted_pods,
-    int disruptions_allowed,
-    int expected_pods,
-    long observed_generation
+    int *disruptions_allowed,
+    int *expected_pods,
+    long *observed_generation
 );
 
 void v1_pod_disruption_budget_status_free(v1_pod_disruption_budget_status_t *v1_pod_disruption_budget_status);

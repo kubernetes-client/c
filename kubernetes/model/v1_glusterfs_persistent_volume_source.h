@@ -22,7 +22,7 @@ typedef struct v1_glusterfs_persistent_volume_source_t {
     char *endpoints; // string
     char *endpoints_namespace; // string
     char *path; // string
-    int read_only; //boolean
+    int *read_only; //boolean
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_glusterfs_persistent_volume_source_t;
@@ -31,7 +31,7 @@ __attribute__((deprecated)) v1_glusterfs_persistent_volume_source_t *v1_glusterf
     char *endpoints,
     char *endpoints_namespace,
     char *path,
-    int read_only
+    int *read_only
 );
 
 void v1_glusterfs_persistent_volume_source_free(v1_glusterfs_persistent_volume_source_t *v1_glusterfs_persistent_volume_source);

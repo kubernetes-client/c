@@ -18,6 +18,8 @@ static v1alpha1_mutating_admission_policy_spec_t *v1alpha1_mutating_admission_po
     if (!v1alpha1_mutating_admission_policy_spec_local_var) {
         return NULL;
     }
+    memset(v1alpha1_mutating_admission_policy_spec_local_var, 0, sizeof(v1alpha1_mutating_admission_policy_spec_t));
+    v1alpha1_mutating_admission_policy_spec_local_var->_library_owned = 1;
     v1alpha1_mutating_admission_policy_spec_local_var->failure_policy = failure_policy;
     v1alpha1_mutating_admission_policy_spec_local_var->match_conditions = match_conditions;
     v1alpha1_mutating_admission_policy_spec_local_var->match_constraints = match_constraints;
@@ -25,8 +27,6 @@ static v1alpha1_mutating_admission_policy_spec_t *v1alpha1_mutating_admission_po
     v1alpha1_mutating_admission_policy_spec_local_var->param_kind = param_kind;
     v1alpha1_mutating_admission_policy_spec_local_var->reinvocation_policy = reinvocation_policy;
     v1alpha1_mutating_admission_policy_spec_local_var->variables = variables;
-
-    v1alpha1_mutating_admission_policy_spec_local_var->_library_owned = 1;
     return v1alpha1_mutating_admission_policy_spec_local_var;
 }
 
@@ -39,7 +39,7 @@ __attribute__((deprecated)) v1alpha1_mutating_admission_policy_spec_t *v1alpha1_
     char *reinvocation_policy,
     list_t *variables
     ) {
-    return v1alpha1_mutating_admission_policy_spec_create_internal (
+    v1alpha1_mutating_admission_policy_spec_t *result = v1alpha1_mutating_admission_policy_spec_create_internal (
         failure_policy,
         match_conditions,
         match_constraints,
@@ -48,6 +48,9 @@ __attribute__((deprecated)) v1alpha1_mutating_admission_policy_spec_t *v1alpha1_
         reinvocation_policy,
         variables
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1alpha1_mutating_admission_policy_spec_free(v1alpha1_mutating_admission_policy_spec_t *v1alpha1_mutating_admission_policy_spec) {
@@ -215,6 +218,8 @@ v1alpha1_mutating_admission_policy_spec_t *v1alpha1_mutating_admission_policy_sp
 
     v1alpha1_mutating_admission_policy_spec_t *v1alpha1_mutating_admission_policy_spec_local_var = NULL;
 
+    char *failure_policy_local_str = NULL;
+
     // define the local list for v1alpha1_mutating_admission_policy_spec->match_conditions
     list_t *match_conditionsList = NULL;
 
@@ -226,6 +231,8 @@ v1alpha1_mutating_admission_policy_spec_t *v1alpha1_mutating_admission_policy_sp
 
     // define the local variable for v1alpha1_mutating_admission_policy_spec->param_kind
     v1alpha1_param_kind_t *param_kind_local_nonprim = NULL;
+
+    char *reinvocation_policy_local_str = NULL;
 
     // define the local list for v1alpha1_mutating_admission_policy_spec->variables
     list_t *variablesList = NULL;
@@ -345,18 +352,29 @@ v1alpha1_mutating_admission_policy_spec_t *v1alpha1_mutating_admission_policy_sp
     }
 
 
+    if (failure_policy && !cJSON_IsNull(failure_policy)) failure_policy_local_str = strdup(failure_policy->valuestring);
+    if (reinvocation_policy && !cJSON_IsNull(reinvocation_policy)) reinvocation_policy_local_str = strdup(reinvocation_policy->valuestring);
+
     v1alpha1_mutating_admission_policy_spec_local_var = v1alpha1_mutating_admission_policy_spec_create_internal (
-        failure_policy && !cJSON_IsNull(failure_policy) ? strdup(failure_policy->valuestring) : NULL,
+        failure_policy_local_str,
         match_conditions ? match_conditionsList : NULL,
         match_constraints ? match_constraints_local_nonprim : NULL,
         mutations ? mutationsList : NULL,
         param_kind ? param_kind_local_nonprim : NULL,
-        reinvocation_policy && !cJSON_IsNull(reinvocation_policy) ? strdup(reinvocation_policy->valuestring) : NULL,
+        reinvocation_policy_local_str,
         variables ? variablesList : NULL
         );
 
+    if (!v1alpha1_mutating_admission_policy_spec_local_var) {
+        goto end;
+    }
+
     return v1alpha1_mutating_admission_policy_spec_local_var;
 end:
+    if (failure_policy_local_str) {
+        free(failure_policy_local_str);
+        failure_policy_local_str = NULL;
+    }
     if (match_conditionsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, match_conditionsList) {
@@ -382,6 +400,10 @@ end:
     if (param_kind_local_nonprim) {
         v1alpha1_param_kind_free(param_kind_local_nonprim);
         param_kind_local_nonprim = NULL;
+    }
+    if (reinvocation_policy_local_str) {
+        free(reinvocation_policy_local_str);
+        reinvocation_policy_local_str = NULL;
     }
     if (variablesList) {
         listEntry_t *listEntry = NULL;

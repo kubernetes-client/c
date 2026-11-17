@@ -25,7 +25,7 @@ typedef struct v1_custom_resource_definition_spec_t {
     struct v1_custom_resource_conversion_t *conversion; //model
     char *group; // string
     struct v1_custom_resource_definition_names_t *names; //model
-    int preserve_unknown_fields; //boolean
+    int *preserve_unknown_fields; //boolean
     char *scope; // string
     list_t *versions; //nonprimitive container
 
@@ -36,7 +36,7 @@ __attribute__((deprecated)) v1_custom_resource_definition_spec_t *v1_custom_reso
     v1_custom_resource_conversion_t *conversion,
     char *group,
     v1_custom_resource_definition_names_t *names,
-    int preserve_unknown_fields,
+    int *preserve_unknown_fields,
     char *scope,
     list_t *versions
 );

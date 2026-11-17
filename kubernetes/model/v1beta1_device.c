@@ -13,10 +13,10 @@ static v1beta1_device_t *v1beta1_device_create_internal(
     if (!v1beta1_device_local_var) {
         return NULL;
     }
+    memset(v1beta1_device_local_var, 0, sizeof(v1beta1_device_t));
+    v1beta1_device_local_var->_library_owned = 1;
     v1beta1_device_local_var->basic = basic;
     v1beta1_device_local_var->name = name;
-
-    v1beta1_device_local_var->_library_owned = 1;
     return v1beta1_device_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1beta1_device_t *v1beta1_device_create(
     v1beta1_basic_device_t *basic,
     char *name
     ) {
-    return v1beta1_device_create_internal (
+    v1beta1_device_t *result = v1beta1_device_create_internal (
         basic,
         name
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1beta1_device_free(v1beta1_device_t *v1beta1_device) {
@@ -89,6 +92,8 @@ v1beta1_device_t *v1beta1_device_parseFromJSON(cJSON *v1beta1_deviceJSON){
     // define the local variable for v1beta1_device->basic
     v1beta1_basic_device_t *basic_local_nonprim = NULL;
 
+    char *name_local_str = NULL;
+
     // v1beta1_device->basic
     cJSON *basic = cJSON_GetObjectItemCaseSensitive(v1beta1_deviceJSON, "basic");
     if (cJSON_IsNull(basic)) {
@@ -114,16 +119,26 @@ v1beta1_device_t *v1beta1_device_parseFromJSON(cJSON *v1beta1_deviceJSON){
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v1beta1_device_local_var = v1beta1_device_create_internal (
         basic ? basic_local_nonprim : NULL,
-        strdup(name->valuestring)
+        name_local_str
         );
+
+    if (!v1beta1_device_local_var) {
+        goto end;
+    }
 
     return v1beta1_device_local_var;
 end:
     if (basic_local_nonprim) {
         v1beta1_basic_device_free(basic_local_nonprim);
         basic_local_nonprim = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
     }
     return NULL;
 

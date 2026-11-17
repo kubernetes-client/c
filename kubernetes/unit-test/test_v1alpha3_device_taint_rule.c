@@ -18,6 +18,7 @@ v1alpha3_device_taint_rule_t* instantiate_v1alpha3_device_taint_rule(int include
 
 #include "test_v1_object_meta.c"
 #include "test_v1alpha3_device_taint_rule_spec.c"
+#include "test_v1alpha3_device_taint_rule_status.c"
 
 
 v1alpha3_device_taint_rule_t* instantiate_v1alpha3_device_taint_rule(int include_optional) {
@@ -29,12 +30,15 @@ v1alpha3_device_taint_rule_t* instantiate_v1alpha3_device_taint_rule(int include
        // false, not to have infinite recursion
       instantiate_v1_object_meta(0),
        // false, not to have infinite recursion
-      instantiate_v1alpha3_device_taint_rule_spec(0)
+      instantiate_v1alpha3_device_taint_rule_spec(0),
+       // false, not to have infinite recursion
+      instantiate_v1alpha3_device_taint_rule_status(0)
     );
   } else {
     v1alpha3_device_taint_rule = v1alpha3_device_taint_rule_create(
       "0",
       "0",
+      NULL,
       NULL,
       NULL
     );

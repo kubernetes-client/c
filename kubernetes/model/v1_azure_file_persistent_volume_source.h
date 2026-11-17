@@ -19,7 +19,7 @@ typedef struct v1_azure_file_persistent_volume_source_t v1_azure_file_persistent
 
 
 typedef struct v1_azure_file_persistent_volume_source_t {
-    int read_only; //boolean
+    int *read_only; //boolean
     char *secret_name; // string
     char *secret_namespace; // string
     char *share_name; // string
@@ -28,7 +28,7 @@ typedef struct v1_azure_file_persistent_volume_source_t {
 } v1_azure_file_persistent_volume_source_t;
 
 __attribute__((deprecated)) v1_azure_file_persistent_volume_source_t *v1_azure_file_persistent_volume_source_create(
-    int read_only,
+    int *read_only,
     char *secret_name,
     char *secret_namespace,
     char *share_name

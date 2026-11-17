@@ -20,6 +20,8 @@ static v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_create
     if (!v1_persistent_volume_claim_spec_local_var) {
         return NULL;
     }
+    memset(v1_persistent_volume_claim_spec_local_var, 0, sizeof(v1_persistent_volume_claim_spec_t));
+    v1_persistent_volume_claim_spec_local_var->_library_owned = 1;
     v1_persistent_volume_claim_spec_local_var->access_modes = access_modes;
     v1_persistent_volume_claim_spec_local_var->data_source = data_source;
     v1_persistent_volume_claim_spec_local_var->data_source_ref = data_source_ref;
@@ -29,8 +31,6 @@ static v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_create
     v1_persistent_volume_claim_spec_local_var->volume_attributes_class_name = volume_attributes_class_name;
     v1_persistent_volume_claim_spec_local_var->volume_mode = volume_mode;
     v1_persistent_volume_claim_spec_local_var->volume_name = volume_name;
-
-    v1_persistent_volume_claim_spec_local_var->_library_owned = 1;
     return v1_persistent_volume_claim_spec_local_var;
 }
 
@@ -45,7 +45,7 @@ __attribute__((deprecated)) v1_persistent_volume_claim_spec_t *v1_persistent_vol
     char *volume_mode,
     char *volume_name
     ) {
-    return v1_persistent_volume_claim_spec_create_internal (
+    v1_persistent_volume_claim_spec_t *result = v1_persistent_volume_claim_spec_create_internal (
         access_modes,
         data_source,
         data_source_ref,
@@ -56,6 +56,9 @@ __attribute__((deprecated)) v1_persistent_volume_claim_spec_t *v1_persistent_vol
         volume_mode,
         volume_name
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_persistent_volume_claim_spec_free(v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec) {
@@ -239,6 +242,14 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
     // define the local variable for v1_persistent_volume_claim_spec->selector
     v1_label_selector_t *selector_local_nonprim = NULL;
 
+    char *storage_class_name_local_str = NULL;
+
+    char *volume_attributes_class_name_local_str = NULL;
+
+    char *volume_mode_local_str = NULL;
+
+    char *volume_name_local_str = NULL;
+
     // v1_persistent_volume_claim_spec->access_modes
     cJSON *access_modes = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_specJSON, "accessModes");
     if (cJSON_IsNull(access_modes)) {
@@ -346,17 +357,26 @@ v1_persistent_volume_claim_spec_t *v1_persistent_volume_claim_spec_parseFromJSON
     }
 
 
+    if (storage_class_name && !cJSON_IsNull(storage_class_name)) storage_class_name_local_str = strdup(storage_class_name->valuestring);
+    if (volume_attributes_class_name && !cJSON_IsNull(volume_attributes_class_name)) volume_attributes_class_name_local_str = strdup(volume_attributes_class_name->valuestring);
+    if (volume_mode && !cJSON_IsNull(volume_mode)) volume_mode_local_str = strdup(volume_mode->valuestring);
+    if (volume_name && !cJSON_IsNull(volume_name)) volume_name_local_str = strdup(volume_name->valuestring);
+
     v1_persistent_volume_claim_spec_local_var = v1_persistent_volume_claim_spec_create_internal (
         access_modes ? access_modesList : NULL,
         data_source ? data_source_local_nonprim : NULL,
         data_source_ref ? data_source_ref_local_nonprim : NULL,
         resources ? resources_local_nonprim : NULL,
         selector ? selector_local_nonprim : NULL,
-        storage_class_name && !cJSON_IsNull(storage_class_name) ? strdup(storage_class_name->valuestring) : NULL,
-        volume_attributes_class_name && !cJSON_IsNull(volume_attributes_class_name) ? strdup(volume_attributes_class_name->valuestring) : NULL,
-        volume_mode && !cJSON_IsNull(volume_mode) ? strdup(volume_mode->valuestring) : NULL,
-        volume_name && !cJSON_IsNull(volume_name) ? strdup(volume_name->valuestring) : NULL
+        storage_class_name_local_str,
+        volume_attributes_class_name_local_str,
+        volume_mode_local_str,
+        volume_name_local_str
         );
+
+    if (!v1_persistent_volume_claim_spec_local_var) {
+        goto end;
+    }
 
     return v1_persistent_volume_claim_spec_local_var;
 end:
@@ -384,6 +404,22 @@ end:
     if (selector_local_nonprim) {
         v1_label_selector_free(selector_local_nonprim);
         selector_local_nonprim = NULL;
+    }
+    if (storage_class_name_local_str) {
+        free(storage_class_name_local_str);
+        storage_class_name_local_str = NULL;
+    }
+    if (volume_attributes_class_name_local_str) {
+        free(volume_attributes_class_name_local_str);
+        volume_attributes_class_name_local_str = NULL;
+    }
+    if (volume_mode_local_str) {
+        free(volume_mode_local_str);
+        volume_mode_local_str = NULL;
+    }
+    if (volume_name_local_str) {
+        free(volume_name_local_str);
+        volume_name_local_str = NULL;
     }
     return NULL;
 

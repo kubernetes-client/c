@@ -20,16 +20,18 @@ typedef struct v1_service_account_token_projection_t v1_service_account_token_pr
 
 typedef struct v1_service_account_token_projection_t {
     char *audience; // string
-    long expiration_seconds; //numeric
+    long *expiration_seconds; //numeric
     char *path; // string
+    long *user; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_service_account_token_projection_t;
 
 __attribute__((deprecated)) v1_service_account_token_projection_t *v1_service_account_token_projection_create(
     char *audience,
-    long expiration_seconds,
-    char *path
+    long *expiration_seconds,
+    char *path,
+    long *user
 );
 
 void v1_service_account_token_projection_free(v1_service_account_token_projection_t *v1_service_account_token_projection);

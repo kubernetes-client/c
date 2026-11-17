@@ -6,12 +6,12 @@
 
 
 static v1_stateful_set_spec_t *v1_stateful_set_spec_create_internal(
-    int min_ready_seconds,
+    int *min_ready_seconds,
     v1_stateful_set_ordinals_t *ordinals,
     v1_stateful_set_persistent_volume_claim_retention_policy_t *persistent_volume_claim_retention_policy,
     char *pod_management_policy,
-    int replicas,
-    int revision_history_limit,
+    int *replicas,
+    int *revision_history_limit,
     v1_label_selector_t *selector,
     char *service_name,
     v1_pod_template_spec_t *_template,
@@ -22,6 +22,8 @@ static v1_stateful_set_spec_t *v1_stateful_set_spec_create_internal(
     if (!v1_stateful_set_spec_local_var) {
         return NULL;
     }
+    memset(v1_stateful_set_spec_local_var, 0, sizeof(v1_stateful_set_spec_t));
+    v1_stateful_set_spec_local_var->_library_owned = 1;
     v1_stateful_set_spec_local_var->min_ready_seconds = min_ready_seconds;
     v1_stateful_set_spec_local_var->ordinals = ordinals;
     v1_stateful_set_spec_local_var->persistent_volume_claim_retention_policy = persistent_volume_claim_retention_policy;
@@ -33,37 +35,56 @@ static v1_stateful_set_spec_t *v1_stateful_set_spec_create_internal(
     v1_stateful_set_spec_local_var->_template = _template;
     v1_stateful_set_spec_local_var->update_strategy = update_strategy;
     v1_stateful_set_spec_local_var->volume_claim_templates = volume_claim_templates;
-
-    v1_stateful_set_spec_local_var->_library_owned = 1;
     return v1_stateful_set_spec_local_var;
 }
 
 __attribute__((deprecated)) v1_stateful_set_spec_t *v1_stateful_set_spec_create(
-    int min_ready_seconds,
+    int *min_ready_seconds,
     v1_stateful_set_ordinals_t *ordinals,
     v1_stateful_set_persistent_volume_claim_retention_policy_t *persistent_volume_claim_retention_policy,
     char *pod_management_policy,
-    int replicas,
-    int revision_history_limit,
+    int *replicas,
+    int *revision_history_limit,
     v1_label_selector_t *selector,
     char *service_name,
     v1_pod_template_spec_t *_template,
     v1_stateful_set_update_strategy_t *update_strategy,
     list_t *volume_claim_templates
     ) {
-    return v1_stateful_set_spec_create_internal (
-        min_ready_seconds,
+    int *min_ready_seconds_copy = NULL;
+    if (min_ready_seconds) {
+        min_ready_seconds_copy = malloc(sizeof(int));
+        if (min_ready_seconds_copy) *min_ready_seconds_copy = *min_ready_seconds;
+    }
+    int *replicas_copy = NULL;
+    if (replicas) {
+        replicas_copy = malloc(sizeof(int));
+        if (replicas_copy) *replicas_copy = *replicas;
+    }
+    int *revision_history_limit_copy = NULL;
+    if (revision_history_limit) {
+        revision_history_limit_copy = malloc(sizeof(int));
+        if (revision_history_limit_copy) *revision_history_limit_copy = *revision_history_limit;
+    }
+    v1_stateful_set_spec_t *result = v1_stateful_set_spec_create_internal (
+        min_ready_seconds_copy,
         ordinals,
         persistent_volume_claim_retention_policy,
         pod_management_policy,
-        replicas,
-        revision_history_limit,
+        replicas_copy,
+        revision_history_limit_copy,
         selector,
         service_name,
         _template,
         update_strategy,
         volume_claim_templates
         );
+    if (!result) {
+        free(min_ready_seconds_copy);
+        free(replicas_copy);
+        free(revision_history_limit_copy);
+    }
+    return result;
 }
 
 void v1_stateful_set_spec_free(v1_stateful_set_spec_t *v1_stateful_set_spec) {
@@ -75,6 +96,10 @@ void v1_stateful_set_spec_free(v1_stateful_set_spec_t *v1_stateful_set_spec) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_stateful_set_spec->min_ready_seconds) {
+        free(v1_stateful_set_spec->min_ready_seconds);
+        v1_stateful_set_spec->min_ready_seconds = NULL;
+    }
     if (v1_stateful_set_spec->ordinals) {
         v1_stateful_set_ordinals_free(v1_stateful_set_spec->ordinals);
         v1_stateful_set_spec->ordinals = NULL;
@@ -86,6 +111,14 @@ void v1_stateful_set_spec_free(v1_stateful_set_spec_t *v1_stateful_set_spec) {
     if (v1_stateful_set_spec->pod_management_policy) {
         free(v1_stateful_set_spec->pod_management_policy);
         v1_stateful_set_spec->pod_management_policy = NULL;
+    }
+    if (v1_stateful_set_spec->replicas) {
+        free(v1_stateful_set_spec->replicas);
+        v1_stateful_set_spec->replicas = NULL;
+    }
+    if (v1_stateful_set_spec->revision_history_limit) {
+        free(v1_stateful_set_spec->revision_history_limit);
+        v1_stateful_set_spec->revision_history_limit = NULL;
     }
     if (v1_stateful_set_spec->selector) {
         v1_label_selector_free(v1_stateful_set_spec->selector);
@@ -118,7 +151,7 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
 
     // v1_stateful_set_spec->min_ready_seconds
     if(v1_stateful_set_spec->min_ready_seconds) {
-    if(cJSON_AddNumberToObject(item, "minReadySeconds", v1_stateful_set_spec->min_ready_seconds) == NULL) {
+    if(cJSON_AddNumberToObject(item, "minReadySeconds", *v1_stateful_set_spec->min_ready_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -160,7 +193,7 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
 
     // v1_stateful_set_spec->replicas
     if(v1_stateful_set_spec->replicas) {
-    if(cJSON_AddNumberToObject(item, "replicas", v1_stateful_set_spec->replicas) == NULL) {
+    if(cJSON_AddNumberToObject(item, "replicas", *v1_stateful_set_spec->replicas) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -168,7 +201,7 @@ cJSON *v1_stateful_set_spec_convertToJSON(v1_stateful_set_spec_t *v1_stateful_se
 
     // v1_stateful_set_spec->revision_history_limit
     if(v1_stateful_set_spec->revision_history_limit) {
-    if(cJSON_AddNumberToObject(item, "revisionHistoryLimit", v1_stateful_set_spec->revision_history_limit) == NULL) {
+    if(cJSON_AddNumberToObject(item, "revisionHistoryLimit", *v1_stateful_set_spec->revision_history_limit) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -254,14 +287,27 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
 
     v1_stateful_set_spec_t *v1_stateful_set_spec_local_var = NULL;
 
+    // define the local variable for v1_stateful_set_spec->min_ready_seconds
+    int *min_ready_seconds_local_var = NULL;
+
     // define the local variable for v1_stateful_set_spec->ordinals
     v1_stateful_set_ordinals_t *ordinals_local_nonprim = NULL;
 
     // define the local variable for v1_stateful_set_spec->persistent_volume_claim_retention_policy
     v1_stateful_set_persistent_volume_claim_retention_policy_t *persistent_volume_claim_retention_policy_local_nonprim = NULL;
 
+    char *pod_management_policy_local_str = NULL;
+
+    // define the local variable for v1_stateful_set_spec->replicas
+    int *replicas_local_var = NULL;
+
+    // define the local variable for v1_stateful_set_spec->revision_history_limit
+    int *revision_history_limit_local_var = NULL;
+
     // define the local variable for v1_stateful_set_spec->selector
     v1_label_selector_t *selector_local_nonprim = NULL;
+
+    char *service_name_local_str = NULL;
 
     // define the local variable for v1_stateful_set_spec->_template
     v1_pod_template_spec_t *_template_local_nonprim = NULL;
@@ -282,6 +328,12 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
     {
     goto end; //Numeric
     }
+    min_ready_seconds_local_var = malloc(sizeof(int));
+    if(!min_ready_seconds_local_var)
+    {
+        goto end;
+    }
+    *min_ready_seconds_local_var = min_ready_seconds->valuedouble;
     }
 
     // v1_stateful_set_spec->ordinals
@@ -324,6 +376,12 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
     {
     goto end; //Numeric
     }
+    replicas_local_var = malloc(sizeof(int));
+    if(!replicas_local_var)
+    {
+        goto end;
+    }
+    *replicas_local_var = replicas->valuedouble;
     }
 
     // v1_stateful_set_spec->revision_history_limit
@@ -336,6 +394,12 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
     {
     goto end; //Numeric
     }
+    revision_history_limit_local_var = malloc(sizeof(int));
+    if(!revision_history_limit_local_var)
+    {
+        goto end;
+    }
+    *revision_history_limit_local_var = revision_history_limit->valuedouble;
     }
 
     // v1_stateful_set_spec->selector
@@ -408,22 +472,33 @@ v1_stateful_set_spec_t *v1_stateful_set_spec_parseFromJSON(cJSON *v1_stateful_se
     }
 
 
+    if (pod_management_policy && !cJSON_IsNull(pod_management_policy)) pod_management_policy_local_str = strdup(pod_management_policy->valuestring);
+    if (service_name && !cJSON_IsNull(service_name)) service_name_local_str = strdup(service_name->valuestring);
+
     v1_stateful_set_spec_local_var = v1_stateful_set_spec_create_internal (
-        min_ready_seconds ? min_ready_seconds->valuedouble : 0,
+        min_ready_seconds_local_var,
         ordinals ? ordinals_local_nonprim : NULL,
         persistent_volume_claim_retention_policy ? persistent_volume_claim_retention_policy_local_nonprim : NULL,
-        pod_management_policy && !cJSON_IsNull(pod_management_policy) ? strdup(pod_management_policy->valuestring) : NULL,
-        replicas ? replicas->valuedouble : 0,
-        revision_history_limit ? revision_history_limit->valuedouble : 0,
+        pod_management_policy_local_str,
+        replicas_local_var,
+        revision_history_limit_local_var,
         selector_local_nonprim,
-        service_name && !cJSON_IsNull(service_name) ? strdup(service_name->valuestring) : NULL,
+        service_name_local_str,
         _template_local_nonprim,
         update_strategy ? update_strategy_local_nonprim : NULL,
         volume_claim_templates ? volume_claim_templatesList : NULL
         );
 
+    if (!v1_stateful_set_spec_local_var) {
+        goto end;
+    }
+
     return v1_stateful_set_spec_local_var;
 end:
+    if (min_ready_seconds_local_var) {
+        free(min_ready_seconds_local_var);
+        min_ready_seconds_local_var = NULL;
+    }
     if (ordinals_local_nonprim) {
         v1_stateful_set_ordinals_free(ordinals_local_nonprim);
         ordinals_local_nonprim = NULL;
@@ -432,9 +507,25 @@ end:
         v1_stateful_set_persistent_volume_claim_retention_policy_free(persistent_volume_claim_retention_policy_local_nonprim);
         persistent_volume_claim_retention_policy_local_nonprim = NULL;
     }
+    if (pod_management_policy_local_str) {
+        free(pod_management_policy_local_str);
+        pod_management_policy_local_str = NULL;
+    }
+    if (replicas_local_var) {
+        free(replicas_local_var);
+        replicas_local_var = NULL;
+    }
+    if (revision_history_limit_local_var) {
+        free(revision_history_limit_local_var);
+        revision_history_limit_local_var = NULL;
+    }
     if (selector_local_nonprim) {
         v1_label_selector_free(selector_local_nonprim);
         selector_local_nonprim = NULL;
+    }
+    if (service_name_local_str) {
+        free(service_name_local_str);
+        service_name_local_str = NULL;
     }
     if (_template_local_nonprim) {
         v1_pod_template_spec_free(_template_local_nonprim);

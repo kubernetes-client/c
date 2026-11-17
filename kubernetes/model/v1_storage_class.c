@@ -6,7 +6,7 @@
 
 
 static v1_storage_class_t *v1_storage_class_create_internal(
-    int allow_volume_expansion,
+    int *allow_volume_expansion,
     list_t *allowed_topologies,
     char *api_version,
     char *kind,
@@ -21,6 +21,8 @@ static v1_storage_class_t *v1_storage_class_create_internal(
     if (!v1_storage_class_local_var) {
         return NULL;
     }
+    memset(v1_storage_class_local_var, 0, sizeof(v1_storage_class_t));
+    v1_storage_class_local_var->_library_owned = 1;
     v1_storage_class_local_var->allow_volume_expansion = allow_volume_expansion;
     v1_storage_class_local_var->allowed_topologies = allowed_topologies;
     v1_storage_class_local_var->api_version = api_version;
@@ -31,13 +33,11 @@ static v1_storage_class_t *v1_storage_class_create_internal(
     v1_storage_class_local_var->provisioner = provisioner;
     v1_storage_class_local_var->reclaim_policy = reclaim_policy;
     v1_storage_class_local_var->volume_binding_mode = volume_binding_mode;
-
-    v1_storage_class_local_var->_library_owned = 1;
     return v1_storage_class_local_var;
 }
 
 __attribute__((deprecated)) v1_storage_class_t *v1_storage_class_create(
-    int allow_volume_expansion,
+    int *allow_volume_expansion,
     list_t *allowed_topologies,
     char *api_version,
     char *kind,
@@ -48,8 +48,13 @@ __attribute__((deprecated)) v1_storage_class_t *v1_storage_class_create(
     char *reclaim_policy,
     char *volume_binding_mode
     ) {
-    return v1_storage_class_create_internal (
-        allow_volume_expansion,
+    int *allow_volume_expansion_copy = NULL;
+    if (allow_volume_expansion) {
+        allow_volume_expansion_copy = malloc(sizeof(int));
+        if (allow_volume_expansion_copy) *allow_volume_expansion_copy = *allow_volume_expansion;
+    }
+    v1_storage_class_t *result = v1_storage_class_create_internal (
+        allow_volume_expansion_copy,
         allowed_topologies,
         api_version,
         kind,
@@ -60,6 +65,10 @@ __attribute__((deprecated)) v1_storage_class_t *v1_storage_class_create(
         reclaim_policy,
         volume_binding_mode
         );
+    if (!result) {
+        free(allow_volume_expansion_copy);
+    }
+    return result;
 }
 
 void v1_storage_class_free(v1_storage_class_t *v1_storage_class) {
@@ -71,6 +80,10 @@ void v1_storage_class_free(v1_storage_class_t *v1_storage_class) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_storage_class->allow_volume_expansion) {
+        free(v1_storage_class->allow_volume_expansion);
+        v1_storage_class->allow_volume_expansion = NULL;
+    }
     if (v1_storage_class->allowed_topologies) {
         list_ForEach(listEntry, v1_storage_class->allowed_topologies) {
             v1_topology_selector_term_free(listEntry->data);
@@ -127,7 +140,7 @@ cJSON *v1_storage_class_convertToJSON(v1_storage_class_t *v1_storage_class) {
 
     // v1_storage_class->allow_volume_expansion
     if(v1_storage_class->allow_volume_expansion) {
-    if(cJSON_AddBoolToObject(item, "allowVolumeExpansion", v1_storage_class->allow_volume_expansion) == NULL) {
+    if(cJSON_AddBoolToObject(item, "allowVolumeExpansion", *v1_storage_class->allow_volume_expansion) == NULL) {
     goto fail; //Bool
     }
     }
@@ -255,8 +268,15 @@ v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON){
 
     v1_storage_class_t *v1_storage_class_local_var = NULL;
 
+    // define the local variable for v1_storage_class->allow_volume_expansion
+    int *allow_volume_expansion_local_var = NULL;
+
     // define the local list for v1_storage_class->allowed_topologies
     list_t *allowed_topologiesList = NULL;
+
+    char *api_version_local_str = NULL;
+
+    char *kind_local_str = NULL;
 
     // define the local variable for v1_storage_class->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
@@ -266,6 +286,12 @@ v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON){
 
     // define the local map for v1_storage_class->parameters
     list_t *parametersList = NULL;
+
+    char *provisioner_local_str = NULL;
+
+    char *reclaim_policy_local_str = NULL;
+
+    char *volume_binding_mode_local_str = NULL;
 
     // v1_storage_class->allow_volume_expansion
     cJSON *allow_volume_expansion = cJSON_GetObjectItemCaseSensitive(v1_storage_classJSON, "allowVolumeExpansion");
@@ -277,6 +303,12 @@ v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON){
     {
     goto end; //Bool
     }
+    allow_volume_expansion_local_var = malloc(sizeof(int));
+    if(!allow_volume_expansion_local_var)
+    {
+        goto end;
+    }
+    *allow_volume_expansion_local_var = allow_volume_expansion->valueint;
     }
 
     // v1_storage_class->allowed_topologies
@@ -426,21 +458,35 @@ v1_storage_class_t *v1_storage_class_parseFromJSON(cJSON *v1_storage_classJSON){
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+    if (provisioner && !cJSON_IsNull(provisioner)) provisioner_local_str = strdup(provisioner->valuestring);
+    if (reclaim_policy && !cJSON_IsNull(reclaim_policy)) reclaim_policy_local_str = strdup(reclaim_policy->valuestring);
+    if (volume_binding_mode && !cJSON_IsNull(volume_binding_mode)) volume_binding_mode_local_str = strdup(volume_binding_mode->valuestring);
+
     v1_storage_class_local_var = v1_storage_class_create_internal (
-        allow_volume_expansion ? allow_volume_expansion->valueint : 0,
+        allow_volume_expansion_local_var,
         allowed_topologies ? allowed_topologiesList : NULL,
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version_local_str,
+        kind_local_str,
         metadata ? metadata_local_nonprim : NULL,
         mount_options ? mount_optionsList : NULL,
         parameters ? parametersList : NULL,
-        strdup(provisioner->valuestring),
-        reclaim_policy && !cJSON_IsNull(reclaim_policy) ? strdup(reclaim_policy->valuestring) : NULL,
-        volume_binding_mode && !cJSON_IsNull(volume_binding_mode) ? strdup(volume_binding_mode->valuestring) : NULL
+        provisioner_local_str,
+        reclaim_policy_local_str,
+        volume_binding_mode_local_str
         );
+
+    if (!v1_storage_class_local_var) {
+        goto end;
+    }
 
     return v1_storage_class_local_var;
 end:
+    if (allow_volume_expansion_local_var) {
+        free(allow_volume_expansion_local_var);
+        allow_volume_expansion_local_var = NULL;
+    }
     if (allowed_topologiesList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, allowed_topologiesList) {
@@ -449,6 +495,14 @@ end:
         }
         list_freeList(allowed_topologiesList);
         allowed_topologiesList = NULL;
+    }
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
     }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
@@ -476,6 +530,18 @@ end:
         }
         list_freeList(parametersList);
         parametersList = NULL;
+    }
+    if (provisioner_local_str) {
+        free(provisioner_local_str);
+        provisioner_local_str = NULL;
+    }
+    if (reclaim_policy_local_str) {
+        free(reclaim_policy_local_str);
+        reclaim_policy_local_str = NULL;
+    }
+    if (volume_binding_mode_local_str) {
+        free(volume_binding_mode_local_str);
+        volume_binding_mode_local_str = NULL;
     }
     return NULL;
 

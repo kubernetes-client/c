@@ -24,6 +24,8 @@ static version_info_t *version_info_create_internal(
     if (!version_info_local_var) {
         return NULL;
     }
+    memset(version_info_local_var, 0, sizeof(version_info_t));
+    version_info_local_var->_library_owned = 1;
     version_info_local_var->build_date = build_date;
     version_info_local_var->compiler = compiler;
     version_info_local_var->emulation_major = emulation_major;
@@ -37,8 +39,6 @@ static version_info_t *version_info_create_internal(
     version_info_local_var->min_compatibility_minor = min_compatibility_minor;
     version_info_local_var->minor = minor;
     version_info_local_var->platform = platform;
-
-    version_info_local_var->_library_owned = 1;
     return version_info_local_var;
 }
 
@@ -57,7 +57,7 @@ __attribute__((deprecated)) version_info_t *version_info_create(
     char *minor,
     char *platform
     ) {
-    return version_info_create_internal (
+    version_info_t *result = version_info_create_internal (
         build_date,
         compiler,
         emulation_major,
@@ -72,6 +72,9 @@ __attribute__((deprecated)) version_info_t *version_info_create(
         minor,
         platform
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void version_info_free(version_info_t *version_info) {
@@ -265,6 +268,32 @@ version_info_t *version_info_parseFromJSON(cJSON *version_infoJSON){
 
     version_info_t *version_info_local_var = NULL;
 
+    char *build_date_local_str = NULL;
+
+    char *compiler_local_str = NULL;
+
+    char *emulation_major_local_str = NULL;
+
+    char *emulation_minor_local_str = NULL;
+
+    char *git_commit_local_str = NULL;
+
+    char *git_tree_state_local_str = NULL;
+
+    char *git_version_local_str = NULL;
+
+    char *go_version_local_str = NULL;
+
+    char *major_local_str = NULL;
+
+    char *min_compatibility_major_local_str = NULL;
+
+    char *min_compatibility_minor_local_str = NULL;
+
+    char *minor_local_str = NULL;
+
+    char *platform_local_str = NULL;
+
     // version_info->build_date
     cJSON *build_date = cJSON_GetObjectItemCaseSensitive(version_infoJSON, "buildDate");
     if (cJSON_IsNull(build_date)) {
@@ -449,24 +478,94 @@ version_info_t *version_info_parseFromJSON(cJSON *version_infoJSON){
     }
 
 
+    if (build_date && !cJSON_IsNull(build_date)) build_date_local_str = strdup(build_date->valuestring);
+    if (compiler && !cJSON_IsNull(compiler)) compiler_local_str = strdup(compiler->valuestring);
+    if (emulation_major && !cJSON_IsNull(emulation_major)) emulation_major_local_str = strdup(emulation_major->valuestring);
+    if (emulation_minor && !cJSON_IsNull(emulation_minor)) emulation_minor_local_str = strdup(emulation_minor->valuestring);
+    if (git_commit && !cJSON_IsNull(git_commit)) git_commit_local_str = strdup(git_commit->valuestring);
+    if (git_tree_state && !cJSON_IsNull(git_tree_state)) git_tree_state_local_str = strdup(git_tree_state->valuestring);
+    if (git_version && !cJSON_IsNull(git_version)) git_version_local_str = strdup(git_version->valuestring);
+    if (go_version && !cJSON_IsNull(go_version)) go_version_local_str = strdup(go_version->valuestring);
+    if (major && !cJSON_IsNull(major)) major_local_str = strdup(major->valuestring);
+    if (min_compatibility_major && !cJSON_IsNull(min_compatibility_major)) min_compatibility_major_local_str = strdup(min_compatibility_major->valuestring);
+    if (min_compatibility_minor && !cJSON_IsNull(min_compatibility_minor)) min_compatibility_minor_local_str = strdup(min_compatibility_minor->valuestring);
+    if (minor && !cJSON_IsNull(minor)) minor_local_str = strdup(minor->valuestring);
+    if (platform && !cJSON_IsNull(platform)) platform_local_str = strdup(platform->valuestring);
+
     version_info_local_var = version_info_create_internal (
-        strdup(build_date->valuestring),
-        strdup(compiler->valuestring),
-        emulation_major && !cJSON_IsNull(emulation_major) ? strdup(emulation_major->valuestring) : NULL,
-        emulation_minor && !cJSON_IsNull(emulation_minor) ? strdup(emulation_minor->valuestring) : NULL,
-        strdup(git_commit->valuestring),
-        strdup(git_tree_state->valuestring),
-        strdup(git_version->valuestring),
-        strdup(go_version->valuestring),
-        strdup(major->valuestring),
-        min_compatibility_major && !cJSON_IsNull(min_compatibility_major) ? strdup(min_compatibility_major->valuestring) : NULL,
-        min_compatibility_minor && !cJSON_IsNull(min_compatibility_minor) ? strdup(min_compatibility_minor->valuestring) : NULL,
-        strdup(minor->valuestring),
-        strdup(platform->valuestring)
+        build_date_local_str,
+        compiler_local_str,
+        emulation_major_local_str,
+        emulation_minor_local_str,
+        git_commit_local_str,
+        git_tree_state_local_str,
+        git_version_local_str,
+        go_version_local_str,
+        major_local_str,
+        min_compatibility_major_local_str,
+        min_compatibility_minor_local_str,
+        minor_local_str,
+        platform_local_str
         );
+
+    if (!version_info_local_var) {
+        goto end;
+    }
 
     return version_info_local_var;
 end:
+    if (build_date_local_str) {
+        free(build_date_local_str);
+        build_date_local_str = NULL;
+    }
+    if (compiler_local_str) {
+        free(compiler_local_str);
+        compiler_local_str = NULL;
+    }
+    if (emulation_major_local_str) {
+        free(emulation_major_local_str);
+        emulation_major_local_str = NULL;
+    }
+    if (emulation_minor_local_str) {
+        free(emulation_minor_local_str);
+        emulation_minor_local_str = NULL;
+    }
+    if (git_commit_local_str) {
+        free(git_commit_local_str);
+        git_commit_local_str = NULL;
+    }
+    if (git_tree_state_local_str) {
+        free(git_tree_state_local_str);
+        git_tree_state_local_str = NULL;
+    }
+    if (git_version_local_str) {
+        free(git_version_local_str);
+        git_version_local_str = NULL;
+    }
+    if (go_version_local_str) {
+        free(go_version_local_str);
+        go_version_local_str = NULL;
+    }
+    if (major_local_str) {
+        free(major_local_str);
+        major_local_str = NULL;
+    }
+    if (min_compatibility_major_local_str) {
+        free(min_compatibility_major_local_str);
+        min_compatibility_major_local_str = NULL;
+    }
+    if (min_compatibility_minor_local_str) {
+        free(min_compatibility_minor_local_str);
+        min_compatibility_minor_local_str = NULL;
+    }
+    if (minor_local_str) {
+        free(minor_local_str);
+        minor_local_str = NULL;
+    }
+    if (platform_local_str) {
+        free(platform_local_str);
+        platform_local_str = NULL;
+    }
     return NULL;
 
 }

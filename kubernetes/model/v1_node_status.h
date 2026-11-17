@@ -34,6 +34,7 @@ typedef struct v1_node_status_t {
     list_t *conditions; //nonprimitive container
     struct v1_node_config_status_t *config; //model
     struct v1_node_daemon_endpoints_t *daemon_endpoints; //model
+    list_t *declared_features; //primitive container
     struct v1_node_features_t *features; //model
     list_t *images; //nonprimitive container
     struct v1_node_system_info_t *node_info; //model
@@ -52,6 +53,7 @@ __attribute__((deprecated)) v1_node_status_t *v1_node_status_create(
     list_t *conditions,
     v1_node_config_status_t *config,
     v1_node_daemon_endpoints_t *daemon_endpoints,
+    list_t *declared_features,
     v1_node_features_t *features,
     list_t *images,
     v1_node_system_info_t *node_info,

@@ -10,19 +10,19 @@ static v1_controller_revision_t *v1_controller_revision_create_internal(
     object_t *data,
     char *kind,
     v1_object_meta_t *metadata,
-    long revision
+    long *revision
     ) {
     v1_controller_revision_t *v1_controller_revision_local_var = malloc(sizeof(v1_controller_revision_t));
     if (!v1_controller_revision_local_var) {
         return NULL;
     }
+    memset(v1_controller_revision_local_var, 0, sizeof(v1_controller_revision_t));
+    v1_controller_revision_local_var->_library_owned = 1;
     v1_controller_revision_local_var->api_version = api_version;
     v1_controller_revision_local_var->data = data;
     v1_controller_revision_local_var->kind = kind;
     v1_controller_revision_local_var->metadata = metadata;
     v1_controller_revision_local_var->revision = revision;
-
-    v1_controller_revision_local_var->_library_owned = 1;
     return v1_controller_revision_local_var;
 }
 
@@ -31,15 +31,24 @@ __attribute__((deprecated)) v1_controller_revision_t *v1_controller_revision_cre
     object_t *data,
     char *kind,
     v1_object_meta_t *metadata,
-    long revision
+    long *revision
     ) {
-    return v1_controller_revision_create_internal (
+    long *revision_copy = NULL;
+    if (revision) {
+        revision_copy = malloc(sizeof(long));
+        if (revision_copy) *revision_copy = *revision;
+    }
+    v1_controller_revision_t *result = v1_controller_revision_create_internal (
         api_version,
         data,
         kind,
         metadata,
-        revision
+        revision_copy
         );
+    if (!result) {
+        free(revision_copy);
+    }
+    return result;
 }
 
 void v1_controller_revision_free(v1_controller_revision_t *v1_controller_revision) {
@@ -67,6 +76,10 @@ void v1_controller_revision_free(v1_controller_revision_t *v1_controller_revisio
         v1_object_meta_free(v1_controller_revision->metadata);
         v1_controller_revision->metadata = NULL;
     }
+    if (v1_controller_revision->revision) {
+        free(v1_controller_revision->revision);
+        v1_controller_revision->revision = NULL;
+    }
     free(v1_controller_revision);
 }
 
@@ -82,7 +95,9 @@ cJSON *v1_controller_revision_convertToJSON(v1_controller_revision_t *v1_control
 
 
     // v1_controller_revision->data
-    if(v1_controller_revision->data) {
+    if (!v1_controller_revision->data) {
+        goto fail;
+    }
     cJSON *data_object = object_convertToJSON(v1_controller_revision->data);
     if(data_object == NULL) {
     goto fail; //model
@@ -90,7 +105,6 @@ cJSON *v1_controller_revision_convertToJSON(v1_controller_revision_t *v1_control
     cJSON_AddItemToObject(item, "data", data_object);
     if(item->child == NULL) {
     goto fail;
-    }
     }
 
 
@@ -116,11 +130,10 @@ cJSON *v1_controller_revision_convertToJSON(v1_controller_revision_t *v1_control
 
 
     // v1_controller_revision->revision
-    if (!v1_controller_revision->revision) {
-        goto fail;
-    }
-    if(cJSON_AddNumberToObject(item, "revision", v1_controller_revision->revision) == NULL) {
+    if(v1_controller_revision->revision) {
+    if(cJSON_AddNumberToObject(item, "revision", *v1_controller_revision->revision) == NULL) {
     goto fail; //Numeric
+    }
     }
 
     return item;
@@ -135,8 +148,15 @@ v1_controller_revision_t *v1_controller_revision_parseFromJSON(cJSON *v1_control
 
     v1_controller_revision_t *v1_controller_revision_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
+    char *kind_local_str = NULL;
+
     // define the local variable for v1_controller_revision->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    // define the local variable for v1_controller_revision->revision
+    long *revision_local_var = NULL;
 
     // v1_controller_revision->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_controller_revisionJSON, "apiVersion");
@@ -155,10 +175,13 @@ v1_controller_revision_t *v1_controller_revision_parseFromJSON(cJSON *v1_control
     if (cJSON_IsNull(data)) {
         data = NULL;
     }
-    object_t *data_local_object = NULL;
-    if (data) { 
-    data_local_object = object_parseFromJSON(data); //object
+    if (!data) {
+        goto end;
     }
+
+    object_t *data_local_object = NULL;
+    
+    data_local_object = object_parseFromJSON(data); //object
 
     // v1_controller_revision->kind
     cJSON *kind = cJSON_GetObjectItemCaseSensitive(v1_controller_revisionJSON, "kind");
@@ -186,30 +209,52 @@ v1_controller_revision_t *v1_controller_revision_parseFromJSON(cJSON *v1_control
     if (cJSON_IsNull(revision)) {
         revision = NULL;
     }
-    if (!revision) {
-        goto end;
-    }
-
-    
+    if (revision) { 
     if(!cJSON_IsNumber(revision))
     {
     goto end; //Numeric
     }
+    revision_local_var = malloc(sizeof(long));
+    if(!revision_local_var)
+    {
+        goto end;
+    }
+    *revision_local_var = revision->valuedouble;
+    }
 
+
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
 
     v1_controller_revision_local_var = v1_controller_revision_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        data ? data_local_object : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version_local_str,
+        data_local_object,
+        kind_local_str,
         metadata ? metadata_local_nonprim : NULL,
-        revision->valuedouble
+        revision_local_var
         );
+
+    if (!v1_controller_revision_local_var) {
+        goto end;
+    }
 
     return v1_controller_revision_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;
+    }
+    if (revision_local_var) {
+        free(revision_local_var);
+        revision_local_var = NULL;
     }
     return NULL;
 

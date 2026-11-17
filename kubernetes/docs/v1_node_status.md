@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **conditions** | [**list_t**](v1_node_condition.md) \* | Conditions is an array of current observed node conditions. More info: https://kubernetes.io/docs/reference/node/node-status/#condition | [optional] 
 **config** | [**v1_node_config_status_t**](v1_node_config_status.md) \* |  | [optional] 
 **daemon_endpoints** | [**v1_node_daemon_endpoints_t**](v1_node_daemon_endpoints.md) \* |  | [optional] 
+**declared_features** | **list_t \*** | DeclaredFeatures represents the features related to feature gates that are declared by the node. | [optional] 
 **features** | [**v1_node_features_t**](v1_node_features.md) \* |  | [optional] 
 **images** | [**list_t**](v1_container_image.md) \* | List of container images on this node | [optional] 
 **node_info** | [**v1_node_system_info_t**](v1_node_system_info.md) \* |  | [optional] 

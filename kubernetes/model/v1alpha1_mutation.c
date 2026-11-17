@@ -14,11 +14,11 @@ static v1alpha1_mutation_t *v1alpha1_mutation_create_internal(
     if (!v1alpha1_mutation_local_var) {
         return NULL;
     }
+    memset(v1alpha1_mutation_local_var, 0, sizeof(v1alpha1_mutation_t));
+    v1alpha1_mutation_local_var->_library_owned = 1;
     v1alpha1_mutation_local_var->apply_configuration = apply_configuration;
     v1alpha1_mutation_local_var->json_patch = json_patch;
     v1alpha1_mutation_local_var->patch_type = patch_type;
-
-    v1alpha1_mutation_local_var->_library_owned = 1;
     return v1alpha1_mutation_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1alpha1_mutation_t *v1alpha1_mutation_create(
     v1alpha1_json_patch_t *json_patch,
     char *patch_type
     ) {
-    return v1alpha1_mutation_create_internal (
+    v1alpha1_mutation_t *result = v1alpha1_mutation_create_internal (
         apply_configuration,
         json_patch,
         patch_type
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1alpha1_mutation_free(v1alpha1_mutation_t *v1alpha1_mutation) {
@@ -113,6 +116,8 @@ v1alpha1_mutation_t *v1alpha1_mutation_parseFromJSON(cJSON *v1alpha1_mutationJSO
     // define the local variable for v1alpha1_mutation->json_patch
     v1alpha1_json_patch_t *json_patch_local_nonprim = NULL;
 
+    char *patch_type_local_str = NULL;
+
     // v1alpha1_mutation->apply_configuration
     cJSON *apply_configuration = cJSON_GetObjectItemCaseSensitive(v1alpha1_mutationJSON, "applyConfiguration");
     if (cJSON_IsNull(apply_configuration)) {
@@ -147,11 +152,17 @@ v1alpha1_mutation_t *v1alpha1_mutation_parseFromJSON(cJSON *v1alpha1_mutationJSO
     }
 
 
+    if (patch_type && !cJSON_IsNull(patch_type)) patch_type_local_str = strdup(patch_type->valuestring);
+
     v1alpha1_mutation_local_var = v1alpha1_mutation_create_internal (
         apply_configuration ? apply_configuration_local_nonprim : NULL,
         json_patch ? json_patch_local_nonprim : NULL,
-        strdup(patch_type->valuestring)
+        patch_type_local_str
         );
+
+    if (!v1alpha1_mutation_local_var) {
+        goto end;
+    }
 
     return v1alpha1_mutation_local_var;
 end:
@@ -162,6 +173,10 @@ end:
     if (json_patch_local_nonprim) {
         v1alpha1_json_patch_free(json_patch_local_nonprim);
         json_patch_local_nonprim = NULL;
+    }
+    if (patch_type_local_str) {
+        free(patch_type_local_str);
+        patch_type_local_str = NULL;
     }
     return NULL;
 

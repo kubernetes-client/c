@@ -19,10 +19,11 @@ typedef struct v1_volume_mount_t v1_volume_mount_t;
 
 
 typedef struct v1_volume_mount_t {
+    list_t *bind_mount_options; //primitive container
     char *mount_path; // string
     char *mount_propagation; // string
     char *name; // string
-    int read_only; //boolean
+    int *read_only; //boolean
     char *recursive_read_only; // string
     char *sub_path; // string
     char *sub_path_expr; // string
@@ -31,10 +32,11 @@ typedef struct v1_volume_mount_t {
 } v1_volume_mount_t;
 
 __attribute__((deprecated)) v1_volume_mount_t *v1_volume_mount_create(
+    list_t *bind_mount_options,
     char *mount_path,
     char *mount_propagation,
     char *name,
-    int read_only,
+    int *read_only,
     char *recursive_read_only,
     char *sub_path,
     char *sub_path_expr

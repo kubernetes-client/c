@@ -13,10 +13,10 @@ static v1beta1_match_condition_t *v1beta1_match_condition_create_internal(
     if (!v1beta1_match_condition_local_var) {
         return NULL;
     }
+    memset(v1beta1_match_condition_local_var, 0, sizeof(v1beta1_match_condition_t));
+    v1beta1_match_condition_local_var->_library_owned = 1;
     v1beta1_match_condition_local_var->expression = expression;
     v1beta1_match_condition_local_var->name = name;
-
-    v1beta1_match_condition_local_var->_library_owned = 1;
     return v1beta1_match_condition_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1beta1_match_condition_t *v1beta1_match_condition_c
     char *expression,
     char *name
     ) {
-    return v1beta1_match_condition_create_internal (
+    v1beta1_match_condition_t *result = v1beta1_match_condition_create_internal (
         expression,
         name
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1beta1_match_condition_free(v1beta1_match_condition_t *v1beta1_match_condition) {
@@ -82,6 +85,10 @@ v1beta1_match_condition_t *v1beta1_match_condition_parseFromJSON(cJSON *v1beta1_
 
     v1beta1_match_condition_t *v1beta1_match_condition_local_var = NULL;
 
+    char *expression_local_str = NULL;
+
+    char *name_local_str = NULL;
+
     // v1beta1_match_condition->expression
     cJSON *expression = cJSON_GetObjectItemCaseSensitive(v1beta1_match_conditionJSON, "expression");
     if (cJSON_IsNull(expression)) {
@@ -113,13 +120,28 @@ v1beta1_match_condition_t *v1beta1_match_condition_parseFromJSON(cJSON *v1beta1_
     }
 
 
+    if (expression && !cJSON_IsNull(expression)) expression_local_str = strdup(expression->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v1beta1_match_condition_local_var = v1beta1_match_condition_create_internal (
-        strdup(expression->valuestring),
-        strdup(name->valuestring)
+        expression_local_str,
+        name_local_str
         );
+
+    if (!v1beta1_match_condition_local_var) {
+        goto end;
+    }
 
     return v1beta1_match_condition_local_var;
 end:
+    if (expression_local_str) {
+        free(expression_local_str);
+        expression_local_str = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
     return NULL;
 
 }

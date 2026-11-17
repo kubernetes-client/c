@@ -21,13 +21,13 @@ typedef struct v1_service_spec_t v1_service_spec_t;
 
 
 typedef struct v1_service_spec_t {
-    int allocate_load_balancer_node_ports; //boolean
+    int *allocate_load_balancer_node_ports; //boolean
     char *cluster_ip; // string
     list_t *cluster_ips; //primitive container
     list_t *external_ips; //primitive container
     char *external_name; // string
     char *external_traffic_policy; // string
-    int health_check_node_port; //numeric
+    int *health_check_node_port; //numeric
     char *internal_traffic_policy; // string
     list_t *ip_families; //primitive container
     char *ip_family_policy; // string
@@ -35,7 +35,7 @@ typedef struct v1_service_spec_t {
     char *load_balancer_ip; // string
     list_t *load_balancer_source_ranges; //primitive container
     list_t *ports; //nonprimitive container
-    int publish_not_ready_addresses; //boolean
+    int *publish_not_ready_addresses; //boolean
     list_t* selector; //map
     char *session_affinity; // string
     struct v1_session_affinity_config_t *session_affinity_config; //model
@@ -46,13 +46,13 @@ typedef struct v1_service_spec_t {
 } v1_service_spec_t;
 
 __attribute__((deprecated)) v1_service_spec_t *v1_service_spec_create(
-    int allocate_load_balancer_node_ports,
+    int *allocate_load_balancer_node_ports,
     char *cluster_ip,
     list_t *cluster_ips,
     list_t *external_ips,
     char *external_name,
     char *external_traffic_policy,
-    int health_check_node_port,
+    int *health_check_node_port,
     char *internal_traffic_policy,
     list_t *ip_families,
     char *ip_family_policy,
@@ -60,7 +60,7 @@ __attribute__((deprecated)) v1_service_spec_t *v1_service_spec_create(
     char *load_balancer_ip,
     list_t *load_balancer_source_ranges,
     list_t *ports,
-    int publish_not_ready_addresses,
+    int *publish_not_ready_addresses,
     list_t* selector,
     char *session_affinity,
     v1_session_affinity_config_t *session_affinity_config,

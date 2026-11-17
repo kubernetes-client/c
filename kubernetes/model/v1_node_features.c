@@ -6,24 +6,33 @@
 
 
 static v1_node_features_t *v1_node_features_create_internal(
-    int supplemental_groups_policy
+    int *supplemental_groups_policy
     ) {
     v1_node_features_t *v1_node_features_local_var = malloc(sizeof(v1_node_features_t));
     if (!v1_node_features_local_var) {
         return NULL;
     }
-    v1_node_features_local_var->supplemental_groups_policy = supplemental_groups_policy;
-
+    memset(v1_node_features_local_var, 0, sizeof(v1_node_features_t));
     v1_node_features_local_var->_library_owned = 1;
+    v1_node_features_local_var->supplemental_groups_policy = supplemental_groups_policy;
     return v1_node_features_local_var;
 }
 
 __attribute__((deprecated)) v1_node_features_t *v1_node_features_create(
-    int supplemental_groups_policy
+    int *supplemental_groups_policy
     ) {
-    return v1_node_features_create_internal (
-        supplemental_groups_policy
+    int *supplemental_groups_policy_copy = NULL;
+    if (supplemental_groups_policy) {
+        supplemental_groups_policy_copy = malloc(sizeof(int));
+        if (supplemental_groups_policy_copy) *supplemental_groups_policy_copy = *supplemental_groups_policy;
+    }
+    v1_node_features_t *result = v1_node_features_create_internal (
+        supplemental_groups_policy_copy
         );
+    if (!result) {
+        free(supplemental_groups_policy_copy);
+    }
+    return result;
 }
 
 void v1_node_features_free(v1_node_features_t *v1_node_features) {
@@ -35,6 +44,10 @@ void v1_node_features_free(v1_node_features_t *v1_node_features) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_node_features->supplemental_groups_policy) {
+        free(v1_node_features->supplemental_groups_policy);
+        v1_node_features->supplemental_groups_policy = NULL;
+    }
     free(v1_node_features);
 }
 
@@ -43,7 +56,7 @@ cJSON *v1_node_features_convertToJSON(v1_node_features_t *v1_node_features) {
 
     // v1_node_features->supplemental_groups_policy
     if(v1_node_features->supplemental_groups_policy) {
-    if(cJSON_AddBoolToObject(item, "supplementalGroupsPolicy", v1_node_features->supplemental_groups_policy) == NULL) {
+    if(cJSON_AddBoolToObject(item, "supplementalGroupsPolicy", *v1_node_features->supplemental_groups_policy) == NULL) {
     goto fail; //Bool
     }
     }
@@ -60,6 +73,9 @@ v1_node_features_t *v1_node_features_parseFromJSON(cJSON *v1_node_featuresJSON){
 
     v1_node_features_t *v1_node_features_local_var = NULL;
 
+    // define the local variable for v1_node_features->supplemental_groups_policy
+    int *supplemental_groups_policy_local_var = NULL;
+
     // v1_node_features->supplemental_groups_policy
     cJSON *supplemental_groups_policy = cJSON_GetObjectItemCaseSensitive(v1_node_featuresJSON, "supplementalGroupsPolicy");
     if (cJSON_IsNull(supplemental_groups_policy)) {
@@ -70,15 +86,30 @@ v1_node_features_t *v1_node_features_parseFromJSON(cJSON *v1_node_featuresJSON){
     {
     goto end; //Bool
     }
+    supplemental_groups_policy_local_var = malloc(sizeof(int));
+    if(!supplemental_groups_policy_local_var)
+    {
+        goto end;
+    }
+    *supplemental_groups_policy_local_var = supplemental_groups_policy->valueint;
     }
 
 
+
     v1_node_features_local_var = v1_node_features_create_internal (
-        supplemental_groups_policy ? supplemental_groups_policy->valueint : 0
+        supplemental_groups_policy_local_var
         );
+
+    if (!v1_node_features_local_var) {
+        goto end;
+    }
 
     return v1_node_features_local_var;
 end:
+    if (supplemental_groups_policy_local_var) {
+        free(supplemental_groups_policy_local_var);
+        supplemental_groups_policy_local_var = NULL;
+    }
     return NULL;
 
 }

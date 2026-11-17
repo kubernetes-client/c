@@ -14,11 +14,11 @@ static v1_device_request_t *v1_device_request_create_internal(
     if (!v1_device_request_local_var) {
         return NULL;
     }
+    memset(v1_device_request_local_var, 0, sizeof(v1_device_request_t));
+    v1_device_request_local_var->_library_owned = 1;
     v1_device_request_local_var->exactly = exactly;
     v1_device_request_local_var->first_available = first_available;
     v1_device_request_local_var->name = name;
-
-    v1_device_request_local_var->_library_owned = 1;
     return v1_device_request_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_device_request_t *v1_device_request_create(
     list_t *first_available,
     char *name
     ) {
-    return v1_device_request_create_internal (
+    v1_device_request_t *result = v1_device_request_create_internal (
         exactly,
         first_available,
         name
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_device_request_free(v1_device_request_t *v1_device_request) {
@@ -123,6 +126,8 @@ v1_device_request_t *v1_device_request_parseFromJSON(cJSON *v1_device_requestJSO
     // define the local list for v1_device_request->first_available
     list_t *first_availableList = NULL;
 
+    char *name_local_str = NULL;
+
     // v1_device_request->exactly
     cJSON *exactly = cJSON_GetObjectItemCaseSensitive(v1_device_requestJSON, "exactly");
     if (cJSON_IsNull(exactly)) {
@@ -172,11 +177,17 @@ v1_device_request_t *v1_device_request_parseFromJSON(cJSON *v1_device_requestJSO
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v1_device_request_local_var = v1_device_request_create_internal (
         exactly ? exactly_local_nonprim : NULL,
         first_available ? first_availableList : NULL,
-        strdup(name->valuestring)
+        name_local_str
         );
+
+    if (!v1_device_request_local_var) {
+        goto end;
+    }
 
     return v1_device_request_local_var;
 end:
@@ -192,6 +203,10 @@ end:
         }
         list_freeList(first_availableList);
         first_availableList = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
     }
     return NULL;
 

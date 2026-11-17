@@ -12,18 +12,21 @@ static v1_selectable_field_t *v1_selectable_field_create_internal(
     if (!v1_selectable_field_local_var) {
         return NULL;
     }
-    v1_selectable_field_local_var->json_path = json_path;
-
+    memset(v1_selectable_field_local_var, 0, sizeof(v1_selectable_field_t));
     v1_selectable_field_local_var->_library_owned = 1;
+    v1_selectable_field_local_var->json_path = json_path;
     return v1_selectable_field_local_var;
 }
 
 __attribute__((deprecated)) v1_selectable_field_t *v1_selectable_field_create(
     char *json_path
     ) {
-    return v1_selectable_field_create_internal (
+    v1_selectable_field_t *result = v1_selectable_field_create_internal (
         json_path
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_selectable_field_free(v1_selectable_field_t *v1_selectable_field) {
@@ -65,6 +68,8 @@ v1_selectable_field_t *v1_selectable_field_parseFromJSON(cJSON *v1_selectable_fi
 
     v1_selectable_field_t *v1_selectable_field_local_var = NULL;
 
+    char *json_path_local_str = NULL;
+
     // v1_selectable_field->json_path
     cJSON *json_path = cJSON_GetObjectItemCaseSensitive(v1_selectable_fieldJSON, "jsonPath");
     if (cJSON_IsNull(json_path)) {
@@ -81,12 +86,22 @@ v1_selectable_field_t *v1_selectable_field_parseFromJSON(cJSON *v1_selectable_fi
     }
 
 
+    if (json_path && !cJSON_IsNull(json_path)) json_path_local_str = strdup(json_path->valuestring);
+
     v1_selectable_field_local_var = v1_selectable_field_create_internal (
-        strdup(json_path->valuestring)
+        json_path_local_str
         );
+
+    if (!v1_selectable_field_local_var) {
+        goto end;
+    }
 
     return v1_selectable_field_local_var;
 end:
+    if (json_path_local_str) {
+        free(json_path_local_str);
+        json_path_local_str = NULL;
+    }
     return NULL;
 
 }

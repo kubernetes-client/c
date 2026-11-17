@@ -21,7 +21,7 @@ typedef struct v1_volume_attachment_status_t v1_volume_attachment_status_t;
 
 typedef struct v1_volume_attachment_status_t {
     struct v1_volume_error_t *attach_error; //model
-    int attached; //boolean
+    int *attached; //boolean
     list_t* attachment_metadata; //map
     struct v1_volume_error_t *detach_error; //model
 
@@ -30,7 +30,7 @@ typedef struct v1_volume_attachment_status_t {
 
 __attribute__((deprecated)) v1_volume_attachment_status_t *v1_volume_attachment_status_create(
     v1_volume_error_t *attach_error,
-    int attached,
+    int *attached,
     list_t* attachment_metadata,
     v1_volume_error_t *detach_error
 );

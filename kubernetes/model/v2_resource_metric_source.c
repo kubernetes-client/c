@@ -13,10 +13,10 @@ static v2_resource_metric_source_t *v2_resource_metric_source_create_internal(
     if (!v2_resource_metric_source_local_var) {
         return NULL;
     }
+    memset(v2_resource_metric_source_local_var, 0, sizeof(v2_resource_metric_source_t));
+    v2_resource_metric_source_local_var->_library_owned = 1;
     v2_resource_metric_source_local_var->name = name;
     v2_resource_metric_source_local_var->target = target;
-
-    v2_resource_metric_source_local_var->_library_owned = 1;
     return v2_resource_metric_source_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v2_resource_metric_source_t *v2_resource_metric_sour
     char *name,
     v2_metric_target_t *target
     ) {
-    return v2_resource_metric_source_create_internal (
+    v2_resource_metric_source_t *result = v2_resource_metric_source_create_internal (
         name,
         target
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v2_resource_metric_source_free(v2_resource_metric_source_t *v2_resource_metric_source) {
@@ -87,6 +90,8 @@ v2_resource_metric_source_t *v2_resource_metric_source_parseFromJSON(cJSON *v2_r
 
     v2_resource_metric_source_t *v2_resource_metric_source_local_var = NULL;
 
+    char *name_local_str = NULL;
+
     // define the local variable for v2_resource_metric_source->target
     v2_metric_target_t *target_local_nonprim = NULL;
 
@@ -118,13 +123,23 @@ v2_resource_metric_source_t *v2_resource_metric_source_parseFromJSON(cJSON *v2_r
     target_local_nonprim = v2_metric_target_parseFromJSON(target); //nonprimitive
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v2_resource_metric_source_local_var = v2_resource_metric_source_create_internal (
-        strdup(name->valuestring),
+        name_local_str,
         target_local_nonprim
         );
 
+    if (!v2_resource_metric_source_local_var) {
+        goto end;
+    }
+
     return v2_resource_metric_source_local_var;
 end:
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
     if (target_local_nonprim) {
         v2_metric_target_free(target_local_nonprim);
         target_local_nonprim = NULL;

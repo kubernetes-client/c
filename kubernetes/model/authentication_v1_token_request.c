@@ -16,13 +16,13 @@ static authentication_v1_token_request_t *authentication_v1_token_request_create
     if (!authentication_v1_token_request_local_var) {
         return NULL;
     }
+    memset(authentication_v1_token_request_local_var, 0, sizeof(authentication_v1_token_request_t));
+    authentication_v1_token_request_local_var->_library_owned = 1;
     authentication_v1_token_request_local_var->api_version = api_version;
     authentication_v1_token_request_local_var->kind = kind;
     authentication_v1_token_request_local_var->metadata = metadata;
     authentication_v1_token_request_local_var->spec = spec;
     authentication_v1_token_request_local_var->status = status;
-
-    authentication_v1_token_request_local_var->_library_owned = 1;
     return authentication_v1_token_request_local_var;
 }
 
@@ -33,13 +33,16 @@ __attribute__((deprecated)) authentication_v1_token_request_t *authentication_v1
     v1_token_request_spec_t *spec,
     v1_token_request_status_t *status
     ) {
-    return authentication_v1_token_request_create_internal (
+    authentication_v1_token_request_t *result = authentication_v1_token_request_create_internal (
         api_version,
         kind,
         metadata,
         spec,
         status
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void authentication_v1_token_request_free(authentication_v1_token_request_t *authentication_v1_token_request) {
@@ -107,9 +110,7 @@ cJSON *authentication_v1_token_request_convertToJSON(authentication_v1_token_req
 
 
     // authentication_v1_token_request->spec
-    if (!authentication_v1_token_request->spec) {
-        goto fail;
-    }
+    if(authentication_v1_token_request->spec) {
     cJSON *spec_local_JSON = v1_token_request_spec_convertToJSON(authentication_v1_token_request->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -117,6 +118,7 @@ cJSON *authentication_v1_token_request_convertToJSON(authentication_v1_token_req
     cJSON_AddItemToObject(item, "spec", spec_local_JSON);
     if(item->child == NULL) {
     goto fail;
+    }
     }
 
 
@@ -143,6 +145,10 @@ fail:
 authentication_v1_token_request_t *authentication_v1_token_request_parseFromJSON(cJSON *authentication_v1_token_requestJSON){
 
     authentication_v1_token_request_t *authentication_v1_token_request_local_var = NULL;
+
+    char *api_version_local_str = NULL;
+
+    char *kind_local_str = NULL;
 
     // define the local variable for authentication_v1_token_request->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
@@ -191,12 +197,9 @@ authentication_v1_token_request_t *authentication_v1_token_request_parseFromJSON
     if (cJSON_IsNull(spec)) {
         spec = NULL;
     }
-    if (!spec) {
-        goto end;
-    }
-
-    
+    if (spec) { 
     spec_local_nonprim = v1_token_request_spec_parseFromJSON(spec); //nonprimitive
+    }
 
     // authentication_v1_token_request->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(authentication_v1_token_requestJSON, "status");
@@ -208,16 +211,31 @@ authentication_v1_token_request_t *authentication_v1_token_request_parseFromJSON
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+
     authentication_v1_token_request_local_var = authentication_v1_token_request_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version_local_str,
+        kind_local_str,
         metadata ? metadata_local_nonprim : NULL,
-        spec_local_nonprim,
+        spec ? spec_local_nonprim : NULL,
         status ? status_local_nonprim : NULL
         );
 
+    if (!authentication_v1_token_request_local_var) {
+        goto end;
+    }
+
     return authentication_v1_token_request_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;

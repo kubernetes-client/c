@@ -14,11 +14,11 @@ static v1_device_class_spec_t *v1_device_class_spec_create_internal(
     if (!v1_device_class_spec_local_var) {
         return NULL;
     }
+    memset(v1_device_class_spec_local_var, 0, sizeof(v1_device_class_spec_t));
+    v1_device_class_spec_local_var->_library_owned = 1;
     v1_device_class_spec_local_var->config = config;
     v1_device_class_spec_local_var->extended_resource_name = extended_resource_name;
     v1_device_class_spec_local_var->selectors = selectors;
-
-    v1_device_class_spec_local_var->_library_owned = 1;
     return v1_device_class_spec_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_device_class_spec_t *v1_device_class_spec_create(
     char *extended_resource_name,
     list_t *selectors
     ) {
-    return v1_device_class_spec_create_internal (
+    v1_device_class_spec_t *result = v1_device_class_spec_create_internal (
         config,
         extended_resource_name,
         selectors
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_device_class_spec_free(v1_device_class_spec_t *v1_device_class_spec) {
@@ -129,6 +132,8 @@ v1_device_class_spec_t *v1_device_class_spec_parseFromJSON(cJSON *v1_device_clas
     // define the local list for v1_device_class_spec->config
     list_t *configList = NULL;
 
+    char *extended_resource_name_local_str = NULL;
+
     // define the local list for v1_device_class_spec->selectors
     list_t *selectorsList = NULL;
 
@@ -193,11 +198,17 @@ v1_device_class_spec_t *v1_device_class_spec_parseFromJSON(cJSON *v1_device_clas
     }
 
 
+    if (extended_resource_name && !cJSON_IsNull(extended_resource_name)) extended_resource_name_local_str = strdup(extended_resource_name->valuestring);
+
     v1_device_class_spec_local_var = v1_device_class_spec_create_internal (
         config ? configList : NULL,
-        extended_resource_name && !cJSON_IsNull(extended_resource_name) ? strdup(extended_resource_name->valuestring) : NULL,
+        extended_resource_name_local_str,
         selectors ? selectorsList : NULL
         );
+
+    if (!v1_device_class_spec_local_var) {
+        goto end;
+    }
 
     return v1_device_class_spec_local_var;
 end:
@@ -209,6 +220,10 @@ end:
         }
         list_freeList(configList);
         configList = NULL;
+    }
+    if (extended_resource_name_local_str) {
+        free(extended_resource_name_local_str);
+        extended_resource_name_local_str = NULL;
     }
     if (selectorsList) {
         listEntry_t *listEntry = NULL;

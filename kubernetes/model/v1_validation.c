@@ -15,12 +15,12 @@ static v1_validation_t *v1_validation_create_internal(
     if (!v1_validation_local_var) {
         return NULL;
     }
+    memset(v1_validation_local_var, 0, sizeof(v1_validation_t));
+    v1_validation_local_var->_library_owned = 1;
     v1_validation_local_var->expression = expression;
     v1_validation_local_var->message = message;
     v1_validation_local_var->message_expression = message_expression;
     v1_validation_local_var->reason = reason;
-
-    v1_validation_local_var->_library_owned = 1;
     return v1_validation_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1_validation_t *v1_validation_create(
     char *message_expression,
     char *reason
     ) {
-    return v1_validation_create_internal (
+    v1_validation_t *result = v1_validation_create_internal (
         expression,
         message,
         message_expression,
         reason
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_validation_free(v1_validation_t *v1_validation) {
@@ -113,6 +116,14 @@ v1_validation_t *v1_validation_parseFromJSON(cJSON *v1_validationJSON){
 
     v1_validation_t *v1_validation_local_var = NULL;
 
+    char *expression_local_str = NULL;
+
+    char *message_local_str = NULL;
+
+    char *message_expression_local_str = NULL;
+
+    char *reason_local_str = NULL;
+
     // v1_validation->expression
     cJSON *expression = cJSON_GetObjectItemCaseSensitive(v1_validationJSON, "expression");
     if (cJSON_IsNull(expression)) {
@@ -165,15 +176,40 @@ v1_validation_t *v1_validation_parseFromJSON(cJSON *v1_validationJSON){
     }
 
 
+    if (expression && !cJSON_IsNull(expression)) expression_local_str = strdup(expression->valuestring);
+    if (message && !cJSON_IsNull(message)) message_local_str = strdup(message->valuestring);
+    if (message_expression && !cJSON_IsNull(message_expression)) message_expression_local_str = strdup(message_expression->valuestring);
+    if (reason && !cJSON_IsNull(reason)) reason_local_str = strdup(reason->valuestring);
+
     v1_validation_local_var = v1_validation_create_internal (
-        strdup(expression->valuestring),
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
-        message_expression && !cJSON_IsNull(message_expression) ? strdup(message_expression->valuestring) : NULL,
-        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL
+        expression_local_str,
+        message_local_str,
+        message_expression_local_str,
+        reason_local_str
         );
+
+    if (!v1_validation_local_var) {
+        goto end;
+    }
 
     return v1_validation_local_var;
 end:
+    if (expression_local_str) {
+        free(expression_local_str);
+        expression_local_str = NULL;
+    }
+    if (message_local_str) {
+        free(message_local_str);
+        message_local_str = NULL;
+    }
+    if (message_expression_local_str) {
+        free(message_expression_local_str);
+        message_expression_local_str = NULL;
+    }
+    if (reason_local_str) {
+        free(reason_local_str);
+        reason_local_str = NULL;
+    }
     return NULL;
 
 }

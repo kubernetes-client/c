@@ -1,0 +1,21 @@
+# v1alpha3_pool_status_t
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**allocated_devices** | **int** | AllocatedDevices is the number of devices currently allocated to claims. A value of 0 means no devices are allocated. May be unset when validationError is set. | [optional] 
+**available_devices** | **int** | AvailableDevices is the number of devices available for allocation. This equals TotalDevices - AllocatedDevices - UnavailableDevices. A value of 0 means no devices are currently available. May be unset when validationError is set. | [optional] 
+**driver** | **char \*** | Driver is the DRA driver name for this pool. Must be a DNS subdomain (e.g., \&quot;gpu.example.com\&quot;). | 
+**generation** | **long** | Generation is the pool generation observed across all ResourceSlices in this pool. Only the latest generation is reported. During a generation rollout, if not all slices at the latest generation have been published, the pool is included with a validationError and device counts unset. | 
+**node_name** | **char \*** | NodeName is the node this pool is associated with. When omitted, the pool is not associated with a specific node. Must be a valid DNS subdomain name (RFC1123). | [optional] 
+**partition_summary** | [**list_t**](v1alpha3_partition_type_status.md) \* | PartitionSummary reports allocatability per (attribute, partition type) for a partitionable pool that publishes SharedCounters. Each entry names the grouping attribute it was resolved from: the PartitionTypeAttribute declared by a device&#39;s own slice, or for devices whose slice declares none, the default named in the request. A pool that mixes partitions declared under different attributes reports each independently. When no slice declares an attribute and the request names no default, the pool reports no partition summary. | [optional] 
+**pool_name** | **char \*** | PoolName is the name of the pool. Must be a valid resource pool name (DNS subdomains separated by \&quot;/\&quot;). | 
+**resource_slice_count** | **int** | ResourceSliceCount is the number of ResourceSlices that make up this pool. May be unset when validationError is set. | [optional] 
+**shareable_summary** | [**v1alpha3_shareable_summary_status_t**](v1alpha3_shareable_summary_status.md) \* |  | [optional] 
+**total_devices** | **int** | TotalDevices is the total number of devices in the pool across all slices. A value of 0 means the pool has no devices. May be unset when validationError is set. | [optional] 
+**unavailable_devices** | **int** | UnavailableDevices is the number of devices that are not available due to taints or other conditions, but are not allocated. A value of 0 means all unallocated devices are available. May be unset when validationError is set. | [optional] 
+**validation_error** | **char \*** | ValidationError is set when the pool&#39;s data could not be fully validated (e.g., incomplete slice publication). When set, device count fields and ResourceSliceCount may be unset. | [optional] 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

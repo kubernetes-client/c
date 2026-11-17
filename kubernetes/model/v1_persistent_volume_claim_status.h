@@ -17,6 +17,7 @@ typedef struct v1_persistent_volume_claim_status_t v1_persistent_volume_claim_st
 
 #include "v1_modify_volume_status.h"
 #include "v1_persistent_volume_claim_condition.h"
+#include "v1_volume_health_status.h"
 
 
 
@@ -27,6 +28,7 @@ typedef struct v1_persistent_volume_claim_status_t {
     list_t* capacity; //map
     list_t *conditions; //nonprimitive container
     char *current_volume_attributes_class_name; // string
+    struct v1_volume_health_status_t *health_status; //model
     struct v1_modify_volume_status_t *modify_volume_status; //model
     char *phase; // string
 
@@ -40,6 +42,7 @@ __attribute__((deprecated)) v1_persistent_volume_claim_status_t *v1_persistent_v
     list_t* capacity,
     list_t *conditions,
     char *current_volume_attributes_class_name,
+    v1_volume_health_status_t *health_status,
     v1_modify_volume_status_t *modify_volume_status,
     char *phase
 );

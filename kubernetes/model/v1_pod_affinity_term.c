@@ -17,14 +17,14 @@ static v1_pod_affinity_term_t *v1_pod_affinity_term_create_internal(
     if (!v1_pod_affinity_term_local_var) {
         return NULL;
     }
+    memset(v1_pod_affinity_term_local_var, 0, sizeof(v1_pod_affinity_term_t));
+    v1_pod_affinity_term_local_var->_library_owned = 1;
     v1_pod_affinity_term_local_var->label_selector = label_selector;
     v1_pod_affinity_term_local_var->match_label_keys = match_label_keys;
     v1_pod_affinity_term_local_var->mismatch_label_keys = mismatch_label_keys;
     v1_pod_affinity_term_local_var->namespace_selector = namespace_selector;
     v1_pod_affinity_term_local_var->namespaces = namespaces;
     v1_pod_affinity_term_local_var->topology_key = topology_key;
-
-    v1_pod_affinity_term_local_var->_library_owned = 1;
     return v1_pod_affinity_term_local_var;
 }
 
@@ -36,7 +36,7 @@ __attribute__((deprecated)) v1_pod_affinity_term_t *v1_pod_affinity_term_create(
     list_t *namespaces,
     char *topology_key
     ) {
-    return v1_pod_affinity_term_create_internal (
+    v1_pod_affinity_term_t *result = v1_pod_affinity_term_create_internal (
         label_selector,
         match_label_keys,
         mismatch_label_keys,
@@ -44,6 +44,9 @@ __attribute__((deprecated)) v1_pod_affinity_term_t *v1_pod_affinity_term_create(
         namespaces,
         topology_key
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_pod_affinity_term_free(v1_pod_affinity_term_t *v1_pod_affinity_term) {
@@ -206,6 +209,8 @@ v1_pod_affinity_term_t *v1_pod_affinity_term_parseFromJSON(cJSON *v1_pod_affinit
     // define the local list for v1_pod_affinity_term->namespaces
     list_t *namespacesList = NULL;
 
+    char *topology_key_local_str = NULL;
+
     // v1_pod_affinity_term->label_selector
     cJSON *label_selector = cJSON_GetObjectItemCaseSensitive(v1_pod_affinity_termJSON, "labelSelector");
     if (cJSON_IsNull(label_selector)) {
@@ -306,14 +311,20 @@ v1_pod_affinity_term_t *v1_pod_affinity_term_parseFromJSON(cJSON *v1_pod_affinit
     }
 
 
+    if (topology_key && !cJSON_IsNull(topology_key)) topology_key_local_str = strdup(topology_key->valuestring);
+
     v1_pod_affinity_term_local_var = v1_pod_affinity_term_create_internal (
         label_selector ? label_selector_local_nonprim : NULL,
         match_label_keys ? match_label_keysList : NULL,
         mismatch_label_keys ? mismatch_label_keysList : NULL,
         namespace_selector ? namespace_selector_local_nonprim : NULL,
         namespaces ? namespacesList : NULL,
-        strdup(topology_key->valuestring)
+        topology_key_local_str
         );
+
+    if (!v1_pod_affinity_term_local_var) {
+        goto end;
+    }
 
     return v1_pod_affinity_term_local_var;
 end:
@@ -351,6 +362,10 @@ end:
         }
         list_freeList(namespacesList);
         namespacesList = NULL;
+    }
+    if (topology_key_local_str) {
+        free(topology_key_local_str);
+        topology_key_local_str = NULL;
     }
     return NULL;
 

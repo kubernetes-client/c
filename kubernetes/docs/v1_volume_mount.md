@@ -3,7 +3,8 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**mount_path** | **char \*** | Path within the container at which the volume should be mounted.  Must not contain &#39;:&#39;. | 
+**bind_mount_options** | **list_t \*** | bindMountOptions is the list of additional bind mount options to apply when mounting this volume into the container. Allowed values are noexec, nodev, and nosuid. These are Linux mount options and have no effect on Windows nodes. This field is not supported with image volumes. This is an alpha field and requires enabling the VolumeBindMountOptions feature gate. | [optional] 
+**mount_path** | **char \*** | Path within the container at which the volume should be mounted. | 
 **mount_propagation** | **char \*** | mountPropagation determines how mounts are propagated from the host to container and the other way around. When not set, MountPropagationNone is used. This field is beta in 1.10. When RecursiveReadOnly is set to IfPossible or to Enabled, MountPropagation must be None or unspecified (which defaults to None). | [optional] 
 **name** | **char \*** | This must match the Name of a Volume. | 
 **read_only** | **int** | Mounted read-only if true, read-write otherwise (false or unspecified). Defaults to false. | [optional] 

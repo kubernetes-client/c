@@ -15,12 +15,12 @@ static v1_device_taint_t *v1_device_taint_create_internal(
     if (!v1_device_taint_local_var) {
         return NULL;
     }
+    memset(v1_device_taint_local_var, 0, sizeof(v1_device_taint_t));
+    v1_device_taint_local_var->_library_owned = 1;
     v1_device_taint_local_var->effect = effect;
     v1_device_taint_local_var->key = key;
     v1_device_taint_local_var->time_added = time_added;
     v1_device_taint_local_var->value = value;
-
-    v1_device_taint_local_var->_library_owned = 1;
     return v1_device_taint_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1_device_taint_t *v1_device_taint_create(
     char *time_added,
     char *value
     ) {
-    return v1_device_taint_create_internal (
+    v1_device_taint_t *result = v1_device_taint_create_internal (
         effect,
         key,
         time_added,
         value
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_device_taint_free(v1_device_taint_t *v1_device_taint) {
@@ -114,6 +117,14 @@ v1_device_taint_t *v1_device_taint_parseFromJSON(cJSON *v1_device_taintJSON){
 
     v1_device_taint_t *v1_device_taint_local_var = NULL;
 
+    char *effect_local_str = NULL;
+
+    char *key_local_str = NULL;
+
+    char *time_added_local_str = NULL;
+
+    char *value_local_str = NULL;
+
     // v1_device_taint->effect
     cJSON *effect = cJSON_GetObjectItemCaseSensitive(v1_device_taintJSON, "effect");
     if (cJSON_IsNull(effect)) {
@@ -169,15 +180,40 @@ v1_device_taint_t *v1_device_taint_parseFromJSON(cJSON *v1_device_taintJSON){
     }
 
 
+    if (effect && !cJSON_IsNull(effect)) effect_local_str = strdup(effect->valuestring);
+    if (key && !cJSON_IsNull(key)) key_local_str = strdup(key->valuestring);
+    if (time_added && !cJSON_IsNull(time_added)) time_added_local_str = strdup(time_added->valuestring);
+    if (value && !cJSON_IsNull(value)) value_local_str = strdup(value->valuestring);
+
     v1_device_taint_local_var = v1_device_taint_create_internal (
-        strdup(effect->valuestring),
-        strdup(key->valuestring),
-        time_added && !cJSON_IsNull(time_added) ? strdup(time_added->valuestring) : NULL,
-        value && !cJSON_IsNull(value) ? strdup(value->valuestring) : NULL
+        effect_local_str,
+        key_local_str,
+        time_added_local_str,
+        value_local_str
         );
+
+    if (!v1_device_taint_local_var) {
+        goto end;
+    }
 
     return v1_device_taint_local_var;
 end:
+    if (effect_local_str) {
+        free(effect_local_str);
+        effect_local_str = NULL;
+    }
+    if (key_local_str) {
+        free(key_local_str);
+        key_local_str = NULL;
+    }
+    if (time_added_local_str) {
+        free(time_added_local_str);
+        time_added_local_str = NULL;
+    }
+    if (value_local_str) {
+        free(value_local_str);
+        value_local_str = NULL;
+    }
     return NULL;
 
 }

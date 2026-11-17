@@ -6,24 +6,33 @@
 
 
 static v1_daemon_endpoint_t *v1_daemon_endpoint_create_internal(
-    int port
+    int *port
     ) {
     v1_daemon_endpoint_t *v1_daemon_endpoint_local_var = malloc(sizeof(v1_daemon_endpoint_t));
     if (!v1_daemon_endpoint_local_var) {
         return NULL;
     }
-    v1_daemon_endpoint_local_var->port = port;
-
+    memset(v1_daemon_endpoint_local_var, 0, sizeof(v1_daemon_endpoint_t));
     v1_daemon_endpoint_local_var->_library_owned = 1;
+    v1_daemon_endpoint_local_var->port = port;
     return v1_daemon_endpoint_local_var;
 }
 
 __attribute__((deprecated)) v1_daemon_endpoint_t *v1_daemon_endpoint_create(
-    int port
+    int *port
     ) {
-    return v1_daemon_endpoint_create_internal (
-        port
+    int *port_copy = NULL;
+    if (port) {
+        port_copy = malloc(sizeof(int));
+        if (port_copy) *port_copy = *port;
+    }
+    v1_daemon_endpoint_t *result = v1_daemon_endpoint_create_internal (
+        port_copy
         );
+    if (!result) {
+        free(port_copy);
+    }
+    return result;
 }
 
 void v1_daemon_endpoint_free(v1_daemon_endpoint_t *v1_daemon_endpoint) {
@@ -35,6 +44,10 @@ void v1_daemon_endpoint_free(v1_daemon_endpoint_t *v1_daemon_endpoint) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_daemon_endpoint->port) {
+        free(v1_daemon_endpoint->port);
+        v1_daemon_endpoint->port = NULL;
+    }
     free(v1_daemon_endpoint);
 }
 
@@ -45,7 +58,7 @@ cJSON *v1_daemon_endpoint_convertToJSON(v1_daemon_endpoint_t *v1_daemon_endpoint
     if (!v1_daemon_endpoint->port) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "Port", v1_daemon_endpoint->port) == NULL) {
+    if(cJSON_AddNumberToObject(item, "Port", *v1_daemon_endpoint->port) == NULL) {
     goto fail; //Numeric
     }
 
@@ -61,6 +74,9 @@ v1_daemon_endpoint_t *v1_daemon_endpoint_parseFromJSON(cJSON *v1_daemon_endpoint
 
     v1_daemon_endpoint_t *v1_daemon_endpoint_local_var = NULL;
 
+    // define the local variable for v1_daemon_endpoint->port
+    int *port_local_var = NULL;
+
     // v1_daemon_endpoint->port
     cJSON *port = cJSON_GetObjectItemCaseSensitive(v1_daemon_endpointJSON, "Port");
     if (cJSON_IsNull(port)) {
@@ -75,14 +91,29 @@ v1_daemon_endpoint_t *v1_daemon_endpoint_parseFromJSON(cJSON *v1_daemon_endpoint
     {
     goto end; //Numeric
     }
+    port_local_var = malloc(sizeof(int));
+    if(!port_local_var)
+    {
+        goto end;
+    }
+    *port_local_var = port->valuedouble;
+
 
 
     v1_daemon_endpoint_local_var = v1_daemon_endpoint_create_internal (
-        port->valuedouble
+        port_local_var
         );
+
+    if (!v1_daemon_endpoint_local_var) {
+        goto end;
+    }
 
     return v1_daemon_endpoint_local_var;
 end:
+    if (port_local_var) {
+        free(port_local_var);
+        port_local_var = NULL;
+    }
     return NULL;
 
 }

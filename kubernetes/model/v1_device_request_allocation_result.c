@@ -6,7 +6,7 @@
 
 
 static v1_device_request_allocation_result_t *v1_device_request_allocation_result_create_internal(
-    int admin_access,
+    int *admin_access,
     list_t *binding_conditions,
     list_t *binding_failure_conditions,
     list_t* consumed_capacity,
@@ -15,12 +15,15 @@ static v1_device_request_allocation_result_t *v1_device_request_allocation_resul
     char *pool,
     char *request,
     char *share_id,
+    list_t *skip_node_operations,
     list_t *tolerations
     ) {
     v1_device_request_allocation_result_t *v1_device_request_allocation_result_local_var = malloc(sizeof(v1_device_request_allocation_result_t));
     if (!v1_device_request_allocation_result_local_var) {
         return NULL;
     }
+    memset(v1_device_request_allocation_result_local_var, 0, sizeof(v1_device_request_allocation_result_t));
+    v1_device_request_allocation_result_local_var->_library_owned = 1;
     v1_device_request_allocation_result_local_var->admin_access = admin_access;
     v1_device_request_allocation_result_local_var->binding_conditions = binding_conditions;
     v1_device_request_allocation_result_local_var->binding_failure_conditions = binding_failure_conditions;
@@ -30,14 +33,13 @@ static v1_device_request_allocation_result_t *v1_device_request_allocation_resul
     v1_device_request_allocation_result_local_var->pool = pool;
     v1_device_request_allocation_result_local_var->request = request;
     v1_device_request_allocation_result_local_var->share_id = share_id;
+    v1_device_request_allocation_result_local_var->skip_node_operations = skip_node_operations;
     v1_device_request_allocation_result_local_var->tolerations = tolerations;
-
-    v1_device_request_allocation_result_local_var->_library_owned = 1;
     return v1_device_request_allocation_result_local_var;
 }
 
 __attribute__((deprecated)) v1_device_request_allocation_result_t *v1_device_request_allocation_result_create(
-    int admin_access,
+    int *admin_access,
     list_t *binding_conditions,
     list_t *binding_failure_conditions,
     list_t* consumed_capacity,
@@ -46,10 +48,16 @@ __attribute__((deprecated)) v1_device_request_allocation_result_t *v1_device_req
     char *pool,
     char *request,
     char *share_id,
+    list_t *skip_node_operations,
     list_t *tolerations
     ) {
-    return v1_device_request_allocation_result_create_internal (
-        admin_access,
+    int *admin_access_copy = NULL;
+    if (admin_access) {
+        admin_access_copy = malloc(sizeof(int));
+        if (admin_access_copy) *admin_access_copy = *admin_access;
+    }
+    v1_device_request_allocation_result_t *result = v1_device_request_allocation_result_create_internal (
+        admin_access_copy,
         binding_conditions,
         binding_failure_conditions,
         consumed_capacity,
@@ -58,8 +66,13 @@ __attribute__((deprecated)) v1_device_request_allocation_result_t *v1_device_req
         pool,
         request,
         share_id,
+        skip_node_operations,
         tolerations
         );
+    if (!result) {
+        free(admin_access_copy);
+    }
+    return result;
 }
 
 void v1_device_request_allocation_result_free(v1_device_request_allocation_result_t *v1_device_request_allocation_result) {
@@ -71,6 +84,10 @@ void v1_device_request_allocation_result_free(v1_device_request_allocation_resul
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_device_request_allocation_result->admin_access) {
+        free(v1_device_request_allocation_result->admin_access);
+        v1_device_request_allocation_result->admin_access = NULL;
+    }
     if (v1_device_request_allocation_result->binding_conditions) {
         list_ForEach(listEntry, v1_device_request_allocation_result->binding_conditions) {
             free(listEntry->data);
@@ -115,6 +132,13 @@ void v1_device_request_allocation_result_free(v1_device_request_allocation_resul
         free(v1_device_request_allocation_result->share_id);
         v1_device_request_allocation_result->share_id = NULL;
     }
+    if (v1_device_request_allocation_result->skip_node_operations) {
+        list_ForEach(listEntry, v1_device_request_allocation_result->skip_node_operations) {
+            free(listEntry->data);
+        }
+        list_freeList(v1_device_request_allocation_result->skip_node_operations);
+        v1_device_request_allocation_result->skip_node_operations = NULL;
+    }
     if (v1_device_request_allocation_result->tolerations) {
         list_ForEach(listEntry, v1_device_request_allocation_result->tolerations) {
             v1_device_toleration_free(listEntry->data);
@@ -130,7 +154,7 @@ cJSON *v1_device_request_allocation_result_convertToJSON(v1_device_request_alloc
 
     // v1_device_request_allocation_result->admin_access
     if(v1_device_request_allocation_result->admin_access) {
-    if(cJSON_AddBoolToObject(item, "adminAccess", v1_device_request_allocation_result->admin_access) == NULL) {
+    if(cJSON_AddBoolToObject(item, "adminAccess", *v1_device_request_allocation_result->admin_access) == NULL) {
     goto fail; //Bool
     }
     }
@@ -234,6 +258,23 @@ cJSON *v1_device_request_allocation_result_convertToJSON(v1_device_request_alloc
     }
 
 
+    // v1_device_request_allocation_result->skip_node_operations
+    if(v1_device_request_allocation_result->skip_node_operations) {
+    cJSON *skip_node_operations = cJSON_AddArrayToObject(item, "skipNodeOperations");
+    if(skip_node_operations == NULL) {
+        goto fail; //primitive container
+    }
+
+    listEntry_t *skip_node_operationsListEntry;
+    list_ForEach(skip_node_operationsListEntry, v1_device_request_allocation_result->skip_node_operations) {
+    if(cJSON_AddStringToObject(skip_node_operations, "", skip_node_operationsListEntry->data) == NULL)
+    {
+        goto fail;
+    }
+    }
+    }
+
+
     // v1_device_request_allocation_result->tolerations
     if(v1_device_request_allocation_result->tolerations) {
     cJSON *tolerations = cJSON_AddArrayToObject(item, "tolerations");
@@ -265,6 +306,9 @@ v1_device_request_allocation_result_t *v1_device_request_allocation_result_parse
 
     v1_device_request_allocation_result_t *v1_device_request_allocation_result_local_var = NULL;
 
+    // define the local variable for v1_device_request_allocation_result->admin_access
+    int *admin_access_local_var = NULL;
+
     // define the local list for v1_device_request_allocation_result->binding_conditions
     list_t *binding_conditionsList = NULL;
 
@@ -273,6 +317,19 @@ v1_device_request_allocation_result_t *v1_device_request_allocation_result_parse
 
     // define the local map for v1_device_request_allocation_result->consumed_capacity
     list_t *consumed_capacityList = NULL;
+
+    char *device_local_str = NULL;
+
+    char *driver_local_str = NULL;
+
+    char *pool_local_str = NULL;
+
+    char *request_local_str = NULL;
+
+    char *share_id_local_str = NULL;
+
+    // define the local list for v1_device_request_allocation_result->skip_node_operations
+    list_t *skip_node_operationsList = NULL;
 
     // define the local list for v1_device_request_allocation_result->tolerations
     list_t *tolerationsList = NULL;
@@ -287,6 +344,12 @@ v1_device_request_allocation_result_t *v1_device_request_allocation_result_parse
     {
     goto end; //Bool
     }
+    admin_access_local_var = malloc(sizeof(int));
+    if(!admin_access_local_var)
+    {
+        goto end;
+    }
+    *admin_access_local_var = admin_access->valueint;
     }
 
     // v1_device_request_allocation_result->binding_conditions
@@ -433,6 +496,28 @@ v1_device_request_allocation_result_t *v1_device_request_allocation_result_parse
     }
     }
 
+    // v1_device_request_allocation_result->skip_node_operations
+    cJSON *skip_node_operations = cJSON_GetObjectItemCaseSensitive(v1_device_request_allocation_resultJSON, "skipNodeOperations");
+    if (cJSON_IsNull(skip_node_operations)) {
+        skip_node_operations = NULL;
+    }
+    if (skip_node_operations) { 
+    cJSON *skip_node_operations_local = NULL;
+    if(!cJSON_IsArray(skip_node_operations)) {
+        goto end;//primitive container
+    }
+    skip_node_operationsList = list_createList();
+
+    cJSON_ArrayForEach(skip_node_operations_local, skip_node_operations)
+    {
+        if(!cJSON_IsString(skip_node_operations_local))
+        {
+            goto end;
+        }
+        list_addElement(skip_node_operationsList , strdup(skip_node_operations_local->valuestring));
+    }
+    }
+
     // v1_device_request_allocation_result->tolerations
     cJSON *tolerations = cJSON_GetObjectItemCaseSensitive(v1_device_request_allocation_resultJSON, "tolerations");
     if (cJSON_IsNull(tolerations)) {
@@ -458,21 +543,36 @@ v1_device_request_allocation_result_t *v1_device_request_allocation_result_parse
     }
 
 
+    if (device && !cJSON_IsNull(device)) device_local_str = strdup(device->valuestring);
+    if (driver && !cJSON_IsNull(driver)) driver_local_str = strdup(driver->valuestring);
+    if (pool && !cJSON_IsNull(pool)) pool_local_str = strdup(pool->valuestring);
+    if (request && !cJSON_IsNull(request)) request_local_str = strdup(request->valuestring);
+    if (share_id && !cJSON_IsNull(share_id)) share_id_local_str = strdup(share_id->valuestring);
+
     v1_device_request_allocation_result_local_var = v1_device_request_allocation_result_create_internal (
-        admin_access ? admin_access->valueint : 0,
+        admin_access_local_var,
         binding_conditions ? binding_conditionsList : NULL,
         binding_failure_conditions ? binding_failure_conditionsList : NULL,
         consumed_capacity ? consumed_capacityList : NULL,
-        strdup(device->valuestring),
-        strdup(driver->valuestring),
-        strdup(pool->valuestring),
-        strdup(request->valuestring),
-        share_id && !cJSON_IsNull(share_id) ? strdup(share_id->valuestring) : NULL,
+        device_local_str,
+        driver_local_str,
+        pool_local_str,
+        request_local_str,
+        share_id_local_str,
+        skip_node_operations ? skip_node_operationsList : NULL,
         tolerations ? tolerationsList : NULL
         );
 
+    if (!v1_device_request_allocation_result_local_var) {
+        goto end;
+    }
+
     return v1_device_request_allocation_result_local_var;
 end:
+    if (admin_access_local_var) {
+        free(admin_access_local_var);
+        admin_access_local_var = NULL;
+    }
     if (binding_conditionsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, binding_conditionsList) {
@@ -504,6 +604,35 @@ end:
         }
         list_freeList(consumed_capacityList);
         consumed_capacityList = NULL;
+    }
+    if (device_local_str) {
+        free(device_local_str);
+        device_local_str = NULL;
+    }
+    if (driver_local_str) {
+        free(driver_local_str);
+        driver_local_str = NULL;
+    }
+    if (pool_local_str) {
+        free(pool_local_str);
+        pool_local_str = NULL;
+    }
+    if (request_local_str) {
+        free(request_local_str);
+        request_local_str = NULL;
+    }
+    if (share_id_local_str) {
+        free(share_id_local_str);
+        share_id_local_str = NULL;
+    }
+    if (skip_node_operationsList) {
+        listEntry_t *listEntry = NULL;
+        list_ForEach(listEntry, skip_node_operationsList) {
+            free(listEntry->data);
+            listEntry->data = NULL;
+        }
+        list_freeList(skip_node_operationsList);
+        skip_node_operationsList = NULL;
     }
     if (tolerationsList) {
         listEntry_t *listEntry = NULL;

@@ -21,8 +21,8 @@ typedef struct v1_lease_spec_t v1_lease_spec_t;
 typedef struct v1_lease_spec_t {
     char *acquire_time; //date time
     char *holder_identity; // string
-    int lease_duration_seconds; //numeric
-    int lease_transitions; //numeric
+    int *lease_duration_seconds; //numeric
+    int *lease_transitions; //numeric
     char *preferred_holder; // string
     char *renew_time; //date time
     char *strategy; // string
@@ -33,8 +33,8 @@ typedef struct v1_lease_spec_t {
 __attribute__((deprecated)) v1_lease_spec_t *v1_lease_spec_create(
     char *acquire_time,
     char *holder_identity,
-    int lease_duration_seconds,
-    int lease_transitions,
+    int *lease_duration_seconds,
+    int *lease_transitions,
     char *preferred_holder,
     char *renew_time,
     char *strategy

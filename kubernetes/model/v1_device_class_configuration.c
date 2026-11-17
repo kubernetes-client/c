@@ -12,18 +12,21 @@ static v1_device_class_configuration_t *v1_device_class_configuration_create_int
     if (!v1_device_class_configuration_local_var) {
         return NULL;
     }
-    v1_device_class_configuration_local_var->opaque = opaque;
-
+    memset(v1_device_class_configuration_local_var, 0, sizeof(v1_device_class_configuration_t));
     v1_device_class_configuration_local_var->_library_owned = 1;
+    v1_device_class_configuration_local_var->opaque = opaque;
     return v1_device_class_configuration_local_var;
 }
 
 __attribute__((deprecated)) v1_device_class_configuration_t *v1_device_class_configuration_create(
     v1_opaque_device_configuration_t *opaque
     ) {
-    return v1_device_class_configuration_create_internal (
+    v1_device_class_configuration_t *result = v1_device_class_configuration_create_internal (
         opaque
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_device_class_configuration_free(v1_device_class_configuration_t *v1_device_class_configuration) {
@@ -82,9 +85,14 @@ v1_device_class_configuration_t *v1_device_class_configuration_parseFromJSON(cJS
     }
 
 
+
     v1_device_class_configuration_local_var = v1_device_class_configuration_create_internal (
         opaque ? opaque_local_nonprim : NULL
         );
+
+    if (!v1_device_class_configuration_local_var) {
+        goto end;
+    }
 
     return v1_device_class_configuration_local_var;
 end:

@@ -17,14 +17,18 @@ typedef struct v1_pod_status_t v1_pod_status_t;
 
 #include "v1_container_status.h"
 #include "v1_host_ip.h"
+#include "v1_node_allocatable_resource_claim_status.h"
 #include "v1_pod_condition.h"
 #include "v1_pod_extended_resource_claim_status.h"
 #include "v1_pod_ip.h"
 #include "v1_pod_resource_claim_status.h"
+#include "v1_pod_volume_health.h"
+#include "v1_resource_requirements.h"
 
 
 
 typedef struct v1_pod_status_t {
+    list_t* allocated_resources; //map
     list_t *conditions; //nonprimitive container
     list_t *container_statuses; //nonprimitive container
     list_t *ephemeral_container_statuses; //nonprimitive container
@@ -33,8 +37,9 @@ typedef struct v1_pod_status_t {
     list_t *host_ips; //nonprimitive container
     list_t *init_container_statuses; //nonprimitive container
     char *message; // string
+    list_t *node_allocatable_resource_claim_statuses; //nonprimitive container
     char *nominated_node_name; // string
-    long observed_generation; //numeric
+    long *observed_generation; //numeric
     char *phase; // string
     char *pod_ip; // string
     list_t *pod_ips; //nonprimitive container
@@ -42,12 +47,15 @@ typedef struct v1_pod_status_t {
     char *reason; // string
     char *resize; // string
     list_t *resource_claim_statuses; //nonprimitive container
+    struct v1_resource_requirements_t *resources; //model
     char *start_time; //date time
+    list_t *volume_health; //nonprimitive container
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_pod_status_t;
 
 __attribute__((deprecated)) v1_pod_status_t *v1_pod_status_create(
+    list_t* allocated_resources,
     list_t *conditions,
     list_t *container_statuses,
     list_t *ephemeral_container_statuses,
@@ -56,8 +64,9 @@ __attribute__((deprecated)) v1_pod_status_t *v1_pod_status_create(
     list_t *host_ips,
     list_t *init_container_statuses,
     char *message,
+    list_t *node_allocatable_resource_claim_statuses,
     char *nominated_node_name,
-    long observed_generation,
+    long *observed_generation,
     char *phase,
     char *pod_ip,
     list_t *pod_ips,
@@ -65,7 +74,9 @@ __attribute__((deprecated)) v1_pod_status_t *v1_pod_status_create(
     char *reason,
     char *resize,
     list_t *resource_claim_statuses,
-    char *start_time
+    v1_resource_requirements_t *resources,
+    char *start_time,
+    list_t *volume_health
 );
 
 void v1_pod_status_free(v1_pod_status_t *v1_pod_status);

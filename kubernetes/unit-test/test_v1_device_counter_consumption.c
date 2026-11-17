@@ -22,11 +22,13 @@ v1_device_counter_consumption_t* instantiate_v1_device_counter_consumption(int i
   v1_device_counter_consumption_t* v1_device_counter_consumption = NULL;
   if (include_optional) {
     v1_device_counter_consumption = v1_device_counter_consumption_create(
+      list_createList(),
       "0",
       list_createList()
     );
   } else {
     v1_device_counter_consumption = v1_device_counter_consumption_create(
+      list_createList(),
       "0",
       list_createList()
     );

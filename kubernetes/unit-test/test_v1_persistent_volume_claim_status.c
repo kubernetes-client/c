@@ -16,6 +16,7 @@
 #include "../model/v1_persistent_volume_claim_status.h"
 v1_persistent_volume_claim_status_t* instantiate_v1_persistent_volume_claim_status(int include_optional);
 
+#include "test_v1_volume_health_status.c"
 #include "test_v1_modify_volume_status.c"
 
 
@@ -30,6 +31,8 @@ v1_persistent_volume_claim_status_t* instantiate_v1_persistent_volume_claim_stat
       list_createList(),
       "0",
        // false, not to have infinite recursion
+      instantiate_v1_volume_health_status(0),
+       // false, not to have infinite recursion
       instantiate_v1_modify_volume_status(0),
       "0"
     );
@@ -41,6 +44,7 @@ v1_persistent_volume_claim_status_t* instantiate_v1_persistent_volume_claim_stat
       list_createList(),
       list_createList(),
       "0",
+      NULL,
       NULL,
       "0"
     );

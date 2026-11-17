@@ -16,6 +16,7 @@
 typedef struct v1beta1_device_request_t v1beta1_device_request_t;
 
 #include "v1beta1_capacity_requirements.h"
+#include "v1beta1_device_derived_attribute.h"
 #include "v1beta1_device_selector.h"
 #include "v1beta1_device_sub_request.h"
 #include "v1beta1_device_toleration.h"
@@ -23,10 +24,11 @@ typedef struct v1beta1_device_request_t v1beta1_device_request_t;
 
 
 typedef struct v1beta1_device_request_t {
-    int admin_access; //boolean
+    int *admin_access; //boolean
     char *allocation_mode; // string
     struct v1beta1_capacity_requirements_t *capacity; //model
-    long count; //numeric
+    long *count; //numeric
+    list_t *derived_attributes; //nonprimitive container
     char *device_class_name; // string
     list_t *first_available; //nonprimitive container
     char *name; // string
@@ -37,10 +39,11 @@ typedef struct v1beta1_device_request_t {
 } v1beta1_device_request_t;
 
 __attribute__((deprecated)) v1beta1_device_request_t *v1beta1_device_request_create(
-    int admin_access,
+    int *admin_access,
     char *allocation_mode,
     v1beta1_capacity_requirements_t *capacity,
-    long count,
+    long *count,
+    list_t *derived_attributes,
     char *device_class_name,
     list_t *first_available,
     char *name,

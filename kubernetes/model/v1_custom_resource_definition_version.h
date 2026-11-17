@@ -24,13 +24,13 @@ typedef struct v1_custom_resource_definition_version_t v1_custom_resource_defini
 
 typedef struct v1_custom_resource_definition_version_t {
     list_t *additional_printer_columns; //nonprimitive container
-    int deprecated; //boolean
+    int *deprecated; //boolean
     char *deprecation_warning; // string
     char *name; // string
     struct v1_custom_resource_validation_t *schema; //model
     list_t *selectable_fields; //nonprimitive container
-    int served; //boolean
-    int storage; //boolean
+    int *served; //boolean
+    int *storage; //boolean
     struct v1_custom_resource_subresources_t *subresources; //model
 
     int _library_owned; // Is the library responsible for freeing this object?
@@ -38,13 +38,13 @@ typedef struct v1_custom_resource_definition_version_t {
 
 __attribute__((deprecated)) v1_custom_resource_definition_version_t *v1_custom_resource_definition_version_create(
     list_t *additional_printer_columns,
-    int deprecated,
+    int *deprecated,
     char *deprecation_warning,
     char *name,
     v1_custom_resource_validation_t *schema,
     list_t *selectable_fields,
-    int served,
-    int storage,
+    int *served,
+    int *storage,
     v1_custom_resource_subresources_t *subresources
 );
 

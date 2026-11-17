@@ -7,17 +7,19 @@
 
 static v1_container_state_terminated_t *v1_container_state_terminated_create_internal(
     char *container_id,
-    int exit_code,
+    int *exit_code,
     char *finished_at,
     char *message,
     char *reason,
-    int signal,
+    int *signal,
     char *started_at
     ) {
     v1_container_state_terminated_t *v1_container_state_terminated_local_var = malloc(sizeof(v1_container_state_terminated_t));
     if (!v1_container_state_terminated_local_var) {
         return NULL;
     }
+    memset(v1_container_state_terminated_local_var, 0, sizeof(v1_container_state_terminated_t));
+    v1_container_state_terminated_local_var->_library_owned = 1;
     v1_container_state_terminated_local_var->container_id = container_id;
     v1_container_state_terminated_local_var->exit_code = exit_code;
     v1_container_state_terminated_local_var->finished_at = finished_at;
@@ -25,29 +27,42 @@ static v1_container_state_terminated_t *v1_container_state_terminated_create_int
     v1_container_state_terminated_local_var->reason = reason;
     v1_container_state_terminated_local_var->signal = signal;
     v1_container_state_terminated_local_var->started_at = started_at;
-
-    v1_container_state_terminated_local_var->_library_owned = 1;
     return v1_container_state_terminated_local_var;
 }
 
 __attribute__((deprecated)) v1_container_state_terminated_t *v1_container_state_terminated_create(
     char *container_id,
-    int exit_code,
+    int *exit_code,
     char *finished_at,
     char *message,
     char *reason,
-    int signal,
+    int *signal,
     char *started_at
     ) {
-    return v1_container_state_terminated_create_internal (
+    int *exit_code_copy = NULL;
+    if (exit_code) {
+        exit_code_copy = malloc(sizeof(int));
+        if (exit_code_copy) *exit_code_copy = *exit_code;
+    }
+    int *signal_copy = NULL;
+    if (signal) {
+        signal_copy = malloc(sizeof(int));
+        if (signal_copy) *signal_copy = *signal;
+    }
+    v1_container_state_terminated_t *result = v1_container_state_terminated_create_internal (
         container_id,
-        exit_code,
+        exit_code_copy,
         finished_at,
         message,
         reason,
-        signal,
+        signal_copy,
         started_at
         );
+    if (!result) {
+        free(exit_code_copy);
+        free(signal_copy);
+    }
+    return result;
 }
 
 void v1_container_state_terminated_free(v1_container_state_terminated_t *v1_container_state_terminated) {
@@ -63,6 +78,10 @@ void v1_container_state_terminated_free(v1_container_state_terminated_t *v1_cont
         free(v1_container_state_terminated->container_id);
         v1_container_state_terminated->container_id = NULL;
     }
+    if (v1_container_state_terminated->exit_code) {
+        free(v1_container_state_terminated->exit_code);
+        v1_container_state_terminated->exit_code = NULL;
+    }
     if (v1_container_state_terminated->finished_at) {
         free(v1_container_state_terminated->finished_at);
         v1_container_state_terminated->finished_at = NULL;
@@ -74,6 +93,10 @@ void v1_container_state_terminated_free(v1_container_state_terminated_t *v1_cont
     if (v1_container_state_terminated->reason) {
         free(v1_container_state_terminated->reason);
         v1_container_state_terminated->reason = NULL;
+    }
+    if (v1_container_state_terminated->signal) {
+        free(v1_container_state_terminated->signal);
+        v1_container_state_terminated->signal = NULL;
     }
     if (v1_container_state_terminated->started_at) {
         free(v1_container_state_terminated->started_at);
@@ -97,7 +120,7 @@ cJSON *v1_container_state_terminated_convertToJSON(v1_container_state_terminated
     if (!v1_container_state_terminated->exit_code) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "exitCode", v1_container_state_terminated->exit_code) == NULL) {
+    if(cJSON_AddNumberToObject(item, "exitCode", *v1_container_state_terminated->exit_code) == NULL) {
     goto fail; //Numeric
     }
 
@@ -128,7 +151,7 @@ cJSON *v1_container_state_terminated_convertToJSON(v1_container_state_terminated
 
     // v1_container_state_terminated->signal
     if(v1_container_state_terminated->signal) {
-    if(cJSON_AddNumberToObject(item, "signal", v1_container_state_terminated->signal) == NULL) {
+    if(cJSON_AddNumberToObject(item, "signal", *v1_container_state_terminated->signal) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -152,6 +175,22 @@ fail:
 v1_container_state_terminated_t *v1_container_state_terminated_parseFromJSON(cJSON *v1_container_state_terminatedJSON){
 
     v1_container_state_terminated_t *v1_container_state_terminated_local_var = NULL;
+
+    char *container_id_local_str = NULL;
+
+    // define the local variable for v1_container_state_terminated->exit_code
+    int *exit_code_local_var = NULL;
+
+    char *finished_at_local_str = NULL;
+
+    char *message_local_str = NULL;
+
+    char *reason_local_str = NULL;
+
+    // define the local variable for v1_container_state_terminated->signal
+    int *signal_local_var = NULL;
+
+    char *started_at_local_str = NULL;
 
     // v1_container_state_terminated->container_id
     cJSON *container_id = cJSON_GetObjectItemCaseSensitive(v1_container_state_terminatedJSON, "containerID");
@@ -179,6 +218,12 @@ v1_container_state_terminated_t *v1_container_state_terminated_parseFromJSON(cJS
     {
     goto end; //Numeric
     }
+    exit_code_local_var = malloc(sizeof(int));
+    if(!exit_code_local_var)
+    {
+        goto end;
+    }
+    *exit_code_local_var = exit_code->valuedouble;
 
     // v1_container_state_terminated->finished_at
     cJSON *finished_at = cJSON_GetObjectItemCaseSensitive(v1_container_state_terminatedJSON, "finishedAt");
@@ -226,6 +271,12 @@ v1_container_state_terminated_t *v1_container_state_terminated_parseFromJSON(cJS
     {
     goto end; //Numeric
     }
+    signal_local_var = malloc(sizeof(int));
+    if(!signal_local_var)
+    {
+        goto end;
+    }
+    *signal_local_var = signal->valuedouble;
     }
 
     // v1_container_state_terminated->started_at
@@ -241,18 +292,56 @@ v1_container_state_terminated_t *v1_container_state_terminated_parseFromJSON(cJS
     }
 
 
+    if (container_id && !cJSON_IsNull(container_id)) container_id_local_str = strdup(container_id->valuestring);
+    if (finished_at && !cJSON_IsNull(finished_at)) finished_at_local_str = strdup(finished_at->valuestring);
+    if (message && !cJSON_IsNull(message)) message_local_str = strdup(message->valuestring);
+    if (reason && !cJSON_IsNull(reason)) reason_local_str = strdup(reason->valuestring);
+    if (started_at && !cJSON_IsNull(started_at)) started_at_local_str = strdup(started_at->valuestring);
+
     v1_container_state_terminated_local_var = v1_container_state_terminated_create_internal (
-        container_id && !cJSON_IsNull(container_id) ? strdup(container_id->valuestring) : NULL,
-        exit_code->valuedouble,
-        finished_at && !cJSON_IsNull(finished_at) ? strdup(finished_at->valuestring) : NULL,
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
-        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL,
-        signal ? signal->valuedouble : 0,
-        started_at && !cJSON_IsNull(started_at) ? strdup(started_at->valuestring) : NULL
+        container_id_local_str,
+        exit_code_local_var,
+        finished_at_local_str,
+        message_local_str,
+        reason_local_str,
+        signal_local_var,
+        started_at_local_str
         );
+
+    if (!v1_container_state_terminated_local_var) {
+        goto end;
+    }
 
     return v1_container_state_terminated_local_var;
 end:
+    if (container_id_local_str) {
+        free(container_id_local_str);
+        container_id_local_str = NULL;
+    }
+    if (exit_code_local_var) {
+        free(exit_code_local_var);
+        exit_code_local_var = NULL;
+    }
+    if (finished_at_local_str) {
+        free(finished_at_local_str);
+        finished_at_local_str = NULL;
+    }
+    if (message_local_str) {
+        free(message_local_str);
+        message_local_str = NULL;
+    }
+    if (reason_local_str) {
+        free(reason_local_str);
+        reason_local_str = NULL;
+    }
+    if (signal_local_var) {
+        free(signal_local_var);
+        signal_local_var = NULL;
+    }
+    if (started_at_local_str) {
+        free(started_at_local_str);
+        started_at_local_str = NULL;
+    }
     return NULL;
 
 }

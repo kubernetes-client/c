@@ -13,10 +13,10 @@ static v1_resource_claim_template_spec_t *v1_resource_claim_template_spec_create
     if (!v1_resource_claim_template_spec_local_var) {
         return NULL;
     }
+    memset(v1_resource_claim_template_spec_local_var, 0, sizeof(v1_resource_claim_template_spec_t));
+    v1_resource_claim_template_spec_local_var->_library_owned = 1;
     v1_resource_claim_template_spec_local_var->metadata = metadata;
     v1_resource_claim_template_spec_local_var->spec = spec;
-
-    v1_resource_claim_template_spec_local_var->_library_owned = 1;
     return v1_resource_claim_template_spec_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_resource_claim_template_spec_t *v1_resource_claim
     v1_object_meta_t *metadata,
     v1_resource_claim_spec_t *spec
     ) {
-    return v1_resource_claim_template_spec_create_internal (
+    v1_resource_claim_template_spec_t *result = v1_resource_claim_template_spec_create_internal (
         metadata,
         spec
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_resource_claim_template_spec_free(v1_resource_claim_template_spec_t *v1_resource_claim_template_spec) {
@@ -67,9 +70,7 @@ cJSON *v1_resource_claim_template_spec_convertToJSON(v1_resource_claim_template_
 
 
     // v1_resource_claim_template_spec->spec
-    if (!v1_resource_claim_template_spec->spec) {
-        goto fail;
-    }
+    if(v1_resource_claim_template_spec->spec) {
     cJSON *spec_local_JSON = v1_resource_claim_spec_convertToJSON(v1_resource_claim_template_spec->spec);
     if(spec_local_JSON == NULL) {
     goto fail; //model
@@ -77,6 +78,7 @@ cJSON *v1_resource_claim_template_spec_convertToJSON(v1_resource_claim_template_
     cJSON_AddItemToObject(item, "spec", spec_local_JSON);
     if(item->child == NULL) {
     goto fail;
+    }
     }
 
     return item;
@@ -111,18 +113,20 @@ v1_resource_claim_template_spec_t *v1_resource_claim_template_spec_parseFromJSON
     if (cJSON_IsNull(spec)) {
         spec = NULL;
     }
-    if (!spec) {
-        goto end;
+    if (spec) { 
+    spec_local_nonprim = v1_resource_claim_spec_parseFromJSON(spec); //nonprimitive
     }
 
-    
-    spec_local_nonprim = v1_resource_claim_spec_parseFromJSON(spec); //nonprimitive
 
 
     v1_resource_claim_template_spec_local_var = v1_resource_claim_template_spec_create_internal (
         metadata ? metadata_local_nonprim : NULL,
-        spec_local_nonprim
+        spec ? spec_local_nonprim : NULL
         );
+
+    if (!v1_resource_claim_template_spec_local_var) {
+        goto end;
+    }
 
     return v1_resource_claim_template_spec_local_var;
 end:

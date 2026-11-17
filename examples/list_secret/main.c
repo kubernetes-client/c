@@ -18,6 +18,7 @@ void list_secret(apiClient_t * apiClient)
                                                                    NULL,    // char *resourceVersion
                                                                    NULL,    // char *resourceVersionMatch
                                                                    NULL,    // int *sendInitialEvents
+                                                                   NULL,    // char *shardSelector
                                                                    NULL,    // int *timeoutSeconds
                                                                    NULL // int *watch
         );

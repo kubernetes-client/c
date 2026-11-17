@@ -13,10 +13,10 @@ static v2_metric_identifier_t *v2_metric_identifier_create_internal(
     if (!v2_metric_identifier_local_var) {
         return NULL;
     }
+    memset(v2_metric_identifier_local_var, 0, sizeof(v2_metric_identifier_t));
+    v2_metric_identifier_local_var->_library_owned = 1;
     v2_metric_identifier_local_var->name = name;
     v2_metric_identifier_local_var->selector = selector;
-
-    v2_metric_identifier_local_var->_library_owned = 1;
     return v2_metric_identifier_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v2_metric_identifier_t *v2_metric_identifier_create(
     char *name,
     v1_label_selector_t *selector
     ) {
-    return v2_metric_identifier_create_internal (
+    v2_metric_identifier_t *result = v2_metric_identifier_create_internal (
         name,
         selector
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v2_metric_identifier_free(v2_metric_identifier_t *v2_metric_identifier) {
@@ -86,6 +89,8 @@ v2_metric_identifier_t *v2_metric_identifier_parseFromJSON(cJSON *v2_metric_iden
 
     v2_metric_identifier_t *v2_metric_identifier_local_var = NULL;
 
+    char *name_local_str = NULL;
+
     // define the local variable for v2_metric_identifier->selector
     v1_label_selector_t *selector_local_nonprim = NULL;
 
@@ -114,13 +119,23 @@ v2_metric_identifier_t *v2_metric_identifier_parseFromJSON(cJSON *v2_metric_iden
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v2_metric_identifier_local_var = v2_metric_identifier_create_internal (
-        strdup(name->valuestring),
+        name_local_str,
         selector ? selector_local_nonprim : NULL
         );
 
+    if (!v2_metric_identifier_local_var) {
+        goto end;
+    }
+
     return v2_metric_identifier_local_var;
 end:
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
     if (selector_local_nonprim) {
         v1_label_selector_free(selector_local_nonprim);
         selector_local_nonprim = NULL;

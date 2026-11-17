@@ -13,10 +13,10 @@ static v1_topology_selector_label_requirement_t *v1_topology_selector_label_requ
     if (!v1_topology_selector_label_requirement_local_var) {
         return NULL;
     }
+    memset(v1_topology_selector_label_requirement_local_var, 0, sizeof(v1_topology_selector_label_requirement_t));
+    v1_topology_selector_label_requirement_local_var->_library_owned = 1;
     v1_topology_selector_label_requirement_local_var->key = key;
     v1_topology_selector_label_requirement_local_var->values = values;
-
-    v1_topology_selector_label_requirement_local_var->_library_owned = 1;
     return v1_topology_selector_label_requirement_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_topology_selector_label_requirement_t *v1_topolog
     char *key,
     list_t *values
     ) {
-    return v1_topology_selector_label_requirement_create_internal (
+    v1_topology_selector_label_requirement_t *result = v1_topology_selector_label_requirement_create_internal (
         key,
         values
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_topology_selector_label_requirement_free(v1_topology_selector_label_requirement_t *v1_topology_selector_label_requirement) {
@@ -94,6 +97,8 @@ v1_topology_selector_label_requirement_t *v1_topology_selector_label_requirement
 
     v1_topology_selector_label_requirement_t *v1_topology_selector_label_requirement_local_var = NULL;
 
+    char *key_local_str = NULL;
+
     // define the local list for v1_topology_selector_label_requirement->values
     list_t *valuesList = NULL;
 
@@ -138,13 +143,23 @@ v1_topology_selector_label_requirement_t *v1_topology_selector_label_requirement
     }
 
 
+    if (key && !cJSON_IsNull(key)) key_local_str = strdup(key->valuestring);
+
     v1_topology_selector_label_requirement_local_var = v1_topology_selector_label_requirement_create_internal (
-        strdup(key->valuestring),
+        key_local_str,
         valuesList
         );
 
+    if (!v1_topology_selector_label_requirement_local_var) {
+        goto end;
+    }
+
     return v1_topology_selector_label_requirement_local_var;
 end:
+    if (key_local_str) {
+        free(key_local_str);
+        key_local_str = NULL;
+    }
     if (valuesList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, valuesList) {

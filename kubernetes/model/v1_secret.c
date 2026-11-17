@@ -8,7 +8,7 @@
 static v1_secret_t *v1_secret_create_internal(
     char *api_version,
     list_t* data,
-    int immutable,
+    int *immutable,
     char *kind,
     v1_object_meta_t *metadata,
     list_t* string_data,
@@ -18,6 +18,8 @@ static v1_secret_t *v1_secret_create_internal(
     if (!v1_secret_local_var) {
         return NULL;
     }
+    memset(v1_secret_local_var, 0, sizeof(v1_secret_t));
+    v1_secret_local_var->_library_owned = 1;
     v1_secret_local_var->api_version = api_version;
     v1_secret_local_var->data = data;
     v1_secret_local_var->immutable = immutable;
@@ -25,29 +27,36 @@ static v1_secret_t *v1_secret_create_internal(
     v1_secret_local_var->metadata = metadata;
     v1_secret_local_var->string_data = string_data;
     v1_secret_local_var->type = type;
-
-    v1_secret_local_var->_library_owned = 1;
     return v1_secret_local_var;
 }
 
 __attribute__((deprecated)) v1_secret_t *v1_secret_create(
     char *api_version,
     list_t* data,
-    int immutable,
+    int *immutable,
     char *kind,
     v1_object_meta_t *metadata,
     list_t* string_data,
     char *type
     ) {
-    return v1_secret_create_internal (
+    int *immutable_copy = NULL;
+    if (immutable) {
+        immutable_copy = malloc(sizeof(int));
+        if (immutable_copy) *immutable_copy = *immutable;
+    }
+    v1_secret_t *result = v1_secret_create_internal (
         api_version,
         data,
-        immutable,
+        immutable_copy,
         kind,
         metadata,
         string_data,
         type
         );
+    if (!result) {
+        free(immutable_copy);
+    }
+    return result;
 }
 
 void v1_secret_free(v1_secret_t *v1_secret) {
@@ -72,6 +81,10 @@ void v1_secret_free(v1_secret_t *v1_secret) {
         }
         list_freeList(v1_secret->data);
         v1_secret->data = NULL;
+    }
+    if (v1_secret->immutable) {
+        free(v1_secret->immutable);
+        v1_secret->immutable = NULL;
     }
     if (v1_secret->kind) {
         free(v1_secret->kind);
@@ -131,7 +144,7 @@ cJSON *v1_secret_convertToJSON(v1_secret_t *v1_secret) {
 
     // v1_secret->immutable
     if(v1_secret->immutable) {
-    if(cJSON_AddBoolToObject(item, "immutable", v1_secret->immutable) == NULL) {
+    if(cJSON_AddBoolToObject(item, "immutable", *v1_secret->immutable) == NULL) {
     goto fail; //Bool
     }
     }
@@ -197,14 +210,23 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
 
     v1_secret_t *v1_secret_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
     // define the local map for v1_secret->data
     list_t *dataList = NULL;
+
+    // define the local variable for v1_secret->immutable
+    int *immutable_local_var = NULL;
+
+    char *kind_local_str = NULL;
 
     // define the local variable for v1_secret->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
 
     // define the local map for v1_secret->string_data
     list_t *string_dataList = NULL;
+
+    char *type_local_str = NULL;
 
     // v1_secret->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_secretJSON, "apiVersion");
@@ -256,6 +278,12 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
     {
     goto end; //Bool
     }
+    immutable_local_var = malloc(sizeof(int));
+    if(!immutable_local_var)
+    {
+        goto end;
+    }
+    *immutable_local_var = immutable->valueint;
     }
 
     // v1_secret->kind
@@ -320,18 +348,30 @@ v1_secret_t *v1_secret_parseFromJSON(cJSON *v1_secretJSON){
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+    if (type && !cJSON_IsNull(type)) type_local_str = strdup(type->valuestring);
+
     v1_secret_local_var = v1_secret_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
+        api_version_local_str,
         data ? dataList : NULL,
-        immutable ? immutable->valueint : 0,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        immutable_local_var,
+        kind_local_str,
         metadata ? metadata_local_nonprim : NULL,
         string_data ? string_dataList : NULL,
-        type && !cJSON_IsNull(type) ? strdup(type->valuestring) : NULL
+        type_local_str
         );
+
+    if (!v1_secret_local_var) {
+        goto end;
+    }
 
     return v1_secret_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
     if (dataList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, dataList) {
@@ -345,6 +385,14 @@ end:
         }
         list_freeList(dataList);
         dataList = NULL;
+    }
+    if (immutable_local_var) {
+        free(immutable_local_var);
+        immutable_local_var = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
     }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
@@ -363,6 +411,10 @@ end:
         }
         list_freeList(string_dataList);
         string_dataList = NULL;
+    }
+    if (type_local_str) {
+        free(type_local_str);
+        type_local_str = NULL;
     }
     return NULL;
 

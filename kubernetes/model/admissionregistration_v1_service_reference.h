@@ -22,7 +22,7 @@ typedef struct admissionregistration_v1_service_reference_t {
     char *name; // string
     char *_namespace; // string
     char *path; // string
-    int port; //numeric
+    int *port; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } admissionregistration_v1_service_reference_t;
@@ -31,7 +31,7 @@ __attribute__((deprecated)) admissionregistration_v1_service_reference_t *admiss
     char *name,
     char *_namespace,
     char *path,
-    int port
+    int *port
 );
 
 void admissionregistration_v1_service_reference_free(admissionregistration_v1_service_reference_t *admissionregistration_v1_service_reference);

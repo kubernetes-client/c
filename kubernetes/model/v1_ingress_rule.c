@@ -13,10 +13,10 @@ static v1_ingress_rule_t *v1_ingress_rule_create_internal(
     if (!v1_ingress_rule_local_var) {
         return NULL;
     }
+    memset(v1_ingress_rule_local_var, 0, sizeof(v1_ingress_rule_t));
+    v1_ingress_rule_local_var->_library_owned = 1;
     v1_ingress_rule_local_var->host = host;
     v1_ingress_rule_local_var->http = http;
-
-    v1_ingress_rule_local_var->_library_owned = 1;
     return v1_ingress_rule_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_ingress_rule_t *v1_ingress_rule_create(
     char *host,
     v1_http_ingress_rule_value_t *http
     ) {
-    return v1_ingress_rule_create_internal (
+    v1_ingress_rule_t *result = v1_ingress_rule_create_internal (
         host,
         http
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_ingress_rule_free(v1_ingress_rule_t *v1_ingress_rule) {
@@ -85,6 +88,8 @@ v1_ingress_rule_t *v1_ingress_rule_parseFromJSON(cJSON *v1_ingress_ruleJSON){
 
     v1_ingress_rule_t *v1_ingress_rule_local_var = NULL;
 
+    char *host_local_str = NULL;
+
     // define the local variable for v1_ingress_rule->http
     v1_http_ingress_rule_value_t *http_local_nonprim = NULL;
 
@@ -110,13 +115,23 @@ v1_ingress_rule_t *v1_ingress_rule_parseFromJSON(cJSON *v1_ingress_ruleJSON){
     }
 
 
+    if (host && !cJSON_IsNull(host)) host_local_str = strdup(host->valuestring);
+
     v1_ingress_rule_local_var = v1_ingress_rule_create_internal (
-        host && !cJSON_IsNull(host) ? strdup(host->valuestring) : NULL,
+        host_local_str,
         http ? http_local_nonprim : NULL
         );
 
+    if (!v1_ingress_rule_local_var) {
+        goto end;
+    }
+
     return v1_ingress_rule_local_var;
 end:
+    if (host_local_str) {
+        free(host_local_str);
+        host_local_str = NULL;
+    }
     if (http_local_nonprim) {
         v1_http_ingress_rule_value_free(http_local_nonprim);
         http_local_nonprim = NULL;

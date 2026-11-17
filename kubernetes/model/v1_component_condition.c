@@ -15,12 +15,12 @@ static v1_component_condition_t *v1_component_condition_create_internal(
     if (!v1_component_condition_local_var) {
         return NULL;
     }
+    memset(v1_component_condition_local_var, 0, sizeof(v1_component_condition_t));
+    v1_component_condition_local_var->_library_owned = 1;
     v1_component_condition_local_var->error = error;
     v1_component_condition_local_var->message = message;
     v1_component_condition_local_var->status = status;
     v1_component_condition_local_var->type = type;
-
-    v1_component_condition_local_var->_library_owned = 1;
     return v1_component_condition_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1_component_condition_t *v1_component_condition_cre
     char *status,
     char *type
     ) {
-    return v1_component_condition_create_internal (
+    v1_component_condition_t *result = v1_component_condition_create_internal (
         error,
         message,
         status,
         type
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_component_condition_free(v1_component_condition_t *v1_component_condition) {
@@ -114,6 +117,14 @@ v1_component_condition_t *v1_component_condition_parseFromJSON(cJSON *v1_compone
 
     v1_component_condition_t *v1_component_condition_local_var = NULL;
 
+    char *error_local_str = NULL;
+
+    char *message_local_str = NULL;
+
+    char *status_local_str = NULL;
+
+    char *type_local_str = NULL;
+
     // v1_component_condition->error
     cJSON *error = cJSON_GetObjectItemCaseSensitive(v1_component_conditionJSON, "error");
     if (cJSON_IsNull(error)) {
@@ -169,15 +180,40 @@ v1_component_condition_t *v1_component_condition_parseFromJSON(cJSON *v1_compone
     }
 
 
+    if (error && !cJSON_IsNull(error)) error_local_str = strdup(error->valuestring);
+    if (message && !cJSON_IsNull(message)) message_local_str = strdup(message->valuestring);
+    if (status && !cJSON_IsNull(status)) status_local_str = strdup(status->valuestring);
+    if (type && !cJSON_IsNull(type)) type_local_str = strdup(type->valuestring);
+
     v1_component_condition_local_var = v1_component_condition_create_internal (
-        error && !cJSON_IsNull(error) ? strdup(error->valuestring) : NULL,
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
-        strdup(status->valuestring),
-        strdup(type->valuestring)
+        error_local_str,
+        message_local_str,
+        status_local_str,
+        type_local_str
         );
+
+    if (!v1_component_condition_local_var) {
+        goto end;
+    }
 
     return v1_component_condition_local_var;
 end:
+    if (error_local_str) {
+        free(error_local_str);
+        error_local_str = NULL;
+    }
+    if (message_local_str) {
+        free(message_local_str);
+        message_local_str = NULL;
+    }
+    if (status_local_str) {
+        free(status_local_str);
+        status_local_str = NULL;
+    }
+    if (type_local_str) {
+        free(type_local_str);
+        type_local_str = NULL;
+    }
     return NULL;
 
 }

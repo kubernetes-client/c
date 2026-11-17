@@ -460,7 +460,7 @@ end:
 // delete collection of APIService
 //
 v1_status_t*
-ApiregistrationV1API_deleteCollectionAPIService(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, v1_delete_options_t *body)
+ApiregistrationV1API_deleteCollectionAPIService(apiClient_t *apiClient, char *pretty, char *_continue, char *dryRun, char *fieldSelector, int *gracePeriodSeconds, int *ignoreStoreReadErrorWithClusterBreakingPotential, char *labelSelector, int *limit, int *orphanDependents, char *propagationPolicy, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, v1_delete_options_t *body)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -639,6 +639,18 @@ ApiregistrationV1API_deleteCollectionAPIService(apiClient_t *apiClient, char *pr
         snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
     }
 
     // query parameters
@@ -870,6 +882,18 @@ ApiregistrationV1API_deleteCollectionAPIService(apiClient_t *apiClient, char *pr
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
     }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
+    }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);
         keyQuery_timeoutSeconds = NULL;
@@ -967,7 +991,7 @@ end:
 // list or watch objects of kind APIService
 //
 v1_api_service_list_t*
-ApiregistrationV1API_listAPIService(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, int *timeoutSeconds, int *watch)
+ApiregistrationV1API_listAPIService(apiClient_t *apiClient, char *pretty, int *allowWatchBookmarks, char *_continue, char *fieldSelector, char *labelSelector, int *limit, char *resourceVersion, char *resourceVersionMatch, int *sendInitialEvents, char *shardSelector, int *timeoutSeconds, int *watch)
 {
     list_t    *localVarQueryParameters = list_createList();
     list_t    *localVarHeaderParameters = NULL;
@@ -1096,6 +1120,18 @@ ApiregistrationV1API_listAPIService(apiClient_t *apiClient, char *pretty, int *a
         snprintf(valueQuery_sendInitialEvents, MAX_NUMBER_LENGTH, "%d", *sendInitialEvents);
         keyPairQuery_sendInitialEvents = keyValuePair_create(keyQuery_sendInitialEvents, valueQuery_sendInitialEvents);
         list_addElement(localVarQueryParameters,keyPairQuery_sendInitialEvents);
+    }
+
+    // query parameters
+    char *keyQuery_shardSelector = NULL;
+    char * valueQuery_shardSelector = NULL;
+    keyValuePair_t *keyPairQuery_shardSelector = 0;
+    if (shardSelector)
+    {
+        keyQuery_shardSelector = strdup("shardSelector");
+        valueQuery_shardSelector = strdup((shardSelector));
+        keyPairQuery_shardSelector = keyValuePair_create(keyQuery_shardSelector, valueQuery_shardSelector);
+        list_addElement(localVarQueryParameters,keyPairQuery_shardSelector);
     }
 
     // query parameters
@@ -1279,6 +1315,18 @@ ApiregistrationV1API_listAPIService(apiClient_t *apiClient, char *pretty, int *a
     if(keyPairQuery_sendInitialEvents){
         keyValuePair_free(keyPairQuery_sendInitialEvents);
         keyPairQuery_sendInitialEvents = NULL;
+    }
+    if(keyQuery_shardSelector){
+        free(keyQuery_shardSelector);
+        keyQuery_shardSelector = NULL;
+    }
+    if(valueQuery_shardSelector){
+        free(valueQuery_shardSelector);
+        valueQuery_shardSelector = NULL;
+    }
+    if(keyPairQuery_shardSelector){
+        keyValuePair_free(keyPairQuery_shardSelector);
+        keyPairQuery_shardSelector = NULL;
     }
     if(keyQuery_timeoutSeconds){
         free(keyQuery_timeoutSeconds);

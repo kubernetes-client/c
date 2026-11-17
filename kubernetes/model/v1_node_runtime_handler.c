@@ -13,10 +13,10 @@ static v1_node_runtime_handler_t *v1_node_runtime_handler_create_internal(
     if (!v1_node_runtime_handler_local_var) {
         return NULL;
     }
+    memset(v1_node_runtime_handler_local_var, 0, sizeof(v1_node_runtime_handler_t));
+    v1_node_runtime_handler_local_var->_library_owned = 1;
     v1_node_runtime_handler_local_var->features = features;
     v1_node_runtime_handler_local_var->name = name;
-
-    v1_node_runtime_handler_local_var->_library_owned = 1;
     return v1_node_runtime_handler_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_node_runtime_handler_t *v1_node_runtime_handler_c
     v1_node_runtime_handler_features_t *features,
     char *name
     ) {
-    return v1_node_runtime_handler_create_internal (
+    v1_node_runtime_handler_t *result = v1_node_runtime_handler_create_internal (
         features,
         name
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_node_runtime_handler_free(v1_node_runtime_handler_t *v1_node_runtime_handler) {
@@ -88,6 +91,8 @@ v1_node_runtime_handler_t *v1_node_runtime_handler_parseFromJSON(cJSON *v1_node_
     // define the local variable for v1_node_runtime_handler->features
     v1_node_runtime_handler_features_t *features_local_nonprim = NULL;
 
+    char *name_local_str = NULL;
+
     // v1_node_runtime_handler->features
     cJSON *features = cJSON_GetObjectItemCaseSensitive(v1_node_runtime_handlerJSON, "features");
     if (cJSON_IsNull(features)) {
@@ -110,16 +115,26 @@ v1_node_runtime_handler_t *v1_node_runtime_handler_parseFromJSON(cJSON *v1_node_
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v1_node_runtime_handler_local_var = v1_node_runtime_handler_create_internal (
         features ? features_local_nonprim : NULL,
-        name && !cJSON_IsNull(name) ? strdup(name->valuestring) : NULL
+        name_local_str
         );
+
+    if (!v1_node_runtime_handler_local_var) {
+        goto end;
+    }
 
     return v1_node_runtime_handler_local_var;
 end:
     if (features_local_nonprim) {
         v1_node_runtime_handler_features_free(features_local_nonprim);
         features_local_nonprim = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
     }
     return NULL;
 

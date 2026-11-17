@@ -13,10 +13,10 @@ static v1_container_resize_policy_t *v1_container_resize_policy_create_internal(
     if (!v1_container_resize_policy_local_var) {
         return NULL;
     }
+    memset(v1_container_resize_policy_local_var, 0, sizeof(v1_container_resize_policy_t));
+    v1_container_resize_policy_local_var->_library_owned = 1;
     v1_container_resize_policy_local_var->resource_name = resource_name;
     v1_container_resize_policy_local_var->restart_policy = restart_policy;
-
-    v1_container_resize_policy_local_var->_library_owned = 1;
     return v1_container_resize_policy_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_container_resize_policy_t *v1_container_resize_po
     char *resource_name,
     char *restart_policy
     ) {
-    return v1_container_resize_policy_create_internal (
+    v1_container_resize_policy_t *result = v1_container_resize_policy_create_internal (
         resource_name,
         restart_policy
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_container_resize_policy_free(v1_container_resize_policy_t *v1_container_resize_policy) {
@@ -82,6 +85,10 @@ v1_container_resize_policy_t *v1_container_resize_policy_parseFromJSON(cJSON *v1
 
     v1_container_resize_policy_t *v1_container_resize_policy_local_var = NULL;
 
+    char *resource_name_local_str = NULL;
+
+    char *restart_policy_local_str = NULL;
+
     // v1_container_resize_policy->resource_name
     cJSON *resource_name = cJSON_GetObjectItemCaseSensitive(v1_container_resize_policyJSON, "resourceName");
     if (cJSON_IsNull(resource_name)) {
@@ -113,13 +120,28 @@ v1_container_resize_policy_t *v1_container_resize_policy_parseFromJSON(cJSON *v1
     }
 
 
+    if (resource_name && !cJSON_IsNull(resource_name)) resource_name_local_str = strdup(resource_name->valuestring);
+    if (restart_policy && !cJSON_IsNull(restart_policy)) restart_policy_local_str = strdup(restart_policy->valuestring);
+
     v1_container_resize_policy_local_var = v1_container_resize_policy_create_internal (
-        strdup(resource_name->valuestring),
-        strdup(restart_policy->valuestring)
+        resource_name_local_str,
+        restart_policy_local_str
         );
+
+    if (!v1_container_resize_policy_local_var) {
+        goto end;
+    }
 
     return v1_container_resize_policy_local_var;
 end:
+    if (resource_name_local_str) {
+        free(resource_name_local_str);
+        resource_name_local_str = NULL;
+    }
+    if (restart_policy_local_str) {
+        free(restart_policy_local_str);
+        restart_policy_local_str = NULL;
+    }
     return NULL;
 
 }

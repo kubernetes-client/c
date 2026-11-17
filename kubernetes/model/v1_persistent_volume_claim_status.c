@@ -12,6 +12,7 @@ static v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_cr
     list_t* capacity,
     list_t *conditions,
     char *current_volume_attributes_class_name,
+    v1_volume_health_status_t *health_status,
     v1_modify_volume_status_t *modify_volume_status,
     char *phase
     ) {
@@ -19,16 +20,17 @@ static v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_cr
     if (!v1_persistent_volume_claim_status_local_var) {
         return NULL;
     }
+    memset(v1_persistent_volume_claim_status_local_var, 0, sizeof(v1_persistent_volume_claim_status_t));
+    v1_persistent_volume_claim_status_local_var->_library_owned = 1;
     v1_persistent_volume_claim_status_local_var->access_modes = access_modes;
     v1_persistent_volume_claim_status_local_var->allocated_resource_statuses = allocated_resource_statuses;
     v1_persistent_volume_claim_status_local_var->allocated_resources = allocated_resources;
     v1_persistent_volume_claim_status_local_var->capacity = capacity;
     v1_persistent_volume_claim_status_local_var->conditions = conditions;
     v1_persistent_volume_claim_status_local_var->current_volume_attributes_class_name = current_volume_attributes_class_name;
+    v1_persistent_volume_claim_status_local_var->health_status = health_status;
     v1_persistent_volume_claim_status_local_var->modify_volume_status = modify_volume_status;
     v1_persistent_volume_claim_status_local_var->phase = phase;
-
-    v1_persistent_volume_claim_status_local_var->_library_owned = 1;
     return v1_persistent_volume_claim_status_local_var;
 }
 
@@ -39,19 +41,24 @@ __attribute__((deprecated)) v1_persistent_volume_claim_status_t *v1_persistent_v
     list_t* capacity,
     list_t *conditions,
     char *current_volume_attributes_class_name,
+    v1_volume_health_status_t *health_status,
     v1_modify_volume_status_t *modify_volume_status,
     char *phase
     ) {
-    return v1_persistent_volume_claim_status_create_internal (
+    v1_persistent_volume_claim_status_t *result = v1_persistent_volume_claim_status_create_internal (
         access_modes,
         allocated_resource_statuses,
         allocated_resources,
         capacity,
         conditions,
         current_volume_attributes_class_name,
+        health_status,
         modify_volume_status,
         phase
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_persistent_volume_claim_status_free(v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status) {
@@ -110,6 +117,10 @@ void v1_persistent_volume_claim_status_free(v1_persistent_volume_claim_status_t 
     if (v1_persistent_volume_claim_status->current_volume_attributes_class_name) {
         free(v1_persistent_volume_claim_status->current_volume_attributes_class_name);
         v1_persistent_volume_claim_status->current_volume_attributes_class_name = NULL;
+    }
+    if (v1_persistent_volume_claim_status->health_status) {
+        v1_volume_health_status_free(v1_persistent_volume_claim_status->health_status);
+        v1_persistent_volume_claim_status->health_status = NULL;
     }
     if (v1_persistent_volume_claim_status->modify_volume_status) {
         v1_modify_volume_status_free(v1_persistent_volume_claim_status->modify_volume_status);
@@ -230,6 +241,19 @@ cJSON *v1_persistent_volume_claim_status_convertToJSON(v1_persistent_volume_clai
     }
 
 
+    // v1_persistent_volume_claim_status->health_status
+    if(v1_persistent_volume_claim_status->health_status) {
+    cJSON *health_status_local_JSON = v1_volume_health_status_convertToJSON(v1_persistent_volume_claim_status->health_status);
+    if(health_status_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "healthStatus", health_status_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+    }
+
+
     // v1_persistent_volume_claim_status->modify_volume_status
     if(v1_persistent_volume_claim_status->modify_volume_status) {
     cJSON *modify_volume_status_local_JSON = v1_modify_volume_status_convertToJSON(v1_persistent_volume_claim_status->modify_volume_status);
@@ -277,8 +301,15 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
     // define the local list for v1_persistent_volume_claim_status->conditions
     list_t *conditionsList = NULL;
 
+    char *current_volume_attributes_class_name_local_str = NULL;
+
+    // define the local variable for v1_persistent_volume_claim_status->health_status
+    v1_volume_health_status_t *health_status_local_nonprim = NULL;
+
     // define the local variable for v1_persistent_volume_claim_status->modify_volume_status
     v1_modify_volume_status_t *modify_volume_status_local_nonprim = NULL;
+
+    char *phase_local_str = NULL;
 
     // v1_persistent_volume_claim_status->access_modes
     cJSON *access_modes = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "accessModes");
@@ -422,6 +453,15 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
     }
     }
 
+    // v1_persistent_volume_claim_status->health_status
+    cJSON *health_status = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "healthStatus");
+    if (cJSON_IsNull(health_status)) {
+        health_status = NULL;
+    }
+    if (health_status) { 
+    health_status_local_nonprim = v1_volume_health_status_parseFromJSON(health_status); //nonprimitive
+    }
+
     // v1_persistent_volume_claim_status->modify_volume_status
     cJSON *modify_volume_status = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_claim_statusJSON, "modifyVolumeStatus");
     if (cJSON_IsNull(modify_volume_status)) {
@@ -444,16 +484,24 @@ v1_persistent_volume_claim_status_t *v1_persistent_volume_claim_status_parseFrom
     }
 
 
+    if (current_volume_attributes_class_name && !cJSON_IsNull(current_volume_attributes_class_name)) current_volume_attributes_class_name_local_str = strdup(current_volume_attributes_class_name->valuestring);
+    if (phase && !cJSON_IsNull(phase)) phase_local_str = strdup(phase->valuestring);
+
     v1_persistent_volume_claim_status_local_var = v1_persistent_volume_claim_status_create_internal (
         access_modes ? access_modesList : NULL,
         allocated_resource_statuses ? allocated_resource_statusesList : NULL,
         allocated_resources ? allocated_resourcesList : NULL,
         capacity ? capacityList : NULL,
         conditions ? conditionsList : NULL,
-        current_volume_attributes_class_name && !cJSON_IsNull(current_volume_attributes_class_name) ? strdup(current_volume_attributes_class_name->valuestring) : NULL,
+        current_volume_attributes_class_name_local_str,
+        health_status ? health_status_local_nonprim : NULL,
         modify_volume_status ? modify_volume_status_local_nonprim : NULL,
-        phase && !cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL
+        phase_local_str
         );
+
+    if (!v1_persistent_volume_claim_status_local_var) {
+        goto end;
+    }
 
     return v1_persistent_volume_claim_status_local_var;
 end:
@@ -517,9 +565,21 @@ end:
         list_freeList(conditionsList);
         conditionsList = NULL;
     }
+    if (current_volume_attributes_class_name_local_str) {
+        free(current_volume_attributes_class_name_local_str);
+        current_volume_attributes_class_name_local_str = NULL;
+    }
+    if (health_status_local_nonprim) {
+        v1_volume_health_status_free(health_status_local_nonprim);
+        health_status_local_nonprim = NULL;
+    }
     if (modify_volume_status_local_nonprim) {
         v1_modify_volume_status_free(modify_volume_status_local_nonprim);
         modify_volume_status_local_nonprim = NULL;
+    }
+    if (phase_local_str) {
+        free(phase_local_str);
+        phase_local_str = NULL;
     }
     return NULL;
 

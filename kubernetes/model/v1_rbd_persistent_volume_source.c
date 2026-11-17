@@ -11,7 +11,7 @@ static v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_create
     char *keyring,
     list_t *monitors,
     char *pool,
-    int read_only,
+    int *read_only,
     v1_secret_reference_t *secret_ref,
     char *user
     ) {
@@ -19,6 +19,8 @@ static v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_create
     if (!v1_rbd_persistent_volume_source_local_var) {
         return NULL;
     }
+    memset(v1_rbd_persistent_volume_source_local_var, 0, sizeof(v1_rbd_persistent_volume_source_t));
+    v1_rbd_persistent_volume_source_local_var->_library_owned = 1;
     v1_rbd_persistent_volume_source_local_var->fs_type = fs_type;
     v1_rbd_persistent_volume_source_local_var->image = image;
     v1_rbd_persistent_volume_source_local_var->keyring = keyring;
@@ -27,8 +29,6 @@ static v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_create
     v1_rbd_persistent_volume_source_local_var->read_only = read_only;
     v1_rbd_persistent_volume_source_local_var->secret_ref = secret_ref;
     v1_rbd_persistent_volume_source_local_var->user = user;
-
-    v1_rbd_persistent_volume_source_local_var->_library_owned = 1;
     return v1_rbd_persistent_volume_source_local_var;
 }
 
@@ -38,20 +38,29 @@ __attribute__((deprecated)) v1_rbd_persistent_volume_source_t *v1_rbd_persistent
     char *keyring,
     list_t *monitors,
     char *pool,
-    int read_only,
+    int *read_only,
     v1_secret_reference_t *secret_ref,
     char *user
     ) {
-    return v1_rbd_persistent_volume_source_create_internal (
+    int *read_only_copy = NULL;
+    if (read_only) {
+        read_only_copy = malloc(sizeof(int));
+        if (read_only_copy) *read_only_copy = *read_only;
+    }
+    v1_rbd_persistent_volume_source_t *result = v1_rbd_persistent_volume_source_create_internal (
         fs_type,
         image,
         keyring,
         monitors,
         pool,
-        read_only,
+        read_only_copy,
         secret_ref,
         user
         );
+    if (!result) {
+        free(read_only_copy);
+    }
+    return result;
 }
 
 void v1_rbd_persistent_volume_source_free(v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source) {
@@ -85,6 +94,10 @@ void v1_rbd_persistent_volume_source_free(v1_rbd_persistent_volume_source_t *v1_
     if (v1_rbd_persistent_volume_source->pool) {
         free(v1_rbd_persistent_volume_source->pool);
         v1_rbd_persistent_volume_source->pool = NULL;
+    }
+    if (v1_rbd_persistent_volume_source->read_only) {
+        free(v1_rbd_persistent_volume_source->read_only);
+        v1_rbd_persistent_volume_source->read_only = NULL;
     }
     if (v1_rbd_persistent_volume_source->secret_ref) {
         v1_secret_reference_free(v1_rbd_persistent_volume_source->secret_ref);
@@ -153,7 +166,7 @@ cJSON *v1_rbd_persistent_volume_source_convertToJSON(v1_rbd_persistent_volume_so
 
     // v1_rbd_persistent_volume_source->read_only
     if(v1_rbd_persistent_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_rbd_persistent_volume_source->read_only) == NULL) {
+    if(cJSON_AddBoolToObject(item, "readOnly", *v1_rbd_persistent_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -191,11 +204,24 @@ v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON
 
     v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_local_var = NULL;
 
+    char *fs_type_local_str = NULL;
+
+    char *image_local_str = NULL;
+
+    char *keyring_local_str = NULL;
+
     // define the local list for v1_rbd_persistent_volume_source->monitors
     list_t *monitorsList = NULL;
 
+    char *pool_local_str = NULL;
+
+    // define the local variable for v1_rbd_persistent_volume_source->read_only
+    int *read_only_local_var = NULL;
+
     // define the local variable for v1_rbd_persistent_volume_source->secret_ref
     v1_secret_reference_t *secret_ref_local_nonprim = NULL;
+
+    char *user_local_str = NULL;
 
     // v1_rbd_persistent_volume_source->fs_type
     cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_rbd_persistent_volume_sourceJSON, "fsType");
@@ -283,6 +309,12 @@ v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON
     {
     goto end; //Bool
     }
+    read_only_local_var = malloc(sizeof(int));
+    if(!read_only_local_var)
+    {
+        goto end;
+    }
+    *read_only_local_var = read_only->valueint;
     }
 
     // v1_rbd_persistent_volume_source->secret_ref
@@ -307,19 +339,41 @@ v1_rbd_persistent_volume_source_t *v1_rbd_persistent_volume_source_parseFromJSON
     }
 
 
+    if (fs_type && !cJSON_IsNull(fs_type)) fs_type_local_str = strdup(fs_type->valuestring);
+    if (image && !cJSON_IsNull(image)) image_local_str = strdup(image->valuestring);
+    if (keyring && !cJSON_IsNull(keyring)) keyring_local_str = strdup(keyring->valuestring);
+    if (pool && !cJSON_IsNull(pool)) pool_local_str = strdup(pool->valuestring);
+    if (user && !cJSON_IsNull(user)) user_local_str = strdup(user->valuestring);
+
     v1_rbd_persistent_volume_source_local_var = v1_rbd_persistent_volume_source_create_internal (
-        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
-        strdup(image->valuestring),
-        keyring && !cJSON_IsNull(keyring) ? strdup(keyring->valuestring) : NULL,
+        fs_type_local_str,
+        image_local_str,
+        keyring_local_str,
         monitorsList,
-        pool && !cJSON_IsNull(pool) ? strdup(pool->valuestring) : NULL,
-        read_only ? read_only->valueint : 0,
+        pool_local_str,
+        read_only_local_var,
         secret_ref ? secret_ref_local_nonprim : NULL,
-        user && !cJSON_IsNull(user) ? strdup(user->valuestring) : NULL
+        user_local_str
         );
+
+    if (!v1_rbd_persistent_volume_source_local_var) {
+        goto end;
+    }
 
     return v1_rbd_persistent_volume_source_local_var;
 end:
+    if (fs_type_local_str) {
+        free(fs_type_local_str);
+        fs_type_local_str = NULL;
+    }
+    if (image_local_str) {
+        free(image_local_str);
+        image_local_str = NULL;
+    }
+    if (keyring_local_str) {
+        free(keyring_local_str);
+        keyring_local_str = NULL;
+    }
     if (monitorsList) {
         listEntry_t *listEntry = NULL;
         list_ForEach(listEntry, monitorsList) {
@@ -329,9 +383,21 @@ end:
         list_freeList(monitorsList);
         monitorsList = NULL;
     }
+    if (pool_local_str) {
+        free(pool_local_str);
+        pool_local_str = NULL;
+    }
+    if (read_only_local_var) {
+        free(read_only_local_var);
+        read_only_local_var = NULL;
+    }
     if (secret_ref_local_nonprim) {
         v1_secret_reference_free(secret_ref_local_nonprim);
         secret_ref_local_nonprim = NULL;
+    }
+    if (user_local_str) {
+        free(user_local_str);
+        user_local_str = NULL;
     }
     return NULL;
 

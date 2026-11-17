@@ -22,7 +22,7 @@ typedef struct v1beta1_device_toleration_t {
     char *effect; // string
     char *key; // string
     char *_operator; // string
-    long toleration_seconds; //numeric
+    long *toleration_seconds; //numeric
     char *value; // string
 
     int _library_owned; // Is the library responsible for freeing this object?
@@ -32,7 +32,7 @@ __attribute__((deprecated)) v1beta1_device_toleration_t *v1beta1_device_tolerati
     char *effect,
     char *key,
     char *_operator,
-    long toleration_seconds,
+    long *toleration_seconds,
     char *value
 );
 

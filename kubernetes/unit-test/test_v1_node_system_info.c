@@ -32,6 +32,7 @@ v1_node_system_info_t* instantiate_v1_node_system_info(int include_optional) {
       "0",
       "0",
       "0",
+      1,
        // false, not to have infinite recursion
       instantiate_v1_node_swap_status(0),
       "0"
@@ -47,6 +48,7 @@ v1_node_system_info_t* instantiate_v1_node_system_info(int include_optional) {
       "0",
       "0",
       "0",
+      1,
       NULL,
       "0"
     );

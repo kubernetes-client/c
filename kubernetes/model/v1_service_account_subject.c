@@ -13,10 +13,10 @@ static v1_service_account_subject_t *v1_service_account_subject_create_internal(
     if (!v1_service_account_subject_local_var) {
         return NULL;
     }
+    memset(v1_service_account_subject_local_var, 0, sizeof(v1_service_account_subject_t));
+    v1_service_account_subject_local_var->_library_owned = 1;
     v1_service_account_subject_local_var->name = name;
     v1_service_account_subject_local_var->_namespace = _namespace;
-
-    v1_service_account_subject_local_var->_library_owned = 1;
     return v1_service_account_subject_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_service_account_subject_t *v1_service_account_sub
     char *name,
     char *_namespace
     ) {
-    return v1_service_account_subject_create_internal (
+    v1_service_account_subject_t *result = v1_service_account_subject_create_internal (
         name,
         _namespace
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_service_account_subject_free(v1_service_account_subject_t *v1_service_account_subject) {
@@ -82,6 +85,10 @@ v1_service_account_subject_t *v1_service_account_subject_parseFromJSON(cJSON *v1
 
     v1_service_account_subject_t *v1_service_account_subject_local_var = NULL;
 
+    char *name_local_str = NULL;
+
+    char *_namespace_local_str = NULL;
+
     // v1_service_account_subject->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_service_account_subjectJSON, "name");
     if (cJSON_IsNull(name)) {
@@ -113,13 +120,28 @@ v1_service_account_subject_t *v1_service_account_subject_parseFromJSON(cJSON *v1
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+    if (_namespace && !cJSON_IsNull(_namespace)) _namespace_local_str = strdup(_namespace->valuestring);
+
     v1_service_account_subject_local_var = v1_service_account_subject_create_internal (
-        strdup(name->valuestring),
-        strdup(_namespace->valuestring)
+        name_local_str,
+        _namespace_local_str
         );
+
+    if (!v1_service_account_subject_local_var) {
+        goto end;
+    }
 
     return v1_service_account_subject_local_var;
 end:
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
+    if (_namespace_local_str) {
+        free(_namespace_local_str);
+        _namespace_local_str = NULL;
+    }
     return NULL;
 
 }

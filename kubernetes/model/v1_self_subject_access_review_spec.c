@@ -13,10 +13,10 @@ static v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec_
     if (!v1_self_subject_access_review_spec_local_var) {
         return NULL;
     }
+    memset(v1_self_subject_access_review_spec_local_var, 0, sizeof(v1_self_subject_access_review_spec_t));
+    v1_self_subject_access_review_spec_local_var->_library_owned = 1;
     v1_self_subject_access_review_spec_local_var->non_resource_attributes = non_resource_attributes;
     v1_self_subject_access_review_spec_local_var->resource_attributes = resource_attributes;
-
-    v1_self_subject_access_review_spec_local_var->_library_owned = 1;
     return v1_self_subject_access_review_spec_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_self_subject_access_review_spec_t *v1_self_subjec
     v1_non_resource_attributes_t *non_resource_attributes,
     v1_resource_attributes_t *resource_attributes
     ) {
-    return v1_self_subject_access_review_spec_create_internal (
+    v1_self_subject_access_review_spec_t *result = v1_self_subject_access_review_spec_create_internal (
         non_resource_attributes,
         resource_attributes
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_self_subject_access_review_spec_free(v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec) {
@@ -115,10 +118,15 @@ v1_self_subject_access_review_spec_t *v1_self_subject_access_review_spec_parseFr
     }
 
 
+
     v1_self_subject_access_review_spec_local_var = v1_self_subject_access_review_spec_create_internal (
         non_resource_attributes ? non_resource_attributes_local_nonprim : NULL,
         resource_attributes ? resource_attributes_local_nonprim : NULL
         );
+
+    if (!v1_self_subject_access_review_spec_local_var) {
+        goto end;
+    }
 
     return v1_self_subject_access_review_spec_local_var;
 end:

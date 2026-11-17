@@ -13,10 +13,10 @@ static v1_endpoint_hints_t *v1_endpoint_hints_create_internal(
     if (!v1_endpoint_hints_local_var) {
         return NULL;
     }
+    memset(v1_endpoint_hints_local_var, 0, sizeof(v1_endpoint_hints_t));
+    v1_endpoint_hints_local_var->_library_owned = 1;
     v1_endpoint_hints_local_var->for_nodes = for_nodes;
     v1_endpoint_hints_local_var->for_zones = for_zones;
-
-    v1_endpoint_hints_local_var->_library_owned = 1;
     return v1_endpoint_hints_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_endpoint_hints_t *v1_endpoint_hints_create(
     list_t *for_nodes,
     list_t *for_zones
     ) {
-    return v1_endpoint_hints_create_internal (
+    v1_endpoint_hints_t *result = v1_endpoint_hints_create_internal (
         for_nodes,
         for_zones
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_endpoint_hints_free(v1_endpoint_hints_t *v1_endpoint_hints) {
@@ -165,10 +168,15 @@ v1_endpoint_hints_t *v1_endpoint_hints_parseFromJSON(cJSON *v1_endpoint_hintsJSO
     }
 
 
+
     v1_endpoint_hints_local_var = v1_endpoint_hints_create_internal (
         for_nodes ? for_nodesList : NULL,
         for_zones ? for_zonesList : NULL
         );
+
+    if (!v1_endpoint_hints_local_var) {
+        goto end;
+    }
 
     return v1_endpoint_hints_local_var;
 end:

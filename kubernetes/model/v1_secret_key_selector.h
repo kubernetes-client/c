@@ -21,7 +21,7 @@ typedef struct v1_secret_key_selector_t v1_secret_key_selector_t;
 typedef struct v1_secret_key_selector_t {
     char *key; // string
     char *name; // string
-    int optional; //boolean
+    int *optional; //boolean
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_secret_key_selector_t;
@@ -29,7 +29,7 @@ typedef struct v1_secret_key_selector_t {
 __attribute__((deprecated)) v1_secret_key_selector_t *v1_secret_key_selector_create(
     char *key,
     char *name,
-    int optional
+    int *optional
 );
 
 void v1_secret_key_selector_free(v1_secret_key_selector_t *v1_secret_key_selector);

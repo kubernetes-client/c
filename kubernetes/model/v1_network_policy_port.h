@@ -20,7 +20,7 @@ typedef struct v1_network_policy_port_t v1_network_policy_port_t;
 
 
 typedef struct v1_network_policy_port_t {
-    int end_port; //numeric
+    int *end_port; //numeric
     int_or_string_t *port; // custom
     char *protocol; // string
 
@@ -28,7 +28,7 @@ typedef struct v1_network_policy_port_t {
 } v1_network_policy_port_t;
 
 __attribute__((deprecated)) v1_network_policy_port_t *v1_network_policy_port_create(
-    int end_port,
+    int *end_port,
     int_or_string_t *port,
     char *protocol
 );

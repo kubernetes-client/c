@@ -15,12 +15,12 @@ static v1_lifecycle_handler_t *v1_lifecycle_handler_create_internal(
     if (!v1_lifecycle_handler_local_var) {
         return NULL;
     }
+    memset(v1_lifecycle_handler_local_var, 0, sizeof(v1_lifecycle_handler_t));
+    v1_lifecycle_handler_local_var->_library_owned = 1;
     v1_lifecycle_handler_local_var->exec = exec;
     v1_lifecycle_handler_local_var->http_get = http_get;
     v1_lifecycle_handler_local_var->sleep = sleep;
     v1_lifecycle_handler_local_var->tcp_socket = tcp_socket;
-
-    v1_lifecycle_handler_local_var->_library_owned = 1;
     return v1_lifecycle_handler_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1_lifecycle_handler_t *v1_lifecycle_handler_create(
     v1_sleep_action_t *sleep,
     v1_tcp_socket_action_t *tcp_socket
     ) {
-    return v1_lifecycle_handler_create_internal (
+    v1_lifecycle_handler_t *result = v1_lifecycle_handler_create_internal (
         exec,
         http_get,
         sleep,
         tcp_socket
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_lifecycle_handler_free(v1_lifecycle_handler_t *v1_lifecycle_handler) {
@@ -181,12 +184,17 @@ v1_lifecycle_handler_t *v1_lifecycle_handler_parseFromJSON(cJSON *v1_lifecycle_h
     }
 
 
+
     v1_lifecycle_handler_local_var = v1_lifecycle_handler_create_internal (
         exec ? exec_local_nonprim : NULL,
         http_get ? http_get_local_nonprim : NULL,
         sleep ? sleep_local_nonprim : NULL,
         tcp_socket ? tcp_socket_local_nonprim : NULL
         );
+
+    if (!v1_lifecycle_handler_local_var) {
+        goto end;
+    }
 
     return v1_lifecycle_handler_local_var;
 end:

@@ -9,9 +9,9 @@ static v1_scale_io_persistent_volume_source_t *v1_scale_io_persistent_volume_sou
     char *fs_type,
     char *gateway,
     char *protection_domain,
-    int read_only,
+    int *read_only,
     v1_secret_reference_t *secret_ref,
-    int ssl_enabled,
+    int *ssl_enabled,
     char *storage_mode,
     char *storage_pool,
     char *system,
@@ -21,6 +21,8 @@ static v1_scale_io_persistent_volume_source_t *v1_scale_io_persistent_volume_sou
     if (!v1_scale_io_persistent_volume_source_local_var) {
         return NULL;
     }
+    memset(v1_scale_io_persistent_volume_source_local_var, 0, sizeof(v1_scale_io_persistent_volume_source_t));
+    v1_scale_io_persistent_volume_source_local_var->_library_owned = 1;
     v1_scale_io_persistent_volume_source_local_var->fs_type = fs_type;
     v1_scale_io_persistent_volume_source_local_var->gateway = gateway;
     v1_scale_io_persistent_volume_source_local_var->protection_domain = protection_domain;
@@ -31,8 +33,6 @@ static v1_scale_io_persistent_volume_source_t *v1_scale_io_persistent_volume_sou
     v1_scale_io_persistent_volume_source_local_var->storage_pool = storage_pool;
     v1_scale_io_persistent_volume_source_local_var->system = system;
     v1_scale_io_persistent_volume_source_local_var->volume_name = volume_name;
-
-    v1_scale_io_persistent_volume_source_local_var->_library_owned = 1;
     return v1_scale_io_persistent_volume_source_local_var;
 }
 
@@ -40,26 +40,41 @@ __attribute__((deprecated)) v1_scale_io_persistent_volume_source_t *v1_scale_io_
     char *fs_type,
     char *gateway,
     char *protection_domain,
-    int read_only,
+    int *read_only,
     v1_secret_reference_t *secret_ref,
-    int ssl_enabled,
+    int *ssl_enabled,
     char *storage_mode,
     char *storage_pool,
     char *system,
     char *volume_name
     ) {
-    return v1_scale_io_persistent_volume_source_create_internal (
+    int *read_only_copy = NULL;
+    if (read_only) {
+        read_only_copy = malloc(sizeof(int));
+        if (read_only_copy) *read_only_copy = *read_only;
+    }
+    int *ssl_enabled_copy = NULL;
+    if (ssl_enabled) {
+        ssl_enabled_copy = malloc(sizeof(int));
+        if (ssl_enabled_copy) *ssl_enabled_copy = *ssl_enabled;
+    }
+    v1_scale_io_persistent_volume_source_t *result = v1_scale_io_persistent_volume_source_create_internal (
         fs_type,
         gateway,
         protection_domain,
-        read_only,
+        read_only_copy,
         secret_ref,
-        ssl_enabled,
+        ssl_enabled_copy,
         storage_mode,
         storage_pool,
         system,
         volume_name
         );
+    if (!result) {
+        free(read_only_copy);
+        free(ssl_enabled_copy);
+    }
+    return result;
 }
 
 void v1_scale_io_persistent_volume_source_free(v1_scale_io_persistent_volume_source_t *v1_scale_io_persistent_volume_source) {
@@ -83,9 +98,17 @@ void v1_scale_io_persistent_volume_source_free(v1_scale_io_persistent_volume_sou
         free(v1_scale_io_persistent_volume_source->protection_domain);
         v1_scale_io_persistent_volume_source->protection_domain = NULL;
     }
+    if (v1_scale_io_persistent_volume_source->read_only) {
+        free(v1_scale_io_persistent_volume_source->read_only);
+        v1_scale_io_persistent_volume_source->read_only = NULL;
+    }
     if (v1_scale_io_persistent_volume_source->secret_ref) {
         v1_secret_reference_free(v1_scale_io_persistent_volume_source->secret_ref);
         v1_scale_io_persistent_volume_source->secret_ref = NULL;
+    }
+    if (v1_scale_io_persistent_volume_source->ssl_enabled) {
+        free(v1_scale_io_persistent_volume_source->ssl_enabled);
+        v1_scale_io_persistent_volume_source->ssl_enabled = NULL;
     }
     if (v1_scale_io_persistent_volume_source->storage_mode) {
         free(v1_scale_io_persistent_volume_source->storage_mode);
@@ -136,7 +159,7 @@ cJSON *v1_scale_io_persistent_volume_source_convertToJSON(v1_scale_io_persistent
 
     // v1_scale_io_persistent_volume_source->read_only
     if(v1_scale_io_persistent_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_scale_io_persistent_volume_source->read_only) == NULL) {
+    if(cJSON_AddBoolToObject(item, "readOnly", *v1_scale_io_persistent_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -158,7 +181,7 @@ cJSON *v1_scale_io_persistent_volume_source_convertToJSON(v1_scale_io_persistent
 
     // v1_scale_io_persistent_volume_source->ssl_enabled
     if(v1_scale_io_persistent_volume_source->ssl_enabled) {
-    if(cJSON_AddBoolToObject(item, "sslEnabled", v1_scale_io_persistent_volume_source->ssl_enabled) == NULL) {
+    if(cJSON_AddBoolToObject(item, "sslEnabled", *v1_scale_io_persistent_volume_source->ssl_enabled) == NULL) {
     goto fail; //Bool
     }
     }
@@ -208,8 +231,28 @@ v1_scale_io_persistent_volume_source_t *v1_scale_io_persistent_volume_source_par
 
     v1_scale_io_persistent_volume_source_t *v1_scale_io_persistent_volume_source_local_var = NULL;
 
+    char *fs_type_local_str = NULL;
+
+    char *gateway_local_str = NULL;
+
+    char *protection_domain_local_str = NULL;
+
+    // define the local variable for v1_scale_io_persistent_volume_source->read_only
+    int *read_only_local_var = NULL;
+
     // define the local variable for v1_scale_io_persistent_volume_source->secret_ref
     v1_secret_reference_t *secret_ref_local_nonprim = NULL;
+
+    // define the local variable for v1_scale_io_persistent_volume_source->ssl_enabled
+    int *ssl_enabled_local_var = NULL;
+
+    char *storage_mode_local_str = NULL;
+
+    char *storage_pool_local_str = NULL;
+
+    char *system_local_str = NULL;
+
+    char *volume_name_local_str = NULL;
 
     // v1_scale_io_persistent_volume_source->fs_type
     cJSON *fs_type = cJSON_GetObjectItemCaseSensitive(v1_scale_io_persistent_volume_sourceJSON, "fsType");
@@ -260,6 +303,12 @@ v1_scale_io_persistent_volume_source_t *v1_scale_io_persistent_volume_source_par
     {
     goto end; //Bool
     }
+    read_only_local_var = malloc(sizeof(int));
+    if(!read_only_local_var)
+    {
+        goto end;
+    }
+    *read_only_local_var = read_only->valueint;
     }
 
     // v1_scale_io_persistent_volume_source->secret_ref
@@ -284,6 +333,12 @@ v1_scale_io_persistent_volume_source_t *v1_scale_io_persistent_volume_source_par
     {
     goto end; //Bool
     }
+    ssl_enabled_local_var = malloc(sizeof(int));
+    if(!ssl_enabled_local_var)
+    {
+        goto end;
+    }
+    *ssl_enabled_local_var = ssl_enabled->valueint;
     }
 
     // v1_scale_io_persistent_volume_source->storage_mode
@@ -338,24 +393,72 @@ v1_scale_io_persistent_volume_source_t *v1_scale_io_persistent_volume_source_par
     }
 
 
+    if (fs_type && !cJSON_IsNull(fs_type)) fs_type_local_str = strdup(fs_type->valuestring);
+    if (gateway && !cJSON_IsNull(gateway)) gateway_local_str = strdup(gateway->valuestring);
+    if (protection_domain && !cJSON_IsNull(protection_domain)) protection_domain_local_str = strdup(protection_domain->valuestring);
+    if (storage_mode && !cJSON_IsNull(storage_mode)) storage_mode_local_str = strdup(storage_mode->valuestring);
+    if (storage_pool && !cJSON_IsNull(storage_pool)) storage_pool_local_str = strdup(storage_pool->valuestring);
+    if (system && !cJSON_IsNull(system)) system_local_str = strdup(system->valuestring);
+    if (volume_name && !cJSON_IsNull(volume_name)) volume_name_local_str = strdup(volume_name->valuestring);
+
     v1_scale_io_persistent_volume_source_local_var = v1_scale_io_persistent_volume_source_create_internal (
-        fs_type && !cJSON_IsNull(fs_type) ? strdup(fs_type->valuestring) : NULL,
-        strdup(gateway->valuestring),
-        protection_domain && !cJSON_IsNull(protection_domain) ? strdup(protection_domain->valuestring) : NULL,
-        read_only ? read_only->valueint : 0,
+        fs_type_local_str,
+        gateway_local_str,
+        protection_domain_local_str,
+        read_only_local_var,
         secret_ref_local_nonprim,
-        ssl_enabled ? ssl_enabled->valueint : 0,
-        storage_mode && !cJSON_IsNull(storage_mode) ? strdup(storage_mode->valuestring) : NULL,
-        storage_pool && !cJSON_IsNull(storage_pool) ? strdup(storage_pool->valuestring) : NULL,
-        strdup(system->valuestring),
-        volume_name && !cJSON_IsNull(volume_name) ? strdup(volume_name->valuestring) : NULL
+        ssl_enabled_local_var,
+        storage_mode_local_str,
+        storage_pool_local_str,
+        system_local_str,
+        volume_name_local_str
         );
+
+    if (!v1_scale_io_persistent_volume_source_local_var) {
+        goto end;
+    }
 
     return v1_scale_io_persistent_volume_source_local_var;
 end:
+    if (fs_type_local_str) {
+        free(fs_type_local_str);
+        fs_type_local_str = NULL;
+    }
+    if (gateway_local_str) {
+        free(gateway_local_str);
+        gateway_local_str = NULL;
+    }
+    if (protection_domain_local_str) {
+        free(protection_domain_local_str);
+        protection_domain_local_str = NULL;
+    }
+    if (read_only_local_var) {
+        free(read_only_local_var);
+        read_only_local_var = NULL;
+    }
     if (secret_ref_local_nonprim) {
         v1_secret_reference_free(secret_ref_local_nonprim);
         secret_ref_local_nonprim = NULL;
+    }
+    if (ssl_enabled_local_var) {
+        free(ssl_enabled_local_var);
+        ssl_enabled_local_var = NULL;
+    }
+    if (storage_mode_local_str) {
+        free(storage_mode_local_str);
+        storage_mode_local_str = NULL;
+    }
+    if (storage_pool_local_str) {
+        free(storage_pool_local_str);
+        storage_pool_local_str = NULL;
+    }
+    if (system_local_str) {
+        free(system_local_str);
+        system_local_str = NULL;
+    }
+    if (volume_name_local_str) {
+        free(volume_name_local_str);
+        volume_name_local_str = NULL;
     }
     return NULL;
 

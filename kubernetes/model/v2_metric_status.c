@@ -17,14 +17,14 @@ static v2_metric_status_t *v2_metric_status_create_internal(
     if (!v2_metric_status_local_var) {
         return NULL;
     }
+    memset(v2_metric_status_local_var, 0, sizeof(v2_metric_status_t));
+    v2_metric_status_local_var->_library_owned = 1;
     v2_metric_status_local_var->container_resource = container_resource;
     v2_metric_status_local_var->external = external;
     v2_metric_status_local_var->object = object;
     v2_metric_status_local_var->pods = pods;
     v2_metric_status_local_var->resource = resource;
     v2_metric_status_local_var->type = type;
-
-    v2_metric_status_local_var->_library_owned = 1;
     return v2_metric_status_local_var;
 }
 
@@ -36,7 +36,7 @@ __attribute__((deprecated)) v2_metric_status_t *v2_metric_status_create(
     v2_resource_metric_status_t *resource,
     char *type
     ) {
-    return v2_metric_status_create_internal (
+    v2_metric_status_t *result = v2_metric_status_create_internal (
         container_resource,
         external,
         object,
@@ -44,6 +44,9 @@ __attribute__((deprecated)) v2_metric_status_t *v2_metric_status_create(
         resource,
         type
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v2_metric_status_free(v2_metric_status_t *v2_metric_status) {
@@ -185,6 +188,8 @@ v2_metric_status_t *v2_metric_status_parseFromJSON(cJSON *v2_metric_statusJSON){
     // define the local variable for v2_metric_status->resource
     v2_resource_metric_status_t *resource_local_nonprim = NULL;
 
+    char *type_local_str = NULL;
+
     // v2_metric_status->container_resource
     cJSON *container_resource = cJSON_GetObjectItemCaseSensitive(v2_metric_statusJSON, "containerResource");
     if (cJSON_IsNull(container_resource)) {
@@ -246,14 +251,20 @@ v2_metric_status_t *v2_metric_status_parseFromJSON(cJSON *v2_metric_statusJSON){
     }
 
 
+    if (type && !cJSON_IsNull(type)) type_local_str = strdup(type->valuestring);
+
     v2_metric_status_local_var = v2_metric_status_create_internal (
         container_resource ? container_resource_local_nonprim : NULL,
         external ? external_local_nonprim : NULL,
         object ? object_local_nonprim : NULL,
         pods ? pods_local_nonprim : NULL,
         resource ? resource_local_nonprim : NULL,
-        strdup(type->valuestring)
+        type_local_str
         );
+
+    if (!v2_metric_status_local_var) {
+        goto end;
+    }
 
     return v2_metric_status_local_var;
 end:
@@ -276,6 +287,10 @@ end:
     if (resource_local_nonprim) {
         v2_resource_metric_status_free(resource_local_nonprim);
         resource_local_nonprim = NULL;
+    }
+    if (type_local_str) {
+        free(type_local_str);
+        type_local_str = NULL;
     }
     return NULL;
 

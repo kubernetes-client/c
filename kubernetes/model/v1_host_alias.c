@@ -13,10 +13,10 @@ static v1_host_alias_t *v1_host_alias_create_internal(
     if (!v1_host_alias_local_var) {
         return NULL;
     }
+    memset(v1_host_alias_local_var, 0, sizeof(v1_host_alias_t));
+    v1_host_alias_local_var->_library_owned = 1;
     v1_host_alias_local_var->hostnames = hostnames;
     v1_host_alias_local_var->ip = ip;
-
-    v1_host_alias_local_var->_library_owned = 1;
     return v1_host_alias_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_host_alias_t *v1_host_alias_create(
     list_t *hostnames,
     char *ip
     ) {
-    return v1_host_alias_create_internal (
+    v1_host_alias_t *result = v1_host_alias_create_internal (
         hostnames,
         ip
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_host_alias_free(v1_host_alias_t *v1_host_alias) {
@@ -96,6 +99,8 @@ v1_host_alias_t *v1_host_alias_parseFromJSON(cJSON *v1_host_aliasJSON){
     // define the local list for v1_host_alias->hostnames
     list_t *hostnamesList = NULL;
 
+    char *ip_local_str = NULL;
+
     // v1_host_alias->hostnames
     cJSON *hostnames = cJSON_GetObjectItemCaseSensitive(v1_host_aliasJSON, "hostnames");
     if (cJSON_IsNull(hostnames)) {
@@ -134,10 +139,16 @@ v1_host_alias_t *v1_host_alias_parseFromJSON(cJSON *v1_host_aliasJSON){
     }
 
 
+    if (ip && !cJSON_IsNull(ip)) ip_local_str = strdup(ip->valuestring);
+
     v1_host_alias_local_var = v1_host_alias_create_internal (
         hostnames ? hostnamesList : NULL,
-        strdup(ip->valuestring)
+        ip_local_str
         );
+
+    if (!v1_host_alias_local_var) {
+        goto end;
+    }
 
     return v1_host_alias_local_var;
 end:
@@ -149,6 +160,10 @@ end:
         }
         list_freeList(hostnamesList);
         hostnamesList = NULL;
+    }
+    if (ip_local_str) {
+        free(ip_local_str);
+        ip_local_str = NULL;
     }
     return NULL;
 

@@ -13,10 +13,10 @@ static v1_limit_response_t *v1_limit_response_create_internal(
     if (!v1_limit_response_local_var) {
         return NULL;
     }
+    memset(v1_limit_response_local_var, 0, sizeof(v1_limit_response_t));
+    v1_limit_response_local_var->_library_owned = 1;
     v1_limit_response_local_var->queuing = queuing;
     v1_limit_response_local_var->type = type;
-
-    v1_limit_response_local_var->_library_owned = 1;
     return v1_limit_response_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_limit_response_t *v1_limit_response_create(
     v1_queuing_configuration_t *queuing,
     char *type
     ) {
-    return v1_limit_response_create_internal (
+    v1_limit_response_t *result = v1_limit_response_create_internal (
         queuing,
         type
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_limit_response_free(v1_limit_response_t *v1_limit_response) {
@@ -89,6 +92,8 @@ v1_limit_response_t *v1_limit_response_parseFromJSON(cJSON *v1_limit_responseJSO
     // define the local variable for v1_limit_response->queuing
     v1_queuing_configuration_t *queuing_local_nonprim = NULL;
 
+    char *type_local_str = NULL;
+
     // v1_limit_response->queuing
     cJSON *queuing = cJSON_GetObjectItemCaseSensitive(v1_limit_responseJSON, "queuing");
     if (cJSON_IsNull(queuing)) {
@@ -114,16 +119,26 @@ v1_limit_response_t *v1_limit_response_parseFromJSON(cJSON *v1_limit_responseJSO
     }
 
 
+    if (type && !cJSON_IsNull(type)) type_local_str = strdup(type->valuestring);
+
     v1_limit_response_local_var = v1_limit_response_create_internal (
         queuing ? queuing_local_nonprim : NULL,
-        strdup(type->valuestring)
+        type_local_str
         );
+
+    if (!v1_limit_response_local_var) {
+        goto end;
+    }
 
     return v1_limit_response_local_var;
 end:
     if (queuing_local_nonprim) {
         v1_queuing_configuration_free(queuing_local_nonprim);
         queuing_local_nonprim = NULL;
+    }
+    if (type_local_str) {
+        free(type_local_str);
+        type_local_str = NULL;
     }
     return NULL;
 

@@ -6,15 +6,15 @@
 
 
 static v1_security_context_t *v1_security_context_create_internal(
-    int allow_privilege_escalation,
+    int *allow_privilege_escalation,
     v1_app_armor_profile_t *app_armor_profile,
     v1_capabilities_t *capabilities,
-    int privileged,
+    int *privileged,
     char *proc_mount,
-    int read_only_root_filesystem,
-    long run_as_group,
-    int run_as_non_root,
-    long run_as_user,
+    int *read_only_root_filesystem,
+    long *run_as_group,
+    int *run_as_non_root,
+    long *run_as_user,
     v1_se_linux_options_t *se_linux_options,
     v1_seccomp_profile_t *seccomp_profile,
     v1_windows_security_context_options_t *windows_options
@@ -23,6 +23,8 @@ static v1_security_context_t *v1_security_context_create_internal(
     if (!v1_security_context_local_var) {
         return NULL;
     }
+    memset(v1_security_context_local_var, 0, sizeof(v1_security_context_t));
+    v1_security_context_local_var->_library_owned = 1;
     v1_security_context_local_var->allow_privilege_escalation = allow_privilege_escalation;
     v1_security_context_local_var->app_armor_profile = app_armor_profile;
     v1_security_context_local_var->capabilities = capabilities;
@@ -35,39 +37,76 @@ static v1_security_context_t *v1_security_context_create_internal(
     v1_security_context_local_var->se_linux_options = se_linux_options;
     v1_security_context_local_var->seccomp_profile = seccomp_profile;
     v1_security_context_local_var->windows_options = windows_options;
-
-    v1_security_context_local_var->_library_owned = 1;
     return v1_security_context_local_var;
 }
 
 __attribute__((deprecated)) v1_security_context_t *v1_security_context_create(
-    int allow_privilege_escalation,
+    int *allow_privilege_escalation,
     v1_app_armor_profile_t *app_armor_profile,
     v1_capabilities_t *capabilities,
-    int privileged,
+    int *privileged,
     char *proc_mount,
-    int read_only_root_filesystem,
-    long run_as_group,
-    int run_as_non_root,
-    long run_as_user,
+    int *read_only_root_filesystem,
+    long *run_as_group,
+    int *run_as_non_root,
+    long *run_as_user,
     v1_se_linux_options_t *se_linux_options,
     v1_seccomp_profile_t *seccomp_profile,
     v1_windows_security_context_options_t *windows_options
     ) {
-    return v1_security_context_create_internal (
-        allow_privilege_escalation,
+    int *allow_privilege_escalation_copy = NULL;
+    if (allow_privilege_escalation) {
+        allow_privilege_escalation_copy = malloc(sizeof(int));
+        if (allow_privilege_escalation_copy) *allow_privilege_escalation_copy = *allow_privilege_escalation;
+    }
+    int *privileged_copy = NULL;
+    if (privileged) {
+        privileged_copy = malloc(sizeof(int));
+        if (privileged_copy) *privileged_copy = *privileged;
+    }
+    int *read_only_root_filesystem_copy = NULL;
+    if (read_only_root_filesystem) {
+        read_only_root_filesystem_copy = malloc(sizeof(int));
+        if (read_only_root_filesystem_copy) *read_only_root_filesystem_copy = *read_only_root_filesystem;
+    }
+    long *run_as_group_copy = NULL;
+    if (run_as_group) {
+        run_as_group_copy = malloc(sizeof(long));
+        if (run_as_group_copy) *run_as_group_copy = *run_as_group;
+    }
+    int *run_as_non_root_copy = NULL;
+    if (run_as_non_root) {
+        run_as_non_root_copy = malloc(sizeof(int));
+        if (run_as_non_root_copy) *run_as_non_root_copy = *run_as_non_root;
+    }
+    long *run_as_user_copy = NULL;
+    if (run_as_user) {
+        run_as_user_copy = malloc(sizeof(long));
+        if (run_as_user_copy) *run_as_user_copy = *run_as_user;
+    }
+    v1_security_context_t *result = v1_security_context_create_internal (
+        allow_privilege_escalation_copy,
         app_armor_profile,
         capabilities,
-        privileged,
+        privileged_copy,
         proc_mount,
-        read_only_root_filesystem,
-        run_as_group,
-        run_as_non_root,
-        run_as_user,
+        read_only_root_filesystem_copy,
+        run_as_group_copy,
+        run_as_non_root_copy,
+        run_as_user_copy,
         se_linux_options,
         seccomp_profile,
         windows_options
         );
+    if (!result) {
+        free(allow_privilege_escalation_copy);
+        free(privileged_copy);
+        free(read_only_root_filesystem_copy);
+        free(run_as_group_copy);
+        free(run_as_non_root_copy);
+        free(run_as_user_copy);
+    }
+    return result;
 }
 
 void v1_security_context_free(v1_security_context_t *v1_security_context) {
@@ -79,6 +118,10 @@ void v1_security_context_free(v1_security_context_t *v1_security_context) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_security_context->allow_privilege_escalation) {
+        free(v1_security_context->allow_privilege_escalation);
+        v1_security_context->allow_privilege_escalation = NULL;
+    }
     if (v1_security_context->app_armor_profile) {
         v1_app_armor_profile_free(v1_security_context->app_armor_profile);
         v1_security_context->app_armor_profile = NULL;
@@ -87,9 +130,29 @@ void v1_security_context_free(v1_security_context_t *v1_security_context) {
         v1_capabilities_free(v1_security_context->capabilities);
         v1_security_context->capabilities = NULL;
     }
+    if (v1_security_context->privileged) {
+        free(v1_security_context->privileged);
+        v1_security_context->privileged = NULL;
+    }
     if (v1_security_context->proc_mount) {
         free(v1_security_context->proc_mount);
         v1_security_context->proc_mount = NULL;
+    }
+    if (v1_security_context->read_only_root_filesystem) {
+        free(v1_security_context->read_only_root_filesystem);
+        v1_security_context->read_only_root_filesystem = NULL;
+    }
+    if (v1_security_context->run_as_group) {
+        free(v1_security_context->run_as_group);
+        v1_security_context->run_as_group = NULL;
+    }
+    if (v1_security_context->run_as_non_root) {
+        free(v1_security_context->run_as_non_root);
+        v1_security_context->run_as_non_root = NULL;
+    }
+    if (v1_security_context->run_as_user) {
+        free(v1_security_context->run_as_user);
+        v1_security_context->run_as_user = NULL;
     }
     if (v1_security_context->se_linux_options) {
         v1_se_linux_options_free(v1_security_context->se_linux_options);
@@ -111,7 +174,7 @@ cJSON *v1_security_context_convertToJSON(v1_security_context_t *v1_security_cont
 
     // v1_security_context->allow_privilege_escalation
     if(v1_security_context->allow_privilege_escalation) {
-    if(cJSON_AddBoolToObject(item, "allowPrivilegeEscalation", v1_security_context->allow_privilege_escalation) == NULL) {
+    if(cJSON_AddBoolToObject(item, "allowPrivilegeEscalation", *v1_security_context->allow_privilege_escalation) == NULL) {
     goto fail; //Bool
     }
     }
@@ -145,7 +208,7 @@ cJSON *v1_security_context_convertToJSON(v1_security_context_t *v1_security_cont
 
     // v1_security_context->privileged
     if(v1_security_context->privileged) {
-    if(cJSON_AddBoolToObject(item, "privileged", v1_security_context->privileged) == NULL) {
+    if(cJSON_AddBoolToObject(item, "privileged", *v1_security_context->privileged) == NULL) {
     goto fail; //Bool
     }
     }
@@ -161,7 +224,7 @@ cJSON *v1_security_context_convertToJSON(v1_security_context_t *v1_security_cont
 
     // v1_security_context->read_only_root_filesystem
     if(v1_security_context->read_only_root_filesystem) {
-    if(cJSON_AddBoolToObject(item, "readOnlyRootFilesystem", v1_security_context->read_only_root_filesystem) == NULL) {
+    if(cJSON_AddBoolToObject(item, "readOnlyRootFilesystem", *v1_security_context->read_only_root_filesystem) == NULL) {
     goto fail; //Bool
     }
     }
@@ -169,7 +232,7 @@ cJSON *v1_security_context_convertToJSON(v1_security_context_t *v1_security_cont
 
     // v1_security_context->run_as_group
     if(v1_security_context->run_as_group) {
-    if(cJSON_AddNumberToObject(item, "runAsGroup", v1_security_context->run_as_group) == NULL) {
+    if(cJSON_AddNumberToObject(item, "runAsGroup", *v1_security_context->run_as_group) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -177,7 +240,7 @@ cJSON *v1_security_context_convertToJSON(v1_security_context_t *v1_security_cont
 
     // v1_security_context->run_as_non_root
     if(v1_security_context->run_as_non_root) {
-    if(cJSON_AddBoolToObject(item, "runAsNonRoot", v1_security_context->run_as_non_root) == NULL) {
+    if(cJSON_AddBoolToObject(item, "runAsNonRoot", *v1_security_context->run_as_non_root) == NULL) {
     goto fail; //Bool
     }
     }
@@ -185,7 +248,7 @@ cJSON *v1_security_context_convertToJSON(v1_security_context_t *v1_security_cont
 
     // v1_security_context->run_as_user
     if(v1_security_context->run_as_user) {
-    if(cJSON_AddNumberToObject(item, "runAsUser", v1_security_context->run_as_user) == NULL) {
+    if(cJSON_AddNumberToObject(item, "runAsUser", *v1_security_context->run_as_user) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -241,11 +304,31 @@ v1_security_context_t *v1_security_context_parseFromJSON(cJSON *v1_security_cont
 
     v1_security_context_t *v1_security_context_local_var = NULL;
 
+    // define the local variable for v1_security_context->allow_privilege_escalation
+    int *allow_privilege_escalation_local_var = NULL;
+
     // define the local variable for v1_security_context->app_armor_profile
     v1_app_armor_profile_t *app_armor_profile_local_nonprim = NULL;
 
     // define the local variable for v1_security_context->capabilities
     v1_capabilities_t *capabilities_local_nonprim = NULL;
+
+    // define the local variable for v1_security_context->privileged
+    int *privileged_local_var = NULL;
+
+    char *proc_mount_local_str = NULL;
+
+    // define the local variable for v1_security_context->read_only_root_filesystem
+    int *read_only_root_filesystem_local_var = NULL;
+
+    // define the local variable for v1_security_context->run_as_group
+    long *run_as_group_local_var = NULL;
+
+    // define the local variable for v1_security_context->run_as_non_root
+    int *run_as_non_root_local_var = NULL;
+
+    // define the local variable for v1_security_context->run_as_user
+    long *run_as_user_local_var = NULL;
 
     // define the local variable for v1_security_context->se_linux_options
     v1_se_linux_options_t *se_linux_options_local_nonprim = NULL;
@@ -266,6 +349,12 @@ v1_security_context_t *v1_security_context_parseFromJSON(cJSON *v1_security_cont
     {
     goto end; //Bool
     }
+    allow_privilege_escalation_local_var = malloc(sizeof(int));
+    if(!allow_privilege_escalation_local_var)
+    {
+        goto end;
+    }
+    *allow_privilege_escalation_local_var = allow_privilege_escalation->valueint;
     }
 
     // v1_security_context->app_armor_profile
@@ -296,6 +385,12 @@ v1_security_context_t *v1_security_context_parseFromJSON(cJSON *v1_security_cont
     {
     goto end; //Bool
     }
+    privileged_local_var = malloc(sizeof(int));
+    if(!privileged_local_var)
+    {
+        goto end;
+    }
+    *privileged_local_var = privileged->valueint;
     }
 
     // v1_security_context->proc_mount
@@ -320,6 +415,12 @@ v1_security_context_t *v1_security_context_parseFromJSON(cJSON *v1_security_cont
     {
     goto end; //Bool
     }
+    read_only_root_filesystem_local_var = malloc(sizeof(int));
+    if(!read_only_root_filesystem_local_var)
+    {
+        goto end;
+    }
+    *read_only_root_filesystem_local_var = read_only_root_filesystem->valueint;
     }
 
     // v1_security_context->run_as_group
@@ -332,6 +433,12 @@ v1_security_context_t *v1_security_context_parseFromJSON(cJSON *v1_security_cont
     {
     goto end; //Numeric
     }
+    run_as_group_local_var = malloc(sizeof(long));
+    if(!run_as_group_local_var)
+    {
+        goto end;
+    }
+    *run_as_group_local_var = run_as_group->valuedouble;
     }
 
     // v1_security_context->run_as_non_root
@@ -344,6 +451,12 @@ v1_security_context_t *v1_security_context_parseFromJSON(cJSON *v1_security_cont
     {
     goto end; //Bool
     }
+    run_as_non_root_local_var = malloc(sizeof(int));
+    if(!run_as_non_root_local_var)
+    {
+        goto end;
+    }
+    *run_as_non_root_local_var = run_as_non_root->valueint;
     }
 
     // v1_security_context->run_as_user
@@ -356,6 +469,12 @@ v1_security_context_t *v1_security_context_parseFromJSON(cJSON *v1_security_cont
     {
     goto end; //Numeric
     }
+    run_as_user_local_var = malloc(sizeof(long));
+    if(!run_as_user_local_var)
+    {
+        goto end;
+    }
+    *run_as_user_local_var = run_as_user->valuedouble;
     }
 
     // v1_security_context->se_linux_options
@@ -386,23 +505,33 @@ v1_security_context_t *v1_security_context_parseFromJSON(cJSON *v1_security_cont
     }
 
 
+    if (proc_mount && !cJSON_IsNull(proc_mount)) proc_mount_local_str = strdup(proc_mount->valuestring);
+
     v1_security_context_local_var = v1_security_context_create_internal (
-        allow_privilege_escalation ? allow_privilege_escalation->valueint : 0,
+        allow_privilege_escalation_local_var,
         app_armor_profile ? app_armor_profile_local_nonprim : NULL,
         capabilities ? capabilities_local_nonprim : NULL,
-        privileged ? privileged->valueint : 0,
-        proc_mount && !cJSON_IsNull(proc_mount) ? strdup(proc_mount->valuestring) : NULL,
-        read_only_root_filesystem ? read_only_root_filesystem->valueint : 0,
-        run_as_group ? run_as_group->valuedouble : 0,
-        run_as_non_root ? run_as_non_root->valueint : 0,
-        run_as_user ? run_as_user->valuedouble : 0,
+        privileged_local_var,
+        proc_mount_local_str,
+        read_only_root_filesystem_local_var,
+        run_as_group_local_var,
+        run_as_non_root_local_var,
+        run_as_user_local_var,
         se_linux_options ? se_linux_options_local_nonprim : NULL,
         seccomp_profile ? seccomp_profile_local_nonprim : NULL,
         windows_options ? windows_options_local_nonprim : NULL
         );
 
+    if (!v1_security_context_local_var) {
+        goto end;
+    }
+
     return v1_security_context_local_var;
 end:
+    if (allow_privilege_escalation_local_var) {
+        free(allow_privilege_escalation_local_var);
+        allow_privilege_escalation_local_var = NULL;
+    }
     if (app_armor_profile_local_nonprim) {
         v1_app_armor_profile_free(app_armor_profile_local_nonprim);
         app_armor_profile_local_nonprim = NULL;
@@ -410,6 +539,30 @@ end:
     if (capabilities_local_nonprim) {
         v1_capabilities_free(capabilities_local_nonprim);
         capabilities_local_nonprim = NULL;
+    }
+    if (privileged_local_var) {
+        free(privileged_local_var);
+        privileged_local_var = NULL;
+    }
+    if (proc_mount_local_str) {
+        free(proc_mount_local_str);
+        proc_mount_local_str = NULL;
+    }
+    if (read_only_root_filesystem_local_var) {
+        free(read_only_root_filesystem_local_var);
+        read_only_root_filesystem_local_var = NULL;
+    }
+    if (run_as_group_local_var) {
+        free(run_as_group_local_var);
+        run_as_group_local_var = NULL;
+    }
+    if (run_as_non_root_local_var) {
+        free(run_as_non_root_local_var);
+        run_as_non_root_local_var = NULL;
+    }
+    if (run_as_user_local_var) {
+        free(run_as_user_local_var);
+        run_as_user_local_var = NULL;
     }
     if (se_linux_options_local_nonprim) {
         v1_se_linux_options_free(se_linux_options_local_nonprim);

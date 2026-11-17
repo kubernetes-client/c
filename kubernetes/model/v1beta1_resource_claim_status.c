@@ -14,11 +14,11 @@ static v1beta1_resource_claim_status_t *v1beta1_resource_claim_status_create_int
     if (!v1beta1_resource_claim_status_local_var) {
         return NULL;
     }
+    memset(v1beta1_resource_claim_status_local_var, 0, sizeof(v1beta1_resource_claim_status_t));
+    v1beta1_resource_claim_status_local_var->_library_owned = 1;
     v1beta1_resource_claim_status_local_var->allocation = allocation;
     v1beta1_resource_claim_status_local_var->devices = devices;
     v1beta1_resource_claim_status_local_var->reserved_for = reserved_for;
-
-    v1beta1_resource_claim_status_local_var->_library_owned = 1;
     return v1beta1_resource_claim_status_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1beta1_resource_claim_status_t *v1beta1_resource_cl
     list_t *devices,
     list_t *reserved_for
     ) {
-    return v1beta1_resource_claim_status_create_internal (
+    v1beta1_resource_claim_status_t *result = v1beta1_resource_claim_status_create_internal (
         allocation,
         devices,
         reserved_for
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1beta1_resource_claim_status_free(v1beta1_resource_claim_status_t *v1beta1_resource_claim_status) {
@@ -198,11 +201,16 @@ v1beta1_resource_claim_status_t *v1beta1_resource_claim_status_parseFromJSON(cJS
     }
 
 
+
     v1beta1_resource_claim_status_local_var = v1beta1_resource_claim_status_create_internal (
         allocation ? allocation_local_nonprim : NULL,
         devices ? devicesList : NULL,
         reserved_for ? reserved_forList : NULL
         );
+
+    if (!v1beta1_resource_claim_status_local_var) {
+        goto end;
+    }
 
     return v1beta1_resource_claim_status_local_var;
 end:

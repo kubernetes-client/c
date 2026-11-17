@@ -12,18 +12,21 @@ static v1_for_node_t *v1_for_node_create_internal(
     if (!v1_for_node_local_var) {
         return NULL;
     }
-    v1_for_node_local_var->name = name;
-
+    memset(v1_for_node_local_var, 0, sizeof(v1_for_node_t));
     v1_for_node_local_var->_library_owned = 1;
+    v1_for_node_local_var->name = name;
     return v1_for_node_local_var;
 }
 
 __attribute__((deprecated)) v1_for_node_t *v1_for_node_create(
     char *name
     ) {
-    return v1_for_node_create_internal (
+    v1_for_node_t *result = v1_for_node_create_internal (
         name
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_for_node_free(v1_for_node_t *v1_for_node) {
@@ -65,6 +68,8 @@ v1_for_node_t *v1_for_node_parseFromJSON(cJSON *v1_for_nodeJSON){
 
     v1_for_node_t *v1_for_node_local_var = NULL;
 
+    char *name_local_str = NULL;
+
     // v1_for_node->name
     cJSON *name = cJSON_GetObjectItemCaseSensitive(v1_for_nodeJSON, "name");
     if (cJSON_IsNull(name)) {
@@ -81,12 +86,22 @@ v1_for_node_t *v1_for_node_parseFromJSON(cJSON *v1_for_nodeJSON){
     }
 
 
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v1_for_node_local_var = v1_for_node_create_internal (
-        strdup(name->valuestring)
+        name_local_str
         );
+
+    if (!v1_for_node_local_var) {
+        goto end;
+    }
 
     return v1_for_node_local_var;
 end:
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
     return NULL;
 
 }

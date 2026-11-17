@@ -13,10 +13,10 @@ static v1_volume_device_t *v1_volume_device_create_internal(
     if (!v1_volume_device_local_var) {
         return NULL;
     }
+    memset(v1_volume_device_local_var, 0, sizeof(v1_volume_device_t));
+    v1_volume_device_local_var->_library_owned = 1;
     v1_volume_device_local_var->device_path = device_path;
     v1_volume_device_local_var->name = name;
-
-    v1_volume_device_local_var->_library_owned = 1;
     return v1_volume_device_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_volume_device_t *v1_volume_device_create(
     char *device_path,
     char *name
     ) {
-    return v1_volume_device_create_internal (
+    v1_volume_device_t *result = v1_volume_device_create_internal (
         device_path,
         name
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_volume_device_free(v1_volume_device_t *v1_volume_device) {
@@ -82,6 +85,10 @@ v1_volume_device_t *v1_volume_device_parseFromJSON(cJSON *v1_volume_deviceJSON){
 
     v1_volume_device_t *v1_volume_device_local_var = NULL;
 
+    char *device_path_local_str = NULL;
+
+    char *name_local_str = NULL;
+
     // v1_volume_device->device_path
     cJSON *device_path = cJSON_GetObjectItemCaseSensitive(v1_volume_deviceJSON, "devicePath");
     if (cJSON_IsNull(device_path)) {
@@ -113,13 +120,28 @@ v1_volume_device_t *v1_volume_device_parseFromJSON(cJSON *v1_volume_deviceJSON){
     }
 
 
+    if (device_path && !cJSON_IsNull(device_path)) device_path_local_str = strdup(device_path->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v1_volume_device_local_var = v1_volume_device_create_internal (
-        strdup(device_path->valuestring),
-        strdup(name->valuestring)
+        device_path_local_str,
+        name_local_str
         );
+
+    if (!v1_volume_device_local_var) {
+        goto end;
+    }
 
     return v1_volume_device_local_var;
 end:
+    if (device_path_local_str) {
+        free(device_path_local_str);
+        device_path_local_str = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
     return NULL;
 
 }

@@ -12,18 +12,21 @@ static v1_csi_node_spec_t *v1_csi_node_spec_create_internal(
     if (!v1_csi_node_spec_local_var) {
         return NULL;
     }
-    v1_csi_node_spec_local_var->drivers = drivers;
-
+    memset(v1_csi_node_spec_local_var, 0, sizeof(v1_csi_node_spec_t));
     v1_csi_node_spec_local_var->_library_owned = 1;
+    v1_csi_node_spec_local_var->drivers = drivers;
     return v1_csi_node_spec_local_var;
 }
 
 __attribute__((deprecated)) v1_csi_node_spec_t *v1_csi_node_spec_create(
     list_t *drivers
     ) {
-    return v1_csi_node_spec_create_internal (
+    v1_csi_node_spec_t *result = v1_csi_node_spec_create_internal (
         drivers
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_csi_node_spec_free(v1_csi_node_spec_t *v1_csi_node_spec) {
@@ -111,9 +114,14 @@ v1_csi_node_spec_t *v1_csi_node_spec_parseFromJSON(cJSON *v1_csi_node_specJSON){
     }
 
 
+
     v1_csi_node_spec_local_var = v1_csi_node_spec_create_internal (
         driversList
         );
+
+    if (!v1_csi_node_spec_local_var) {
+        goto end;
+    }
 
     return v1_csi_node_spec_local_var;
 end:

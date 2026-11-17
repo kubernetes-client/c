@@ -17,14 +17,14 @@ static v1_limit_range_item_t *v1_limit_range_item_create_internal(
     if (!v1_limit_range_item_local_var) {
         return NULL;
     }
+    memset(v1_limit_range_item_local_var, 0, sizeof(v1_limit_range_item_t));
+    v1_limit_range_item_local_var->_library_owned = 1;
     v1_limit_range_item_local_var->_default = _default;
     v1_limit_range_item_local_var->default_request = default_request;
     v1_limit_range_item_local_var->max = max;
     v1_limit_range_item_local_var->max_limit_request_ratio = max_limit_request_ratio;
     v1_limit_range_item_local_var->min = min;
     v1_limit_range_item_local_var->type = type;
-
-    v1_limit_range_item_local_var->_library_owned = 1;
     return v1_limit_range_item_local_var;
 }
 
@@ -36,7 +36,7 @@ __attribute__((deprecated)) v1_limit_range_item_t *v1_limit_range_item_create(
     list_t* min,
     char *type
     ) {
-    return v1_limit_range_item_create_internal (
+    v1_limit_range_item_t *result = v1_limit_range_item_create_internal (
         _default,
         default_request,
         max,
@@ -44,6 +44,9 @@ __attribute__((deprecated)) v1_limit_range_item_t *v1_limit_range_item_create(
         min,
         type
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_limit_range_item_free(v1_limit_range_item_t *v1_limit_range_item) {
@@ -250,6 +253,8 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
     // define the local map for v1_limit_range_item->min
     list_t *minList = NULL;
 
+    char *type_local_str = NULL;
+
     // v1_limit_range_item->_default
     cJSON *_default = cJSON_GetObjectItemCaseSensitive(v1_limit_range_itemJSON, "default");
     if (cJSON_IsNull(_default)) {
@@ -406,14 +411,20 @@ v1_limit_range_item_t *v1_limit_range_item_parseFromJSON(cJSON *v1_limit_range_i
     }
 
 
+    if (type && !cJSON_IsNull(type)) type_local_str = strdup(type->valuestring);
+
     v1_limit_range_item_local_var = v1_limit_range_item_create_internal (
         _default ? _defaultList : NULL,
         default_request ? default_requestList : NULL,
         max ? maxList : NULL,
         max_limit_request_ratio ? max_limit_request_ratioList : NULL,
         min ? minList : NULL,
-        strdup(type->valuestring)
+        type_local_str
         );
+
+    if (!v1_limit_range_item_local_var) {
+        goto end;
+    }
 
     return v1_limit_range_item_local_var;
 end:
@@ -486,6 +497,10 @@ end:
         }
         list_freeList(minList);
         minList = NULL;
+    }
+    if (type_local_str) {
+        free(type_local_str);
+        type_local_str = NULL;
     }
     return NULL;
 

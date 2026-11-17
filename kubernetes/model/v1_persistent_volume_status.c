@@ -15,12 +15,12 @@ static v1_persistent_volume_status_t *v1_persistent_volume_status_create_interna
     if (!v1_persistent_volume_status_local_var) {
         return NULL;
     }
+    memset(v1_persistent_volume_status_local_var, 0, sizeof(v1_persistent_volume_status_t));
+    v1_persistent_volume_status_local_var->_library_owned = 1;
     v1_persistent_volume_status_local_var->last_phase_transition_time = last_phase_transition_time;
     v1_persistent_volume_status_local_var->message = message;
     v1_persistent_volume_status_local_var->phase = phase;
     v1_persistent_volume_status_local_var->reason = reason;
-
-    v1_persistent_volume_status_local_var->_library_owned = 1;
     return v1_persistent_volume_status_local_var;
 }
 
@@ -30,12 +30,15 @@ __attribute__((deprecated)) v1_persistent_volume_status_t *v1_persistent_volume_
     char *phase,
     char *reason
     ) {
-    return v1_persistent_volume_status_create_internal (
+    v1_persistent_volume_status_t *result = v1_persistent_volume_status_create_internal (
         last_phase_transition_time,
         message,
         phase,
         reason
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_persistent_volume_status_free(v1_persistent_volume_status_t *v1_persistent_volume_status) {
@@ -112,6 +115,14 @@ v1_persistent_volume_status_t *v1_persistent_volume_status_parseFromJSON(cJSON *
 
     v1_persistent_volume_status_t *v1_persistent_volume_status_local_var = NULL;
 
+    char *last_phase_transition_time_local_str = NULL;
+
+    char *message_local_str = NULL;
+
+    char *phase_local_str = NULL;
+
+    char *reason_local_str = NULL;
+
     // v1_persistent_volume_status->last_phase_transition_time
     cJSON *last_phase_transition_time = cJSON_GetObjectItemCaseSensitive(v1_persistent_volume_statusJSON, "lastPhaseTransitionTime");
     if (cJSON_IsNull(last_phase_transition_time)) {
@@ -161,15 +172,40 @@ v1_persistent_volume_status_t *v1_persistent_volume_status_parseFromJSON(cJSON *
     }
 
 
+    if (last_phase_transition_time && !cJSON_IsNull(last_phase_transition_time)) last_phase_transition_time_local_str = strdup(last_phase_transition_time->valuestring);
+    if (message && !cJSON_IsNull(message)) message_local_str = strdup(message->valuestring);
+    if (phase && !cJSON_IsNull(phase)) phase_local_str = strdup(phase->valuestring);
+    if (reason && !cJSON_IsNull(reason)) reason_local_str = strdup(reason->valuestring);
+
     v1_persistent_volume_status_local_var = v1_persistent_volume_status_create_internal (
-        last_phase_transition_time && !cJSON_IsNull(last_phase_transition_time) ? strdup(last_phase_transition_time->valuestring) : NULL,
-        message && !cJSON_IsNull(message) ? strdup(message->valuestring) : NULL,
-        phase && !cJSON_IsNull(phase) ? strdup(phase->valuestring) : NULL,
-        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL
+        last_phase_transition_time_local_str,
+        message_local_str,
+        phase_local_str,
+        reason_local_str
         );
+
+    if (!v1_persistent_volume_status_local_var) {
+        goto end;
+    }
 
     return v1_persistent_volume_status_local_var;
 end:
+    if (last_phase_transition_time_local_str) {
+        free(last_phase_transition_time_local_str);
+        last_phase_transition_time_local_str = NULL;
+    }
+    if (message_local_str) {
+        free(message_local_str);
+        message_local_str = NULL;
+    }
+    if (phase_local_str) {
+        free(phase_local_str);
+        phase_local_str = NULL;
+    }
+    if (reason_local_str) {
+        free(reason_local_str);
+        reason_local_str = NULL;
+    }
     return NULL;
 
 }

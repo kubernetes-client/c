@@ -6,8 +6,8 @@
 
 
 static v1_subject_access_review_status_t *v1_subject_access_review_status_create_internal(
-    int allowed,
-    int denied,
+    int *allowed,
+    int *denied,
     char *evaluation_error,
     char *reason
     ) {
@@ -15,27 +15,42 @@ static v1_subject_access_review_status_t *v1_subject_access_review_status_create
     if (!v1_subject_access_review_status_local_var) {
         return NULL;
     }
+    memset(v1_subject_access_review_status_local_var, 0, sizeof(v1_subject_access_review_status_t));
+    v1_subject_access_review_status_local_var->_library_owned = 1;
     v1_subject_access_review_status_local_var->allowed = allowed;
     v1_subject_access_review_status_local_var->denied = denied;
     v1_subject_access_review_status_local_var->evaluation_error = evaluation_error;
     v1_subject_access_review_status_local_var->reason = reason;
-
-    v1_subject_access_review_status_local_var->_library_owned = 1;
     return v1_subject_access_review_status_local_var;
 }
 
 __attribute__((deprecated)) v1_subject_access_review_status_t *v1_subject_access_review_status_create(
-    int allowed,
-    int denied,
+    int *allowed,
+    int *denied,
     char *evaluation_error,
     char *reason
     ) {
-    return v1_subject_access_review_status_create_internal (
-        allowed,
-        denied,
+    int *allowed_copy = NULL;
+    if (allowed) {
+        allowed_copy = malloc(sizeof(int));
+        if (allowed_copy) *allowed_copy = *allowed;
+    }
+    int *denied_copy = NULL;
+    if (denied) {
+        denied_copy = malloc(sizeof(int));
+        if (denied_copy) *denied_copy = *denied;
+    }
+    v1_subject_access_review_status_t *result = v1_subject_access_review_status_create_internal (
+        allowed_copy,
+        denied_copy,
         evaluation_error,
         reason
         );
+    if (!result) {
+        free(allowed_copy);
+        free(denied_copy);
+    }
+    return result;
 }
 
 void v1_subject_access_review_status_free(v1_subject_access_review_status_t *v1_subject_access_review_status) {
@@ -47,6 +62,14 @@ void v1_subject_access_review_status_free(v1_subject_access_review_status_t *v1_
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_subject_access_review_status->allowed) {
+        free(v1_subject_access_review_status->allowed);
+        v1_subject_access_review_status->allowed = NULL;
+    }
+    if (v1_subject_access_review_status->denied) {
+        free(v1_subject_access_review_status->denied);
+        v1_subject_access_review_status->denied = NULL;
+    }
     if (v1_subject_access_review_status->evaluation_error) {
         free(v1_subject_access_review_status->evaluation_error);
         v1_subject_access_review_status->evaluation_error = NULL;
@@ -65,14 +88,14 @@ cJSON *v1_subject_access_review_status_convertToJSON(v1_subject_access_review_st
     if (!v1_subject_access_review_status->allowed) {
         goto fail;
     }
-    if(cJSON_AddBoolToObject(item, "allowed", v1_subject_access_review_status->allowed) == NULL) {
+    if(cJSON_AddBoolToObject(item, "allowed", *v1_subject_access_review_status->allowed) == NULL) {
     goto fail; //Bool
     }
 
 
     // v1_subject_access_review_status->denied
     if(v1_subject_access_review_status->denied) {
-    if(cJSON_AddBoolToObject(item, "denied", v1_subject_access_review_status->denied) == NULL) {
+    if(cJSON_AddBoolToObject(item, "denied", *v1_subject_access_review_status->denied) == NULL) {
     goto fail; //Bool
     }
     }
@@ -105,6 +128,16 @@ v1_subject_access_review_status_t *v1_subject_access_review_status_parseFromJSON
 
     v1_subject_access_review_status_t *v1_subject_access_review_status_local_var = NULL;
 
+    // define the local variable for v1_subject_access_review_status->allowed
+    int *allowed_local_var = NULL;
+
+    // define the local variable for v1_subject_access_review_status->denied
+    int *denied_local_var = NULL;
+
+    char *evaluation_error_local_str = NULL;
+
+    char *reason_local_str = NULL;
+
     // v1_subject_access_review_status->allowed
     cJSON *allowed = cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_statusJSON, "allowed");
     if (cJSON_IsNull(allowed)) {
@@ -119,6 +152,12 @@ v1_subject_access_review_status_t *v1_subject_access_review_status_parseFromJSON
     {
     goto end; //Bool
     }
+    allowed_local_var = malloc(sizeof(int));
+    if(!allowed_local_var)
+    {
+        goto end;
+    }
+    *allowed_local_var = allowed->valueint;
 
     // v1_subject_access_review_status->denied
     cJSON *denied = cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_statusJSON, "denied");
@@ -130,6 +169,12 @@ v1_subject_access_review_status_t *v1_subject_access_review_status_parseFromJSON
     {
     goto end; //Bool
     }
+    denied_local_var = malloc(sizeof(int));
+    if(!denied_local_var)
+    {
+        goto end;
+    }
+    *denied_local_var = denied->valueint;
     }
 
     // v1_subject_access_review_status->evaluation_error
@@ -157,15 +202,38 @@ v1_subject_access_review_status_t *v1_subject_access_review_status_parseFromJSON
     }
 
 
+    if (evaluation_error && !cJSON_IsNull(evaluation_error)) evaluation_error_local_str = strdup(evaluation_error->valuestring);
+    if (reason && !cJSON_IsNull(reason)) reason_local_str = strdup(reason->valuestring);
+
     v1_subject_access_review_status_local_var = v1_subject_access_review_status_create_internal (
-        allowed->valueint,
-        denied ? denied->valueint : 0,
-        evaluation_error && !cJSON_IsNull(evaluation_error) ? strdup(evaluation_error->valuestring) : NULL,
-        reason && !cJSON_IsNull(reason) ? strdup(reason->valuestring) : NULL
+        allowed_local_var,
+        denied_local_var,
+        evaluation_error_local_str,
+        reason_local_str
         );
+
+    if (!v1_subject_access_review_status_local_var) {
+        goto end;
+    }
 
     return v1_subject_access_review_status_local_var;
 end:
+    if (allowed_local_var) {
+        free(allowed_local_var);
+        allowed_local_var = NULL;
+    }
+    if (denied_local_var) {
+        free(denied_local_var);
+        denied_local_var = NULL;
+    }
+    if (evaluation_error_local_str) {
+        free(evaluation_error_local_str);
+        evaluation_error_local_str = NULL;
+    }
+    if (reason_local_str) {
+        free(reason_local_str);
+        reason_local_str = NULL;
+    }
     return NULL;
 
 }

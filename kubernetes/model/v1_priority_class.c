@@ -8,16 +8,18 @@
 static v1_priority_class_t *v1_priority_class_create_internal(
     char *api_version,
     char *description,
-    int global_default,
+    int *global_default,
     char *kind,
     v1_object_meta_t *metadata,
     char *preemption_policy,
-    int value
+    int *value
     ) {
     v1_priority_class_t *v1_priority_class_local_var = malloc(sizeof(v1_priority_class_t));
     if (!v1_priority_class_local_var) {
         return NULL;
     }
+    memset(v1_priority_class_local_var, 0, sizeof(v1_priority_class_t));
+    v1_priority_class_local_var->_library_owned = 1;
     v1_priority_class_local_var->api_version = api_version;
     v1_priority_class_local_var->description = description;
     v1_priority_class_local_var->global_default = global_default;
@@ -25,29 +27,42 @@ static v1_priority_class_t *v1_priority_class_create_internal(
     v1_priority_class_local_var->metadata = metadata;
     v1_priority_class_local_var->preemption_policy = preemption_policy;
     v1_priority_class_local_var->value = value;
-
-    v1_priority_class_local_var->_library_owned = 1;
     return v1_priority_class_local_var;
 }
 
 __attribute__((deprecated)) v1_priority_class_t *v1_priority_class_create(
     char *api_version,
     char *description,
-    int global_default,
+    int *global_default,
     char *kind,
     v1_object_meta_t *metadata,
     char *preemption_policy,
-    int value
+    int *value
     ) {
-    return v1_priority_class_create_internal (
+    int *global_default_copy = NULL;
+    if (global_default) {
+        global_default_copy = malloc(sizeof(int));
+        if (global_default_copy) *global_default_copy = *global_default;
+    }
+    int *value_copy = NULL;
+    if (value) {
+        value_copy = malloc(sizeof(int));
+        if (value_copy) *value_copy = *value;
+    }
+    v1_priority_class_t *result = v1_priority_class_create_internal (
         api_version,
         description,
-        global_default,
+        global_default_copy,
         kind,
         metadata,
         preemption_policy,
-        value
+        value_copy
         );
+    if (!result) {
+        free(global_default_copy);
+        free(value_copy);
+    }
+    return result;
 }
 
 void v1_priority_class_free(v1_priority_class_t *v1_priority_class) {
@@ -67,6 +82,10 @@ void v1_priority_class_free(v1_priority_class_t *v1_priority_class) {
         free(v1_priority_class->description);
         v1_priority_class->description = NULL;
     }
+    if (v1_priority_class->global_default) {
+        free(v1_priority_class->global_default);
+        v1_priority_class->global_default = NULL;
+    }
     if (v1_priority_class->kind) {
         free(v1_priority_class->kind);
         v1_priority_class->kind = NULL;
@@ -78,6 +97,10 @@ void v1_priority_class_free(v1_priority_class_t *v1_priority_class) {
     if (v1_priority_class->preemption_policy) {
         free(v1_priority_class->preemption_policy);
         v1_priority_class->preemption_policy = NULL;
+    }
+    if (v1_priority_class->value) {
+        free(v1_priority_class->value);
+        v1_priority_class->value = NULL;
     }
     free(v1_priority_class);
 }
@@ -103,7 +126,7 @@ cJSON *v1_priority_class_convertToJSON(v1_priority_class_t *v1_priority_class) {
 
     // v1_priority_class->global_default
     if(v1_priority_class->global_default) {
-    if(cJSON_AddBoolToObject(item, "globalDefault", v1_priority_class->global_default) == NULL) {
+    if(cJSON_AddBoolToObject(item, "globalDefault", *v1_priority_class->global_default) == NULL) {
     goto fail; //Bool
     }
     }
@@ -139,11 +162,10 @@ cJSON *v1_priority_class_convertToJSON(v1_priority_class_t *v1_priority_class) {
 
 
     // v1_priority_class->value
-    if (!v1_priority_class->value) {
-        goto fail;
-    }
-    if(cJSON_AddNumberToObject(item, "value", v1_priority_class->value) == NULL) {
+    if(v1_priority_class->value) {
+    if(cJSON_AddNumberToObject(item, "value", *v1_priority_class->value) == NULL) {
     goto fail; //Numeric
+    }
     }
 
     return item;
@@ -158,8 +180,22 @@ v1_priority_class_t *v1_priority_class_parseFromJSON(cJSON *v1_priority_classJSO
 
     v1_priority_class_t *v1_priority_class_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
+    char *description_local_str = NULL;
+
+    // define the local variable for v1_priority_class->global_default
+    int *global_default_local_var = NULL;
+
+    char *kind_local_str = NULL;
+
     // define the local variable for v1_priority_class->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
+
+    char *preemption_policy_local_str = NULL;
+
+    // define the local variable for v1_priority_class->value
+    int *value_local_var = NULL;
 
     // v1_priority_class->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_priority_classJSON, "apiVersion");
@@ -195,6 +231,12 @@ v1_priority_class_t *v1_priority_class_parseFromJSON(cJSON *v1_priority_classJSO
     {
     goto end; //Bool
     }
+    global_default_local_var = malloc(sizeof(int));
+    if(!global_default_local_var)
+    {
+        goto end;
+    }
+    *global_default_local_var = global_default->valueint;
     }
 
     // v1_priority_class->kind
@@ -235,32 +277,68 @@ v1_priority_class_t *v1_priority_class_parseFromJSON(cJSON *v1_priority_classJSO
     if (cJSON_IsNull(value)) {
         value = NULL;
     }
-    if (!value) {
-        goto end;
-    }
-
-    
+    if (value) { 
     if(!cJSON_IsNumber(value))
     {
     goto end; //Numeric
     }
+    value_local_var = malloc(sizeof(int));
+    if(!value_local_var)
+    {
+        goto end;
+    }
+    *value_local_var = value->valuedouble;
+    }
 
+
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (description && !cJSON_IsNull(description)) description_local_str = strdup(description->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+    if (preemption_policy && !cJSON_IsNull(preemption_policy)) preemption_policy_local_str = strdup(preemption_policy->valuestring);
 
     v1_priority_class_local_var = v1_priority_class_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        description && !cJSON_IsNull(description) ? strdup(description->valuestring) : NULL,
-        global_default ? global_default->valueint : 0,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version_local_str,
+        description_local_str,
+        global_default_local_var,
+        kind_local_str,
         metadata ? metadata_local_nonprim : NULL,
-        preemption_policy && !cJSON_IsNull(preemption_policy) ? strdup(preemption_policy->valuestring) : NULL,
-        value->valuedouble
+        preemption_policy_local_str,
+        value_local_var
         );
+
+    if (!v1_priority_class_local_var) {
+        goto end;
+    }
 
     return v1_priority_class_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (description_local_str) {
+        free(description_local_str);
+        description_local_str = NULL;
+    }
+    if (global_default_local_var) {
+        free(global_default_local_var);
+        global_default_local_var = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;
+    }
+    if (preemption_policy_local_str) {
+        free(preemption_policy_local_str);
+        preemption_policy_local_str = NULL;
+    }
+    if (value_local_var) {
+        free(value_local_var);
+        value_local_var = NULL;
     }
     return NULL;
 

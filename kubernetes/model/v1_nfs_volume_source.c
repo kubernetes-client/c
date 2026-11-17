@@ -7,31 +7,40 @@
 
 static v1_nfs_volume_source_t *v1_nfs_volume_source_create_internal(
     char *path,
-    int read_only,
+    int *read_only,
     char *server
     ) {
     v1_nfs_volume_source_t *v1_nfs_volume_source_local_var = malloc(sizeof(v1_nfs_volume_source_t));
     if (!v1_nfs_volume_source_local_var) {
         return NULL;
     }
+    memset(v1_nfs_volume_source_local_var, 0, sizeof(v1_nfs_volume_source_t));
+    v1_nfs_volume_source_local_var->_library_owned = 1;
     v1_nfs_volume_source_local_var->path = path;
     v1_nfs_volume_source_local_var->read_only = read_only;
     v1_nfs_volume_source_local_var->server = server;
-
-    v1_nfs_volume_source_local_var->_library_owned = 1;
     return v1_nfs_volume_source_local_var;
 }
 
 __attribute__((deprecated)) v1_nfs_volume_source_t *v1_nfs_volume_source_create(
     char *path,
-    int read_only,
+    int *read_only,
     char *server
     ) {
-    return v1_nfs_volume_source_create_internal (
+    int *read_only_copy = NULL;
+    if (read_only) {
+        read_only_copy = malloc(sizeof(int));
+        if (read_only_copy) *read_only_copy = *read_only;
+    }
+    v1_nfs_volume_source_t *result = v1_nfs_volume_source_create_internal (
         path,
-        read_only,
+        read_only_copy,
         server
         );
+    if (!result) {
+        free(read_only_copy);
+    }
+    return result;
 }
 
 void v1_nfs_volume_source_free(v1_nfs_volume_source_t *v1_nfs_volume_source) {
@@ -46,6 +55,10 @@ void v1_nfs_volume_source_free(v1_nfs_volume_source_t *v1_nfs_volume_source) {
     if (v1_nfs_volume_source->path) {
         free(v1_nfs_volume_source->path);
         v1_nfs_volume_source->path = NULL;
+    }
+    if (v1_nfs_volume_source->read_only) {
+        free(v1_nfs_volume_source->read_only);
+        v1_nfs_volume_source->read_only = NULL;
     }
     if (v1_nfs_volume_source->server) {
         free(v1_nfs_volume_source->server);
@@ -68,7 +81,7 @@ cJSON *v1_nfs_volume_source_convertToJSON(v1_nfs_volume_source_t *v1_nfs_volume_
 
     // v1_nfs_volume_source->read_only
     if(v1_nfs_volume_source->read_only) {
-    if(cJSON_AddBoolToObject(item, "readOnly", v1_nfs_volume_source->read_only) == NULL) {
+    if(cJSON_AddBoolToObject(item, "readOnly", *v1_nfs_volume_source->read_only) == NULL) {
     goto fail; //Bool
     }
     }
@@ -93,6 +106,13 @@ fail:
 v1_nfs_volume_source_t *v1_nfs_volume_source_parseFromJSON(cJSON *v1_nfs_volume_sourceJSON){
 
     v1_nfs_volume_source_t *v1_nfs_volume_source_local_var = NULL;
+
+    char *path_local_str = NULL;
+
+    // define the local variable for v1_nfs_volume_source->read_only
+    int *read_only_local_var = NULL;
+
+    char *server_local_str = NULL;
 
     // v1_nfs_volume_source->path
     cJSON *path = cJSON_GetObjectItemCaseSensitive(v1_nfs_volume_sourceJSON, "path");
@@ -119,6 +139,12 @@ v1_nfs_volume_source_t *v1_nfs_volume_source_parseFromJSON(cJSON *v1_nfs_volume_
     {
     goto end; //Bool
     }
+    read_only_local_var = malloc(sizeof(int));
+    if(!read_only_local_var)
+    {
+        goto end;
+    }
+    *read_only_local_var = read_only->valueint;
     }
 
     // v1_nfs_volume_source->server
@@ -137,14 +163,33 @@ v1_nfs_volume_source_t *v1_nfs_volume_source_parseFromJSON(cJSON *v1_nfs_volume_
     }
 
 
+    if (path && !cJSON_IsNull(path)) path_local_str = strdup(path->valuestring);
+    if (server && !cJSON_IsNull(server)) server_local_str = strdup(server->valuestring);
+
     v1_nfs_volume_source_local_var = v1_nfs_volume_source_create_internal (
-        strdup(path->valuestring),
-        read_only ? read_only->valueint : 0,
-        strdup(server->valuestring)
+        path_local_str,
+        read_only_local_var,
+        server_local_str
         );
+
+    if (!v1_nfs_volume_source_local_var) {
+        goto end;
+    }
 
     return v1_nfs_volume_source_local_var;
 end:
+    if (path_local_str) {
+        free(path_local_str);
+        path_local_str = NULL;
+    }
+    if (read_only_local_var) {
+        free(read_only_local_var);
+        read_only_local_var = NULL;
+    }
+    if (server_local_str) {
+        free(server_local_str);
+        server_local_str = NULL;
+    }
     return NULL;
 
 }

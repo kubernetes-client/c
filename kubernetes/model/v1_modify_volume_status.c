@@ -13,10 +13,10 @@ static v1_modify_volume_status_t *v1_modify_volume_status_create_internal(
     if (!v1_modify_volume_status_local_var) {
         return NULL;
     }
+    memset(v1_modify_volume_status_local_var, 0, sizeof(v1_modify_volume_status_t));
+    v1_modify_volume_status_local_var->_library_owned = 1;
     v1_modify_volume_status_local_var->status = status;
     v1_modify_volume_status_local_var->target_volume_attributes_class_name = target_volume_attributes_class_name;
-
-    v1_modify_volume_status_local_var->_library_owned = 1;
     return v1_modify_volume_status_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_modify_volume_status_t *v1_modify_volume_status_c
     char *status,
     char *target_volume_attributes_class_name
     ) {
-    return v1_modify_volume_status_create_internal (
+    v1_modify_volume_status_t *result = v1_modify_volume_status_create_internal (
         status,
         target_volume_attributes_class_name
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_modify_volume_status_free(v1_modify_volume_status_t *v1_modify_volume_status) {
@@ -81,6 +84,10 @@ v1_modify_volume_status_t *v1_modify_volume_status_parseFromJSON(cJSON *v1_modif
 
     v1_modify_volume_status_t *v1_modify_volume_status_local_var = NULL;
 
+    char *status_local_str = NULL;
+
+    char *target_volume_attributes_class_name_local_str = NULL;
+
     // v1_modify_volume_status->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_modify_volume_statusJSON, "status");
     if (cJSON_IsNull(status)) {
@@ -109,13 +116,28 @@ v1_modify_volume_status_t *v1_modify_volume_status_parseFromJSON(cJSON *v1_modif
     }
 
 
+    if (status && !cJSON_IsNull(status)) status_local_str = strdup(status->valuestring);
+    if (target_volume_attributes_class_name && !cJSON_IsNull(target_volume_attributes_class_name)) target_volume_attributes_class_name_local_str = strdup(target_volume_attributes_class_name->valuestring);
+
     v1_modify_volume_status_local_var = v1_modify_volume_status_create_internal (
-        strdup(status->valuestring),
-        target_volume_attributes_class_name && !cJSON_IsNull(target_volume_attributes_class_name) ? strdup(target_volume_attributes_class_name->valuestring) : NULL
+        status_local_str,
+        target_volume_attributes_class_name_local_str
         );
+
+    if (!v1_modify_volume_status_local_var) {
+        goto end;
+    }
 
     return v1_modify_volume_status_local_var;
 end:
+    if (status_local_str) {
+        free(status_local_str);
+        status_local_str = NULL;
+    }
+    if (target_volume_attributes_class_name_local_str) {
+        free(target_volume_attributes_class_name_local_str);
+        target_volume_attributes_class_name_local_str = NULL;
+    }
     return NULL;
 
 }

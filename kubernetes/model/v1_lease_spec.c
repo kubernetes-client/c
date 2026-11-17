@@ -8,8 +8,8 @@
 static v1_lease_spec_t *v1_lease_spec_create_internal(
     char *acquire_time,
     char *holder_identity,
-    int lease_duration_seconds,
-    int lease_transitions,
+    int *lease_duration_seconds,
+    int *lease_transitions,
     char *preferred_holder,
     char *renew_time,
     char *strategy
@@ -18,6 +18,8 @@ static v1_lease_spec_t *v1_lease_spec_create_internal(
     if (!v1_lease_spec_local_var) {
         return NULL;
     }
+    memset(v1_lease_spec_local_var, 0, sizeof(v1_lease_spec_t));
+    v1_lease_spec_local_var->_library_owned = 1;
     v1_lease_spec_local_var->acquire_time = acquire_time;
     v1_lease_spec_local_var->holder_identity = holder_identity;
     v1_lease_spec_local_var->lease_duration_seconds = lease_duration_seconds;
@@ -25,29 +27,42 @@ static v1_lease_spec_t *v1_lease_spec_create_internal(
     v1_lease_spec_local_var->preferred_holder = preferred_holder;
     v1_lease_spec_local_var->renew_time = renew_time;
     v1_lease_spec_local_var->strategy = strategy;
-
-    v1_lease_spec_local_var->_library_owned = 1;
     return v1_lease_spec_local_var;
 }
 
 __attribute__((deprecated)) v1_lease_spec_t *v1_lease_spec_create(
     char *acquire_time,
     char *holder_identity,
-    int lease_duration_seconds,
-    int lease_transitions,
+    int *lease_duration_seconds,
+    int *lease_transitions,
     char *preferred_holder,
     char *renew_time,
     char *strategy
     ) {
-    return v1_lease_spec_create_internal (
+    int *lease_duration_seconds_copy = NULL;
+    if (lease_duration_seconds) {
+        lease_duration_seconds_copy = malloc(sizeof(int));
+        if (lease_duration_seconds_copy) *lease_duration_seconds_copy = *lease_duration_seconds;
+    }
+    int *lease_transitions_copy = NULL;
+    if (lease_transitions) {
+        lease_transitions_copy = malloc(sizeof(int));
+        if (lease_transitions_copy) *lease_transitions_copy = *lease_transitions;
+    }
+    v1_lease_spec_t *result = v1_lease_spec_create_internal (
         acquire_time,
         holder_identity,
-        lease_duration_seconds,
-        lease_transitions,
+        lease_duration_seconds_copy,
+        lease_transitions_copy,
         preferred_holder,
         renew_time,
         strategy
         );
+    if (!result) {
+        free(lease_duration_seconds_copy);
+        free(lease_transitions_copy);
+    }
+    return result;
 }
 
 void v1_lease_spec_free(v1_lease_spec_t *v1_lease_spec) {
@@ -66,6 +81,14 @@ void v1_lease_spec_free(v1_lease_spec_t *v1_lease_spec) {
     if (v1_lease_spec->holder_identity) {
         free(v1_lease_spec->holder_identity);
         v1_lease_spec->holder_identity = NULL;
+    }
+    if (v1_lease_spec->lease_duration_seconds) {
+        free(v1_lease_spec->lease_duration_seconds);
+        v1_lease_spec->lease_duration_seconds = NULL;
+    }
+    if (v1_lease_spec->lease_transitions) {
+        free(v1_lease_spec->lease_transitions);
+        v1_lease_spec->lease_transitions = NULL;
     }
     if (v1_lease_spec->preferred_holder) {
         free(v1_lease_spec->preferred_holder);
@@ -103,7 +126,7 @@ cJSON *v1_lease_spec_convertToJSON(v1_lease_spec_t *v1_lease_spec) {
 
     // v1_lease_spec->lease_duration_seconds
     if(v1_lease_spec->lease_duration_seconds) {
-    if(cJSON_AddNumberToObject(item, "leaseDurationSeconds", v1_lease_spec->lease_duration_seconds) == NULL) {
+    if(cJSON_AddNumberToObject(item, "leaseDurationSeconds", *v1_lease_spec->lease_duration_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -111,7 +134,7 @@ cJSON *v1_lease_spec_convertToJSON(v1_lease_spec_t *v1_lease_spec) {
 
     // v1_lease_spec->lease_transitions
     if(v1_lease_spec->lease_transitions) {
-    if(cJSON_AddNumberToObject(item, "leaseTransitions", v1_lease_spec->lease_transitions) == NULL) {
+    if(cJSON_AddNumberToObject(item, "leaseTransitions", *v1_lease_spec->lease_transitions) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -152,6 +175,22 @@ v1_lease_spec_t *v1_lease_spec_parseFromJSON(cJSON *v1_lease_specJSON){
 
     v1_lease_spec_t *v1_lease_spec_local_var = NULL;
 
+    char *acquire_time_local_str = NULL;
+
+    char *holder_identity_local_str = NULL;
+
+    // define the local variable for v1_lease_spec->lease_duration_seconds
+    int *lease_duration_seconds_local_var = NULL;
+
+    // define the local variable for v1_lease_spec->lease_transitions
+    int *lease_transitions_local_var = NULL;
+
+    char *preferred_holder_local_str = NULL;
+
+    char *renew_time_local_str = NULL;
+
+    char *strategy_local_str = NULL;
+
     // v1_lease_spec->acquire_time
     cJSON *acquire_time = cJSON_GetObjectItemCaseSensitive(v1_lease_specJSON, "acquireTime");
     if (cJSON_IsNull(acquire_time)) {
@@ -186,6 +225,12 @@ v1_lease_spec_t *v1_lease_spec_parseFromJSON(cJSON *v1_lease_specJSON){
     {
     goto end; //Numeric
     }
+    lease_duration_seconds_local_var = malloc(sizeof(int));
+    if(!lease_duration_seconds_local_var)
+    {
+        goto end;
+    }
+    *lease_duration_seconds_local_var = lease_duration_seconds->valuedouble;
     }
 
     // v1_lease_spec->lease_transitions
@@ -198,6 +243,12 @@ v1_lease_spec_t *v1_lease_spec_parseFromJSON(cJSON *v1_lease_specJSON){
     {
     goto end; //Numeric
     }
+    lease_transitions_local_var = malloc(sizeof(int));
+    if(!lease_transitions_local_var)
+    {
+        goto end;
+    }
+    *lease_transitions_local_var = lease_transitions->valuedouble;
     }
 
     // v1_lease_spec->preferred_holder
@@ -237,18 +288,56 @@ v1_lease_spec_t *v1_lease_spec_parseFromJSON(cJSON *v1_lease_specJSON){
     }
 
 
+    if (acquire_time && !cJSON_IsNull(acquire_time)) acquire_time_local_str = strdup(acquire_time->valuestring);
+    if (holder_identity && !cJSON_IsNull(holder_identity)) holder_identity_local_str = strdup(holder_identity->valuestring);
+    if (preferred_holder && !cJSON_IsNull(preferred_holder)) preferred_holder_local_str = strdup(preferred_holder->valuestring);
+    if (renew_time && !cJSON_IsNull(renew_time)) renew_time_local_str = strdup(renew_time->valuestring);
+    if (strategy && !cJSON_IsNull(strategy)) strategy_local_str = strdup(strategy->valuestring);
+
     v1_lease_spec_local_var = v1_lease_spec_create_internal (
-        acquire_time && !cJSON_IsNull(acquire_time) ? strdup(acquire_time->valuestring) : NULL,
-        holder_identity && !cJSON_IsNull(holder_identity) ? strdup(holder_identity->valuestring) : NULL,
-        lease_duration_seconds ? lease_duration_seconds->valuedouble : 0,
-        lease_transitions ? lease_transitions->valuedouble : 0,
-        preferred_holder && !cJSON_IsNull(preferred_holder) ? strdup(preferred_holder->valuestring) : NULL,
-        renew_time && !cJSON_IsNull(renew_time) ? strdup(renew_time->valuestring) : NULL,
-        strategy && !cJSON_IsNull(strategy) ? strdup(strategy->valuestring) : NULL
+        acquire_time_local_str,
+        holder_identity_local_str,
+        lease_duration_seconds_local_var,
+        lease_transitions_local_var,
+        preferred_holder_local_str,
+        renew_time_local_str,
+        strategy_local_str
         );
+
+    if (!v1_lease_spec_local_var) {
+        goto end;
+    }
 
     return v1_lease_spec_local_var;
 end:
+    if (acquire_time_local_str) {
+        free(acquire_time_local_str);
+        acquire_time_local_str = NULL;
+    }
+    if (holder_identity_local_str) {
+        free(holder_identity_local_str);
+        holder_identity_local_str = NULL;
+    }
+    if (lease_duration_seconds_local_var) {
+        free(lease_duration_seconds_local_var);
+        lease_duration_seconds_local_var = NULL;
+    }
+    if (lease_transitions_local_var) {
+        free(lease_transitions_local_var);
+        lease_transitions_local_var = NULL;
+    }
+    if (preferred_holder_local_str) {
+        free(preferred_holder_local_str);
+        preferred_holder_local_str = NULL;
+    }
+    if (renew_time_local_str) {
+        free(renew_time_local_str);
+        renew_time_local_str = NULL;
+    }
+    if (strategy_local_str) {
+        free(strategy_local_str);
+        strategy_local_str = NULL;
+    }
     return NULL;
 
 }

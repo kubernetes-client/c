@@ -14,11 +14,11 @@ static v1_capacity_request_policy_range_t *v1_capacity_request_policy_range_crea
     if (!v1_capacity_request_policy_range_local_var) {
         return NULL;
     }
+    memset(v1_capacity_request_policy_range_local_var, 0, sizeof(v1_capacity_request_policy_range_t));
+    v1_capacity_request_policy_range_local_var->_library_owned = 1;
     v1_capacity_request_policy_range_local_var->max = max;
     v1_capacity_request_policy_range_local_var->min = min;
     v1_capacity_request_policy_range_local_var->step = step;
-
-    v1_capacity_request_policy_range_local_var->_library_owned = 1;
     return v1_capacity_request_policy_range_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_capacity_request_policy_range_t *v1_capacity_requ
     char *min,
     char *step
     ) {
-    return v1_capacity_request_policy_range_create_internal (
+    v1_capacity_request_policy_range_t *result = v1_capacity_request_policy_range_create_internal (
         max,
         min,
         step
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_capacity_request_policy_range_free(v1_capacity_request_policy_range_t *v1_capacity_request_policy_range) {
@@ -97,6 +100,12 @@ v1_capacity_request_policy_range_t *v1_capacity_request_policy_range_parseFromJS
 
     v1_capacity_request_policy_range_t *v1_capacity_request_policy_range_local_var = NULL;
 
+    char *max_local_str = NULL;
+
+    char *min_local_str = NULL;
+
+    char *step_local_str = NULL;
+
     // v1_capacity_request_policy_range->max
     cJSON *max = cJSON_GetObjectItemCaseSensitive(v1_capacity_request_policy_rangeJSON, "max");
     if (cJSON_IsNull(max)) {
@@ -137,14 +146,34 @@ v1_capacity_request_policy_range_t *v1_capacity_request_policy_range_parseFromJS
     }
 
 
+    if (max && !cJSON_IsNull(max)) max_local_str = strdup(max->valuestring);
+    if (min && !cJSON_IsNull(min)) min_local_str = strdup(min->valuestring);
+    if (step && !cJSON_IsNull(step)) step_local_str = strdup(step->valuestring);
+
     v1_capacity_request_policy_range_local_var = v1_capacity_request_policy_range_create_internal (
-        max && !cJSON_IsNull(max) ? strdup(max->valuestring) : NULL,
-        strdup(min->valuestring),
-        step && !cJSON_IsNull(step) ? strdup(step->valuestring) : NULL
+        max_local_str,
+        min_local_str,
+        step_local_str
         );
+
+    if (!v1_capacity_request_policy_range_local_var) {
+        goto end;
+    }
 
     return v1_capacity_request_policy_range_local_var;
 end:
+    if (max_local_str) {
+        free(max_local_str);
+        max_local_str = NULL;
+    }
+    if (min_local_str) {
+        free(min_local_str);
+        min_local_str = NULL;
+    }
+    if (step_local_str) {
+        free(step_local_str);
+        step_local_str = NULL;
+    }
     return NULL;
 
 }

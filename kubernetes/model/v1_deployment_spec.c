@@ -6,11 +6,11 @@
 
 
 static v1_deployment_spec_t *v1_deployment_spec_create_internal(
-    int min_ready_seconds,
-    int paused,
-    int progress_deadline_seconds,
-    int replicas,
-    int revision_history_limit,
+    int *min_ready_seconds,
+    int *paused,
+    int *progress_deadline_seconds,
+    int *replicas,
+    int *revision_history_limit,
     v1_label_selector_t *selector,
     v1_deployment_strategy_t *strategy,
     v1_pod_template_spec_t *_template
@@ -19,6 +19,8 @@ static v1_deployment_spec_t *v1_deployment_spec_create_internal(
     if (!v1_deployment_spec_local_var) {
         return NULL;
     }
+    memset(v1_deployment_spec_local_var, 0, sizeof(v1_deployment_spec_t));
+    v1_deployment_spec_local_var->_library_owned = 1;
     v1_deployment_spec_local_var->min_ready_seconds = min_ready_seconds;
     v1_deployment_spec_local_var->paused = paused;
     v1_deployment_spec_local_var->progress_deadline_seconds = progress_deadline_seconds;
@@ -27,31 +29,62 @@ static v1_deployment_spec_t *v1_deployment_spec_create_internal(
     v1_deployment_spec_local_var->selector = selector;
     v1_deployment_spec_local_var->strategy = strategy;
     v1_deployment_spec_local_var->_template = _template;
-
-    v1_deployment_spec_local_var->_library_owned = 1;
     return v1_deployment_spec_local_var;
 }
 
 __attribute__((deprecated)) v1_deployment_spec_t *v1_deployment_spec_create(
-    int min_ready_seconds,
-    int paused,
-    int progress_deadline_seconds,
-    int replicas,
-    int revision_history_limit,
+    int *min_ready_seconds,
+    int *paused,
+    int *progress_deadline_seconds,
+    int *replicas,
+    int *revision_history_limit,
     v1_label_selector_t *selector,
     v1_deployment_strategy_t *strategy,
     v1_pod_template_spec_t *_template
     ) {
-    return v1_deployment_spec_create_internal (
-        min_ready_seconds,
-        paused,
-        progress_deadline_seconds,
-        replicas,
-        revision_history_limit,
+    int *min_ready_seconds_copy = NULL;
+    if (min_ready_seconds) {
+        min_ready_seconds_copy = malloc(sizeof(int));
+        if (min_ready_seconds_copy) *min_ready_seconds_copy = *min_ready_seconds;
+    }
+    int *paused_copy = NULL;
+    if (paused) {
+        paused_copy = malloc(sizeof(int));
+        if (paused_copy) *paused_copy = *paused;
+    }
+    int *progress_deadline_seconds_copy = NULL;
+    if (progress_deadline_seconds) {
+        progress_deadline_seconds_copy = malloc(sizeof(int));
+        if (progress_deadline_seconds_copy) *progress_deadline_seconds_copy = *progress_deadline_seconds;
+    }
+    int *replicas_copy = NULL;
+    if (replicas) {
+        replicas_copy = malloc(sizeof(int));
+        if (replicas_copy) *replicas_copy = *replicas;
+    }
+    int *revision_history_limit_copy = NULL;
+    if (revision_history_limit) {
+        revision_history_limit_copy = malloc(sizeof(int));
+        if (revision_history_limit_copy) *revision_history_limit_copy = *revision_history_limit;
+    }
+    v1_deployment_spec_t *result = v1_deployment_spec_create_internal (
+        min_ready_seconds_copy,
+        paused_copy,
+        progress_deadline_seconds_copy,
+        replicas_copy,
+        revision_history_limit_copy,
         selector,
         strategy,
         _template
         );
+    if (!result) {
+        free(min_ready_seconds_copy);
+        free(paused_copy);
+        free(progress_deadline_seconds_copy);
+        free(replicas_copy);
+        free(revision_history_limit_copy);
+    }
+    return result;
 }
 
 void v1_deployment_spec_free(v1_deployment_spec_t *v1_deployment_spec) {
@@ -63,6 +96,26 @@ void v1_deployment_spec_free(v1_deployment_spec_t *v1_deployment_spec) {
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_deployment_spec->min_ready_seconds) {
+        free(v1_deployment_spec->min_ready_seconds);
+        v1_deployment_spec->min_ready_seconds = NULL;
+    }
+    if (v1_deployment_spec->paused) {
+        free(v1_deployment_spec->paused);
+        v1_deployment_spec->paused = NULL;
+    }
+    if (v1_deployment_spec->progress_deadline_seconds) {
+        free(v1_deployment_spec->progress_deadline_seconds);
+        v1_deployment_spec->progress_deadline_seconds = NULL;
+    }
+    if (v1_deployment_spec->replicas) {
+        free(v1_deployment_spec->replicas);
+        v1_deployment_spec->replicas = NULL;
+    }
+    if (v1_deployment_spec->revision_history_limit) {
+        free(v1_deployment_spec->revision_history_limit);
+        v1_deployment_spec->revision_history_limit = NULL;
+    }
     if (v1_deployment_spec->selector) {
         v1_label_selector_free(v1_deployment_spec->selector);
         v1_deployment_spec->selector = NULL;
@@ -83,7 +136,7 @@ cJSON *v1_deployment_spec_convertToJSON(v1_deployment_spec_t *v1_deployment_spec
 
     // v1_deployment_spec->min_ready_seconds
     if(v1_deployment_spec->min_ready_seconds) {
-    if(cJSON_AddNumberToObject(item, "minReadySeconds", v1_deployment_spec->min_ready_seconds) == NULL) {
+    if(cJSON_AddNumberToObject(item, "minReadySeconds", *v1_deployment_spec->min_ready_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -91,7 +144,7 @@ cJSON *v1_deployment_spec_convertToJSON(v1_deployment_spec_t *v1_deployment_spec
 
     // v1_deployment_spec->paused
     if(v1_deployment_spec->paused) {
-    if(cJSON_AddBoolToObject(item, "paused", v1_deployment_spec->paused) == NULL) {
+    if(cJSON_AddBoolToObject(item, "paused", *v1_deployment_spec->paused) == NULL) {
     goto fail; //Bool
     }
     }
@@ -99,7 +152,7 @@ cJSON *v1_deployment_spec_convertToJSON(v1_deployment_spec_t *v1_deployment_spec
 
     // v1_deployment_spec->progress_deadline_seconds
     if(v1_deployment_spec->progress_deadline_seconds) {
-    if(cJSON_AddNumberToObject(item, "progressDeadlineSeconds", v1_deployment_spec->progress_deadline_seconds) == NULL) {
+    if(cJSON_AddNumberToObject(item, "progressDeadlineSeconds", *v1_deployment_spec->progress_deadline_seconds) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -107,7 +160,7 @@ cJSON *v1_deployment_spec_convertToJSON(v1_deployment_spec_t *v1_deployment_spec
 
     // v1_deployment_spec->replicas
     if(v1_deployment_spec->replicas) {
-    if(cJSON_AddNumberToObject(item, "replicas", v1_deployment_spec->replicas) == NULL) {
+    if(cJSON_AddNumberToObject(item, "replicas", *v1_deployment_spec->replicas) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -115,7 +168,7 @@ cJSON *v1_deployment_spec_convertToJSON(v1_deployment_spec_t *v1_deployment_spec
 
     // v1_deployment_spec->revision_history_limit
     if(v1_deployment_spec->revision_history_limit) {
-    if(cJSON_AddNumberToObject(item, "revisionHistoryLimit", v1_deployment_spec->revision_history_limit) == NULL) {
+    if(cJSON_AddNumberToObject(item, "revisionHistoryLimit", *v1_deployment_spec->revision_history_limit) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -173,6 +226,21 @@ v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(cJSON *v1_deployment_spec
 
     v1_deployment_spec_t *v1_deployment_spec_local_var = NULL;
 
+    // define the local variable for v1_deployment_spec->min_ready_seconds
+    int *min_ready_seconds_local_var = NULL;
+
+    // define the local variable for v1_deployment_spec->paused
+    int *paused_local_var = NULL;
+
+    // define the local variable for v1_deployment_spec->progress_deadline_seconds
+    int *progress_deadline_seconds_local_var = NULL;
+
+    // define the local variable for v1_deployment_spec->replicas
+    int *replicas_local_var = NULL;
+
+    // define the local variable for v1_deployment_spec->revision_history_limit
+    int *revision_history_limit_local_var = NULL;
+
     // define the local variable for v1_deployment_spec->selector
     v1_label_selector_t *selector_local_nonprim = NULL;
 
@@ -192,6 +260,12 @@ v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(cJSON *v1_deployment_spec
     {
     goto end; //Numeric
     }
+    min_ready_seconds_local_var = malloc(sizeof(int));
+    if(!min_ready_seconds_local_var)
+    {
+        goto end;
+    }
+    *min_ready_seconds_local_var = min_ready_seconds->valuedouble;
     }
 
     // v1_deployment_spec->paused
@@ -204,6 +278,12 @@ v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(cJSON *v1_deployment_spec
     {
     goto end; //Bool
     }
+    paused_local_var = malloc(sizeof(int));
+    if(!paused_local_var)
+    {
+        goto end;
+    }
+    *paused_local_var = paused->valueint;
     }
 
     // v1_deployment_spec->progress_deadline_seconds
@@ -216,6 +296,12 @@ v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(cJSON *v1_deployment_spec
     {
     goto end; //Numeric
     }
+    progress_deadline_seconds_local_var = malloc(sizeof(int));
+    if(!progress_deadline_seconds_local_var)
+    {
+        goto end;
+    }
+    *progress_deadline_seconds_local_var = progress_deadline_seconds->valuedouble;
     }
 
     // v1_deployment_spec->replicas
@@ -228,6 +314,12 @@ v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(cJSON *v1_deployment_spec
     {
     goto end; //Numeric
     }
+    replicas_local_var = malloc(sizeof(int));
+    if(!replicas_local_var)
+    {
+        goto end;
+    }
+    *replicas_local_var = replicas->valuedouble;
     }
 
     // v1_deployment_spec->revision_history_limit
@@ -240,6 +332,12 @@ v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(cJSON *v1_deployment_spec
     {
     goto end; //Numeric
     }
+    revision_history_limit_local_var = malloc(sizeof(int));
+    if(!revision_history_limit_local_var)
+    {
+        goto end;
+    }
+    *revision_history_limit_local_var = revision_history_limit->valuedouble;
     }
 
     // v1_deployment_spec->selector
@@ -276,19 +374,44 @@ v1_deployment_spec_t *v1_deployment_spec_parseFromJSON(cJSON *v1_deployment_spec
     _template_local_nonprim = v1_pod_template_spec_parseFromJSON(_template); //nonprimitive
 
 
+
     v1_deployment_spec_local_var = v1_deployment_spec_create_internal (
-        min_ready_seconds ? min_ready_seconds->valuedouble : 0,
-        paused ? paused->valueint : 0,
-        progress_deadline_seconds ? progress_deadline_seconds->valuedouble : 0,
-        replicas ? replicas->valuedouble : 0,
-        revision_history_limit ? revision_history_limit->valuedouble : 0,
+        min_ready_seconds_local_var,
+        paused_local_var,
+        progress_deadline_seconds_local_var,
+        replicas_local_var,
+        revision_history_limit_local_var,
         selector_local_nonprim,
         strategy ? strategy_local_nonprim : NULL,
         _template_local_nonprim
         );
 
+    if (!v1_deployment_spec_local_var) {
+        goto end;
+    }
+
     return v1_deployment_spec_local_var;
 end:
+    if (min_ready_seconds_local_var) {
+        free(min_ready_seconds_local_var);
+        min_ready_seconds_local_var = NULL;
+    }
+    if (paused_local_var) {
+        free(paused_local_var);
+        paused_local_var = NULL;
+    }
+    if (progress_deadline_seconds_local_var) {
+        free(progress_deadline_seconds_local_var);
+        progress_deadline_seconds_local_var = NULL;
+    }
+    if (replicas_local_var) {
+        free(replicas_local_var);
+        replicas_local_var = NULL;
+    }
+    if (revision_history_limit_local_var) {
+        free(revision_history_limit_local_var);
+        revision_history_limit_local_var = NULL;
+    }
     if (selector_local_nonprim) {
         v1_label_selector_free(selector_local_nonprim);
         selector_local_nonprim = NULL;

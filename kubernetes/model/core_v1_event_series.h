@@ -19,14 +19,14 @@ typedef struct core_v1_event_series_t core_v1_event_series_t;
 
 
 typedef struct core_v1_event_series_t {
-    int count; //numeric
+    int *count; //numeric
     char *last_observed_time; //date time
 
     int _library_owned; // Is the library responsible for freeing this object?
 } core_v1_event_series_t;
 
 __attribute__((deprecated)) core_v1_event_series_t *core_v1_event_series_create(
-    int count,
+    int *count,
     char *last_observed_time
 );
 

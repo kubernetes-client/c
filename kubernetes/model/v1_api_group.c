@@ -17,14 +17,14 @@ static v1_api_group_t *v1_api_group_create_internal(
     if (!v1_api_group_local_var) {
         return NULL;
     }
+    memset(v1_api_group_local_var, 0, sizeof(v1_api_group_t));
+    v1_api_group_local_var->_library_owned = 1;
     v1_api_group_local_var->api_version = api_version;
     v1_api_group_local_var->kind = kind;
     v1_api_group_local_var->name = name;
     v1_api_group_local_var->preferred_version = preferred_version;
     v1_api_group_local_var->server_address_by_client_cidrs = server_address_by_client_cidrs;
     v1_api_group_local_var->versions = versions;
-
-    v1_api_group_local_var->_library_owned = 1;
     return v1_api_group_local_var;
 }
 
@@ -36,7 +36,7 @@ __attribute__((deprecated)) v1_api_group_t *v1_api_group_create(
     list_t *server_address_by_client_cidrs,
     list_t *versions
     ) {
-    return v1_api_group_create_internal (
+    v1_api_group_t *result = v1_api_group_create_internal (
         api_version,
         kind,
         name,
@@ -44,6 +44,9 @@ __attribute__((deprecated)) v1_api_group_t *v1_api_group_create(
         server_address_by_client_cidrs,
         versions
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_api_group_free(v1_api_group_t *v1_api_group) {
@@ -181,6 +184,12 @@ v1_api_group_t *v1_api_group_parseFromJSON(cJSON *v1_api_groupJSON){
 
     v1_api_group_t *v1_api_group_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
+    char *kind_local_str = NULL;
+
+    char *name_local_str = NULL;
+
     // define the local variable for v1_api_group->preferred_version
     v1_group_version_for_discovery_t *preferred_version_local_nonprim = NULL;
 
@@ -290,17 +299,37 @@ v1_api_group_t *v1_api_group_parseFromJSON(cJSON *v1_api_groupJSON){
     }
 
 
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
+    if (name && !cJSON_IsNull(name)) name_local_str = strdup(name->valuestring);
+
     v1_api_group_local_var = v1_api_group_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
-        strdup(name->valuestring),
+        api_version_local_str,
+        kind_local_str,
+        name_local_str,
         preferred_version ? preferred_version_local_nonprim : NULL,
         server_address_by_client_cidrs ? server_address_by_client_cidrsList : NULL,
         versionsList
         );
 
+    if (!v1_api_group_local_var) {
+        goto end;
+    }
+
     return v1_api_group_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
+    if (name_local_str) {
+        free(name_local_str);
+        name_local_str = NULL;
+    }
     if (preferred_version_local_nonprim) {
         v1_group_version_for_discovery_free(preferred_version_local_nonprim);
         preferred_version_local_nonprim = NULL;

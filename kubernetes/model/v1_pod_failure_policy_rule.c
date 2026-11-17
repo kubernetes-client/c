@@ -14,11 +14,11 @@ static v1_pod_failure_policy_rule_t *v1_pod_failure_policy_rule_create_internal(
     if (!v1_pod_failure_policy_rule_local_var) {
         return NULL;
     }
+    memset(v1_pod_failure_policy_rule_local_var, 0, sizeof(v1_pod_failure_policy_rule_t));
+    v1_pod_failure_policy_rule_local_var->_library_owned = 1;
     v1_pod_failure_policy_rule_local_var->action = action;
     v1_pod_failure_policy_rule_local_var->on_exit_codes = on_exit_codes;
     v1_pod_failure_policy_rule_local_var->on_pod_conditions = on_pod_conditions;
-
-    v1_pod_failure_policy_rule_local_var->_library_owned = 1;
     return v1_pod_failure_policy_rule_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_pod_failure_policy_rule_t *v1_pod_failure_policy_
     v1_pod_failure_policy_on_exit_codes_requirement_t *on_exit_codes,
     list_t *on_pod_conditions
     ) {
-    return v1_pod_failure_policy_rule_create_internal (
+    v1_pod_failure_policy_rule_t *result = v1_pod_failure_policy_rule_create_internal (
         action,
         on_exit_codes,
         on_pod_conditions
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_pod_failure_policy_rule_free(v1_pod_failure_policy_rule_t *v1_pod_failure_policy_rule) {
@@ -117,6 +120,8 @@ v1_pod_failure_policy_rule_t *v1_pod_failure_policy_rule_parseFromJSON(cJSON *v1
 
     v1_pod_failure_policy_rule_t *v1_pod_failure_policy_rule_local_var = NULL;
 
+    char *action_local_str = NULL;
+
     // define the local variable for v1_pod_failure_policy_rule->on_exit_codes
     v1_pod_failure_policy_on_exit_codes_requirement_t *on_exit_codes_local_nonprim = NULL;
 
@@ -172,14 +177,24 @@ v1_pod_failure_policy_rule_t *v1_pod_failure_policy_rule_parseFromJSON(cJSON *v1
     }
 
 
+    if (action && !cJSON_IsNull(action)) action_local_str = strdup(action->valuestring);
+
     v1_pod_failure_policy_rule_local_var = v1_pod_failure_policy_rule_create_internal (
-        strdup(action->valuestring),
+        action_local_str,
         on_exit_codes ? on_exit_codes_local_nonprim : NULL,
         on_pod_conditions ? on_pod_conditionsList : NULL
         );
 
+    if (!v1_pod_failure_policy_rule_local_var) {
+        goto end;
+    }
+
     return v1_pod_failure_policy_rule_local_var;
 end:
+    if (action_local_str) {
+        free(action_local_str);
+        action_local_str = NULL;
+    }
     if (on_exit_codes_local_nonprim) {
         v1_pod_failure_policy_on_exit_codes_requirement_free(on_exit_codes_local_nonprim);
         on_exit_codes_local_nonprim = NULL;

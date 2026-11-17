@@ -13,10 +13,10 @@ static v1_watch_event_t *v1_watch_event_create_internal(
     if (!v1_watch_event_local_var) {
         return NULL;
     }
+    memset(v1_watch_event_local_var, 0, sizeof(v1_watch_event_t));
+    v1_watch_event_local_var->_library_owned = 1;
     v1_watch_event_local_var->object = object;
     v1_watch_event_local_var->type = type;
-
-    v1_watch_event_local_var->_library_owned = 1;
     return v1_watch_event_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_watch_event_t *v1_watch_event_create(
     object_t *object,
     char *type
     ) {
-    return v1_watch_event_create_internal (
+    v1_watch_event_t *result = v1_watch_event_create_internal (
         object,
         type
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_watch_event_free(v1_watch_event_t *v1_watch_event) {
@@ -87,6 +90,8 @@ v1_watch_event_t *v1_watch_event_parseFromJSON(cJSON *v1_watch_eventJSON){
 
     v1_watch_event_t *v1_watch_event_local_var = NULL;
 
+    char *type_local_str = NULL;
+
     // v1_watch_event->object
     cJSON *object = cJSON_GetObjectItemCaseSensitive(v1_watch_eventJSON, "object");
     if (cJSON_IsNull(object)) {
@@ -116,13 +121,23 @@ v1_watch_event_t *v1_watch_event_parseFromJSON(cJSON *v1_watch_eventJSON){
     }
 
 
+    if (type && !cJSON_IsNull(type)) type_local_str = strdup(type->valuestring);
+
     v1_watch_event_local_var = v1_watch_event_create_internal (
         object_local_object,
-        strdup(type->valuestring)
+        type_local_str
         );
+
+    if (!v1_watch_event_local_var) {
+        goto end;
+    }
 
     return v1_watch_event_local_var;
 end:
+    if (type_local_str) {
+        free(type_local_str);
+        type_local_str = NULL;
+    }
     return NULL;
 
 }

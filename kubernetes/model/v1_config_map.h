@@ -23,7 +23,7 @@ typedef struct v1_config_map_t {
     char *api_version; // string
     list_t* binary_data; //map
     list_t* data; //map
-    int immutable; //boolean
+    int *immutable; //boolean
     char *kind; // string
     struct v1_object_meta_t *metadata; //model
 
@@ -34,7 +34,7 @@ __attribute__((deprecated)) v1_config_map_t *v1_config_map_create(
     char *api_version,
     list_t* binary_data,
     list_t* data,
-    int immutable,
+    int *immutable,
     char *kind,
     v1_object_meta_t *metadata
 );

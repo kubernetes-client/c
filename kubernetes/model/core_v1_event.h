@@ -25,7 +25,7 @@ typedef struct core_v1_event_t core_v1_event_t;
 typedef struct core_v1_event_t {
     char *action; // string
     char *api_version; // string
-    int count; //numeric
+    int *count; //numeric
     char *event_time; //date time
     char *first_timestamp; //date time
     struct v1_object_reference_t *involved_object; //model
@@ -47,7 +47,7 @@ typedef struct core_v1_event_t {
 __attribute__((deprecated)) core_v1_event_t *core_v1_event_create(
     char *action,
     char *api_version,
-    int count,
+    int *count,
     char *event_time,
     char *first_timestamp,
     v1_object_reference_t *involved_object,

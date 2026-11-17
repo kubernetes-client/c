@@ -13,10 +13,10 @@ static v1_token_review_spec_t *v1_token_review_spec_create_internal(
     if (!v1_token_review_spec_local_var) {
         return NULL;
     }
+    memset(v1_token_review_spec_local_var, 0, sizeof(v1_token_review_spec_t));
+    v1_token_review_spec_local_var->_library_owned = 1;
     v1_token_review_spec_local_var->audiences = audiences;
     v1_token_review_spec_local_var->token = token;
-
-    v1_token_review_spec_local_var->_library_owned = 1;
     return v1_token_review_spec_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_token_review_spec_t *v1_token_review_spec_create(
     list_t *audiences,
     char *token
     ) {
-    return v1_token_review_spec_create_internal (
+    v1_token_review_spec_t *result = v1_token_review_spec_create_internal (
         audiences,
         token
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_token_review_spec_free(v1_token_review_spec_t *v1_token_review_spec) {
@@ -74,10 +77,11 @@ cJSON *v1_token_review_spec_convertToJSON(v1_token_review_spec_t *v1_token_revie
 
 
     // v1_token_review_spec->token
-    if(v1_token_review_spec->token) {
+    if (!v1_token_review_spec->token) {
+        goto fail;
+    }
     if(cJSON_AddStringToObject(item, "token", v1_token_review_spec->token) == NULL) {
     goto fail; //String
-    }
     }
 
     return item;
@@ -94,6 +98,8 @@ v1_token_review_spec_t *v1_token_review_spec_parseFromJSON(cJSON *v1_token_revie
 
     // define the local list for v1_token_review_spec->audiences
     list_t *audiencesList = NULL;
+
+    char *token_local_str = NULL;
 
     // v1_token_review_spec->audiences
     cJSON *audiences = cJSON_GetObjectItemCaseSensitive(v1_token_review_specJSON, "audiences");
@@ -122,18 +128,27 @@ v1_token_review_spec_t *v1_token_review_spec_parseFromJSON(cJSON *v1_token_revie
     if (cJSON_IsNull(token)) {
         token = NULL;
     }
-    if (token) { 
-    if(!cJSON_IsString(token) && !cJSON_IsNull(token))
+    if (!token) {
+        goto end;
+    }
+
+    
+    if(!cJSON_IsString(token))
     {
     goto end; //String
     }
-    }
 
+
+    if (token && !cJSON_IsNull(token)) token_local_str = strdup(token->valuestring);
 
     v1_token_review_spec_local_var = v1_token_review_spec_create_internal (
         audiences ? audiencesList : NULL,
-        token && !cJSON_IsNull(token) ? strdup(token->valuestring) : NULL
+        token_local_str
         );
+
+    if (!v1_token_review_spec_local_var) {
+        goto end;
+    }
 
     return v1_token_review_spec_local_var;
 end:
@@ -145,6 +160,10 @@ end:
         }
         list_freeList(audiencesList);
         audiencesList = NULL;
+    }
+    if (token_local_str) {
+        free(token_local_str);
+        token_local_str = NULL;
     }
     return NULL;
 

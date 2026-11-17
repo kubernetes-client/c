@@ -17,14 +17,14 @@ static v1_subject_access_review_spec_t *v1_subject_access_review_spec_create_int
     if (!v1_subject_access_review_spec_local_var) {
         return NULL;
     }
+    memset(v1_subject_access_review_spec_local_var, 0, sizeof(v1_subject_access_review_spec_t));
+    v1_subject_access_review_spec_local_var->_library_owned = 1;
     v1_subject_access_review_spec_local_var->extra = extra;
     v1_subject_access_review_spec_local_var->groups = groups;
     v1_subject_access_review_spec_local_var->non_resource_attributes = non_resource_attributes;
     v1_subject_access_review_spec_local_var->resource_attributes = resource_attributes;
     v1_subject_access_review_spec_local_var->uid = uid;
     v1_subject_access_review_spec_local_var->user = user;
-
-    v1_subject_access_review_spec_local_var->_library_owned = 1;
     return v1_subject_access_review_spec_local_var;
 }
 
@@ -36,7 +36,7 @@ __attribute__((deprecated)) v1_subject_access_review_spec_t *v1_subject_access_r
     char *uid,
     char *user
     ) {
-    return v1_subject_access_review_spec_create_internal (
+    v1_subject_access_review_spec_t *result = v1_subject_access_review_spec_create_internal (
         extra,
         groups,
         non_resource_attributes,
@@ -44,6 +44,9 @@ __attribute__((deprecated)) v1_subject_access_review_spec_t *v1_subject_access_r
         uid,
         user
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_subject_access_review_spec_free(v1_subject_access_review_spec_t *v1_subject_access_review_spec) {
@@ -192,6 +195,10 @@ v1_subject_access_review_spec_t *v1_subject_access_review_spec_parseFromJSON(cJS
     // define the local variable for v1_subject_access_review_spec->resource_attributes
     v1_resource_attributes_t *resource_attributes_local_nonprim = NULL;
 
+    char *uid_local_str = NULL;
+
+    char *user_local_str = NULL;
+
     // v1_subject_access_review_spec->extra
     cJSON *extra = cJSON_GetObjectItemCaseSensitive(v1_subject_access_review_specJSON, "extra");
     if (cJSON_IsNull(extra)) {
@@ -280,14 +287,21 @@ v1_subject_access_review_spec_t *v1_subject_access_review_spec_parseFromJSON(cJS
     }
 
 
+    if (uid && !cJSON_IsNull(uid)) uid_local_str = strdup(uid->valuestring);
+    if (user && !cJSON_IsNull(user)) user_local_str = strdup(user->valuestring);
+
     v1_subject_access_review_spec_local_var = v1_subject_access_review_spec_create_internal (
         extra ? extraList : NULL,
         groups ? groupsList : NULL,
         non_resource_attributes ? non_resource_attributes_local_nonprim : NULL,
         resource_attributes ? resource_attributes_local_nonprim : NULL,
-        uid && !cJSON_IsNull(uid) ? strdup(uid->valuestring) : NULL,
-        user && !cJSON_IsNull(user) ? strdup(user->valuestring) : NULL
+        uid_local_str,
+        user_local_str
         );
+
+    if (!v1_subject_access_review_spec_local_var) {
+        goto end;
+    }
 
     return v1_subject_access_review_spec_local_var;
 end:
@@ -319,6 +333,14 @@ end:
     if (resource_attributes_local_nonprim) {
         v1_resource_attributes_free(resource_attributes_local_nonprim);
         resource_attributes_local_nonprim = NULL;
+    }
+    if (uid_local_str) {
+        free(uid_local_str);
+        uid_local_str = NULL;
+    }
+    if (user_local_str) {
+        free(user_local_str);
+        user_local_str = NULL;
     }
     return NULL;
 

@@ -22,11 +22,11 @@ typedef struct v1_priority_class_t v1_priority_class_t;
 typedef struct v1_priority_class_t {
     char *api_version; // string
     char *description; // string
-    int global_default; //boolean
+    int *global_default; //boolean
     char *kind; // string
     struct v1_object_meta_t *metadata; //model
     char *preemption_policy; // string
-    int value; //numeric
+    int *value; //numeric
 
     int _library_owned; // Is the library responsible for freeing this object?
 } v1_priority_class_t;
@@ -34,11 +34,11 @@ typedef struct v1_priority_class_t {
 __attribute__((deprecated)) v1_priority_class_t *v1_priority_class_create(
     char *api_version,
     char *description,
-    int global_default,
+    int *global_default,
     char *kind,
     v1_object_meta_t *metadata,
     char *preemption_policy,
-    int value
+    int *value
 );
 
 void v1_priority_class_free(v1_priority_class_t *v1_priority_class);

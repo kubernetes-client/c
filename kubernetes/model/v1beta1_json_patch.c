@@ -12,18 +12,21 @@ static v1beta1_json_patch_t *v1beta1_json_patch_create_internal(
     if (!v1beta1_json_patch_local_var) {
         return NULL;
     }
-    v1beta1_json_patch_local_var->expression = expression;
-
+    memset(v1beta1_json_patch_local_var, 0, sizeof(v1beta1_json_patch_t));
     v1beta1_json_patch_local_var->_library_owned = 1;
+    v1beta1_json_patch_local_var->expression = expression;
     return v1beta1_json_patch_local_var;
 }
 
 __attribute__((deprecated)) v1beta1_json_patch_t *v1beta1_json_patch_create(
     char *expression
     ) {
-    return v1beta1_json_patch_create_internal (
+    v1beta1_json_patch_t *result = v1beta1_json_patch_create_internal (
         expression
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1beta1_json_patch_free(v1beta1_json_patch_t *v1beta1_json_patch) {
@@ -64,6 +67,8 @@ v1beta1_json_patch_t *v1beta1_json_patch_parseFromJSON(cJSON *v1beta1_json_patch
 
     v1beta1_json_patch_t *v1beta1_json_patch_local_var = NULL;
 
+    char *expression_local_str = NULL;
+
     // v1beta1_json_patch->expression
     cJSON *expression = cJSON_GetObjectItemCaseSensitive(v1beta1_json_patchJSON, "expression");
     if (cJSON_IsNull(expression)) {
@@ -77,12 +82,22 @@ v1beta1_json_patch_t *v1beta1_json_patch_parseFromJSON(cJSON *v1beta1_json_patch
     }
 
 
+    if (expression && !cJSON_IsNull(expression)) expression_local_str = strdup(expression->valuestring);
+
     v1beta1_json_patch_local_var = v1beta1_json_patch_create_internal (
-        expression && !cJSON_IsNull(expression) ? strdup(expression->valuestring) : NULL
+        expression_local_str
         );
+
+    if (!v1beta1_json_patch_local_var) {
+        goto end;
+    }
 
     return v1beta1_json_patch_local_var;
 end:
+    if (expression_local_str) {
+        free(expression_local_str);
+        expression_local_str = NULL;
+    }
     return NULL;
 
 }

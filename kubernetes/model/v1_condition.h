@@ -21,7 +21,7 @@ typedef struct v1_condition_t v1_condition_t;
 typedef struct v1_condition_t {
     char *last_transition_time; //date time
     char *message; // string
-    long observed_generation; //numeric
+    long *observed_generation; //numeric
     char *reason; // string
     char *status; // string
     char *type; // string
@@ -32,7 +32,7 @@ typedef struct v1_condition_t {
 __attribute__((deprecated)) v1_condition_t *v1_condition_create(
     char *last_transition_time,
     char *message,
-    long observed_generation,
+    long *observed_generation,
     char *reason,
     char *status,
     char *type

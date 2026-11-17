@@ -7,31 +7,40 @@
 
 static v1_port_status_t *v1_port_status_create_internal(
     char *error,
-    int port,
+    int *port,
     char *protocol
     ) {
     v1_port_status_t *v1_port_status_local_var = malloc(sizeof(v1_port_status_t));
     if (!v1_port_status_local_var) {
         return NULL;
     }
+    memset(v1_port_status_local_var, 0, sizeof(v1_port_status_t));
+    v1_port_status_local_var->_library_owned = 1;
     v1_port_status_local_var->error = error;
     v1_port_status_local_var->port = port;
     v1_port_status_local_var->protocol = protocol;
-
-    v1_port_status_local_var->_library_owned = 1;
     return v1_port_status_local_var;
 }
 
 __attribute__((deprecated)) v1_port_status_t *v1_port_status_create(
     char *error,
-    int port,
+    int *port,
     char *protocol
     ) {
-    return v1_port_status_create_internal (
+    int *port_copy = NULL;
+    if (port) {
+        port_copy = malloc(sizeof(int));
+        if (port_copy) *port_copy = *port;
+    }
+    v1_port_status_t *result = v1_port_status_create_internal (
         error,
-        port,
+        port_copy,
         protocol
         );
+    if (!result) {
+        free(port_copy);
+    }
+    return result;
 }
 
 void v1_port_status_free(v1_port_status_t *v1_port_status) {
@@ -46,6 +55,10 @@ void v1_port_status_free(v1_port_status_t *v1_port_status) {
     if (v1_port_status->error) {
         free(v1_port_status->error);
         v1_port_status->error = NULL;
+    }
+    if (v1_port_status->port) {
+        free(v1_port_status->port);
+        v1_port_status->port = NULL;
     }
     if (v1_port_status->protocol) {
         free(v1_port_status->protocol);
@@ -69,7 +82,7 @@ cJSON *v1_port_status_convertToJSON(v1_port_status_t *v1_port_status) {
     if (!v1_port_status->port) {
         goto fail;
     }
-    if(cJSON_AddNumberToObject(item, "port", v1_port_status->port) == NULL) {
+    if(cJSON_AddNumberToObject(item, "port", *v1_port_status->port) == NULL) {
     goto fail; //Numeric
     }
 
@@ -93,6 +106,13 @@ fail:
 v1_port_status_t *v1_port_status_parseFromJSON(cJSON *v1_port_statusJSON){
 
     v1_port_status_t *v1_port_status_local_var = NULL;
+
+    char *error_local_str = NULL;
+
+    // define the local variable for v1_port_status->port
+    int *port_local_var = NULL;
+
+    char *protocol_local_str = NULL;
 
     // v1_port_status->error
     cJSON *error = cJSON_GetObjectItemCaseSensitive(v1_port_statusJSON, "error");
@@ -120,6 +140,12 @@ v1_port_status_t *v1_port_status_parseFromJSON(cJSON *v1_port_statusJSON){
     {
     goto end; //Numeric
     }
+    port_local_var = malloc(sizeof(int));
+    if(!port_local_var)
+    {
+        goto end;
+    }
+    *port_local_var = port->valuedouble;
 
     // v1_port_status->protocol
     cJSON *protocol = cJSON_GetObjectItemCaseSensitive(v1_port_statusJSON, "protocol");
@@ -137,14 +163,33 @@ v1_port_status_t *v1_port_status_parseFromJSON(cJSON *v1_port_statusJSON){
     }
 
 
+    if (error && !cJSON_IsNull(error)) error_local_str = strdup(error->valuestring);
+    if (protocol && !cJSON_IsNull(protocol)) protocol_local_str = strdup(protocol->valuestring);
+
     v1_port_status_local_var = v1_port_status_create_internal (
-        error && !cJSON_IsNull(error) ? strdup(error->valuestring) : NULL,
-        port->valuedouble,
-        strdup(protocol->valuestring)
+        error_local_str,
+        port_local_var,
+        protocol_local_str
         );
+
+    if (!v1_port_status_local_var) {
+        goto end;
+    }
 
     return v1_port_status_local_var;
 end:
+    if (error_local_str) {
+        free(error_local_str);
+        error_local_str = NULL;
+    }
+    if (port_local_var) {
+        free(port_local_var);
+        port_local_var = NULL;
+    }
+    if (protocol_local_str) {
+        free(protocol_local_str);
+        protocol_local_str = NULL;
+    }
     return NULL;
 
 }

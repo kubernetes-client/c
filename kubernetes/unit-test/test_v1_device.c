@@ -32,6 +32,7 @@ v1_device_t* instantiate_v1_device(int include_optional) {
       list_createList(),
       list_createList(),
       "0",
+      list_createList(),
       "0",
        // false, not to have infinite recursion
       instantiate_v1_node_selector(0),
@@ -48,6 +49,7 @@ v1_device_t* instantiate_v1_device(int include_optional) {
       list_createList(),
       list_createList(),
       "0",
+      list_createList(),
       "0",
       NULL,
       list_createList()

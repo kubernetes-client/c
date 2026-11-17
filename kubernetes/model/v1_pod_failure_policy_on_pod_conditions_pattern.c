@@ -13,10 +13,10 @@ static v1_pod_failure_policy_on_pod_conditions_pattern_t *v1_pod_failure_policy_
     if (!v1_pod_failure_policy_on_pod_conditions_pattern_local_var) {
         return NULL;
     }
+    memset(v1_pod_failure_policy_on_pod_conditions_pattern_local_var, 0, sizeof(v1_pod_failure_policy_on_pod_conditions_pattern_t));
+    v1_pod_failure_policy_on_pod_conditions_pattern_local_var->_library_owned = 1;
     v1_pod_failure_policy_on_pod_conditions_pattern_local_var->status = status;
     v1_pod_failure_policy_on_pod_conditions_pattern_local_var->type = type;
-
-    v1_pod_failure_policy_on_pod_conditions_pattern_local_var->_library_owned = 1;
     return v1_pod_failure_policy_on_pod_conditions_pattern_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_pod_failure_policy_on_pod_conditions_pattern_t *v
     char *status,
     char *type
     ) {
-    return v1_pod_failure_policy_on_pod_conditions_pattern_create_internal (
+    v1_pod_failure_policy_on_pod_conditions_pattern_t *result = v1_pod_failure_policy_on_pod_conditions_pattern_create_internal (
         status,
         type
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_pod_failure_policy_on_pod_conditions_pattern_free(v1_pod_failure_policy_on_pod_conditions_pattern_t *v1_pod_failure_policy_on_pod_conditions_pattern) {
@@ -54,11 +57,10 @@ cJSON *v1_pod_failure_policy_on_pod_conditions_pattern_convertToJSON(v1_pod_fail
     cJSON *item = cJSON_CreateObject();
 
     // v1_pod_failure_policy_on_pod_conditions_pattern->status
-    if (!v1_pod_failure_policy_on_pod_conditions_pattern->status) {
-        goto fail;
-    }
+    if(v1_pod_failure_policy_on_pod_conditions_pattern->status) {
     if(cJSON_AddStringToObject(item, "status", v1_pod_failure_policy_on_pod_conditions_pattern->status) == NULL) {
     goto fail; //String
+    }
     }
 
 
@@ -82,19 +84,20 @@ v1_pod_failure_policy_on_pod_conditions_pattern_t *v1_pod_failure_policy_on_pod_
 
     v1_pod_failure_policy_on_pod_conditions_pattern_t *v1_pod_failure_policy_on_pod_conditions_pattern_local_var = NULL;
 
+    char *status_local_str = NULL;
+
+    char *type_local_str = NULL;
+
     // v1_pod_failure_policy_on_pod_conditions_pattern->status
     cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_pod_failure_policy_on_pod_conditions_patternJSON, "status");
     if (cJSON_IsNull(status)) {
         status = NULL;
     }
-    if (!status) {
-        goto end;
-    }
-
-    
-    if(!cJSON_IsString(status))
+    if (status) { 
+    if(!cJSON_IsString(status) && !cJSON_IsNull(status))
     {
     goto end; //String
+    }
     }
 
     // v1_pod_failure_policy_on_pod_conditions_pattern->type
@@ -113,13 +116,28 @@ v1_pod_failure_policy_on_pod_conditions_pattern_t *v1_pod_failure_policy_on_pod_
     }
 
 
+    if (status && !cJSON_IsNull(status)) status_local_str = strdup(status->valuestring);
+    if (type && !cJSON_IsNull(type)) type_local_str = strdup(type->valuestring);
+
     v1_pod_failure_policy_on_pod_conditions_pattern_local_var = v1_pod_failure_policy_on_pod_conditions_pattern_create_internal (
-        strdup(status->valuestring),
-        strdup(type->valuestring)
+        status_local_str,
+        type_local_str
         );
+
+    if (!v1_pod_failure_policy_on_pod_conditions_pattern_local_var) {
+        goto end;
+    }
 
     return v1_pod_failure_policy_on_pod_conditions_pattern_local_var;
 end:
+    if (status_local_str) {
+        free(status_local_str);
+        status_local_str = NULL;
+    }
+    if (type_local_str) {
+        free(type_local_str);
+        type_local_str = NULL;
+    }
     return NULL;
 
 }

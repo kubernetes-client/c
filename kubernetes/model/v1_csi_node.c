@@ -9,18 +9,20 @@ static v1_csi_node_t *v1_csi_node_create_internal(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,
-    v1_csi_node_spec_t *spec
+    v1_csi_node_spec_t *spec,
+    v1_csi_node_status_t *status
     ) {
     v1_csi_node_t *v1_csi_node_local_var = malloc(sizeof(v1_csi_node_t));
     if (!v1_csi_node_local_var) {
         return NULL;
     }
+    memset(v1_csi_node_local_var, 0, sizeof(v1_csi_node_t));
+    v1_csi_node_local_var->_library_owned = 1;
     v1_csi_node_local_var->api_version = api_version;
     v1_csi_node_local_var->kind = kind;
     v1_csi_node_local_var->metadata = metadata;
     v1_csi_node_local_var->spec = spec;
-
-    v1_csi_node_local_var->_library_owned = 1;
+    v1_csi_node_local_var->status = status;
     return v1_csi_node_local_var;
 }
 
@@ -28,14 +30,19 @@ __attribute__((deprecated)) v1_csi_node_t *v1_csi_node_create(
     char *api_version,
     char *kind,
     v1_object_meta_t *metadata,
-    v1_csi_node_spec_t *spec
+    v1_csi_node_spec_t *spec,
+    v1_csi_node_status_t *status
     ) {
-    return v1_csi_node_create_internal (
+    v1_csi_node_t *result = v1_csi_node_create_internal (
         api_version,
         kind,
         metadata,
-        spec
+        spec,
+        status
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_csi_node_free(v1_csi_node_t *v1_csi_node) {
@@ -62,6 +69,10 @@ void v1_csi_node_free(v1_csi_node_t *v1_csi_node) {
     if (v1_csi_node->spec) {
         v1_csi_node_spec_free(v1_csi_node->spec);
         v1_csi_node->spec = NULL;
+    }
+    if (v1_csi_node->status) {
+        v1_csi_node_status_free(v1_csi_node->status);
+        v1_csi_node->status = NULL;
     }
     free(v1_csi_node);
 }
@@ -111,6 +122,19 @@ cJSON *v1_csi_node_convertToJSON(v1_csi_node_t *v1_csi_node) {
     goto fail;
     }
 
+
+    // v1_csi_node->status
+    if(v1_csi_node->status) {
+    cJSON *status_local_JSON = v1_csi_node_status_convertToJSON(v1_csi_node->status);
+    if(status_local_JSON == NULL) {
+    goto fail; //model
+    }
+    cJSON_AddItemToObject(item, "status", status_local_JSON);
+    if(item->child == NULL) {
+    goto fail;
+    }
+    }
+
     return item;
 fail:
     if (item) {
@@ -123,11 +147,18 @@ v1_csi_node_t *v1_csi_node_parseFromJSON(cJSON *v1_csi_nodeJSON){
 
     v1_csi_node_t *v1_csi_node_local_var = NULL;
 
+    char *api_version_local_str = NULL;
+
+    char *kind_local_str = NULL;
+
     // define the local variable for v1_csi_node->metadata
     v1_object_meta_t *metadata_local_nonprim = NULL;
 
     // define the local variable for v1_csi_node->spec
     v1_csi_node_spec_t *spec_local_nonprim = NULL;
+
+    // define the local variable for v1_csi_node->status
+    v1_csi_node_status_t *status_local_nonprim = NULL;
 
     // v1_csi_node->api_version
     cJSON *api_version = cJSON_GetObjectItemCaseSensitive(v1_csi_nodeJSON, "apiVersion");
@@ -174,16 +205,41 @@ v1_csi_node_t *v1_csi_node_parseFromJSON(cJSON *v1_csi_nodeJSON){
     
     spec_local_nonprim = v1_csi_node_spec_parseFromJSON(spec); //nonprimitive
 
+    // v1_csi_node->status
+    cJSON *status = cJSON_GetObjectItemCaseSensitive(v1_csi_nodeJSON, "status");
+    if (cJSON_IsNull(status)) {
+        status = NULL;
+    }
+    if (status) { 
+    status_local_nonprim = v1_csi_node_status_parseFromJSON(status); //nonprimitive
+    }
+
+
+    if (api_version && !cJSON_IsNull(api_version)) api_version_local_str = strdup(api_version->valuestring);
+    if (kind && !cJSON_IsNull(kind)) kind_local_str = strdup(kind->valuestring);
 
     v1_csi_node_local_var = v1_csi_node_create_internal (
-        api_version && !cJSON_IsNull(api_version) ? strdup(api_version->valuestring) : NULL,
-        kind && !cJSON_IsNull(kind) ? strdup(kind->valuestring) : NULL,
+        api_version_local_str,
+        kind_local_str,
         metadata ? metadata_local_nonprim : NULL,
-        spec_local_nonprim
+        spec_local_nonprim,
+        status ? status_local_nonprim : NULL
         );
+
+    if (!v1_csi_node_local_var) {
+        goto end;
+    }
 
     return v1_csi_node_local_var;
 end:
+    if (api_version_local_str) {
+        free(api_version_local_str);
+        api_version_local_str = NULL;
+    }
+    if (kind_local_str) {
+        free(kind_local_str);
+        kind_local_str = NULL;
+    }
     if (metadata_local_nonprim) {
         v1_object_meta_free(metadata_local_nonprim);
         metadata_local_nonprim = NULL;
@@ -191,6 +247,10 @@ end:
     if (spec_local_nonprim) {
         v1_csi_node_spec_free(spec_local_nonprim);
         spec_local_nonprim = NULL;
+    }
+    if (status_local_nonprim) {
+        v1_csi_node_status_free(status_local_nonprim);
+        status_local_nonprim = NULL;
     }
     return NULL;
 

@@ -6,7 +6,7 @@
 
 
 static v1_network_policy_port_t *v1_network_policy_port_create_internal(
-    int end_port,
+    int *end_port,
     int_or_string_t *port,
     char *protocol
     ) {
@@ -14,24 +14,33 @@ static v1_network_policy_port_t *v1_network_policy_port_create_internal(
     if (!v1_network_policy_port_local_var) {
         return NULL;
     }
+    memset(v1_network_policy_port_local_var, 0, sizeof(v1_network_policy_port_t));
+    v1_network_policy_port_local_var->_library_owned = 1;
     v1_network_policy_port_local_var->end_port = end_port;
     v1_network_policy_port_local_var->port = port;
     v1_network_policy_port_local_var->protocol = protocol;
-
-    v1_network_policy_port_local_var->_library_owned = 1;
     return v1_network_policy_port_local_var;
 }
 
 __attribute__((deprecated)) v1_network_policy_port_t *v1_network_policy_port_create(
-    int end_port,
+    int *end_port,
     int_or_string_t *port,
     char *protocol
     ) {
-    return v1_network_policy_port_create_internal (
-        end_port,
+    int *end_port_copy = NULL;
+    if (end_port) {
+        end_port_copy = malloc(sizeof(int));
+        if (end_port_copy) *end_port_copy = *end_port;
+    }
+    v1_network_policy_port_t *result = v1_network_policy_port_create_internal (
+        end_port_copy,
         port,
         protocol
         );
+    if (!result) {
+        free(end_port_copy);
+    }
+    return result;
 }
 
 void v1_network_policy_port_free(v1_network_policy_port_t *v1_network_policy_port) {
@@ -43,6 +52,10 @@ void v1_network_policy_port_free(v1_network_policy_port_t *v1_network_policy_por
         return ;
     }
     listEntry_t *listEntry;
+    if (v1_network_policy_port->end_port) {
+        free(v1_network_policy_port->end_port);
+        v1_network_policy_port->end_port = NULL;
+    }
     if (v1_network_policy_port->port) {
         int_or_string_free(v1_network_policy_port->port);
         v1_network_policy_port->port = NULL;
@@ -59,7 +72,7 @@ cJSON *v1_network_policy_port_convertToJSON(v1_network_policy_port_t *v1_network
 
     // v1_network_policy_port->end_port
     if(v1_network_policy_port->end_port) {
-    if(cJSON_AddNumberToObject(item, "endPort", v1_network_policy_port->end_port) == NULL) {
+    if(cJSON_AddNumberToObject(item, "endPort", *v1_network_policy_port->end_port) == NULL) {
     goto fail; //Numeric
     }
     }
@@ -97,8 +110,13 @@ v1_network_policy_port_t *v1_network_policy_port_parseFromJSON(cJSON *v1_network
 
     v1_network_policy_port_t *v1_network_policy_port_local_var = NULL;
 
+    // define the local variable for v1_network_policy_port->end_port
+    int *end_port_local_var = NULL;
+
     // define the local variable for v1_network_policy_port->port
     int_or_string_t *port_local_nonprim = NULL;
+
+    char *protocol_local_str = NULL;
 
     // v1_network_policy_port->end_port
     cJSON *end_port = cJSON_GetObjectItemCaseSensitive(v1_network_policy_portJSON, "endPort");
@@ -110,6 +128,12 @@ v1_network_policy_port_t *v1_network_policy_port_parseFromJSON(cJSON *v1_network
     {
     goto end; //Numeric
     }
+    end_port_local_var = malloc(sizeof(int));
+    if(!end_port_local_var)
+    {
+        goto end;
+    }
+    *end_port_local_var = end_port->valuedouble;
     }
 
     // v1_network_policy_port->port
@@ -134,17 +158,31 @@ v1_network_policy_port_t *v1_network_policy_port_parseFromJSON(cJSON *v1_network
     }
 
 
+    if (protocol && !cJSON_IsNull(protocol)) protocol_local_str = strdup(protocol->valuestring);
+
     v1_network_policy_port_local_var = v1_network_policy_port_create_internal (
-        end_port ? end_port->valuedouble : 0,
+        end_port_local_var,
         port ? port_local_nonprim : NULL,
-        protocol && !cJSON_IsNull(protocol) ? strdup(protocol->valuestring) : NULL
+        protocol_local_str
         );
+
+    if (!v1_network_policy_port_local_var) {
+        goto end;
+    }
 
     return v1_network_policy_port_local_var;
 end:
+    if (end_port_local_var) {
+        free(end_port_local_var);
+        end_port_local_var = NULL;
+    }
     if (port_local_nonprim) {
         int_or_string_free(port_local_nonprim);
         port_local_nonprim = NULL;
+    }
+    if (protocol_local_str) {
+        free(protocol_local_str);
+        protocol_local_str = NULL;
     }
     return NULL;
 

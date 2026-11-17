@@ -13,10 +13,10 @@ static v1_scheduling_t *v1_scheduling_create_internal(
     if (!v1_scheduling_local_var) {
         return NULL;
     }
+    memset(v1_scheduling_local_var, 0, sizeof(v1_scheduling_t));
+    v1_scheduling_local_var->_library_owned = 1;
     v1_scheduling_local_var->node_selector = node_selector;
     v1_scheduling_local_var->tolerations = tolerations;
-
-    v1_scheduling_local_var->_library_owned = 1;
     return v1_scheduling_local_var;
 }
 
@@ -24,10 +24,13 @@ __attribute__((deprecated)) v1_scheduling_t *v1_scheduling_create(
     list_t* node_selector,
     list_t *tolerations
     ) {
-    return v1_scheduling_create_internal (
+    v1_scheduling_t *result = v1_scheduling_create_internal (
         node_selector,
         tolerations
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_scheduling_free(v1_scheduling_t *v1_scheduling) {
@@ -172,10 +175,15 @@ v1_scheduling_t *v1_scheduling_parseFromJSON(cJSON *v1_schedulingJSON){
     }
 
 
+
     v1_scheduling_local_var = v1_scheduling_create_internal (
         node_selector ? node_selectorList : NULL,
         tolerations ? tolerationsList : NULL
         );
+
+    if (!v1_scheduling_local_var) {
+        goto end;
+    }
 
     return v1_scheduling_local_var;
 end:

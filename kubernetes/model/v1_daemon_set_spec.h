@@ -22,8 +22,8 @@ typedef struct v1_daemon_set_spec_t v1_daemon_set_spec_t;
 
 
 typedef struct v1_daemon_set_spec_t {
-    int min_ready_seconds; //numeric
-    int revision_history_limit; //numeric
+    int *min_ready_seconds; //numeric
+    int *revision_history_limit; //numeric
     struct v1_label_selector_t *selector; //model
     struct v1_pod_template_spec_t *_template; //model
     struct v1_daemon_set_update_strategy_t *update_strategy; //model
@@ -32,8 +32,8 @@ typedef struct v1_daemon_set_spec_t {
 } v1_daemon_set_spec_t;
 
 __attribute__((deprecated)) v1_daemon_set_spec_t *v1_daemon_set_spec_create(
-    int min_ready_seconds,
-    int revision_history_limit,
+    int *min_ready_seconds,
+    int *revision_history_limit,
     v1_label_selector_t *selector,
     v1_pod_template_spec_t *_template,
     v1_daemon_set_update_strategy_t *update_strategy

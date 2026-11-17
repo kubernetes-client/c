@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **machine_id** | **char \*** | MachineID reported by the node. For unique machine identification in the cluster this field is preferred. Learn more from man(5) machine-id: http://man7.org/linux/man-pages/man5/machine-id.5.html | 
 **operating_system** | **char \*** | The Operating System reported by the node | 
 **os_image** | **char \*** | OS Image reported by the node from /etc/os-release (e.g. Debian GNU/Linux 7 (wheezy)). | 
+**running_in_user_namespace** | **int** | Whether the node is running in a user namespace. | [optional] 
 **swap** | [**v1_node_swap_status_t**](v1_node_swap_status.md) \* |  | [optional] 
 **system_uuid** | **char \*** | SystemUUID reported by the node. For unique machine identification MachineID is preferred. This field is specific to Red Hat hosts https://access.redhat.com/documentation/en-us/red_hat_subscription_management/1/html/rhsm/uuid | 
 

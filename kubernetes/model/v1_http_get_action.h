@@ -25,6 +25,7 @@ typedef struct v1_http_get_action_t {
     list_t *http_headers; //nonprimitive container
     char *path; // string
     int_or_string_t *port; // custom
+    char *protocol; // string
     char *scheme; // string
 
     int _library_owned; // Is the library responsible for freeing this object?
@@ -35,6 +36,7 @@ __attribute__((deprecated)) v1_http_get_action_t *v1_http_get_action_create(
     list_t *http_headers,
     char *path,
     int_or_string_t *port,
+    char *protocol,
     char *scheme
 );
 

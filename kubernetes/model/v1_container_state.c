@@ -14,11 +14,11 @@ static v1_container_state_t *v1_container_state_create_internal(
     if (!v1_container_state_local_var) {
         return NULL;
     }
+    memset(v1_container_state_local_var, 0, sizeof(v1_container_state_t));
+    v1_container_state_local_var->_library_owned = 1;
     v1_container_state_local_var->running = running;
     v1_container_state_local_var->terminated = terminated;
     v1_container_state_local_var->waiting = waiting;
-
-    v1_container_state_local_var->_library_owned = 1;
     return v1_container_state_local_var;
 }
 
@@ -27,11 +27,14 @@ __attribute__((deprecated)) v1_container_state_t *v1_container_state_create(
     v1_container_state_terminated_t *terminated,
     v1_container_state_waiting_t *waiting
     ) {
-    return v1_container_state_create_internal (
+    v1_container_state_t *result = v1_container_state_create_internal (
         running,
         terminated,
         waiting
         );
+    if (!result) {
+    }
+    return result;
 }
 
 void v1_container_state_free(v1_container_state_t *v1_container_state) {
@@ -148,11 +151,16 @@ v1_container_state_t *v1_container_state_parseFromJSON(cJSON *v1_container_state
     }
 
 
+
     v1_container_state_local_var = v1_container_state_create_internal (
         running ? running_local_nonprim : NULL,
         terminated ? terminated_local_nonprim : NULL,
         waiting ? waiting_local_nonprim : NULL
         );
+
+    if (!v1_container_state_local_var) {
+        goto end;
+    }
 
     return v1_container_state_local_var;
 end:

@@ -19,9 +19,9 @@ typedef struct v1_container_port_t v1_container_port_t;
 
 
 typedef struct v1_container_port_t {
-    int container_port; //numeric
+    int *container_port; //numeric
     char *host_ip; // string
-    int host_port; //numeric
+    int *host_port; //numeric
     char *name; // string
     char *protocol; // string
 
@@ -29,9 +29,9 @@ typedef struct v1_container_port_t {
 } v1_container_port_t;
 
 __attribute__((deprecated)) v1_container_port_t *v1_container_port_create(
-    int container_port,
+    int *container_port,
     char *host_ip,
-    int host_port,
+    int *host_port,
     char *name,
     char *protocol
 );

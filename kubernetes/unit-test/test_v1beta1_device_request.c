@@ -28,6 +28,7 @@ v1beta1_device_request_t* instantiate_v1beta1_device_request(int include_optiona
        // false, not to have infinite recursion
       instantiate_v1beta1_capacity_requirements(0),
       56,
+      list_createList(),
       "0",
       list_createList(),
       "0",
@@ -40,6 +41,7 @@ v1beta1_device_request_t* instantiate_v1beta1_device_request(int include_optiona
       "0",
       NULL,
       56,
+      list_createList(),
       "0",
       list_createList(),
       "0",
